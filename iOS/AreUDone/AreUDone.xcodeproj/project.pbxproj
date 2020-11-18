@@ -16,6 +16,9 @@
 		33B87E312565072000354880 /* AreUDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E302565072000354880 /* AreUDoneTests.swift */; };
 		33B87E3C2565072000354880 /* AreUDoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E3B2565072000354880 /* AreUDoneUITests.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
+		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
+		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
+		BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		33B87E3B2565072000354880 /* AreUDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUDoneUITests.swift; sourceTree = "<group>"; };
 		33B87E3D2565072000354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
+		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
+		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +111,7 @@
 				33B87E1B2565071C00354880 /* SceneDelegate.swift */,
 				33B87E4E25650CC900354880 /* Supports */,
 				33B87E4C25650B2B00354880 /* Common */,
-				33B87E4D25650B3200354880 /* LoginScene */,
+				33B87E4D25650B3200354880 /* SignInScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -131,6 +137,7 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
 				33B87E752565137D00354880 /* Resources */,
 				33B87E742565136700354880 /* Model */,
@@ -140,15 +147,16 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		33B87E4D25650B3200354880 /* LoginScene */ = {
+		33B87E4D25650B3200354880 /* SignInScene */ = {
 			isa = PBXGroup;
 			children = (
 				33B87E672565122200354880 /* Resources */,
 				33B87E712565131F00354880 /* Model */,
 				33B87E6C256512A400354880 /* View */,
 				33B87E6B2565129100354880 /* ViewModel */,
+				BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */,
 			);
-			path = LoginScene;
+			path = SignInScene;
 			sourceTree = "<group>";
 		};
 		33B87E4E25650CC900354880 /* Supports */ = {
@@ -233,6 +241,15 @@
 				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		BDD18ABB2565448D005DF00A /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */,
+				BDD18AC4256544C6005DF00A /* Coordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +384,9 @@
 			files = (
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */,
+				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
+				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
+				BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 			);
