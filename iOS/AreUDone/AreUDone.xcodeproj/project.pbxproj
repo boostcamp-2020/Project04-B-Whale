@@ -10,11 +10,15 @@
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
 		33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SignInViewController.swift */; };
-		33B87E212565071C00354880 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E1F2565071C00354880 /* Login.storyboard */; };
+		33B87E212565071C00354880 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E1F2565071C00354880 /* SignIn.storyboard */; };
 		33B87E232565071F00354880 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E222565071F00354880 /* Assets.xcassets */; };
 		33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E242565071F00354880 /* LaunchScreen.storyboard */; };
 		33B87E312565072000354880 /* AreUDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E302565072000354880 /* AreUDoneTests.swift */; };
 		33B87E3C2565072000354880 /* AreUDoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E3B2565072000354880 /* AreUDoneUITests.swift */; };
+		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
+		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
+		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
+		BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +43,7 @@
 		33B87E192565071C00354880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33B87E1B2565071C00354880 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		33B87E1D2565071C00354880 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		33B87E202565071C00354880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		33B87E202565071C00354880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SignIn.storyboard; sourceTree = "<group>"; };
 		33B87E222565071F00354880 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33B87E252565071F00354880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33B87E272565071F00354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +53,10 @@
 		33B87E372565072000354880 /* AreUDoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreUDoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E3B2565072000354880 /* AreUDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUDoneUITests.swift; sourceTree = "<group>"; };
 		33B87E3D2565072000354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
+		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
+		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +111,7 @@
 				33B87E1B2565071C00354880 /* SceneDelegate.swift */,
 				33B87E4E25650CC900354880 /* Supports */,
 				33B87E4C25650B2B00354880 /* Common */,
-				33B87E4D25650B3200354880 /* LoginScene */,
+				33B87E4D25650B3200354880 /* SignInScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -129,6 +137,8 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BDD18ABB2565448D005DF00A /* Coordinator */,
+				BDD18AB225653CB8005DF00A /* Extension */,
 				33B87E752565137D00354880 /* Resources */,
 				33B87E742565136700354880 /* Model */,
 				33B87E722565133A00354880 /* View */,
@@ -137,15 +147,16 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		33B87E4D25650B3200354880 /* LoginScene */ = {
+		33B87E4D25650B3200354880 /* SignInScene */ = {
 			isa = PBXGroup;
 			children = (
 				33B87E672565122200354880 /* Resources */,
 				33B87E712565131F00354880 /* Model */,
 				33B87E6C256512A400354880 /* View */,
 				33B87E6B2565129100354880 /* ViewModel */,
+				BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */,
 			);
-			path = LoginScene;
+			path = SignInScene;
 			sourceTree = "<group>";
 		};
 		33B87E4E25650CC900354880 /* Supports */ = {
@@ -161,7 +172,7 @@
 		33B87E672565122200354880 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				33B87E1F2565071C00354880 /* Login.storyboard */,
+				33B87E1F2565071C00354880 /* SignIn.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -222,6 +233,23 @@
 			children = (
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		BDD18AB225653CB8005DF00A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		BDD18ABB2565448D005DF00A /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */,
+				BDD18AC4256544C6005DF00A /* Coordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,7 +357,7 @@
 			files = (
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
-				33B87E212565071C00354880 /* Login.storyboard in Resources */,
+				33B87E212565071C00354880 /* SignIn.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +382,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */,
+				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
+				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
+				BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 			);
@@ -392,12 +424,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		33B87E1F2565071C00354880 /* Login.storyboard */ = {
+		33B87E1F2565071C00354880 /* SignIn.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				33B87E202565071C00354880 /* Base */,
 			);
-			name = Login.storyboard;
+			name = SignIn.storyboard;
 			sourceTree = "<group>";
 		};
 		33B87E242565071F00354880 /* LaunchScreen.storyboard */ = {
