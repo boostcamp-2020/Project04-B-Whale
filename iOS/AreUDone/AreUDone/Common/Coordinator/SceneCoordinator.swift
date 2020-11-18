@@ -10,13 +10,16 @@ import UIKit
 final class SceneCoordinator: Coordinator {
   
   private var window: UIWindow?
-  var initCoordinator: Coordinator
+  private let initCoordinator: Coordinator
+  
   init(window: UIWindow, coordinator: Coordinator) {
     self.window = window
     initCoordinator = coordinator
   }
   
   func start() -> UIViewController {
+    
+    // SiginCoordinator or TabbarCoordinator
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
