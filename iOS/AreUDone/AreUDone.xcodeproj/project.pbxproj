@@ -18,6 +18,10 @@
 		3383649A256614D200F92EE4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383648525660F0100F92EE4 /* Router.swift */; };
 		3383649E256614DA00F92EE4 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383648A25660F2C00F92EE4 /* Routable.swift */; };
 		338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383648F25660F6900F92EE4 /* EndPointable.swift */; };
+		338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */; };
+		338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C525665CD900F92EE4 /* NanumSquareLight.ttf */; };
+		338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */; };
+		338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
 		33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SigninViewController.swift */; };
@@ -94,6 +98,10 @@
 		3383648525660F0100F92EE4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		3383648A25660F2C00F92EE4 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		3383648F25660F6900F92EE4 /* EndPointable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointable.swift; sourceTree = "<group>"; };
+		338364C525665CD900F92EE4 /* NanumSquareLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareLight.ttf; sourceTree = "<group>"; };
+		338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRegular.ttf; sourceTree = "<group>"; };
+		338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareOTF_acEB.otf; sourceTree = "<group>"; };
+		338364C825665CD900F92EE4 /* NanumSquareBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareBold.ttf; sourceTree = "<group>"; };
 		33B87E162565071C00354880 /* AreUDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AreUDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E192565071C00354880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33B87E1B2565071C00354880 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +206,17 @@
 			path = NetworkFramework;
 			sourceTree = "<group>";
 		};
+		338364D125665CF200F92EE4 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				338364C825665CD900F92EE4 /* NanumSquareBold.ttf */,
+				338364C525665CD900F92EE4 /* NanumSquareLight.ttf */,
+				338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */,
+				338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		33B87E0D2565071C00354880 = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +285,7 @@
 		33B87E4E25650CC900354880 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				338364D125665CF200F92EE4 /* Fonts */,
 				33B87E242565071F00354880 /* LaunchScreen.storyboard */,
 				33B87E272565071F00354880 /* Info.plist */,
 				33B87E222565071F00354880 /* Assets.xcassets */,
@@ -308,8 +328,8 @@
 		BDD18ABB2565448D005DF00A /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */,
 				BDD18AC4256544C6005DF00A /* Coordinator.swift */,
+				BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -510,7 +530,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
+				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
+				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
+				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
 			);
