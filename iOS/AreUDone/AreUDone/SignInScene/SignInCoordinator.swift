@@ -8,8 +8,6 @@
 import UIKit
 import NetworkFramework
 
-
-
 final class SignInCoordinator: Coordinator {
   
   private var storyboard: UIStoryboard {
@@ -27,5 +25,14 @@ final class SignInCoordinator: Coordinator {
       })
     
     return signInViewController
+  }
+}
+
+extension SignInCoordinator {
+  func openURL() {
+    guard let url = URL(string: "") else { return }
+    if UIApplication.shared.canOpenURL(url) {
+      UIApplication.shared.open(url)
+    }
   }
 }
