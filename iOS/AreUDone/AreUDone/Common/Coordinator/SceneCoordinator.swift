@@ -12,7 +12,7 @@ final class SceneCoordinator: Coordinator {
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
   
-  init(window: UIWindow, factory: CoordinatorFactoryable) {
+  init(window: UIWindow?, factory: CoordinatorFactoryable) {
     self.window = window
     initCoordinatorFactory = factory
   }

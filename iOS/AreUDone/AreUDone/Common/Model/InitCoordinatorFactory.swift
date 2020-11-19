@@ -17,9 +17,9 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
     switch isValid {
     case true:
       print("탭바")
-      return SignInCoordinator() // TODO: TabbarCoordinator 만들어주기
+      return SigninCoordinator() // TODO: TabbarCoordinator 만들어주기
     case false:
-      return SignInCoordinator()
+      return SigninCoordinator()
     }
   }
 }
