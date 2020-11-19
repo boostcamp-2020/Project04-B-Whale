@@ -8,28 +8,31 @@
 import UIKit
 import NetworkFramework
 
-final class SignInCoordinator: Coordinator {
+final class SigninCoordinator: Coordinator {
   
   private var storyboard: UIStoryboard {
-    return UIStoryboard.storyboard(storyboard: .signIn)
+    return UIStoryboard.storyboard(storyboard: .signin)
   }
   
   func start() -> UIViewController {
     // TODO:- SignInViewController의 init 수정 시 같이 수정해야함.
     
-    let signInViewController = storyboard.instantiateViewController(
+    guard let signInViewController = storyboard.instantiateViewController(
       identifier: "SignInViewController",
       creator: { coder in
-        let viewModel = SignInViewModel()
-        return SignInViewController(coder: coder, viewModel: viewModel)
-      })
+        let viewModel = SigninViewModel()
+        return SigninViewController(coder: coder, viewModel: viewModel)
+      }) as? SigninViewController
+    else { return UIViewController() }
+    
+    signInViewController.signinCoordinator = self
     
     return signInViewController
   }
 }
 
-extension SignInCoordinator {
-  func openURL() {
+extension SigninCoordinator {
+  func openURL(endPoint: EndPointable) {
     guard let url = URL(string: "") else { return }
     if UIApplication.shared.canOpenURL(url) {
       UIApplication.shared.open(url)

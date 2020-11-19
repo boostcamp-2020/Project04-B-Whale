@@ -9,7 +9,7 @@ import UIKit
 
 extension UIStoryboard {
   enum Storyboard: String {
-    case signIn
+    case signin
     
     var fileName: String {
       return rawValue.capitalized
