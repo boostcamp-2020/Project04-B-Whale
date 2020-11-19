@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
-		338364612565586800F92EE4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SignInViewModel.swift */; };
+		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3383647C25660EDE00F92EE4 /* NetworkFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3383647525660EDE00F92EE4 /* NetworkFramework.framework */; };
 		3383647D25660EDE00F92EE4 /* NetworkFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3383647525660EDE00F92EE4 /* NetworkFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -20,14 +20,14 @@
 		338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383648F25660F6900F92EE4 /* EndPointable.swift */; };
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
-		33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SignInViewController.swift */; };
+		33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SigninViewController.swift */; };
 		33B87E232565071F00354880 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E222565071F00354880 /* Assets.xcassets */; };
 		33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E242565071F00354880 /* LaunchScreen.storyboard */; };
 		33B87E312565072000354880 /* AreUDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E302565072000354880 /* AreUDoneTests.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
-		BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */; };
+		BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC9256545FC005DF00A /* SigninCoordinator.swift */; };
 		BDD18AE625660E77005DF00A /* KeychainFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = BDD18AE425660E77005DF00A /* KeychainFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BDD18AE925660E77005DF00A /* KeychainFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD18AE225660E77005DF00A /* KeychainFramework.framework */; };
 		BDD18AEB25660E77005DF00A /* KeychainFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDD18AE225660E77005DF00A /* KeychainFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,7 +36,7 @@
 		BDD18AF925660E8D005DF00A /* SecureStoreQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF425660E8D005DF00A /* SecureStoreQueryable.swift */; };
 		BDD18AFA25660E8D005DF00A /* InternetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF525660E8D005DF00A /* InternetProtocol.swift */; };
 		BDD18AFB25660E8D005DF00A /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF625660E8D005DF00A /* SecureStore.swift */; };
-		BDD18B0625660F56005DF00A /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B0525660F56005DF00A /* SignIn.storyboard */; };
+		BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B0525660F56005DF00A /* Signin.storyboard */; };
 		BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
 		BDD18B2425663E74005DF00A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2325663E74005DF00A /* UserService.swift */; };
 		BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2D25663F6D005DF00A /* CardService.swift */; };
@@ -87,7 +87,7 @@
 
 /* Begin PBXFileReference section */
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
-		338364602565586800F92EE4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewModel.swift; path = AreUDone/SignInScene/ViewModel/SignInViewModel.swift; sourceTree = SOURCE_ROOT; };
+		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3383647725660EDE00F92EE4 /* NetworkFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkFramework.h; sourceTree = "<group>"; };
 		3383647825660EDE00F92EE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		33B87E162565071C00354880 /* AreUDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AreUDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E192565071C00354880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33B87E1B2565071C00354880 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		33B87E1D2565071C00354880 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		33B87E1D2565071C00354880 /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
 		33B87E222565071F00354880 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33B87E252565071F00354880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33B87E272565071F00354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
+		BDD18AC9256545FC005DF00A /* SigninCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AE225660E77005DF00A /* KeychainFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeychainFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD18AE425660E77005DF00A /* KeychainFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeychainFramework.h; sourceTree = "<group>"; };
 		BDD18AE525660E77005DF00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		BDD18AF425660E8D005DF00A /* SecureStoreQueryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStoreQueryable.swift; sourceTree = "<group>"; };
 		BDD18AF525660E8D005DF00A /* InternetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetProtocol.swift; sourceTree = "<group>"; };
 		BDD18AF625660E8D005DF00A /* SecureStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
-		BDD18B0525660F56005DF00A /* SignIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignIn.storyboard; sourceTree = "<group>"; };
+		BDD18B0525660F56005DF00A /* Signin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Signin.storyboard; sourceTree = "<group>"; };
 		BDD18B0A2566132A005DF00A /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		BDD18B2325663E74005DF00A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BDD18B2D25663F6D005DF00A /* CardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardService.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		3383646525655E4F00F92EE4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				338364602565586800F92EE4 /* SignInViewModel.swift */,
+				338364602565586800F92EE4 /* SigninViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 		33B87E4D25650B3200354880 /* SignInScene */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */,
+				BDD18AC9256545FC005DF00A /* SigninCoordinator.swift */,
 				33B87E672565122200354880 /* Resources */,
 				33B87E6C256512A400354880 /* View */,
 				3383646525655E4F00F92EE4 /* ViewModel */,
@@ -276,7 +276,7 @@
 		33B87E672565122200354880 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18B0525660F56005DF00A /* SignIn.storyboard */,
+				BDD18B0525660F56005DF00A /* Signin.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -292,7 +292,7 @@
 		33B87E6D256512F400354880 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				33B87E1D2565071C00354880 /* SignInViewController.swift */,
+				33B87E1D2565071C00354880 /* SigninViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -511,7 +511,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
-				BDD18B0625660F56005DF00A /* SignIn.storyboard in Resources */,
+				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,11 +556,11 @@
 			files = (
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
-				33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */,
+				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
-				BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */,
-				338364612565586800F92EE4 /* SignInViewModel.swift in Sources */,
+				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
+				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,

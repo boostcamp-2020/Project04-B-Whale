@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SigninViewController.swift
 //  AreUDone
 //
 //  Created by a1111 on 2020/11/18.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class SignInViewController: UIViewController {
+final class SigninViewController: UIViewController {
   
-  private let viewModel: SignInViewModelProtocol
+  private let viewModel: SigninViewModelProtocol
   
-  init?(coder: NSCoder, viewModel: SignInViewModelProtocol) {
+  init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
     
     super.init(coder: coder)

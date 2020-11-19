@@ -8,10 +8,10 @@
 import UIKit
 import NetworkFramework
 
-final class SignInCoordinator: Coordinator {
+final class SigninCoordinator: Coordinator {
   
   private var storyboard: UIStoryboard {
-    return UIStoryboard.storyboard(storyboard: .signIn)
+    return UIStoryboard.storyboard(storyboard: .signin)
   }
   
   func start() -> UIViewController {
@@ -20,15 +20,15 @@ final class SignInCoordinator: Coordinator {
     let signInViewController = storyboard.instantiateViewController(
       identifier: "SignInViewController",
       creator: { coder in
-        let viewModel = SignInViewModel()
-        return SignInViewController(coder: coder, viewModel: viewModel)
+        let viewModel = SigninViewModel()
+        return SigninViewController(coder: coder, viewModel: viewModel)
       })
     
     return signInViewController
   }
 }
 
-extension SignInCoordinator {
+extension SigninCoordinator {
   func openURL() {
     guard let url = URL(string: "") else { return }
     if UIApplication.shared.canOpenURL(url) {
