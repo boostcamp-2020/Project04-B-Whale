@@ -8,12 +8,12 @@
 import Foundation
 
 protocol CoordinatorFactoryable {
-  static func makeCoordinator(by isValid: Bool) -> Coordinator
+  func makeCoordinator(by isValid: Bool) -> Coordinator
 }
 
 final class InitCoorndinatorFactory: CoordinatorFactoryable {
   
-  static func makeCoordinator(by isValid: Bool) -> Coordinator {
+  func makeCoordinator(by isValid: Bool) -> Coordinator {
     switch isValid {
     case true:
       print("탭바")

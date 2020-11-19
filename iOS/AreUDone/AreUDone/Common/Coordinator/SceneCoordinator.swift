@@ -10,20 +10,29 @@ import UIKit
 final class SceneCoordinator: Coordinator {
   
   private var window: UIWindow?
-  private let initCoordinator: Coordinator
+  private let initCoordinatorFactory: CoordinatorFactoryable
   
-  init(window: UIWindow, coordinator: Coordinator) {
+  init(window: UIWindow, factory: CoordinatorFactoryable) {
     self.window = window
-    initCoordinator = coordinator
+    initCoordinatorFactory = factory
   }
   
+  @discardableResult
   func start() -> UIViewController {
+    let isSignIn = checkSignIn()
     
-    // SiginCoordinator or TabbarCoordinator
+    let initCoordinator = initCoordinatorFactory.makeCoordinator(by: isSignIn)
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
     
     return initViewController
+  }
+  
+  private func checkSignIn() -> Bool {
+    if let _ = Keychain.shared.loadValue(forKey: "") {
+      return true
+    }
+    return false
   }
 }
