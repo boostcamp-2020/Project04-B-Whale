@@ -18,5 +18,9 @@ module.exports = {
     parser: '@babel/eslint-parser',
     rules: {
         'prettier/prettier': 'error',
+        'import/prefer-default-export': 'off',
+        'import/no-default-export': 'error',
+        'import/no-cycle': 'off',
+        'class-methods-use-this': 'off',
     },
 };
