@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol CardServiceProtocol {
+  
+}
+
+class CardService {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+}

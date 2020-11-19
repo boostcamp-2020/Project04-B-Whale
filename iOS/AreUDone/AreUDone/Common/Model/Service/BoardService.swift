@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol BoardServiceProtocol: class {
+  
+}
+
+class BoardService {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+}

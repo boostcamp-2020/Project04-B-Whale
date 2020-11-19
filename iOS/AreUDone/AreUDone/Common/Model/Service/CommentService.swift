@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol CommentServiceProtocol {
+  
+}
+
+class CommentService {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+}

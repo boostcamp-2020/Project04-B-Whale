@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol ListServiceProtocol {
+  
+}
+
+class ListService {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+}

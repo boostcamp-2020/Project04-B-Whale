@@ -38,16 +38,15 @@
 		BDD18AFB25660E8D005DF00A /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF625660E8D005DF00A /* SecureStore.swift */; };
 		BDD18B0625660F56005DF00A /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B0525660F56005DF00A /* SignIn.storyboard */; };
 		BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
+		BDD18B2425663E74005DF00A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2325663E74005DF00A /* UserService.swift */; };
+		BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2D25663F6D005DF00A /* CardService.swift */; };
+		BDD18B342566403E005DF00A /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B332566403E005DF00A /* BoardService.swift */; };
+		BDD18B3A25664057005DF00A /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3925664057005DF00A /* ListService.swift */; };
+		BDD18B4025664077005DF00A /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3F25664077005DF00A /* CommentService.swift */; };
+		BDD18B462566408F005DF00A /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3383647A25660EDE00F92EE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33B87E0E2565071C00354880 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3383647425660EDE00F92EE4;
-			remoteInfo = NetworkFramework;
-		};
 		33B87E2D2565072000354880 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33B87E0E2565071C00354880 /* Project object */;
@@ -120,6 +119,12 @@
 		BDD18AF625660E8D005DF00A /* SecureStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		BDD18B0525660F56005DF00A /* SignIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignIn.storyboard; sourceTree = "<group>"; };
 		BDD18B0A2566132A005DF00A /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		BDD18B2325663E74005DF00A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		BDD18B2D25663F6D005DF00A /* CardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardService.swift; sourceTree = "<group>"; };
+		BDD18B332566403E005DF00A /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
+		BDD18B3925664057005DF00A /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
+		BDD18B3F25664077005DF00A /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
+		BDD18B452566408F005DF00A /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +171,7 @@
 		338364572565573A00F92EE4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BDD18B2225663E5D005DF00A /* Service */,
 				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
 			);
@@ -322,6 +328,19 @@
 			path = KeychainFramework;
 			sourceTree = "<group>";
 		};
+		BDD18B2225663E5D005DF00A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B2325663E74005DF00A /* UserService.swift */,
+				BDD18B2D25663F6D005DF00A /* CardService.swift */,
+				BDD18B332566403E005DF00A /* BoardService.swift */,
+				BDD18B3925664057005DF00A /* ListService.swift */,
+				BDD18B3F25664077005DF00A /* CommentService.swift */,
+				BDD18B452566408F005DF00A /* ActivityService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -330,7 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD18AE625660E77005DF00A /* KeychainFramework.h in Headers */,
-        3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */,
+				3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +360,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3383648125660EDE00F92EE4 /* Build configuration list for PBXNativeTarget "NetworkFramework" */;
 			buildPhases = (
-				3383647025660EDE00F92EE4 /* Headers */,
 				3383647125660EDE00F92EE4 /* Sources */,
 				3383647225660EDE00F92EE4 /* Frameworks */,
 				3383647325660EDE00F92EE4 /* Resources */,
@@ -537,14 +555,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
+				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */,
 				338364612565586800F92EE4 /* SignInViewModel.swift in Sources */,
+				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
+				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
+				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
+				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
+				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,11 +606,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3383647B25660EDE00F92EE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3383647425660EDE00F92EE4 /* NetworkFramework */;
-			targetProxy = 3383647A25660EDE00F92EE4 /* PBXContainerItemProxy */;
-		};
 		33B87E2E2565072000354880 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 33B87E152565071C00354880 /* AreUDone */;

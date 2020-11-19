@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol ActivityServiceProtocol {
+  
+}
+
+class ActivityService {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+}

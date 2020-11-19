@@ -6,3 +6,23 @@
 //
 
 import Foundation
+import NetworkFramework
+
+protocol UserServiceProtocol {
+  
+}
+
+class UserService: UserServiceProtocol {
+  private let router: Routable
+  
+  init(router: Routable) {
+    self.router = router
+  }
+  
+}
+
+//extension Routable where Self: Open {
+//  func openURL() {
+//
+//  }
+//}
