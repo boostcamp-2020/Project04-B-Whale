@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="699" width="272" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -45,7 +45,7 @@
                                     <constraint firstAttribute="width" secondItem="kWB-MX-gQp" secondAttribute="height" multiplier="1:1" id="rXk-xo-yY5"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="760" width="272" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GJ3-vA-RKX" secondAttribute="height" multiplier="4.85:1" id="JiB-mf-nqf"/>
