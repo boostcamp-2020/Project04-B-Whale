@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
+		338364612565586800F92EE4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SignInViewModel.swift */; };
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
 		33B87E1E2565071C00354880 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SignInViewController.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
+		338364602565586800F92EE4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewModel.swift; path = AreUDone/SignInScene/ViewModel/SignInViewModel.swift; sourceTree = SOURCE_ROOT; };
 		33B87E162565071C00354880 /* AreUDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AreUDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E192565071C00354880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33B87E1B2565071C00354880 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +88,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		338364572565573A00F92EE4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3383646525655E4F00F92EE4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				338364602565586800F92EE4 /* SignInViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		33B87E0D2565071C00354880 = {
 			isa = PBXGroup;
 			children = (
@@ -139,10 +159,7 @@
 			children = (
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
-				33B87E752565137D00354880 /* Resources */,
-				33B87E742565136700354880 /* Model */,
-				33B87E722565133A00354880 /* View */,
-				33B87E732565134100354880 /* ViewModel */,
+				338364572565573A00F92EE4 /* Model */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -150,11 +167,10 @@
 		33B87E4D25650B3200354880 /* SignInScene */ = {
 			isa = PBXGroup;
 			children = (
-				33B87E672565122200354880 /* Resources */,
-				33B87E712565131F00354880 /* Model */,
-				33B87E6C256512A400354880 /* View */,
-				33B87E6B2565129100354880 /* ViewModel */,
 				BDD18AC9256545FC005DF00A /* SignInCoordinator.swift */,
+				33B87E672565122200354880 /* Resources */,
+				33B87E6C256512A400354880 /* View */,
+				3383646525655E4F00F92EE4 /* ViewModel */,
 			);
 			path = SignInScene;
 			sourceTree = "<group>";
@@ -177,13 +193,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		33B87E6B2565129100354880 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		33B87E6C256512A400354880 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,41 +207,6 @@
 				33B87E1D2565071C00354880 /* SignInViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		33B87E712565131F00354880 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		33B87E722565133A00354880 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		33B87E732565134100354880 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		33B87E742565136700354880 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		33B87E752565137D00354880 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		BDD18AB225653CB8005DF00A /* Extension */ = {
@@ -387,8 +361,10 @@
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SignInCoordinator.swift in Sources */,
+				338364612565586800F92EE4 /* SignInViewModel.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
+				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

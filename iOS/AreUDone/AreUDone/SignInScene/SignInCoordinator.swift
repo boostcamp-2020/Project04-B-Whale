@@ -15,9 +15,13 @@ final class SignInCoordinator: Coordinator {
   
   func start() -> UIViewController {
     // TODO:- SignInViewController의 init 수정 시 같이 수정해야함.
-    guard let signInViewController = storyboard.instantiateInitialViewController() else {
-      return UIViewController()
-    }
+    
+    let signInViewController = storyboard.instantiateViewController(
+      identifier: "SignInViewController",
+      creator: { coder in
+        let viewModel = SignInViewModel()
+        return SignInViewController(coder: coder, viewModel: viewModel)
+      })
     
     return signInViewController
   }
