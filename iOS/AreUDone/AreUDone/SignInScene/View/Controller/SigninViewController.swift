@@ -10,6 +10,7 @@ import UIKit
 final class SigninViewController: UIViewController {
   
   private let viewModel: SigninViewModelProtocol
+  weak var signinCoordinator: SigninCoordinator?
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
@@ -23,9 +24,33 @@ final class SigninViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
+    bindUI()
   }
   
+  private func bindUI() {
+    appleSigninBinding()
+    naverSigninBinding()
+  }
   
+  private func appleSigninBinding() {
+    viewModel.appleSigninBinding() { [weak self] endpoint in
+      self?.signinCoordinator?.openURL(endPoint: endpoint)
+    }
+  }
+  
+  private func naverSigninBinding() {
+    viewModel.naverSigninBinding() { [weak self] endpoint in
+      self?.signinCoordinator?.openURL(endPoint: endpoint)
+    }
+  }
+  
+  @IBAction func appleSigninButtonTapped(_ sender: Any) {
+    viewModel.appleSigninButtonTapped()
+  }
+  
+  @IBAction func naverSigninButtonTapped(_ sender: Any) {
+    viewModel.naverSigninButtonTapped()
+  }
 }
 

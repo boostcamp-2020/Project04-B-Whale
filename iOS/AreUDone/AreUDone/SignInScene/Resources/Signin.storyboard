@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9">
-                                <rect key="frame" x="71" y="690" width="272" height="56"/>
+                                <rect key="frame" x="71" y="699" width="272" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Obc-CD-fb9" secondAttribute="height" multiplier="4.85:1" id="Xg4-Cf-Kll"/>
@@ -34,38 +34,36 @@
                                 <state key="normal" title="            애플 아이디로 로그인">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="appleSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="UrH-Nu-aUH"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applelogo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kWB-MX-gQp">
-                                <rect key="frame" x="79" y="698.5" width="40" height="38.5"/>
+                                <rect key="frame" x="79" y="707.5" width="40" height="38.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="kWB-MX-gQp" secondAttribute="height" multiplier="1:1" id="rXk-xo-yY5"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUM-yC-lI4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX">
                                 <rect key="frame" x="71" y="760" width="272" height="56"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="xUM-yC-lI4" secondAttribute="height" multiplier="4.85:1" id="2nK-yk-8Ae"/>
-                                    <constraint firstAttribute="height" constant="56" id="rXT-8U-d53"/>
+                                    <constraint firstAttribute="width" secondItem="GJ3-vA-RKX" secondAttribute="height" multiplier="4.85:1" id="JiB-mf-nqf"/>
+                                    <constraint firstAttribute="height" constant="56" id="jvp-gS-HVK"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="NaverSignInIcon"/>
+                                <state key="normal" image="NaverSignInIcon"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xOx-i5-aaB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="kWB-MX-gQp" firstAttribute="top" secondItem="Obc-CD-fb9" secondAttribute="top" constant="8" id="B19-Hu-xe2"/>
-                            <constraint firstItem="xOx-i5-aaB" firstAttribute="bottom" secondItem="xUM-yC-lI4" secondAttribute="bottom" constant="46" id="BgZ-bw-BF7"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="BDf-1e-AQO"/>
                             <constraint firstItem="kWB-MX-gQp" firstAttribute="bottom" secondItem="Obc-CD-fb9" secondAttribute="bottom" constant="-8" id="Fhu-Sa-oZx"/>
                             <constraint firstItem="kWB-MX-gQp" firstAttribute="leading" secondItem="Obc-CD-fb9" secondAttribute="leading" constant="8" id="GrS-lk-p33"/>
                             <constraint firstItem="Obc-CD-fb9" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="HWN-wO-FYH"/>
-                            <constraint firstItem="xUM-yC-lI4" firstAttribute="top" secondItem="Obc-CD-fb9" secondAttribute="bottom" constant="14" id="WVt-59-Lbe"/>
-                            <constraint firstItem="xUM-yC-lI4" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="cgk-qU-m3c"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="bottom" secondItem="xOx-i5-aaB" secondAttribute="bottom" constant="-46" id="HaI-rx-41r"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="top" secondItem="Obc-CD-fb9" secondAttribute="bottom" constant="5" id="aaP-M2-W4h"/>
                         </constraints>
                     </view>
                 </viewController>

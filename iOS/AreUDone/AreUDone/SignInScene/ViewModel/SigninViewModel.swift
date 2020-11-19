@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import NetworkFramework
 
 protocol SigninViewModelProtocol {
   
-  func naverSigninBinding(handler: @escaping (() -> ()))
-  func appleSigninBinding(handler: @escaping (() -> ()))
+  func naverSigninBinding(handler: @escaping ((EndPointable) -> ()))
+  func appleSigninBinding(handler: @escaping ((EndPointable) -> ()))
   
   func naverSigninButtonTapped()
   func appleSigninButtonTapped()
@@ -18,25 +19,26 @@ protocol SigninViewModelProtocol {
 
 final class SigninViewModel: SigninViewModelProtocol {
   
-  private var naverSigninHandler: (() -> ())?
-  private var appleSigninHandler: (() -> ())?
+  private var naverSigninHandler: ((EndPointable) -> ())?
+  private var appleSigninHandler: ((EndPointable) -> ())?
   
-  func naverSigninBinding(handler: @escaping (() -> ())) {
+  func naverSigninBinding(handler: @escaping ((EndPointable) -> ())) {
     naverSigninHandler = handler
+
   }
   
-  func appleSigninBinding(handler: @escaping (() -> ())) {
+  func appleSigninBinding(handler: @escaping ((EndPointable) -> ())) {
     appleSigninHandler = handler
   }
   
   func naverSigninButtonTapped() {
     // TODO: 네트워크 Service 객체에 네이버 로그인 요청
     
-//    naverSignInHandler
+
   }
   
   func appleSigninButtonTapped() {
     // TODO: 네트워크 Service 객체에 애플 로그인 요청
-//    appleSignInHandler
+
   }
 }
