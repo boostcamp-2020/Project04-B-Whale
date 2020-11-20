@@ -12,15 +12,21 @@ protocol SigninViewModelProtocol {
   
   func naverSigninBinding(handler: @escaping ((EndPointable) -> ()))
   func appleSigninBinding(handler: @escaping ((EndPointable) -> ()))
+  func videoPlayBinding(handler: @escaping((VideoPlayerLooper) -> Void))
   
   func naverSigninButtonTapped()
   func appleSigninButtonTapped()
+  func videoPlay()
+  func videoRemove()
 }
 
 final class SigninViewModel: SigninViewModelProtocol {
   
   private var naverSigninHandler: ((EndPointable) -> ())?
   private var appleSigninHandler: ((EndPointable) -> ())?
+  private var videoPlayHandler: ((VideoPlayerLooper) -> Void)?
+  
+  private var videoPlayerLooper = VideoPlayerLooper()
   
   func naverSigninBinding(handler: @escaping ((EndPointable) -> ())) {
     naverSigninHandler = handler
@@ -29,6 +35,10 @@ final class SigninViewModel: SigninViewModelProtocol {
   
   func appleSigninBinding(handler: @escaping ((EndPointable) -> ())) {
     appleSigninHandler = handler
+  }
+  
+  func videoPlayBinding(handler: @escaping ((VideoPlayerLooper) -> Void)) {
+    videoPlayHandler = handler
   }
   
   func naverSigninButtonTapped() {
@@ -40,5 +50,14 @@ final class SigninViewModel: SigninViewModelProtocol {
   func appleSigninButtonTapped() {
     // TODO: 네트워크 Service 객체에 애플 로그인 요청
 
+  }
+  
+  func videoPlay() {
+    videoPlayHandler?(videoPlayerLooper)
+    videoPlayerLooper.play()
+  }
+  
+  func videoRemove() {
+    videoPlayerLooper.remove()
   }
 }

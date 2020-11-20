@@ -50,6 +50,8 @@
 		BDD18B4025664077005DF00A /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3F25664077005DF00A /* CommentService.swift */; };
 		BDD18B462566408F005DF00A /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
 		BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B872567A0C5005DF00A /* SigninChecker.swift */; };
+		BDD18B9F2567B432005DF00A /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B9E2567B432005DF00A /* background.mp4 */; };
+		BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,8 @@
 		BDD18B3F25664077005DF00A /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		BDD18B452566408F005DF00A /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		BDD18B872567A0C5005DF00A /* SigninChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninChecker.swift; sourceTree = "<group>"; };
+		BDD18B9E2567B432005DF00A /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
+		BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerLooper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				33B87E182565071C00354880 /* AreUDone */,
+				BDD18B9E2567B432005DF00A /* background.mp4 */,
 				3383647625660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE325660E77005DF00A /* KeychainFramework */,
 				33B87E2F2565072000354880 /* AreUDoneTests */,
@@ -371,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18B872567A0C5005DF00A /* SigninChecker.swift */,
+				BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -546,6 +552,7 @@
 			files = (
 				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
+				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
@@ -599,6 +606,7 @@
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
+				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
