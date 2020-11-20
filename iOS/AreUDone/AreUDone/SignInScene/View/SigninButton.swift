@@ -1,13 +1,13 @@
 //
-//  NaverSigninbutton.swift
+//  SigninButton.swift
 //  AreUDone
 //
-//  Created by 서명렬 on 2020/11/20.
+//  Created by a1111 on 2020/11/19.
 //
 
 import UIKit
 
-class NaverSigninbutton: UIButton {
+class SigninButton: UIButton {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
