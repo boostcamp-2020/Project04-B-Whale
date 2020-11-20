@@ -11,18 +11,17 @@ import NetworkFramework
 final class SigninCoordinator: Coordinator {
   
   private var storyboard: UIStoryboard {
-    return UIStoryboard.storyboard(storyboard: .signin)
+    return UIStoryboard.load(storyboard: .signin)
   }
   
   func start() -> UIViewController {
-    // TODO:- SignInViewController의 init 수정 시 같이 수정해야함.
     
     guard let signInViewController = storyboard.instantiateViewController(
-      identifier: "SignInViewController",
-      creator: { coder in
-        let viewModel = SigninViewModel()
-        return SigninViewController(coder: coder, viewModel: viewModel)
-      }) as? SigninViewController
+            identifier: SigninViewController.identifier,
+            creator: { coder in
+              let viewModel = SigninViewModel()
+              return SigninViewController(coder: coder, viewModel: viewModel)
+            }) as? SigninViewController
     else { return UIViewController() }
     
     signInViewController.signinCoordinator = self
