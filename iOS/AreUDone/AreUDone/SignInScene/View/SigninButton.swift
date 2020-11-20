@@ -23,5 +23,6 @@ class SigninButton: UIButton {
   
   private func configure() {
     layer.cornerRadius = 5
+    adjustsImageWhenHighlighted = false
   }
 }
