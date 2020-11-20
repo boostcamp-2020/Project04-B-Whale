@@ -12,10 +12,20 @@ protocol CommentServiceProtocol {
   
 }
 
-class CommentService {
+class CommentService: CommentServiceProtocol {
+  
+  // MARK: - Property
+  
   private let router: Routable
+  
+  
+  // MARK: - Initializer
   
   init(router: Routable) {
     self.router = router
   }
+  
+  
+  // MARK: - Method
+  
 }

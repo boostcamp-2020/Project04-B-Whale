@@ -9,8 +9,13 @@ import UIKit
 
 final class SigninViewController: UIViewController {
   
+  // MARK: - Property
+  
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
+  
+  
+  // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
@@ -22,11 +27,31 @@ final class SigninViewController: UIViewController {
     fatalError("This controller must be initialized with code")
   }
   
+  
+  // MARK: - Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     bindUI()
   }
+  
+  
+  // MARK: - Method
+  
+  @IBAction func appleSigninButtonTapped(_ sender: Any) {
+    viewModel.appleSigninButtonTapped()
+  }
+  
+  @IBAction func naverSigninButtonTapped(_ sender: Any) {
+    viewModel.naverSigninButtonTapped()
+  }
+}
+
+
+// MARK: - Extension
+
+extension SigninViewController {
   
   private func bindUI() {
     appleSigninBinding()
@@ -43,14 +68,6 @@ final class SigninViewController: UIViewController {
     viewModel.naverSigninBinding() { [weak self] endpoint in
       self?.signinCoordinator?.openURL(endPoint: endpoint)
     }
-  }
-  
-  @IBAction func appleSigninButtonTapped(_ sender: Any) {
-    viewModel.appleSigninButtonTapped()
-  }
-  
-  @IBAction func naverSigninButtonTapped(_ sender: Any) {
-    viewModel.naverSigninButtonTapped()
   }
 }
 

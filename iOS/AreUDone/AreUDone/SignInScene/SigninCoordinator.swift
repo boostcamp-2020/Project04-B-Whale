@@ -10,9 +10,14 @@ import NetworkFramework
 
 final class SigninCoordinator: Coordinator {
   
+  // MARK: - Property
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .signin)
   }
+  
+  
+  // MARK: - Method
   
   func start() -> UIViewController {
     
@@ -29,6 +34,8 @@ final class SigninCoordinator: Coordinator {
     return signInViewController
   }
 }
+
+// MARK: - Extension
 
 extension SigninCoordinator {
   func openURL(endPoint: EndPointable) {
