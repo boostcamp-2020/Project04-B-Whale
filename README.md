@@ -1,17 +1,20 @@
 <div align="center">
   <img alt="DEV" src="https://i.imgur.com/zpCG2Hc.png">
+  
+  <br>
+
+  ![Swift](https://img.shields.io/badge/swift-v5.3-orange?logo=swift)
+  ![Xcode](https://img.shields.io/badge/xcode-v12.1-blue?logo=xcode)
+  ![Javascript](https://img.shields.io/badge/javascript-ES6+-yellow?logo=javascript)
+  ![react](https://img.shields.io/badge/react-v17.0.1-9cf?logo=react)
+  ![NodeJS](https://img.shields.io/badge/node.js-v12.18.3-green?logo=node.js)
+  ![MySQL](https://img.shields.io/badge/mysql-v5.7-green?logo=mysql)
+
+  <br>
+  
 </div>
 
-<br>
 
-![Swift](https://img.shields.io/badge/swift-v5.3-orange?logo=swift)
-![Xcode](https://img.shields.io/badge/xcode-v12.1-blue?logo=xcode)
-![Javascript](https://img.shields.io/badge/javascript-ES6+-yellow?logo=javascript)
-![react](https://img.shields.io/badge/react-v17.0.1-9cf?logo=react)
-![NodeJS](https://img.shields.io/badge/node.js-v12.18.3-green?logo=node.js)
-![MySQL](https://img.shields.io/badge/mysql-v5.7-green?logo=mysql)
-
-<br>
 
 ## 프로젝트 소개
 > 실시간 다사용자 할일 관리 서비스
