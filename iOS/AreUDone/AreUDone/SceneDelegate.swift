@@ -17,7 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
     
-    let sceneCoordinator = SceneCoordinator(window: window, factory: InitCoorndinatorFactory())
+    let sceneCoordinator = SceneCoordinator(
+      window: window,
+      factory: InitCoorndinatorFactory(),
+      signinChecker: SigninChecker()
+    )
     sceneCoordinator.start()
   }
   
