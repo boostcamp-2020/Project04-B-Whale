@@ -1,13 +1,13 @@
 //
-//  SigninButton.swift
+//  NaverSigninbutton.swift
 //  AreUDone
 //
-//  Created by a1111 on 2020/11/19.
+//  Created by 서명렬 on 2020/11/20.
 //
 
 import UIKit
 
-class SigninButton: UIButton {
+class NaverSigninbutton: UIButton {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
@@ -23,5 +23,6 @@ class SigninButton: UIButton {
   
   private func configure() {
     layer.cornerRadius = 5
+    adjustsImageWhenHighlighted = false
   }
 }

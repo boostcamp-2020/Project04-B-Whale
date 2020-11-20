@@ -22,7 +22,7 @@
 		338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C525665CD900F92EE4 /* NanumSquareLight.ttf */; };
 		338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */; };
 		338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
-		338364D725666C1200F92EE4 /* SigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364D625666C1200F92EE4 /* SigninButton.swift */; };
+		338364D725666C1200F92EE4 /* AppleSigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364D625666C1200F92EE4 /* AppleSigninButton.swift */; };
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
 		33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SigninViewController.swift */; };
@@ -49,6 +49,7 @@
 		BDD18B3A25664057005DF00A /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3925664057005DF00A /* ListService.swift */; };
 		BDD18B4025664077005DF00A /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3F25664077005DF00A /* CommentService.swift */; };
 		BDD18B462566408F005DF00A /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
+		BDD18B7A256793EA005DF00A /* NaverSigninbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B79256793EA005DF00A /* NaverSigninbutton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +104,7 @@
 		338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRegular.ttf; sourceTree = "<group>"; };
 		338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareOTF_acEB.otf; sourceTree = "<group>"; };
 		338364C825665CD900F92EE4 /* NanumSquareBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareBold.ttf; sourceTree = "<group>"; };
-		338364D625666C1200F92EE4 /* SigninButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninButton.swift; sourceTree = "<group>"; };
+		338364D625666C1200F92EE4 /* AppleSigninButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSigninButton.swift; sourceTree = "<group>"; };
 		33B87E162565071C00354880 /* AreUDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AreUDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E192565071C00354880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33B87E1B2565071C00354880 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		BDD18B3925664057005DF00A /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
 		BDD18B3F25664077005DF00A /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		BDD18B452566408F005DF00A /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
+		BDD18B79256793EA005DF00A /* NaverSigninbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverSigninbutton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,7 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				33B87E6D256512F400354880 /* Controller */,
-				338364D625666C1200F92EE4 /* SigninButton.swift */,
+				338364D625666C1200F92EE4 /* AppleSigninButton.swift */,
+				BDD18B79256793EA005DF00A /* NaverSigninbutton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDD18B7A256793EA005DF00A /* NaverSigninbutton.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
@@ -593,7 +597,7 @@
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
-				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
+				338364D725666C1200F92EE4 /* AppleSigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,

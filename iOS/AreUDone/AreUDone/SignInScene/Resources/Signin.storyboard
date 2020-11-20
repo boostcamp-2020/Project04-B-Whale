@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9" customClass="AppleSigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="699" width="272" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -45,13 +45,16 @@
                                     <constraint firstAttribute="width" secondItem="kWB-MX-gQp" secondAttribute="height" multiplier="1:1" id="rXk-xo-yY5"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="NaverSigninbutton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="760" width="272" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GJ3-vA-RKX" secondAttribute="height" multiplier="4.85:1" id="JiB-mf-nqf"/>
                                     <constraint firstAttribute="height" constant="56" id="jvp-gS-HVK"/>
                                 </constraints>
                                 <state key="normal" image="NaverSignInIcon"/>
+                                <connections>
+                                    <action selector="naverSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="rwo-bW-pTh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xOx-i5-aaB"/>
@@ -74,7 +77,7 @@
     </scenes>
     <resources>
         <image name="NaverSignInIcon" width="578" height="125"/>
-        <image name="applelogo" catalog="system" width="128" height="121"/>
+        <image name="applelogo" catalog="system" width="103" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
