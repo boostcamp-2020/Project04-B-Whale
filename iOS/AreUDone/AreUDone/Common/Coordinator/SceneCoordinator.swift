@@ -11,28 +11,27 @@ final class SceneCoordinator: Coordinator {
   
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
+  private let signinChecker: SigninCheckable
   
-  init(window: UIWindow?, factory: CoordinatorFactoryable) {
+  init(
+    window: UIWindow?,
+    factory: CoordinatorFactoryable,
+    signinChecker: SigninCheckable
+  ) {
     self.window = window
     initCoordinatorFactory = factory
+    self.signinChecker = signinChecker
   }
   
   @discardableResult
   func start() -> UIViewController {
-    let isSignIn = checkSignIn()
+    let signinCheckResult = signinChecker.check()
     
-    let initCoordinator = initCoordinatorFactory.makeCoordinator(by: isSignIn)
+    let initCoordinator = initCoordinatorFactory.makeCoordinator(by: signinCheckResult)
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
     
     return initViewController
-  }
-  
-  private func checkSignIn() -> Bool {
-    if let _ = Keychain.shared.loadValue(forKey: "") {
-      return true
-    }
-    return false
   }
 }

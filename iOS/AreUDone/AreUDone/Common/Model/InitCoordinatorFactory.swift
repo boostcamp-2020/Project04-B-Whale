@@ -8,17 +8,16 @@
 import Foundation
 
 protocol CoordinatorFactoryable {
-  func makeCoordinator(by isValid: Bool) -> Coordinator
+  func makeCoordinator(by isValid: SigninCheckResult) -> Coordinator
 }
 
 final class InitCoorndinatorFactory: CoordinatorFactoryable {
   
-  func makeCoordinator(by isValid: Bool) -> Coordinator {
+  func makeCoordinator(by isValid: SigninCheckResult) -> Coordinator {
     switch isValid {
-    case true:
-      print("탭바")
+    case .isLogin:
       return SigninCoordinator() // TODO: TabbarCoordinator 만들어주기
-    case false:
+    case .isNotLogin:
       return SigninCoordinator()
     }
   }

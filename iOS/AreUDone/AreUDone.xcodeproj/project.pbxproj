@@ -49,6 +49,7 @@
 		BDD18B3A25664057005DF00A /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3925664057005DF00A /* ListService.swift */; };
 		BDD18B4025664077005DF00A /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3F25664077005DF00A /* CommentService.swift */; };
 		BDD18B462566408F005DF00A /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
+		BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B872567A0C5005DF00A /* SigninChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		BDD18B3925664057005DF00A /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
 		BDD18B3F25664077005DF00A /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		BDD18B452566408F005DF00A /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
+		BDD18B872567A0C5005DF00A /* SigninChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 			children = (
 				BDD18AC9256545FC005DF00A /* SigninCoordinator.swift */,
 				33B87E672565122200354880 /* Resources */,
+				BDD18B8D2567A12D005DF00A /* Model */,
 				33B87E6C256512A400354880 /* View */,
 				3383646525655E4F00F92EE4 /* ViewModel */,
 			);
@@ -362,6 +365,14 @@
 				BDD18B452566408F005DF00A /* ActivityService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		BDD18B8D2567A12D005DF00A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B872567A0C5005DF00A /* SigninChecker.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -586,6 +597,7 @@
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
+				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
