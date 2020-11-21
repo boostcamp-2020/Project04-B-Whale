@@ -35,12 +35,12 @@ final class SceneCoordinator: Coordinator {
   
   // MARK: - Method
   
-  @discardableResult
   func start() -> UIViewController {
-    let signinCheckResult = signinChecker.check()
+    var signinCheckResult = signinChecker.check()
+    signinCheckResult = .isLogin // TODO: 로그인 API 완성되면 삭제
     
     let initCoordinator = initCoordinatorFactory.coordinator(
-      by: .isLogin,
+      by: signinCheckResult,
       with: router
     )
     let initViewController = initCoordinator.start()
