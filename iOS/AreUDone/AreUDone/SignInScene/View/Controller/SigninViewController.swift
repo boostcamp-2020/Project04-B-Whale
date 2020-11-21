@@ -9,10 +9,14 @@ import UIKit
 
 final class SigninViewController: UIViewController {
   
+  // MARK: - Property
+  
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
   
   @IBOutlet weak var videoBackgroundView: UIView!
+  
+  // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
@@ -24,6 +28,9 @@ final class SigninViewController: UIViewController {
     fatalError("This controller must be initialized with code")
   }
   
+  
+  // MARK: - Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     bindUI()
@@ -34,6 +41,23 @@ final class SigninViewController: UIViewController {
     super.viewWillDisappear(animated)
     backgroundRemove()
   }
+  
+  
+  // MARK: - Method
+  
+  @IBAction func appleSigninButtonTapped(_ sender: Any) {
+    viewModel.appleSigninButtonTapped()
+  }
+  
+  @IBAction func naverSigninButtonTapped(_ sender: Any) {
+    viewModel.naverSigninButtonTapped()
+  }
+}
+
+
+// MARK: - Extension
+
+extension SigninViewController {
   
   private func bindUI() {
     appleSigninBinding()
@@ -52,7 +76,7 @@ final class SigninViewController: UIViewController {
       self?.signinCoordinator?.openURL(endPoint: endpoint)
     }
   }
-  
+
   private func videoPlayBinding() {
     viewModel.videoPlayBinding { [weak self] playerLayer in
       guard let self = self else { return }
@@ -67,14 +91,6 @@ final class SigninViewController: UIViewController {
   
   private func backgroundRemove() {
     viewModel.videoRemove()
-  }
-  
-  @IBAction func appleSigninButtonTapped(_ sender: Any) {
-    viewModel.appleSigninButtonTapped()
-  }
-  
-  @IBAction func naverSigninButtonTapped(_ sender: Any) {
-    viewModel.naverSigninButtonTapped()
   }
 }
 

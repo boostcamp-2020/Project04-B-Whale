@@ -10,19 +10,23 @@ import NetworkFramework
 
 final class SigninCoordinator: Coordinator {
   
+  // MARK: - Property
+  
   private var storyboard: UIStoryboard {
-    return UIStoryboard.storyboard(storyboard: .signin)
+    return UIStoryboard.load(storyboard: .signin)
   }
   
+  
+  // MARK: - Method
+  
   func start() -> UIViewController {
-    // TODO:- SignInViewController의 init 수정 시 같이 수정해야함.
     
     guard let signInViewController = storyboard.instantiateViewController(
-      identifier: "SignInViewController",
-      creator: { coder in
-        let viewModel = SigninViewModel(videoPlayerLooper: VideoPlayerLooper())
-        return SigninViewController(coder: coder, viewModel: viewModel)
-      }) as? SigninViewController
+            identifier: SigninViewController.identifier,
+            creator: { coder in
+              let viewModel = SigninViewModel()
+              return SigninViewController(coder: coder, viewModel: viewModel)
+            }) as? SigninViewController
     else { return UIViewController() }
     
     signInViewController.signinCoordinator = self
@@ -30,6 +34,8 @@ final class SigninCoordinator: Coordinator {
     return signInViewController
   }
 }
+
+// MARK: - Extension
 
 extension SigninCoordinator {
   func openURL(endPoint: EndPointable) {

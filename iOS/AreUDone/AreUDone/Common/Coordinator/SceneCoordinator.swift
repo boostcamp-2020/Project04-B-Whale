@@ -9,9 +9,14 @@ import UIKit
 
 final class SceneCoordinator: Coordinator {
   
+  // MARK: - Property
+  
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
+  
+  
+  // MARK: - Initializer
   
   init(
     window: UIWindow?,
@@ -22,6 +27,9 @@ final class SceneCoordinator: Coordinator {
     initCoordinatorFactory = factory
     self.signinChecker = signinChecker
   }
+  
+  
+  // MARK: - Method
   
   @discardableResult
   func start() -> UIViewController {
