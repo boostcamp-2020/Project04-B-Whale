@@ -10,6 +10,7 @@ import UIKit
 extension UIStoryboard {
   enum Storyboard: String {
     case signin
+    case calendar
     
     var fileName: String {
       return rawValue.capitalized

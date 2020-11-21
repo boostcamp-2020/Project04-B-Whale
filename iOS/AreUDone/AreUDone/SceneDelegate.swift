@@ -5,7 +5,9 @@
 //  Created by a1111 on 2020/11/18.
 //
 
+import NetworkFramework
 import UIKit
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
@@ -18,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window = UIWindow(windowScene: windowScene)
     
     let sceneCoordinator = SceneCoordinator(
-      window: window,
+      window: window, router: Router(),
       factory: InitCoorndinatorFactory(),
       signinChecker: SigninChecker()
     )
