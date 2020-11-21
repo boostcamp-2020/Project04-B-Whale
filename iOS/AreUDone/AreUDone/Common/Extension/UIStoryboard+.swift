@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIStoryboard {
+  
   enum Storyboard: String {
     case signin
     
@@ -16,7 +17,7 @@ extension UIStoryboard {
     }
   }
   
-  class func storyboard(storyboard: Storyboard, bundle: Bundle? = nil) -> UIStoryboard {
-    return UIStoryboard(name: storyboard.fileName, bundle: bundle)
+  static func load(storyboard: Storyboard, bundle: Bundle? = nil) -> Self {
+    return .init(name: storyboard.fileName, bundle: bundle)
   }
 }
