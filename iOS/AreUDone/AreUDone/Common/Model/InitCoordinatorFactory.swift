@@ -9,14 +9,14 @@ import UIKit
 import NetworkFramework
 
 protocol CoordinatorFactoryable {
-  func coordinator(by isValid: SigninCheckResult, with router: Router) -> Coordinator
+  func coordinator(by isValid: SigninCheckResult, with router: Routable) -> Coordinator
 }
 
 final class InitCoorndinatorFactory: CoordinatorFactoryable {
   
-  func coordinator(by isValid: SigninCheckResult, with router: Router) -> Coordinator {
-    switch isValid {
-    case .isLogin:
+  func coordinator(by result: SigninCheckResult, with router: Routable) -> Coordinator {
+    switch result {
+    case .isSigned:
       let coordinators = [CalendarCoordinator()]
       return TabbarCoordinator(
         router: router,
@@ -24,7 +24,7 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
         tabbarController: UITabBarController(),
         coordinators: coordinators
       )
-    case .isNotLogin:
+    case .isNotSigned:
       return SigninCoordinator()
     }
   }

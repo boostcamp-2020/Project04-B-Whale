@@ -12,7 +12,7 @@ import NetworkFramework
 final class TabbarCoordinator: Coordinator {
   
   // MARK: - Property
-  private let router: Router
+  private let router: Routable
   private let signInCoordinator: SigninCoordinator
   
   private let tabbarController: UITabBarController
@@ -23,7 +23,7 @@ final class TabbarCoordinator: Coordinator {
   // MARK: - Initializer
   
   init(
-    router: Router,
+    router: Routable,
     signInCoordinator: SigninCoordinator,
     tabbarController: UITabBarController,
     coordinators: [Coordinator]

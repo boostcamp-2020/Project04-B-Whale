@@ -37,7 +37,7 @@ final class SceneCoordinator: Coordinator {
   
   func start() -> UIViewController {
     var signinCheckResult = signinChecker.check()
-    signinCheckResult = .isLogin // TODO: 로그인 API 완성되면 삭제
+    signinCheckResult = .isSigned // TODO: 로그인 API 완성되면 삭제
     
     let initCoordinator = initCoordinatorFactory.coordinator(
       by: signinCheckResult,

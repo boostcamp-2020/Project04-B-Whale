@@ -34,6 +34,22 @@
 		33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01752568ED2B003D3221 /* CalendarViewModel.swift */; };
 		33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */; };
 		33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33EE01892568F47D003D3221 /* Calendar.storyboard */; };
+		33EE019B25690979003D3221 /* VideoPlayerLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */; };
+		33EE01BF25690EEF003D3221 /* InitCoordinatorFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */; };
+		33EE01C325690F24003D3221 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
+		33EE01CA25690F57003D3221 /* SigninChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B872567A0C5005DF00A /* SigninChecker.swift */; };
+		33EE01CE25690F69003D3221 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
+		33EE01D225690F70003D3221 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */; };
+		33EE01D625690F7C003D3221 /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
+		33EE01DA25690F83003D3221 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE016E2568ECC7003D3221 /* CalendarViewController.swift */; };
+		33EE01DE25690F8F003D3221 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
+		33EE01E225690F9C003D3221 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01752568ED2B003D3221 /* CalendarViewModel.swift */; };
+		33EE01E625690FBB003D3221 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */; };
+		33EE01EA25690FC8003D3221 /* SigninCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC9256545FC005DF00A /* SigninCoordinator.swift */; };
+		33EE01EE2569100F003D3221 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1D2565071C00354880 /* SigninViewController.swift */; };
+		33EE01F22569101A003D3221 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
+		33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BB32568D682005DF00A /* VideoConstant.swift */; };
+		33EE01FA25691044003D3221 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
@@ -63,13 +79,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		33B87E2D2565072000354880 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33B87E0E2565071C00354880 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 33B87E152565071C00354880;
-			remoteInfo = AreUDone;
-		};
-		33B87E382565072000354880 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33B87E0E2565071C00354880 /* Project object */;
 			proxyType = 1;
@@ -124,12 +133,12 @@
 		33B87E2C2565072000354880 /* AreUDoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreUDoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E302565072000354880 /* AreUDoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUDoneTests.swift; sourceTree = "<group>"; };
 		33B87E322565072000354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33B87E372565072000354880 /* AreUDoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreUDoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
 		33EE016E2568ECC7003D3221 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		33EE01752568ED2B003D3221 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
 		33EE01892568F47D003D3221 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactoryTests.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
@@ -175,13 +184,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		33B87E292565072000354880 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		33B87E342565072000354880 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,7 +258,6 @@
 			children = (
 				33B87E162565071C00354880 /* AreUDone.app */,
 				33B87E2C2565072000354880 /* AreUDoneTests.xctest */,
-				33B87E372565072000354880 /* AreUDoneUITests.xctest */,
 				3383647525660EDE00F92EE4 /* NetworkFramework.framework */,
 				BDD18AE225660E77005DF00A /* KeychainFramework.framework */,
 			);
@@ -282,6 +283,7 @@
 			children = (
 				33B87E302565072000354880 /* AreUDoneTests.swift */,
 				33B87E322565072000354880 /* Info.plist */,
+				33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */,
 			);
 			path = AreUDoneTests;
 			sourceTree = "<group>";
@@ -511,24 +513,6 @@
 			productReference = 33B87E2C2565072000354880 /* AreUDoneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		33B87E362565072000354880 /* AreUDoneUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 33B87E462565072000354880 /* Build configuration list for PBXNativeTarget "AreUDoneUITests" */;
-			buildPhases = (
-				33B87E332565072000354880 /* Sources */,
-				33B87E342565072000354880 /* Frameworks */,
-				33B87E352565072000354880 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				33B87E392565072000354880 /* PBXTargetDependency */,
-			);
-			name = AreUDoneUITests;
-			productName = AreUDoneUITests;
-			productReference = 33B87E372565072000354880 /* AreUDoneUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		BDD18AE125660E77005DF00A /* KeychainFramework */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDD18AEE25660E77005DF00A /* Build configuration list for PBXNativeTarget "KeychainFramework" */;
@@ -567,10 +551,6 @@
 						CreatedOnToolsVersion = 12.1;
 						TestTargetID = 33B87E152565071C00354880;
 					};
-					33B87E362565072000354880 = {
-						CreatedOnToolsVersion = 12.1;
-						TestTargetID = 33B87E152565071C00354880;
-					};
 					BDD18AE125660E77005DF00A = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
@@ -592,7 +572,6 @@
 			targets = (
 				33B87E152565071C00354880 /* AreUDone */,
 				33B87E2B2565072000354880 /* AreUDoneTests */,
-				33B87E362565072000354880 /* AreUDoneUITests */,
 				3383647425660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE125660E77005DF00A /* KeychainFramework */,
 			);
@@ -624,13 +603,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		33B87E2A2565072000354880 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		33B87E352565072000354880 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -693,17 +665,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33EE01DA25690F83003D3221 /* CalendarViewController.swift in Sources */,
 				3383649A256614D200F92EE4 /* Router.swift in Sources */,
 				3383649E256614DA00F92EE4 /* Routable.swift in Sources */,
+				33EE019B25690979003D3221 /* VideoPlayerLooper.swift in Sources */,
+				33EE01CA25690F57003D3221 /* SigninChecker.swift in Sources */,
+				33EE01D225690F70003D3221 /* CalendarCoordinator.swift in Sources */,
+				33EE01E225690F9C003D3221 /* CalendarViewModel.swift in Sources */,
 				338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */,
+				33EE01C325690F24003D3221 /* InitCoordinatorFactory.swift in Sources */,
+				33EE01FA25691044003D3221 /* Keychain.swift in Sources */,
 				33B87E312565072000354880 /* AreUDoneTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		33B87E332565072000354880 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				33EE01DE25690F8F003D3221 /* UIViewController+.swift in Sources */,
+				33EE01BF25690EEF003D3221 /* InitCoordinatorFactoryTests.swift in Sources */,
+				33EE01F22569101A003D3221 /* SigninViewModel.swift in Sources */,
+				33EE01D625690F7C003D3221 /* UIStoryboard+.swift in Sources */,
+				33EE01EE2569100F003D3221 /* SigninViewController.swift in Sources */,
+				33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */,
+				33EE01E625690FBB003D3221 /* TabbarCoordinator.swift in Sources */,
+				33EE01EA25690FC8003D3221 /* SigninCoordinator.swift in Sources */,
+				33EE01CE25690F69003D3221 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,11 +707,6 @@
 			isa = PBXTargetDependency;
 			target = 33B87E152565071C00354880 /* AreUDone */;
 			targetProxy = 33B87E2D2565072000354880 /* PBXContainerItemProxy */;
-		};
-		33B87E392565072000354880 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 33B87E152565071C00354880 /* AreUDone */;
-			targetProxy = 33B87E382565072000354880 /* PBXContainerItemProxy */;
 		};
 		BDD18AE825660E77005DF00A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1012,46 +988,6 @@
 			};
 			name = Release;
 		};
-		33B87E472565072000354880 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B3PWYBKFUK;
-				INFOPLIST_FILE = AreUDoneUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = sym.AreUDoneUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AreUDone;
-			};
-			name = Debug;
-		};
-		33B87E482565072000354880 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B3PWYBKFUK;
-				INFOPLIST_FILE = AreUDoneUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = sym.AreUDoneUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AreUDone;
-			};
-			name = Release;
-		};
 		BDD18AEC25660E77005DF00A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1146,15 +1082,6 @@
 			buildConfigurations = (
 				33B87E442565072000354880 /* Debug */,
 				33B87E452565072000354880 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		33B87E462565072000354880 /* Build configuration list for PBXNativeTarget "AreUDoneUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				33B87E472565072000354880 /* Debug */,
-				33B87E482565072000354880 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
