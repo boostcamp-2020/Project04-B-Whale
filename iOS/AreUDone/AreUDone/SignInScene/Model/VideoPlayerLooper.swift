@@ -36,6 +36,13 @@ class VideoPlayerLooper {
   }
   
   func remove() {
+    unload()
     playerLayer?.removeFromSuperlayer()
+  }
+  
+  func unload() {
+    player = nil
+    playerLayer = nil
+    playerLooper = nil
   }
 }

@@ -30,6 +30,11 @@ final class SigninViewController: UIViewController {
     backgroundPlay()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    backgroundRemove()
+  }
+  
   private func bindUI() {
     appleSigninBinding()
     naverSigninBinding()
@@ -50,8 +55,10 @@ final class SigninViewController: UIViewController {
   
   private func videoPlayBinding() {
     viewModel.videoPlayBinding { [weak self] videoPlayerLooper in
+      guard let self = self else { return }
       if let playerLayer = videoPlayerLooper.makeVideoLayer(for: "background") {
-        self?.videoBackgroundView.layer.addSublayer(playerLayer)
+        playerLayer.frame = self.videoBackgroundView.bounds
+        self.videoBackgroundView.layer.addSublayer(playerLayer)
       }
     }
   }
