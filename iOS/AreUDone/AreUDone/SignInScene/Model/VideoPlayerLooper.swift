@@ -20,18 +20,22 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
   private var playerLayer: AVPlayerLayer?
   private var playerLooper: AVPlayerLooper?
   
+  init(){
+    configureNotification()
+  }
+  
   func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer? {
     if let path = Bundle.main.path(forResource: fileName, ofType: type) {
       let url = URL(fileURLWithPath: path)
       let playerItem = AVPlayerItem(url: url)
-
+      
       player = AVQueuePlayer()
       try? AVAudioSession.sharedInstance().setCategory(.ambient)
       playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-
+      
       playerLayer = AVPlayerLayer(player: player)
       playerLayer?.videoGravity = .resizeAspectFill
-
+      
       return playerLayer
     }
     
@@ -40,6 +44,10 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
   
   func play() {
     player.play()
+  }
+  
+  func pause() {
+    player.pause()
   }
   
   func remove() {
@@ -51,5 +59,18 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
     player = nil
     playerLayer = nil
     playerLooper = nil
+  }
+  
+  private func configureNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: Notification.Name("fore"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: Notification.Name("back"), object: nil)
+  }
+  
+  @objc private func sceneWillEnterForeground(){
+    play()
+  }
+  
+  @objc private func sceneDidEnterBackground(){
+    pause()
   }
 }
