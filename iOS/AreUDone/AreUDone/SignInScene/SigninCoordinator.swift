@@ -5,8 +5,8 @@
 //  Created by 서명렬 on 2020/11/18.
 //
 
-import UIKit
 import NetworkFramework
+import UIKit
 
 final class SigninCoordinator: Coordinator {
   
@@ -20,7 +20,6 @@ final class SigninCoordinator: Coordinator {
   // MARK: - Method
   
   func start() -> UIViewController {
-    
     guard let signInViewController = storyboard.instantiateViewController(
             identifier: SigninViewController.identifier,
             creator: { coder in
@@ -38,6 +37,7 @@ final class SigninCoordinator: Coordinator {
 // MARK: - Extension
 
 extension SigninCoordinator {
+  
   func openURL(endPoint: EndPointable) {
     guard let url = URL(string: "") else { return }
     if UIApplication.shared.canOpenURL(url) {

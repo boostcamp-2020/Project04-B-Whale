@@ -29,6 +29,11 @@
 		33B87E232565071F00354880 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E222565071F00354880 /* Assets.xcassets */; };
 		33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E242565071F00354880 /* LaunchScreen.storyboard */; };
 		33B87E312565072000354880 /* AreUDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E302565072000354880 /* AreUDoneTests.swift */; };
+		33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */; };
+		33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE016E2568ECC7003D3221 /* CalendarViewController.swift */; };
+		33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01752568ED2B003D3221 /* CalendarViewModel.swift */; };
+		33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */; };
+		33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33EE01892568F47D003D3221 /* Calendar.storyboard */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
@@ -120,6 +125,11 @@
 		33B87E302565072000354880 /* AreUDoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUDoneTests.swift; sourceTree = "<group>"; };
 		33B87E322565072000354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33B87E372565072000354880 /* AreUDoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreUDoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
+		33EE016E2568ECC7003D3221 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		33EE01752568ED2B003D3221 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
+		33EE01892568F47D003D3221 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
@@ -261,6 +271,8 @@
 				33B87E4E25650CC900354880 /* Supports */,
 				33B87E4C25650B2B00354880 /* Common */,
 				33B87E4D25650B3200354880 /* SignInScene */,
+				33EE016B2568EC48003D3221 /* CalendarScene */,
+				33EE01742568ED15003D3221 /* ViewModel */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -333,6 +345,40 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		33EE016B2568EC48003D3221 /* CalendarScene */ = {
+			isa = PBXGroup;
+			children = (
+				33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */,
+				33EE016C2568EC5B003D3221 /* Resources */,
+				33EE016D2568EC63003D3221 /* View */,
+			);
+			path = CalendarScene;
+			sourceTree = "<group>";
+		};
+		33EE016C2568EC5B003D3221 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				33EE01892568F47D003D3221 /* Calendar.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		33EE016D2568EC63003D3221 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				33EE016E2568ECC7003D3221 /* CalendarViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		33EE01742568ED15003D3221 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				33EE01752568ED2B003D3221 /* CalendarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		BDD18AB225653CB8005DF00A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +393,7 @@
 			children = (
 				BDD18AC4256544C6005DF00A /* Coordinator.swift */,
 				BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */,
+				33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -569,6 +616,7 @@
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
+				33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */,
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
@@ -613,11 +661,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
+				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
+				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
@@ -630,6 +681,7 @@
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
+				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
