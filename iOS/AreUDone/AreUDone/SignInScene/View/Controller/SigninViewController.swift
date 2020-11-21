@@ -71,7 +71,6 @@ final class SigninViewController: UIViewController {
   
   @IBAction func appleSigninButtonTapped(_ sender: Any) {
     viewModel.appleSigninButtonTapped()
-    viewModel.videoRemove()
   }
   
   @IBAction func naverSigninButtonTapped(_ sender: Any) {
