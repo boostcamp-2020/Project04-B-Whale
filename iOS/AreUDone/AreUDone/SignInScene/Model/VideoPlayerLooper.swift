@@ -26,6 +26,7 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
       let playerItem = AVPlayerItem(url: url)
 
       player = AVQueuePlayer()
+      try? AVAudioSession.sharedInstance().setCategory(.ambient)
       playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
 
       playerLayer = AVPlayerLayer(player: player)
