@@ -14,8 +14,8 @@ class VideoPlayerLooper {
   private var playerLayer: AVPlayerLayer?
   private var playerLooper: AVPlayerLooper?
   
-  func makeVideoLayer(for fileName: String) -> AVPlayerLayer? {
-    if let path = Bundle.main.path(forResource: fileName, ofType: "mp4") {
+  func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer? {
+    if let path = Bundle.main.path(forResource: fileName, ofType: type) {
       let url = URL(fileURLWithPath: path)
       let playerItem = AVPlayerItem(url: url)
       

@@ -5,6 +5,7 @@
 //  Created by a1111 on 2020/11/18.
 //
 
+import AVFoundation
 import Foundation
 import NetworkFramework
 
@@ -12,7 +13,7 @@ protocol SigninViewModelProtocol {
   
   func naverSigninBinding(handler: @escaping ((EndPointable) -> ()))
   func appleSigninBinding(handler: @escaping ((EndPointable) -> ()))
-  func videoPlayBinding(handler: @escaping((VideoPlayerLooper) -> Void))
+  func videoPlayBinding(handler: @escaping((AVPlayerLayer) -> Void))
   
   func naverSigninButtonTapped()
   func appleSigninButtonTapped()
@@ -24,7 +25,7 @@ final class SigninViewModel: SigninViewModelProtocol {
   
   private var naverSigninHandler: ((EndPointable) -> ())?
   private var appleSigninHandler: ((EndPointable) -> ())?
-  private var videoPlayHandler: ((VideoPlayerLooper) -> Void)?
+  private var videoPlayHandler: ((AVPlayerLayer) -> Void)?
   
   private var videoPlayerLooper = VideoPlayerLooper()
   
@@ -37,7 +38,7 @@ final class SigninViewModel: SigninViewModelProtocol {
     appleSigninHandler = handler
   }
   
-  func videoPlayBinding(handler: @escaping ((VideoPlayerLooper) -> Void)) {
+  func videoPlayBinding(handler: @escaping ((AVPlayerLayer) -> Void)) {
     videoPlayHandler = handler
   }
   
@@ -53,8 +54,13 @@ final class SigninViewModel: SigninViewModelProtocol {
   }
   
   func videoPlay() {
-    videoPlayHandler?(videoPlayerLooper)
-    videoPlayerLooper.play()
+    if let playerLayer = videoPlayerLooper.configureVideoLayer(
+        for: VideoConstant.background,
+        ofType: VideoConstant.mp4
+    ) {
+      videoPlayHandler?(playerLayer)
+      videoPlayerLooper.play()
+    }
   }
   
   func videoRemove() {
