@@ -12,7 +12,7 @@ final class CalendarViewController: UIViewController {
   // MARK: - Property
   
   private let viewModel: CalendarViewModelProtocol
-  
+  weak var calendarCoordinator: CalendarCoordinator?
   
   // MARK: - Initializer
   

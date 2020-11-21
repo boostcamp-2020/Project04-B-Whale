@@ -13,7 +13,6 @@ protocol CalendarViewModelProtocol {
 
 final class CalendarViewModel: CalendarViewModelProtocol {
   
-  
-  
-  
+  // MARK: - Property
+
 }

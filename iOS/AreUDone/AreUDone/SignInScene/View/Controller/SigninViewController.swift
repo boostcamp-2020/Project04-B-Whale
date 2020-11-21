@@ -9,8 +9,14 @@ import UIKit
 
 final class SigninViewController: UIViewController {
   
+  // MARK: - Property
+  
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
+  
+  @IBOutlet weak var videoBackgroundView: UIView!
+  
+  // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
@@ -22,15 +28,41 @@ final class SigninViewController: UIViewController {
     fatalError("This controller must be initialized with code")
   }
   
+  
+  // MARK: - Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     bindUI()
+    backgroundPlay()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    backgroundRemove()
+  }
+  
+  
+  // MARK: - Method
+  
+  @IBAction func appleSigninButtonTapped(_ sender: Any) {
+    viewModel.appleSigninButtonTapped()
+  }
+  
+  @IBAction func naverSigninButtonTapped(_ sender: Any) {
+    viewModel.naverSigninButtonTapped()
+  }
+}
+
+
+// MARK: - Extension
+
+extension SigninViewController {
   
   private func bindUI() {
     appleSigninBinding()
     naverSigninBinding()
+    videoPlayBinding()
   }
   
   private func appleSigninBinding() {
@@ -44,13 +76,21 @@ final class SigninViewController: UIViewController {
       self?.signinCoordinator?.openURL(endPoint: endpoint)
     }
   }
-  
-  @IBAction func appleSigninButtonTapped(_ sender: Any) {
-    viewModel.appleSigninButtonTapped()
+
+  private func videoPlayBinding() {
+    viewModel.videoPlayBinding { [weak self] playerLayer in
+      guard let self = self else { return }
+      playerLayer.frame = self.videoBackgroundView.bounds
+      self.videoBackgroundView.layer.addSublayer(playerLayer)
+    }
   }
   
-  @IBAction func naverSigninButtonTapped(_ sender: Any) {
-    viewModel.naverSigninButtonTapped()
+  private func backgroundPlay() {
+    viewModel.videoPlay()
+  }
+  
+  private func backgroundRemove() {
+    viewModel.videoRemove()
   }
 }
 

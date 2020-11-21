@@ -12,10 +12,20 @@ protocol ListServiceProtocol {
   
 }
 
-class ListService {
+class ListService: ListServiceProtocol {
+  
+  // MARK: - Property
+  
   private let router: Routable
+  
+  
+  // MARK: - Initializer
   
   init(router: Routable) {
     self.router = router
   }
+  
+  
+  // MARK: - Method
+  
 }

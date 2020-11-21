@@ -34,6 +34,7 @@
 		33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01752568ED2B003D3221 /* CalendarViewModel.swift */; };
 		33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */; };
 		33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33EE01892568F47D003D3221 /* Calendar.storyboard */; };
+		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -55,6 +56,9 @@
 		BDD18B4025664077005DF00A /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B3F25664077005DF00A /* CommentService.swift */; };
 		BDD18B462566408F005DF00A /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
 		BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B872567A0C5005DF00A /* SigninChecker.swift */; };
+		BDD18B9F2567B432005DF00A /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B9E2567B432005DF00A /* background.mp4 */; };
+		BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */; };
+		BDD18BB42568D682005DF00A /* VideoConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BB32568D682005DF00A /* VideoConstant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +130,7 @@
 		33EE01752568ED2B003D3221 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
 		33EE01892568F47D003D3221 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -147,6 +152,9 @@
 		BDD18B3F25664077005DF00A /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		BDD18B452566408F005DF00A /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		BDD18B872567A0C5005DF00A /* SigninChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninChecker.swift; sourceTree = "<group>"; };
+		BDD18B9E2567B432005DF00A /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
+		BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerLooper.swift; sourceTree = "<group>"; };
+		BDD18BB32568D682005DF00A /* VideoConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				33B87E182565071C00354880 /* AreUDone */,
+				BDD18B9E2567B432005DF00A /* background.mp4 */,
 				3383647625660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE325660E77005DF00A /* KeychainFramework */,
 				33B87E2F2565072000354880 /* AreUDoneTests */,
@@ -280,6 +289,7 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BDD18BB22568D636005DF00A /* Constants */,
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
 				338364572565573A00F92EE4 /* Model */,
@@ -373,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
+				33F66CE82567A17C00959401 /* UIViewController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -418,8 +429,17 @@
 			isa = PBXGroup;
 			children = (
 				BDD18B872567A0C5005DF00A /* SigninChecker.swift */,
+				BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BDD18BB22568D636005DF00A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18BB32568D682005DF00A /* VideoConstant.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,6 +613,7 @@
 			files = (
 				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
+				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
 				33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */,
@@ -650,15 +671,18 @@
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
+				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
+				BDD18BB42568D682005DF00A /* VideoConstant.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
+				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,

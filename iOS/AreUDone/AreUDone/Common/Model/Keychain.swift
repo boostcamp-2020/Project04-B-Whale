@@ -16,12 +16,18 @@ protocol Keychainable {
 }
 
 class Keychain: Keychainable {
+  
+  // MARK: - Property
+  
   static let shared = Keychain()
   
   private var secureStore: SecureStore {
     let queryable = GenericPasswordQueryable(service: "AreUDone")
     return SecureStore(secureStoreQueryable: queryable)
   }
+  
+  
+  // MARK: - Method
   
   func save(value: String, forKey key: String) {
     try? secureStore.setValue(value, for: key)
