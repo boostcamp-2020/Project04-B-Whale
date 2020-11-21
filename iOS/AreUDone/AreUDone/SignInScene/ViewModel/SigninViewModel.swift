@@ -27,7 +27,11 @@ final class SigninViewModel: SigninViewModelProtocol {
   private var appleSigninHandler: ((EndPointable) -> ())?
   private var videoPlayHandler: ((AVPlayerLayer) -> Void)?
   
-  private var videoPlayerLooper = VideoPlayerLooper()
+  private var videoPlayerLooper: VideoPlayerLoopable?
+  
+  init(videoPlayerLooper: VideoPlayerLoopable) {
+    self.videoPlayerLooper = videoPlayerLooper
+  }
   
   func naverSigninBinding(handler: @escaping ((EndPointable) -> ())) {
     naverSigninHandler = handler
@@ -54,16 +58,17 @@ final class SigninViewModel: SigninViewModelProtocol {
   }
   
   func videoPlay() {
-    if let playerLayer = videoPlayerLooper.configureVideoLayer(
+    if let playerLayer = videoPlayerLooper?.configureVideoLayer(
         for: VideoConstant.background,
         ofType: VideoConstant.mp4
     ) {
       videoPlayHandler?(playerLayer)
-      videoPlayerLooper.play()
+      videoPlayerLooper?.play()
     }
   }
   
   func videoRemove() {
-    videoPlayerLooper.remove()
+    videoPlayerLooper?.remove()
+    videoPlayerLooper = nil
   }
 }

@@ -20,7 +20,7 @@ final class SigninCoordinator: Coordinator {
     guard let signInViewController = storyboard.instantiateViewController(
       identifier: "SignInViewController",
       creator: { coder in
-        let viewModel = SigninViewModel()
+        let viewModel = SigninViewModel(videoPlayerLooper: VideoPlayerLooper())
         return SigninViewController(coder: coder, viewModel: viewModel)
       }) as? SigninViewController
     else { return UIViewController() }

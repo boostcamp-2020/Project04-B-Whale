@@ -8,7 +8,13 @@
 import AVKit
 import Foundation
 
-class VideoPlayerLooper {
+protocol VideoPlayerLoopable {
+  func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer?
+  func play()
+  func remove()
+}
+
+final class VideoPlayerLooper: VideoPlayerLoopable {
   
   private var player: AVQueuePlayer!
   private var playerLayer: AVPlayerLayer?
@@ -18,13 +24,13 @@ class VideoPlayerLooper {
     if let path = Bundle.main.path(forResource: fileName, ofType: type) {
       let url = URL(fileURLWithPath: path)
       let playerItem = AVPlayerItem(url: url)
-      
+
       player = AVQueuePlayer()
       playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-      
+
       playerLayer = AVPlayerLayer(player: player)
       playerLayer?.videoGravity = .resizeAspectFill
-      
+
       return playerLayer
     }
     
@@ -40,7 +46,7 @@ class VideoPlayerLooper {
     playerLayer?.removeFromSuperlayer()
   }
   
-  func unload() {
+  private func unload() {
     player = nil
     playerLayer = nil
     playerLooper = nil

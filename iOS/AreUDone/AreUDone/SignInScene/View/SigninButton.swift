@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SigninButton: UIButton {
+final class SigninButton: UIButton {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
