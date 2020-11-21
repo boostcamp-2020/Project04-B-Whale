@@ -14,6 +14,7 @@ final class SigninViewController: UIViewController {
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
   
+  @IBOutlet weak var videoBackgroundView: UIView!
   
   // MARK: - Initializer
   
@@ -32,8 +33,13 @@ final class SigninViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     bindUI()
+    backgroundPlay()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    backgroundRemove()
   }
   
   
@@ -56,6 +62,7 @@ extension SigninViewController {
   private func bindUI() {
     appleSigninBinding()
     naverSigninBinding()
+    videoPlayBinding()
   }
   
   private func appleSigninBinding() {
@@ -68,6 +75,22 @@ extension SigninViewController {
     viewModel.naverSigninBinding() { [weak self] endpoint in
       self?.signinCoordinator?.openURL(endPoint: endpoint)
     }
+  }
+
+  private func videoPlayBinding() {
+    viewModel.videoPlayBinding { [weak self] playerLayer in
+      guard let self = self else { return }
+      playerLayer.frame = self.videoBackgroundView.bounds
+      self.videoBackgroundView.layer.addSublayer(playerLayer)
+    }
+  }
+  
+  private func backgroundPlay() {
+    viewModel.videoPlay()
+  }
+  
+  private func backgroundRemove() {
+    viewModel.videoRemove()
   }
 }
 
