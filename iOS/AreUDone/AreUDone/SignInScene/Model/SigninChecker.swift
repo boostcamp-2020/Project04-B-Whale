@@ -8,8 +8,8 @@
 import Foundation
 
 enum SigninCheckResult {
-  case isLogin
-  case isNotLogin
+  case isSigned
+  case isNotSigned
 }
 
 protocol SigninCheckable {
@@ -21,8 +21,8 @@ final class SigninChecker: SigninCheckable {
   
   func check() -> SigninCheckResult {
     if let _ = Keychain.shared.loadValue(forKey: "") {
-      return .isLogin
+      return .isSigned
     }
-    return .isNotLogin
+    return .isNotSigned
   }
 }
