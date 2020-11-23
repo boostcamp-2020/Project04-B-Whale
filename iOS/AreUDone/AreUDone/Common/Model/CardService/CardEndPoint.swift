@@ -40,11 +40,10 @@ extension CardEndPoint: EndPointable {
       return .get
     }
   }
-
+  
   var headers: HTTPHeader? {
-    guard let accessToken = Keychain.shared.loadValue(
-            forKey: "token"
-    ) else { return nil}
+    guard let accessToken = Keychain.shared.loadValue(forKey: "token")
+    else { return nil }
     
     return [
       "Authorization": "Bearer \(accessToken))",
@@ -56,6 +55,4 @@ extension CardEndPoint: EndPointable {
   var bodies: HTTPBody? {
     return nil
   }
-  
-  
 }
