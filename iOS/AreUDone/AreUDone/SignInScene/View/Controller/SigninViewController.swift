@@ -14,7 +14,11 @@ final class SigninViewController: UIViewController {
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
   
-  @IBOutlet weak var videoBackgroundView: UIView!
+  @IBOutlet weak var videoBackgroundView: UIView! {
+    didSet {
+      videoBackgroundView.alpha = 0
+    }
+  }
   
   // MARK: - Initializer
   
@@ -34,7 +38,6 @@ final class SigninViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     bindUI()
-    backgroundPlay()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -82,6 +85,10 @@ extension SigninViewController {
       guard let self = self else { return }
       playerLayer.frame = self.videoBackgroundView.bounds
       self.videoBackgroundView.layer.addSublayer(playerLayer)
+      
+      UIView.animate(withDuration: 1) {
+        self.videoBackgroundView.alpha = 1
+      }
     }
   }
   
