@@ -46,6 +46,7 @@ final class CalendarViewController: UIViewController {
     super.viewDidLoad()
     bindUI()
     viewModel.fetchInitializeDailyCards()
+    navigationController?.navigationBar.isHidden = true
   }
 }
 
