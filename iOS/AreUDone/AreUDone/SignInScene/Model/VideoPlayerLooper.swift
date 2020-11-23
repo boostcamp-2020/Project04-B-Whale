@@ -43,11 +43,11 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
   }
   
   func play() {
-    player.play()
+    player?.play()
   }
   
   func pause() {
-    player.pause()
+    player?.pause()
   }
   
   func remove() {
