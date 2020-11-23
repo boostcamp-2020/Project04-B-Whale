@@ -9,7 +9,7 @@ import Foundation
 import NetworkFramework
 
 protocol CardServiceProtocol {
-  
+  func fetchDailyCards(date: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
 }
 
 class CardService: CardServiceProtocol {
@@ -28,4 +28,9 @@ class CardService: CardServiceProtocol {
   
   // MARK: - Method
   
+  func fetchDailyCards(date: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
+    router.request(route: CardEndPoint.fetchDailyCards(date: date)) { (result: Result<Cards, APIError>) in
+      completionHandler(result)
+    }
+  }
 }
