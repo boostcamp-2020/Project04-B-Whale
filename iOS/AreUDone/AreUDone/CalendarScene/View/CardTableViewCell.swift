@@ -24,8 +24,24 @@ final class CardTableViewCell: UITableViewCell, Reusable, NibLoadable {
     
     configure()
   }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    titleLabel.text = nil
+    dueDateLabel.text = nil
+    commentCountLabel.text = nil
+  }
 }
 
+
+extension CardTableViewCell {
+  func update(with card: Card) {
+    titleLabel.text = card.title
+    dueDateLabel.text = card.dueDate
+    commentCountLabel.text = "\(card.commentCount)"
+  }
+}
 
 // MARK: - Extension
 
@@ -34,6 +50,7 @@ private extension CardTableViewCell {
   // MARK:- Method
   
   func configure() {
+    configureCardTableViewCell()
     configureTitleLabel()
     configureDueDateLabel()
     configureCommentImageView()
@@ -42,6 +59,8 @@ private extension CardTableViewCell {
   
   func configureCardTableViewCell() {
     layer.cornerRadius = 10
+    backgroundColor = .systemGray5
+    selectionStyle = .none
   }
   
   func configureTitleLabel() {

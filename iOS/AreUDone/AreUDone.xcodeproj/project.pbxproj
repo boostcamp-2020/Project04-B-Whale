@@ -97,6 +97,7 @@
 		BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E2B256B9215002308B9 /* UITableView+.swift */; };
 		BDE27E32256B9342002308B9 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E31256B9342002308B9 /* Reusable.swift */; };
 		BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E36256B934B002308B9 /* NibLoadable.swift */; };
+		BDE27E4B256BC674002308B9 /* CardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E4A256BC674002308B9 /* CardTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 		BDE27E2B256B9215002308B9 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		BDE27E31256B9342002308B9 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		BDE27E36256B934B002308B9 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		BDE27E4A256BC674002308B9 /* CardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,6 +468,7 @@
 				BDE27E14256B7FA0002308B9 /* DateLabel.swift */,
 				BDE27E1F256B8C88002308B9 /* CardTableViewCell.swift */,
 				BDE27E20256B8C88002308B9 /* CardTableViewCell.xib */,
+				BDE27E4A256BC674002308B9 /* CardTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				BDE27E21256B8C89002308B9 /* CardTableViewCell.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
+				BDE27E4B256BC674002308B9 /* CardTableView.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,

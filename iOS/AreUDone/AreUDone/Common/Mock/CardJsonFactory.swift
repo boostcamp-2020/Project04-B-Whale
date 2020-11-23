@@ -20,7 +20,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "id": 1,
                         "title": "캘린더 끝내기",
                         "dueDate": "2020-11-18",
-                        "commentCount": 1
+                        "commentCount": 11
                     },
                     {
                         "id": 2,
@@ -57,6 +57,30 @@ struct CardTrueJsonFactory: JsonFactory {
                         "title": "재밌게 끝내기",
                         "dueDate": "2020-11-18",
                         "commentCount": 7
+                    },
+                    {
+                        "id": 8,
+                        "title": "재밌게 끝내기",
+                        "dueDate": "2020-11-18",
+                        "commentCount": 7
+                    },
+                    {
+                        "id": 9,
+                        "title": "재밌게 끝내기",
+                        "dueDate": "2020-11-18",
+                        "commentCount": 7
+                    },
+                    {
+                        "id": 10,
+                        "title": "재밌게 끝내기",
+                        "dueDate": "2020-11-18",
+                        "commentCount": 10
+                    },
+                    {
+                        "id": 11,
+                        "title": "재밌게 끝내기",
+                        "dueDate": "2020-11-18",
+                        "commentCount": 100
                     }
                 ]
             }
