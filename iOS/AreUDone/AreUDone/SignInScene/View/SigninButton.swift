@@ -22,7 +22,9 @@ final class SigninButton: UIButton {
     
     configure()
   }
-  
+}
+
+extension SigninButton {
   
   // MARK: - Method
   
