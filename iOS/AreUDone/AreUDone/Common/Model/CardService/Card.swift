@@ -16,3 +16,14 @@ struct Card: Codable {
     let title, dueDate: String
     let commentCount: Int
 }
+
+extension Card: Hashable {
+  
+  static func == (lhs: Card, rhs: Card) -> Bool {
+    return lhs.id == rhs.id
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
+}

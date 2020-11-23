@@ -17,23 +17,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-ef-Zki" customClass="CardTableView" customModule="AreUDone" customModuleProvider="target">
+                                <rect key="frame" x="30" y="44" width="354" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vCS-Xe-Iy9">
                                 <rect key="frame" x="0.0" y="44" width="414" height="134.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hk0-qB-Mjb" userLabel="CurrentDateLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hk0-qB-Mjb" userLabel="CurrentDateLabel">
                                         <rect key="frame" x="103.5" y="51.5" width="207" height="31.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BM0-K5-2Nc" userLabel="DateLabel" customClass="DateLabel" customModule="AreUDone" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020.11.23" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BM0-K5-2Nc" userLabel="DateLabel" customClass="DateLabel" customModule="AreUDone" customModuleProvider="target">
                                         <rect key="frame" x="103.5" y="51.5" width="207" height="31.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" id="69P-QL-1mI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KcY-JV-y2K" userLabel="PreviousButton">
@@ -41,6 +46,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="KcY-JV-y2K" secondAttribute="height" multiplier="1:1" id="Sw1-Af-scQ"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="chevron.left" catalog="system"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nr-UP-dSp" userLabel="NextButton">
@@ -48,10 +54,11 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7nr-UP-dSp" secondAttribute="height" multiplier="1:1" id="xSB-pO-akO"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="chevron.right" catalog="system"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Hk0-qB-Mjb" firstAttribute="trailing" secondItem="BM0-K5-2Nc" secondAttribute="trailing" id="3d5-Af-SnJ"/>
                                     <constraint firstItem="7nr-UP-dSp" firstAttribute="leading" secondItem="BM0-K5-2Nc" secondAttribute="trailing" id="6e6-Mp-W0o"/>
@@ -68,20 +75,16 @@
                                     <constraint firstItem="BM0-K5-2Nc" firstAttribute="centerX" secondItem="vCS-Xe-Iy9" secondAttribute="centerX" id="vin-mi-tlk"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-ef-Zki">
-                                <rect key="frame" x="0.0" y="178.5" width="414" height="683.5"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Mzv-cZ-RHA"/>
-                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Rpx-ef-Zki" firstAttribute="leading" secondItem="Mzv-cZ-RHA" secondAttribute="leading" id="0xX-5i-lkS"/>
-                            <constraint firstItem="Mzv-cZ-RHA" firstAttribute="trailing" secondItem="Rpx-ef-Zki" secondAttribute="trailing" id="2rZ-hK-jLl"/>
+                            <constraint firstItem="Rpx-ef-Zki" firstAttribute="leading" secondItem="Mzv-cZ-RHA" secondAttribute="leading" constant="30" id="0xX-5i-lkS"/>
+                            <constraint firstItem="Mzv-cZ-RHA" firstAttribute="trailing" secondItem="Rpx-ef-Zki" secondAttribute="trailing" constant="30" id="2rZ-hK-jLl"/>
+                            <constraint firstItem="Rpx-ef-Zki" firstAttribute="top" secondItem="Mzv-cZ-RHA" secondAttribute="top" id="449-26-vu2"/>
                             <constraint firstItem="vCS-Xe-Iy9" firstAttribute="centerX" secondItem="H7c-pU-k8V" secondAttribute="centerX" id="6b8-bS-isM"/>
                             <constraint firstItem="Mzv-cZ-RHA" firstAttribute="trailing" secondItem="vCS-Xe-Iy9" secondAttribute="trailing" id="9DJ-n4-0Iw"/>
                             <constraint firstItem="vCS-Xe-Iy9" firstAttribute="top" secondItem="Mzv-cZ-RHA" secondAttribute="top" id="CNq-Sf-kdf"/>
-                            <constraint firstItem="Rpx-ef-Zki" firstAttribute="top" secondItem="vCS-Xe-Iy9" secondAttribute="bottom" id="Hbb-IO-WkC"/>
                             <constraint firstItem="Mzv-cZ-RHA" firstAttribute="bottom" secondItem="Rpx-ef-Zki" secondAttribute="bottom" id="bzb-64-BOQ"/>
                             <constraint firstItem="vCS-Xe-Iy9" firstAttribute="leading" secondItem="Mzv-cZ-RHA" secondAttribute="leading" id="daI-Nb-wMa"/>
                             <constraint firstItem="vCS-Xe-Iy9" firstAttribute="height" secondItem="H7c-pU-k8V" secondAttribute="height" multiplier="0.15" id="i9Q-es-Hrh"/>
@@ -103,9 +106,6 @@
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

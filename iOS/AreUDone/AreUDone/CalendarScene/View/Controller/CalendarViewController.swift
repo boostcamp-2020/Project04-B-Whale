@@ -7,16 +7,24 @@
 
 import UIKit
 
+enum Section {
+  case main
+}
+
 final class CalendarViewController: UIViewController {
+  
+  typealias DataSource = UITableViewDiffableDataSource<String, Card>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<String, Card>
   
   // MARK: - Property
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
+  lazy var dataSource = configureDataSource()
   
   @IBOutlet private weak var dateLabel: DateLabel!
   @IBOutlet private weak var currentDateLabel: UILabel!
-  @IBOutlet private weak var cardTableView: UITableView!
+  @IBOutlet private weak var cardTableView: CardTableView!
   
   
   // MARK: - Initializer
@@ -36,22 +44,59 @@ final class CalendarViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configure()
+    bindUI()
+    viewModel.fetchInitializeDailyCards()
   }
 }
 
 
 // MARK: - Extension
 
-extension CalendarViewController {
+private extension CalendarViewController {
   
   // MARK:- Method
   
-  private func configure() {
-    configureCardTableView()
+  func bindUI() {
+    initializeCardTableViewBinding()
   }
   
-  private func configureCardTableView() {
-    cardTableView.register(CardTableViewCell.self)
+  func initializeCardTableViewBinding() {
+    viewModel.bindingInitializeCardTableView { [weak self] cards in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: cards, animatingDifferences: false)
+      }
+    }
+  }
+  
+  func updateCardTableViewBinding() {
+    viewModel.bindingUpdateCardTableView { [weak self] cards in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: cards)
+      }
+    }
+  }
+
+  func configureDataSource() -> DataSource {
+    let dataSource = DataSource(
+      tableView: cardTableView) { (tableView, indexPath, card) -> UITableViewCell? in
+      let cell: CardTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+      
+      cell.update(with: card)
+      
+      return cell
+    }
+    
+    return dataSource
+  }
+  
+  func updateSnapshot(with item: Cards, animatingDifferences: Bool = true) {
+    var snapshot = Snapshot()
+
+    item.cards.forEach { card in
+      snapshot.appendSections([String(card.id)])
+      snapshot.appendItems([card])
+    }
+    
+    dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
 }
