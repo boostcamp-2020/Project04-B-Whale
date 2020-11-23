@@ -32,11 +32,14 @@ class RouterTests: XCTestCase {
       switch result {
       case .success:
         XCTAssert(false)
-      case .failure:
-        XCTAssert(true)
+      case .failure(let error):
+        if error == .data {
+          XCTAssert(true)
+        } else {
+          XCTAssert(false)
+        }
+        
       }
     }
   }
-  
-  
 }
