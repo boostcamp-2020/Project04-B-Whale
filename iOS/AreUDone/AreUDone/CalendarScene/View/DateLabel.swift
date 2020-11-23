@@ -9,6 +9,8 @@ import UIKit
 
 final class DateLabel: UILabel {
   
+  // MARK:- Initializer
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -20,6 +22,12 @@ final class DateLabel: UILabel {
     
     configure()
   }
+}
+
+
+// MARK:- Extension
+
+extension DateLabel {
   
   private func configure(){
     textAlignment = .center

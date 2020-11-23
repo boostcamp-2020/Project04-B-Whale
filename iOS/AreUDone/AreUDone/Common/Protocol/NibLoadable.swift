@@ -15,6 +15,6 @@ protocol NibLoadable {
 extension NibLoadable where Self: UIView {
   
   static var nibName: String {
-    return NSStringFromClass(self).components(separatedBy: ".").last!
+    return String(describing: self)
   }
 }
