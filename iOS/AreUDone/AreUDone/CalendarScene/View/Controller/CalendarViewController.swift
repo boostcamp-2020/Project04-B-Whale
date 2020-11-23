@@ -14,9 +14,9 @@ final class CalendarViewController: UIViewController {
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
   
-  @IBOutlet weak var dateLabel: DateLabel!
-  @IBOutlet weak var currentDateLabel: UILabel!
-  @IBOutlet weak var cardTableView: UITableView!
+  @IBOutlet private weak var dateLabel: DateLabel!
+  @IBOutlet private weak var currentDateLabel: UILabel!
+  @IBOutlet private weak var cardTableView: UITableView!
   
   
   // MARK: - Initializer
@@ -44,6 +44,8 @@ final class CalendarViewController: UIViewController {
 // MARK: - Extension
 
 extension CalendarViewController {
+  
+  // MARK:- Method
   
   private func configure() {
     configureCardTableView()

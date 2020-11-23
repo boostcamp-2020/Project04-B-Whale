@@ -14,7 +14,7 @@ final class SigninViewController: UIViewController {
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
   
-  @IBOutlet weak var videoBackgroundView: UIView! {
+  @IBOutlet private weak var videoBackgroundView: UIView! {
     didSet {
       videoBackgroundView.alpha = 0
     }

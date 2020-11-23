@@ -29,6 +29,8 @@ final class DateLabel: UILabel {
 
 extension DateLabel {
   
+  // MARK:- Method
+  
   private func configure(){
     textAlignment = .center
     font = UIFont(name: "ChalkboardSE-Bold", size: 30)
