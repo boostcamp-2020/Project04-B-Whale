@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NetworkFramework
 
 final class CalendarCoordinator: Coordinator {
   
@@ -13,7 +14,11 @@ final class CalendarCoordinator: Coordinator {
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .calendar)
   }
+  private let router: Routable
   
+  init(router: Routable) {
+    self.router = router
+  }
   
   // MARK: - Method
   
@@ -21,7 +26,8 @@ final class CalendarCoordinator: Coordinator {
     guard let calendarViewController = storyboard.instantiateViewController(
             identifier: CalendarViewController.identifier,
             creator: { coder in
-              let viewModel = CalendarViewModel()
+              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory())) // TODO: CardTrueJsonFactory 라고 프로그래머가 구별해서 넣어줘야 하는게 살짝 불편한데... 
+              let viewModel = CalendarViewModel(cardService: cardService)
               return CalendarViewController(coder: coder, viewModel: viewModel)
             }) as? CalendarViewController
     else { return UIViewController() }

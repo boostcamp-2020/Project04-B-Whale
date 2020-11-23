@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		336010C3256B786E009580A1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C2256B786E009580A1 /* Card.swift */; };
+		336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C7256B78CE009580A1 /* CardEndPoint.swift */; };
+		336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010CC256B7B2B009580A1 /* APICredentials.swift */; };
+		336010D5256B891C009580A1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010D4256B891C009580A1 /* Date+.swift */; };
+		336010DE256B8E60009580A1 /* CardJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010DD256B8E60009580A1 /* CardJsonFactory.swift */; };
+		3360110B256B9123009580A1 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360110A256B9123009580A1 /* RouterTests.swift */; };
+		33601112256B9156009580A1 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE1B256B51CE008E3969 /* MockRouter.swift */; };
+		33601116256B916C009580A1 /* JsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE20256B5210008E3969 /* JsonFactory.swift */; };
+		3360111A256B9170009580A1 /* CardJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010DD256B8E60009580A1 /* CardJsonFactory.swift */; };
+		3360111E256B91CB009580A1 /* CardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2D25663F6D005DF00A /* CardService.swift */; };
+		33601125256B91D2009580A1 /* CardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C7256B78CE009580A1 /* CardEndPoint.swift */; };
+		33601129256B91D5009580A1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C2256B786E009580A1 /* Card.swift */; };
+		3360112D256B9211009580A1 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010CC256B7B2B009580A1 /* APICredentials.swift */; };
+		33601131256B93C2009580A1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010D4256B891C009580A1 /* Date+.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,6 +43,8 @@
 		33B87E232565071F00354880 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E222565071F00354880 /* Assets.xcassets */; };
 		33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33B87E242565071F00354880 /* LaunchScreen.storyboard */; };
 		33B87E312565072000354880 /* AreUDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E302565072000354880 /* AreUDoneTests.swift */; };
+		33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE1B256B51CE008E3969 /* MockRouter.swift */; };
+		33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE20256B5210008E3969 /* JsonFactory.swift */; };
 		33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */; };
 		33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE016E2568ECC7003D3221 /* CalendarViewController.swift */; };
 		33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01752568ED2B003D3221 /* CalendarViewModel.swift */; };
@@ -110,6 +126,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		336010C2256B786E009580A1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		336010C7256B78CE009580A1 /* CardEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEndPoint.swift; sourceTree = "<group>"; };
+		336010CC256B7B2B009580A1 /* APICredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
+		336010D4256B891C009580A1 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		336010DD256B8E60009580A1 /* CardJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardJsonFactory.swift; sourceTree = "<group>"; };
+		3360110A256B9123009580A1 /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +155,8 @@
 		33B87E2C2565072000354880 /* AreUDoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreUDoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B87E302565072000354880 /* AreUDoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUDoneTests.swift; sourceTree = "<group>"; };
 		33B87E322565072000354880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33D2DE1B256B51CE008E3969 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
+		33D2DE20256B5210008E3969 /* JsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFactory.swift; sourceTree = "<group>"; };
 		33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
 		33EE016E2568ECC7003D3221 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		33EE01752568ED2B003D3221 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -200,10 +224,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		336010DC256B8E34009580A1 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				33D2DE1B256B51CE008E3969 /* MockRouter.swift */,
+				33D2DE20256B5210008E3969 /* JsonFactory.swift */,
+				336010DD256B8E60009580A1 /* CardJsonFactory.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		336010F6256B8F7D009580A1 /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B2325663E74005DF00A /* UserService.swift */,
+			);
+			path = UserService;
+			sourceTree = "<group>";
+		};
+		336010F7256B8FA2009580A1 /* BoardService */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B332566403E005DF00A /* BoardService.swift */,
+			);
+			path = BoardService;
+			sourceTree = "<group>";
+		};
+		336010FB256B8FAB009580A1 /* ListService */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B3925664057005DF00A /* ListService.swift */,
+			);
+			path = ListService;
+			sourceTree = "<group>";
+		};
+		336010FF256B8FB5009580A1 /* CommentService */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B3F25664077005DF00A /* CommentService.swift */,
+			);
+			path = CommentService;
+			sourceTree = "<group>";
+		};
+		33601103256B8FBC009580A1 /* ActivityService */ = {
+			isa = PBXGroup;
+			children = (
+				BDD18B452566408F005DF00A /* ActivityService.swift */,
+			);
+			path = ActivityService;
+			sourceTree = "<group>";
+		};
 		338364572565573A00F92EE4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18B2225663E5D005DF00A /* Service */,
+				336010F6256B8F7D009580A1 /* UserService */,
+				BDD18B2225663E5D005DF00A /* CardService */,
+				336010F7256B8FA2009580A1 /* BoardService */,
+				336010FB256B8FAB009580A1 /* ListService */,
+				336010FF256B8FB5009580A1 /* CommentService */,
+				33601103256B8FBC009580A1 /* ActivityService */,
 				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
 			);
@@ -282,8 +361,9 @@
 			isa = PBXGroup;
 			children = (
 				33B87E302565072000354880 /* AreUDoneTests.swift */,
-				33B87E322565072000354880 /* Info.plist */,
 				33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */,
+				3360110A256B9123009580A1 /* RouterTests.swift */,
+				33B87E322565072000354880 /* Info.plist */,
 			);
 			path = AreUDoneTests;
 			sourceTree = "<group>";
@@ -291,6 +371,7 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				336010DC256B8E34009580A1 /* Mock */,
 				BDD18BB22568D636005DF00A /* Constants */,
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
@@ -386,6 +467,7 @@
 			children = (
 				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
 				33F66CE82567A17C00959401 /* UIViewController+.swift */,
+				336010D4256B891C009580A1 /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -414,17 +496,14 @@
 			path = KeychainFramework;
 			sourceTree = "<group>";
 		};
-		BDD18B2225663E5D005DF00A /* Service */ = {
+		BDD18B2225663E5D005DF00A /* CardService */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18B2325663E74005DF00A /* UserService.swift */,
+				336010C2256B786E009580A1 /* Card.swift */,
+				336010C7256B78CE009580A1 /* CardEndPoint.swift */,
 				BDD18B2D25663F6D005DF00A /* CardService.swift */,
-				BDD18B332566403E005DF00A /* BoardService.swift */,
-				BDD18B3925664057005DF00A /* ListService.swift */,
-				BDD18B3F25664077005DF00A /* CommentService.swift */,
-				BDD18B452566408F005DF00A /* ActivityService.swift */,
 			);
-			path = Service;
+			path = CardService;
 			sourceTree = "<group>";
 		};
 		BDD18B8D2567A12D005DF00A /* Model */ = {
@@ -440,6 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18BB32568D682005DF00A /* VideoConstant.swift */,
+				336010CC256B7B2B009580A1 /* APICredentials.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -635,13 +715,16 @@
 			files = (
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
+				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
+				336010D5256B891C009580A1 /* Date+.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
+				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
@@ -654,8 +737,12 @@
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
+				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
+				336010C3256B786E009580A1 /* Card.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
+				336010DE256B8E60009580A1 /* CardJsonFactory.swift in Sources */,
+				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 			);
@@ -671,19 +758,28 @@
 				33EE019B25690979003D3221 /* VideoPlayerLooper.swift in Sources */,
 				33EE01CA25690F57003D3221 /* SigninChecker.swift in Sources */,
 				33EE01D225690F70003D3221 /* CalendarCoordinator.swift in Sources */,
+				3360111E256B91CB009580A1 /* CardService.swift in Sources */,
+				3360112D256B9211009580A1 /* APICredentials.swift in Sources */,
 				33EE01E225690F9C003D3221 /* CalendarViewModel.swift in Sources */,
 				338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */,
 				33EE01C325690F24003D3221 /* InitCoordinatorFactory.swift in Sources */,
+				33601129256B91D5009580A1 /* Card.swift in Sources */,
 				33EE01FA25691044003D3221 /* Keychain.swift in Sources */,
 				33B87E312565072000354880 /* AreUDoneTests.swift in Sources */,
+				33601125256B91D2009580A1 /* CardEndPoint.swift in Sources */,
 				33EE01DE25690F8F003D3221 /* UIViewController+.swift in Sources */,
 				33EE01BF25690EEF003D3221 /* InitCoordinatorFactoryTests.swift in Sources */,
 				33EE01F22569101A003D3221 /* SigninViewModel.swift in Sources */,
+				33601116256B916C009580A1 /* JsonFactory.swift in Sources */,
+				33601112256B9156009580A1 /* MockRouter.swift in Sources */,
 				33EE01D625690F7C003D3221 /* UIStoryboard+.swift in Sources */,
+				33601131256B93C2009580A1 /* Date+.swift in Sources */,
 				33EE01EE2569100F003D3221 /* SigninViewController.swift in Sources */,
 				33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */,
 				33EE01E625690FBB003D3221 /* TabbarCoordinator.swift in Sources */,
+				3360111A256B9170009580A1 /* CardJsonFactory.swift in Sources */,
 				33EE01EA25690FC8003D3221 /* SigninCoordinator.swift in Sources */,
+				3360110B256B9123009580A1 /* RouterTests.swift in Sources */,
 				33EE01CE25690F69003D3221 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
