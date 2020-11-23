@@ -75,6 +75,12 @@
 		BDD18B9F2567B432005DF00A /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B9E2567B432005DF00A /* background.mp4 */; };
 		BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */; };
 		BDD18BB42568D682005DF00A /* VideoConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BB32568D682005DF00A /* VideoConstant.swift */; };
+		BDE27E15256B7FA0002308B9 /* DateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E14256B7FA0002308B9 /* DateLabel.swift */; };
+		BDE27E21256B8C89002308B9 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E1F256B8C88002308B9 /* CardTableViewCell.swift */; };
+		BDE27E22256B8C89002308B9 /* CardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDE27E20256B8C88002308B9 /* CardTableViewCell.xib */; };
+		BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E2B256B9215002308B9 /* UITableView+.swift */; };
+		BDE27E32256B9342002308B9 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E31256B9342002308B9 /* Reusable.swift */; };
+		BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E36256B934B002308B9 /* NibLoadable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +170,12 @@
 		BDD18B9E2567B432005DF00A /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
 		BDD18BA42567BB4D005DF00A /* VideoPlayerLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerLooper.swift; sourceTree = "<group>"; };
 		BDD18BB32568D682005DF00A /* VideoConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConstant.swift; sourceTree = "<group>"; };
+		BDE27E14256B7FA0002308B9 /* DateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLabel.swift; sourceTree = "<group>"; };
+		BDE27E1F256B8C88002308B9 /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		BDE27E20256B8C88002308B9 /* CardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardTableViewCell.xib; sourceTree = "<group>"; };
+		BDE27E2B256B9215002308B9 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
+		BDE27E31256B9342002308B9 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		BDE27E36256B934B002308B9 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,7 +285,6 @@
 				33B87E4C25650B2B00354880 /* Common */,
 				33B87E4D25650B3200354880 /* SignInScene */,
 				33EE016B2568EC48003D3221 /* CalendarScene */,
-				33EE01742568ED15003D3221 /* ViewModel */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -291,6 +302,7 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BDE27E30256B9335002308B9 /* Protocol */,
 				BDD18BB22568D636005DF00A /* Constants */,
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
@@ -353,6 +365,7 @@
 				33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */,
 				33EE016C2568EC5B003D3221 /* Resources */,
 				33EE016D2568EC63003D3221 /* View */,
+				33EE01742568ED15003D3221 /* ViewModel */,
 			);
 			path = CalendarScene;
 			sourceTree = "<group>";
@@ -368,7 +381,10 @@
 		33EE016D2568EC63003D3221 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				33EE016E2568ECC7003D3221 /* CalendarViewController.swift */,
+				BDE27E13256B7F8A002308B9 /* Controller */,
+				BDE27E14256B7FA0002308B9 /* DateLabel.swift */,
+				BDE27E1F256B8C88002308B9 /* CardTableViewCell.swift */,
+				BDE27E20256B8C88002308B9 /* CardTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,6 +402,7 @@
 			children = (
 				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
 				33F66CE82567A17C00959401 /* UIViewController+.swift */,
+				BDE27E2B256B9215002308B9 /* UITableView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -442,6 +459,23 @@
 				BDD18BB32568D682005DF00A /* VideoConstant.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		BDE27E13256B7F8A002308B9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				33EE016E2568ECC7003D3221 /* CalendarViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BDE27E30256B9335002308B9 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				BDE27E31256B9342002308B9 /* Reusable.swift */,
+				BDE27E36256B934B002308B9 /* NibLoadable.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -597,6 +631,7 @@
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
 				33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */,
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
+				BDE27E22256B8C89002308B9 /* CardTableViewCell.xib in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
 			);
@@ -636,10 +671,12 @@
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
+				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
+				BDE27E21256B8C89002308B9 /* CardTableViewCell.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
@@ -647,7 +684,9 @@
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
+				BDE27E15256B7FA0002308B9 /* DateLabel.swift in Sources */,
 				BDD18BB42568D682005DF00A /* VideoConstant.swift in Sources */,
+				BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
@@ -656,6 +695,7 @@
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
+				BDE27E32256B9342002308B9 /* Reusable.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 			);
