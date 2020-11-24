@@ -24,7 +24,7 @@ final class CalendarViewController: UIViewController {
   
   @IBOutlet private weak var dateLabel: DateLabel!
   @IBOutlet private weak var currentDateLabel: UILabel!
-  @IBOutlet weak var cardCollectionView: UICollectionView!
+  @IBOutlet weak var cardCollectionView: CardCollectionView!
   
   
   // MARK: - Initializer
@@ -45,10 +45,7 @@ final class CalendarViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     bindUI()
-    viewModel.fetchInitializeDailyCards()
-    configureDateLabelTapGesture()
-    
-    navigationController?.navigationBar.isHidden = true
+    configure()
   }
 }
 
@@ -58,6 +55,13 @@ final class CalendarViewController: UIViewController {
 private extension CalendarViewController {
   
   // MARK:- Method
+  
+  func configure() {
+    configureDateLabelTapGesture()
+    cardCollectionView.delegate = self
+    viewModel.fetchInitializeDailyCards()
+    navigationController?.navigationBar.isHidden = true
+  }
   
   func configureDateLabelTapGesture() {
     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dateLabelDidTapped))
@@ -88,7 +92,7 @@ private extension CalendarViewController {
       }
     }
   }
-
+  
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       collectionView: cardCollectionView
@@ -106,7 +110,7 @@ private extension CalendarViewController {
   
   func updateSnapshot(with item: Cards, animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-
+    
     snapshot.appendSections([""])
     snapshot.appendItems(item.cards)
     
@@ -115,9 +119,10 @@ private extension CalendarViewController {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension CardCellDelegate
 
 extension CalendarViewController: CardCellDelegate {
+  
   func delete(cardCell: CardCollectionViewCell) {
     if let indexPath = cardCollectionView.indexPath(for: cardCell),
        let item = dataSource.itemIdentifier(for: indexPath) {
@@ -125,5 +130,18 @@ extension CalendarViewController: CardCellDelegate {
       snapshot.deleteItems([item])
       
     }
+  }
+  
+  func resetCellOffset(without cell: CardCollectionViewCell) {
+    cardCollectionView.resetCellOffset(without: cell)
+  }
+}
+
+
+// MARK:- Extension UICollectionViewDelegate
+
+extension CalendarViewController: UICollectionViewDelegate {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cardCollectionView.resetCellOffset()
   }
 }

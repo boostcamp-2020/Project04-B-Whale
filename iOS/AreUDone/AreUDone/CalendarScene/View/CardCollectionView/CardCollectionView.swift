@@ -43,4 +43,17 @@ final class CardCollectionView: UICollectionView {
     
     collectionViewLayout = layout
   }
+  
+  func resetCellOffset(without cell: CardCollectionViewCell? = nil) {
+    guard var cells = visibleCells as? [CardCollectionViewCell] else { return }
+    if let cell = cell {
+      cells.removeAll { visibleCell -> Bool in
+        visibleCell == cell
+      }
+    }
+    
+    cells.forEach({ visibleCell in
+      visibleCell.resetOffset()
+    })
+  }
 }

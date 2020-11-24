@@ -9,6 +9,7 @@ import UIKit
 
 protocol CardCellDelegate {
   func delete(cardCell: CardCollectionViewCell)
+  func resetCellOffset(without cell: CardCollectionViewCell)
 }
 
 class CardCollectionViewCell: UICollectionViewCell, Reusable {
@@ -67,6 +68,12 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   func updateCell(with card: Card) {
     cardContentView.updateContentView(with: card)
+  }
+  
+  func resetOffset() {
+    UIView.animate(withDuration: 0.3) {
+      self.scrollView.contentOffset.x = 0
+    }
   }
 }
 
@@ -149,5 +156,6 @@ extension CardCollectionViewCell {
 extension CardCollectionViewCell: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     scrollView.backgroundColor = scrollView.contentOffset.x <= 0 ? .clear : .systemRed
+    delegate?.resetCellOffset(without: self)
   }
 }
