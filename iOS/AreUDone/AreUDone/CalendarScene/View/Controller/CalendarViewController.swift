@@ -46,6 +46,8 @@ final class CalendarViewController: UIViewController {
     super.viewDidLoad()
     bindUI()
     viewModel.fetchInitializeDailyCards()
+    configureDateLabelTapGesture()
+    
     navigationController?.navigationBar.isHidden = true
   }
 }
@@ -56,6 +58,16 @@ final class CalendarViewController: UIViewController {
 private extension CalendarViewController {
   
   // MARK:- Method
+  
+  func configureDateLabelTapGesture() {
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dateLabelDidTapped))
+    dateLabel.addGestureRecognizer(tapRecognizer)
+    dateLabel.isUserInteractionEnabled = true
+  }
+  
+  @objc func dateLabelDidTapped() {
+    calendarCoordinator?.didTapOnDate(selectedDate: Date())
+  }
   
   func bindUI() {
     initializeCardTableViewBinding()

@@ -16,7 +16,7 @@ final class TabbarCoordinator: Coordinator {
   private let signInCoordinator: SigninCoordinator
   
   private let tabbarController: UITabBarController
-  private let coordinators: [Coordinator]
+  private let coordinators: [NavigationCoordinator]
   
   private var controllers: [UINavigationController] = []
   
@@ -26,7 +26,7 @@ final class TabbarCoordinator: Coordinator {
     router: Routable,
     signInCoordinator: SigninCoordinator,
     tabbarController: UITabBarController,
-    coordinators: [Coordinator]
+    coordinators: [NavigationCoordinator]
   ) {
     self.router = router
     self.signInCoordinator = signInCoordinator
@@ -48,10 +48,12 @@ final class TabbarCoordinator: Coordinator {
     return tabbarController
   }
   
-  private func configureController(with coordinator: Coordinator) {
+  private func configureController(with coordinator: NavigationCoordinator) {
     let navigationController = UINavigationController()
     
     let viewController = coordinator.start()
+    coordinator.setNavigationController(navigationController)
+    
     navigationController.pushViewController(viewController, animated: false)
     navigationController.tabBarItem = UITabBarItem(title: "캘린더", image: UIImage(systemName: "circle"), tag: 0)
     
