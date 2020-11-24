@@ -9,7 +9,8 @@
     "start": "babel-node src/main",
     "start:dev": "nodemon -e js --watch src --exec babel-node src/main",
     "start:prod": "node dist/main",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
     "helmet": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-naver": "^1.0.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "typeorm": "^0.2.29",
