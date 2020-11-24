@@ -13,7 +13,7 @@ enum Section {
 
 final class CalendarViewController: UIViewController {
   
-  typealias DataSource = UITableViewDiffableDataSource<String, Card>
+  typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
   typealias Snapshot = NSDiffableDataSourceSnapshot<String, Card>
   
   // MARK: - Property
@@ -24,7 +24,7 @@ final class CalendarViewController: UIViewController {
   
   @IBOutlet private weak var dateLabel: DateLabel!
   @IBOutlet private weak var currentDateLabel: UILabel!
-  @IBOutlet private weak var cardTableView: CardTableView!
+  @IBOutlet weak var cardCollectionView: UICollectionView!
   
   
   // MARK: - Initializer
@@ -91,10 +91,12 @@ private extension CalendarViewController {
 
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
-      tableView: cardTableView) { (tableView, indexPath, card) -> UITableViewCell? in
-      let cell: CardTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+      collectionView: cardCollectionView
+    ) { (collectionView, indexPath, card) -> UICollectionViewCell? in
+      let cell: CardCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
-      cell.update(with: card)
+      cell.updateCell(with: card)
+      cell.delegate = self
       
       return cell
     }
@@ -105,11 +107,23 @@ private extension CalendarViewController {
   func updateSnapshot(with item: Cards, animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
 
-    item.cards.forEach { card in
-      snapshot.appendSections([String(card.id)])
-      snapshot.appendItems([card])
-    }
+    snapshot.appendSections([""])
+    snapshot.appendItems(item.cards)
     
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+  }
+}
+
+
+// MARK:- Extension
+
+extension CalendarViewController: CardCellDelegate {
+  func delete(cardCell: CardCollectionViewCell) {
+    if let indexPath = cardCollectionView.indexPath(for: cardCell),
+       let item = dataSource.itemIdentifier(for: indexPath) {
+      var snapshot = dataSource.snapshot()
+      snapshot.deleteItems([item])
+      
+    }
   }
 }
