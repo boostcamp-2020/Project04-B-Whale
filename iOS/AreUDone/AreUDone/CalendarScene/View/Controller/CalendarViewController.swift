@@ -133,7 +133,7 @@ extension CalendarViewController: CardCellDelegate {
   }
   
   func resetCellOffset(without cell: CardCollectionViewCell) {
-    cardCollectionView.resetCellOffset(without: cell)
+    cardCollectionView.resetVisibleCellOffset(without: cell)
   }
 }
 
@@ -142,6 +142,6 @@ extension CalendarViewController: CardCellDelegate {
 
 extension CalendarViewController: UICollectionViewDelegate {
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    cardCollectionView.resetCellOffset()
+    cardCollectionView.resetVisibleCellOffset()
   }
 }
