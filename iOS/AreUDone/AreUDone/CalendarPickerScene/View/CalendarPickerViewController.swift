@@ -16,7 +16,7 @@ class CalendarPickerViewController: UIViewController {
   typealias DataSource = UICollectionViewDiffableDataSource<Section, Day>
   typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Day>
   
-
+  
   // MARK: Views
   private lazy var dimmedBackgroundView: UIView = {
     let view = UIView()
@@ -34,6 +34,13 @@ class CalendarPickerViewController: UIViewController {
     collectionView.backgroundColor = .systemGroupedBackground
     collectionView.isScrollEnabled = false
     collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.delegate = self
+    
+    collectionView.register(
+      CalendarDateCollectionViewCell.self,
+      forCellWithReuseIdentifier: CalendarDateCollectionViewCell.reuseIdentifier
+    )
+    
     return collectionView
   }()
   
@@ -43,31 +50,11 @@ class CalendarPickerViewController: UIViewController {
     self.dismiss(animated: true)
   }
   
-  private lazy var footerView = CalendarPickerFooterView(
-    didTapLastMonthCompletionHandler: { [weak self] in
-      guard let self = self else { return }
-      
-      self.viewModel.fetchUpdateMonth(to: -1)
-    },
-    didTapNextMonthCompletionHandler: { [weak self] in
-      guard let self = self else { return }
-      
-      self.viewModel.fetchUpdateMonth(to: 1)
-    })
-
-  
   private let selectedDateChanged: ((Date) -> Void)
-  private let calendar = Calendar(identifier: .gregorian)
-  
-  private lazy var dateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "d"
-    return dateFormatter
-  }()
   
   private let viewModel: CalendarPickerViewModelProtocol
   lazy var dataSource = configureDataSource()
-
+  
   
   // MARK: - Initializer
   
@@ -79,7 +66,6 @@ class CalendarPickerViewController: UIViewController {
     
     modalPresentationStyle = .overCurrentContext
     modalTransitionStyle = .crossDissolve
-//    definesPresentationContext = true
   }
   
   required init?(coder: NSCoder) {
@@ -88,29 +74,86 @@ class CalendarPickerViewController: UIViewController {
   
   // MARK: - Life Cycle
   
-  func 
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     bindUI()
-    viewModel.fetchInitialData()
-    
     gestureRecognizer()
+    configureConstraints()
     
+    viewModel.fetchInitialData()
+  }
+}
+
+extension CalendarPickerViewController {
+  
+  func bindUI() {
+    viewModel.bindingInitializeDate { days, selectedDate in
+      self.updateSnapshot(with: days, animatingDifferences: false)
+      self.headerView.baseDate = selectedDate
+    }
+    
+    viewModel.bindingUpdateDate { days, selectedDate in
+      self.updateSnapshot(with: days)
+      self.headerView.baseDate = selectedDate
+    }
+    
+    viewModel.bindingChangeSelectedDate { days in
+      self.updateSnapshot(with: days)
+    }
+  }
+  
+  @objc func didSwiped(recognizer: UISwipeGestureRecognizer) {
+    switch recognizer.direction {
+    case .left:
+      self.viewModel.fetchUpdatedMonth(to: 1)
+      
+    case .right:
+      self.viewModel.fetchUpdatedMonth(to: -1)
+      
+    default:
+      break
+    }
+  }
+  
+  func gestureRecognizer() {
+    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+    leftSwipeGesture.direction = .left
+    
+    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+    rightSwipeGesture.direction = .right
+    
+    collectionView.addGestureRecognizer(leftSwipeGesture)
+    collectionView.addGestureRecognizer(rightSwipeGesture)
+  }
+}
+
+
+// MARK: Constraints 설정
+
+extension CalendarPickerViewController {
+  
+  func configureConstraints() {
     view.addSubview(dimmedBackgroundView)
     view.addSubview(collectionView)
     view.addSubview(headerView)
-    view.addSubview(footerView)
     
-    var constraints = [
+    configureDimmerViewConstraints()
+    configureCollectionViewConstraints()
+    configureHeaderViewConstraints()
+  }
+  
+  func configureDimmerViewConstraints() {
+    NSLayoutConstraint.activate([
       dimmedBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       dimmedBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       dimmedBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
       dimmedBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ]
-    
-    constraints.append(contentsOf: [
+    ])
+  }
+  
+  func configureCollectionViewConstraints() {
+    NSLayoutConstraint.activate([
       collectionView.leadingAnchor.constraint(
         equalTo: view.readableContentGuide.leadingAnchor),
       collectionView.trailingAnchor.constraint(
@@ -122,84 +165,26 @@ class CalendarPickerViewController: UIViewController {
         equalTo: view.heightAnchor,
         multiplier: 0.5)
     ])
-    
-    constraints.append(contentsOf: [
+  }
+  
+  func configureHeaderViewConstraints() {
+    NSLayoutConstraint.activate([
       headerView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
       headerView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
       headerView.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 85),
-      
-      footerView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
-      footerView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
-      footerView.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
-      footerView.heightAnchor.constraint(equalToConstant: 60)
+      headerView.heightAnchor.constraint(equalToConstant: 85)
     ])
-    
-    NSLayoutConstraint.activate(constraints)
-    
-    collectionView.register(
-      CalendarDateCollectionViewCell.self,
-      forCellWithReuseIdentifier: CalendarDateCollectionViewCell.reuseIdentifier
-    )
-    
-    collectionView.delegate = self
   }
-  
-
-  @objc func didSwipe(recognizer: UISwipeGestureRecognizer) {
-    
-    switch recognizer.direction {
-    case .left:
-      self.viewModel.fetchUpdateMonth(to: -1)
-    case .right:
-      self.viewModel.fetchUpdateMonth(to: 1)
-    default:
-      break
-    }
-  }
-  
-  func gestureRecognizer() {
-    
-    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
-    leftSwipeGesture.direction = .left
-    
-    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
-    rightSwipeGesture.direction = .right
-    
-    collectionView.addGestureRecognizer(leftSwipeGesture)
-    collectionView.addGestureRecognizer(rightSwipeGesture)
-    
-    
-    
-  }
-  
 }
 
-extension CalendarPickerViewController {
-  
-  func bindUI() {
-    viewModel.bindingInitialize { days, selectedDate in
-      self.updateSnapshot(with: days, animatingDifferences: false)
-      self.headerView.baseDate = selectedDate
-      
-    }
-    
-    viewModel.bindingUpdate { days, selectedDate in
-      self.updateSnapshot(with: days)
-      self.headerView.baseDate = selectedDate
 
-    }
-    
-    viewModel.bindingChangeSelectedDate { days in
-      self.updateSnapshot(with: days)
-    }
-  }
-  
+// MARK: Diffable DataSource
+
+extension CalendarPickerViewController {
   
   func configureDataSource() -> DataSource {
     let datasource = DataSource(collectionView: collectionView) { collectionView, indexPath, day -> UICollectionViewCell? in
       let cell: CalendarDateCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-      
       cell.day = day
       
       return cell
@@ -210,24 +195,24 @@ extension CalendarPickerViewController {
   
   func updateSnapshot(with item: [Day], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-
+    
     snapshot.appendSections([.main])
     snapshot.appendItems(item)
     
-    
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
-  
 }
 
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
+// MARK: UICollectionViewDelegateFlowLayout
 
+extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
+  
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cell = collectionView.cellForItem(at: indexPath) as! CalendarDateCollectionViewCell
-    viewModel.changeSelectedDate(to: cell.day!.date)
-    print("선택", cell.day!.date)
+    guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarDateCollectionViewCell,
+          let day = cell.day else { return }
+    
+    viewModel.changeSelectedDate(to: day.date)
   }
   
   func collectionView(
