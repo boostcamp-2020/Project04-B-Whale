@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
         res.status(err.errorCode.httpStatusCode).json({
             error: {
                 code: err.errorCode.code,
-                message: err.errorCode.message,
+                message: err.message,
             },
         });
     } else if (Array.isArray(err) && err[0] instanceof ValidationError) {
