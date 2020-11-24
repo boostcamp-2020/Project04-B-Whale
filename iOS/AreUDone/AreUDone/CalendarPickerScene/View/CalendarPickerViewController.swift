@@ -20,35 +20,23 @@ class CalendarPickerViewController: UIViewController {
   // MARK: Views
   private lazy var dimmedBackgroundView: UIView = {
     let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
     return view
   }()
   
-  private lazy var collectionView: UICollectionView = {
+  private lazy var collectionView: CalendarCollectionView = {
+    
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.backgroundColor = .systemGroupedBackground
-    collectionView.isScrollEnabled = false
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    let collectionView = CalendarCollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.delegate = self
-    
-    collectionView.register(
-      CalendarDateCollectionViewCell.self,
-      forCellWithReuseIdentifier: CalendarDateCollectionViewCell.reuseIdentifier
-    )
     
     return collectionView
   }()
   
-  private lazy var headerView = CalendarPickerHeaderView { [weak self] in
-    guard let self = self else { return }
-    
-    self.dismiss(animated: true)
-  }
+  private lazy var headerView = CalendarPickerHeaderView()
   
   private let selectedDateChanged: ((Date) -> Void)
   
@@ -78,14 +66,14 @@ class CalendarPickerViewController: UIViewController {
     super.viewDidLoad()
     
     bindUI()
-    gestureRecognizer()
+    addGestureRecognizer()
     configureConstraints()
     
     viewModel.fetchInitialData()
   }
 }
 
-extension CalendarPickerViewController {
+private extension CalendarPickerViewController {
   
   func bindUI() {
     viewModel.bindingInitializeDate { days, selectedDate in
@@ -116,7 +104,11 @@ extension CalendarPickerViewController {
     }
   }
   
-  func gestureRecognizer() {
+  @objc func didTapped() {
+    dismiss(animated: true)
+  }
+  
+  func addGestureRecognizer() {
     let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
     leftSwipeGesture.direction = .left
     
@@ -125,15 +117,23 @@ extension CalendarPickerViewController {
     
     collectionView.addGestureRecognizer(leftSwipeGesture)
     collectionView.addGestureRecognizer(rightSwipeGesture)
+    
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapped))
+    
+    dimmedBackgroundView.addGestureRecognizer(tapRecognizer)
   }
 }
 
 
 // MARK: Constraints 설정
 
-extension CalendarPickerViewController {
+private extension CalendarPickerViewController {
   
   func configureConstraints() {
+    dimmedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    headerView.translatesAutoresizingMaskIntoConstraints = false
+    
     view.addSubview(dimmedBackgroundView)
     view.addSubview(collectionView)
     view.addSubview(headerView)
@@ -180,7 +180,7 @@ extension CalendarPickerViewController {
 
 // MARK: Diffable DataSource
 
-extension CalendarPickerViewController {
+private extension CalendarPickerViewController {
   
   func configureDataSource() -> DataSource {
     let datasource = DataSource(collectionView: collectionView) { collectionView, indexPath, day -> UICollectionViewCell? in

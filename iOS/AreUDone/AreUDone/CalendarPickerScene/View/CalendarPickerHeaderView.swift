@@ -7,52 +7,40 @@
 
 import UIKit
 
-class CalendarPickerHeaderView: UIView {
-  lazy var monthLabel: UILabel = {
+final class CalendarPickerHeaderView: UIView {
+  
+  // MARK:- Property
+  
+  private lazy var monthLabel: UILabel = {
     let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = .systemFont(ofSize: 26, weight: .bold)
     label.text = "Month"
-    label.accessibilityTraits = .header
-    label.isAccessibilityElement = true
+    
     return label
   }()
-
-  lazy var closeButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-
-    let configuration = UIImage.SymbolConfiguration(scale: .large)
-    let image = UIImage(systemName: "xmark.circle.fill", withConfiguration: configuration)
-    button.setImage(image, for: .normal)
-
-    button.tintColor = .secondaryLabel
-    button.contentMode = .scaleAspectFill
-    button.isUserInteractionEnabled = true
-    button.isAccessibilityElement = true
-    button.accessibilityLabel = "Close Picker"
-    return button
-  }()
-
-  lazy var dayOfWeekStackView: UIStackView = {
+  
+  private lazy var dayOfWeekStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.distribution = .fillEqually
+    
     return stackView
   }()
 
-  lazy var separatorView: UIView = {
+  private lazy var separatorView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.label.withAlphaComponent(0.2)
+    
     return view
   }()
 
   private lazy var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.calendar = Calendar(identifier: .gregorian)
-    dateFormatter.locale = Locale.autoupdatingCurrent
-    dateFormatter.setLocalizedDateFormatFromTemplate("MMMM y")
+    dateFormatter.locale = Locale(identifier: "ko")
+    dateFormatter.dateFormat = "yyyy년 M월"
+    
     return dateFormatter
   }()
 
@@ -62,13 +50,37 @@ class CalendarPickerHeaderView: UIView {
     }
   }
 
-  var exitButtonTappedCompletionHandler: (() -> Void)
-
-  init(exitButtonTappedCompletionHandler: @escaping (() -> Void)) {
-    self.exitButtonTappedCompletionHandler = exitButtonTappedCompletionHandler
-
+  
+  // MARK:- Initializer
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  init() {
     super.init(frame: CGRect.zero)
+    
+    configure()
+  }
+}
 
+
+// MARK:- Extension
+
+private extension CalendarPickerHeaderView {
+  
+  func configure() {
+    addSubview(monthLabel)
+    addSubview(separatorView)
+    addSubview(dayOfWeekStackView)
+
+    configureView()
+    configureMonthLabel()
+    configureSeparatorView()
+    configureDayOfWeekStackView()
+  }
+  
+  func configureView() {
     translatesAutoresizingMaskIntoConstraints = false
 
     backgroundColor = .systemGroupedBackground
@@ -79,81 +91,63 @@ class CalendarPickerHeaderView: UIView {
     ]
     layer.cornerCurve = .continuous
     layer.cornerRadius = 15
-
-    addSubview(monthLabel)
-    addSubview(closeButton)
-    addSubview(dayOfWeekStackView)
-    addSubview(separatorView)
-
-    for dayNumber in 1...7 {
-      let dayLabel = UILabel()
-      dayLabel.font = .systemFont(ofSize: 12, weight: .bold)
-      dayLabel.textColor = .secondaryLabel
-      dayLabel.textAlignment = .center
-      dayLabel.text = dayOfWeekLetter(for: dayNumber)
-
-      // VoiceOver users don't need to hear these days of the week read to them, nor do SwitchControl or Voice Control users need to select them
-      // If fact, they get in the way!
-      // When a VoiceOver user highlights a day of the month, the day of the week is read to them.
-      // That method provides the same amount of context as this stack view does to visual users
-      dayLabel.isAccessibilityElement = false
-      dayOfWeekStackView.addArrangedSubview(dayLabel)
-    }
-
-    closeButton.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
   }
-
-  @objc func didTapExitButton() {
-    exitButtonTappedCompletionHandler()
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func dayOfWeekLetter(for dayNumber: Int) -> String {
-    switch dayNumber {
-    case 1:
-      return "S"
-    case 2:
-      return "M"
-    case 3:
-      return "T"
-    case 4:
-      return "W"
-    case 5:
-      return "T"
-    case 6:
-      return "F"
-    case 7:
-      return "S"
-    default:
-      return ""
-    }
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-
+  
+  func configureMonthLabel() {
+    monthLabel.translatesAutoresizingMaskIntoConstraints = false
+    
     NSLayoutConstraint.activate([
       monthLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       monthLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      monthLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: 5),
-
-      closeButton.centerYAnchor.constraint(equalTo: monthLabel.centerYAnchor),
-      closeButton.heightAnchor.constraint(equalToConstant: 28),
-      closeButton.widthAnchor.constraint(equalToConstant: 28),
-      closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-
-      dayOfWeekStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      dayOfWeekStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      dayOfWeekStackView.bottomAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: -5),
-
+      monthLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    ])
+  }
+  
+  func configureSeparatorView() {
+    separatorView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
       separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
       separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
       separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
       separatorView.heightAnchor.constraint(equalToConstant: 1)
     ])
   }
+  
+  func configureDayOfWeekStackView() {
+    dayOfWeekStackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    for dayNumber in 1...7 {
+      let title = dayOfWeekLetter(for: dayNumber)
+      let dayLabel = DayLabel(title: title)
+      dayOfWeekStackView.addArrangedSubview(dayLabel)
+    }
+    
+    NSLayoutConstraint.activate([
+      dayOfWeekStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      dayOfWeekStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      dayOfWeekStackView.bottomAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: -5),
+    ])
+  }
+  
+  func dayOfWeekLetter(for dayNumber: Int) -> String {
+    switch dayNumber {
+    case 1:
+      return "일"
+    case 2:
+      return "월"
+    case 3:
+      return "화"
+    case 4:
+      return "수"
+    case 5:
+      return "목"
+    case 6:
+      return "금"
+    case 7:
+      return "토"
+    default:
+      return ""
+    }
+  }
 }
-
