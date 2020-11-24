@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarPickerViewController: UIViewController {
+final class CalendarPickerViewController: UIViewController {
   
   enum Section {
     case main
@@ -17,7 +17,8 @@ class CalendarPickerViewController: UIViewController {
   typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Day>
   
   
-  // MARK: Views
+  // MARK: - Property
+  
   private lazy var dimmedBackgroundView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.black.withAlphaComponent(0.3)

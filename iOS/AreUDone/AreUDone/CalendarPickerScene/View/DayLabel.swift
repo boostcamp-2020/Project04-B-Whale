@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DayLabel: UILabel {
+final class DayLabel: UILabel {
   
   // MARK:- Initializer
   
