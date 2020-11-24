@@ -67,6 +67,7 @@
 		33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BB32568D682005DF00A /* VideoConstant.swift */; };
 		33EE01FA25691044003D3221 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
+		BD2AA722256CBDAC00EA8791 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA721256CBDAC00EA8791 /* UICollectionView+.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -171,6 +172,7 @@
 		33EE01892568F47D003D3221 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactoryTests.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		BD2AA721256CBDAC00EA8791 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				33F66CE82567A17C00959401 /* UIViewController+.swift */,
 				BDE27E2B256B9215002308B9 /* UITableView+.swift */,
 				336010D4256B891C009580A1 /* Date+.swift */,
+				BD2AA721256CBDAC00EA8791 /* UICollectionView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				BDE27E21256B8C89002308B9 /* CardTableViewCell.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
+				BD2AA722256CBDAC00EA8791 /* UICollectionView+.swift in Sources */,
 				BDE27E4B256BC674002308B9 /* CardTableView.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
