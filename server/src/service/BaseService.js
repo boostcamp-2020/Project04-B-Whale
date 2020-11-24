@@ -7,7 +7,7 @@ import { Invitation } from '../model/Invitation';
 import { List } from '../model/List';
 import { User } from '../model/User';
 
-export class AbstractService {
+export class BaseService {
     constructor() {
         this.activityRepository = getRepository(Activity);
         this.boardRepository = getRepository(Board);

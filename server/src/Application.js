@@ -10,9 +10,13 @@ import {
     initializeTransactionalContext,
     patchTypeORMRepositoryWithBaseRepository,
 } from 'typeorm-transactional-cls-hooked';
+import passport from 'passport';
 import { ConnectionOptionGenerator } from './common/config/database/ConnectionOptionGenerator';
 import { DatabaseEnv } from './common/env/DatabaseEnv';
 import { EnvType } from './common/env/EnvType';
+import { IndexRouter } from './router';
+import { errorHandler } from './common/middleware/errorHandler';
+import { NaverStrategy } from './common/config/passport/NaverStrategy';
 
 export class Application {
     constructor() {
@@ -30,6 +34,7 @@ export class Application {
     async initialize() {
         try {
             await this.initEnvironment();
+            this.initPassport();
             this.registerMiddleware();
             await this.initDatabase();
         } catch (error) {
@@ -64,5 +69,11 @@ export class Application {
         this.httpServer.use(cors());
         this.httpServer.use(express.json());
         this.httpServer.use(express.urlencoded({ extended: false }));
+        this.httpServer.use(IndexRouter());
+        this.httpServer.use(errorHandler);
+    }
+
+    initPassport() {
+        passport.use(new NaverStrategy());
     }
 }

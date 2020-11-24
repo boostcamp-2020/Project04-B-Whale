@@ -1,6 +1,6 @@
-import { AbstractService } from './AbstractService';
+import { BaseService } from './BaseService';
 
-export class ActivityService extends AbstractService {
+export class ActivityService extends BaseService {
     static instance = null;
 
     static getInstance() {
