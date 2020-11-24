@@ -11,3 +11,12 @@ protocol Coordinator {
   @discardableResult
   func start() -> UIViewController
 }
+
+protocol NavigationCoordinator {
+  
+  func setNavigationController(_ navigationController: UINavigationController)
+  
+  @discardableResult
+  func start() -> UIViewController
+}
+

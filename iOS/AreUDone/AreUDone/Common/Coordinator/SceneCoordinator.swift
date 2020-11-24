@@ -16,7 +16,7 @@ final class SceneCoordinator: Coordinator {
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
   private let router: Router
-  
+  private var initCoordinator: Coordinator!
   
   // MARK: - Initializer
   
@@ -39,7 +39,7 @@ final class SceneCoordinator: Coordinator {
     var signinCheckResult = signinChecker.check()
     signinCheckResult = .isSigned // TODO: 로그인 API 완성되면 삭제
     
-    let initCoordinator = initCoordinatorFactory.coordinator(
+    initCoordinator = initCoordinatorFactory.coordinator(
       by: signinCheckResult,
       with: router
     )
