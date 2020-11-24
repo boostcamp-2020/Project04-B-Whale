@@ -6,10 +6,9 @@ export const BoardRouter = () => {
 
     router.get('/', async (req, res) => {
         const boardService = BoardService.getInstance();
-        // TODO: jwt 추가 후, req.user에서 userId를 가져와야할 것
-        const userId = 1;
-        const data = await boardService.getBoardsByUserId(userId);
-        res.status(200).json({ data });
+        const { id } = req.user;
+        const data = await boardService.getBoardsByUserId(id);
+        res.status(200).json({ ...data });
     });
 
     return router;
