@@ -78,7 +78,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   // MARK: Calendar 계산 Method
   
-  func generateDaysInMonth(for baseDate: Date) -> [Day] {
+  private func generateDaysInMonth(for baseDate: Date) -> [Day] {
     guard let metadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
@@ -107,7 +107,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
+  private func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
     guard let numberOfDaysInMonth = calendar.range(
       of: .day,
       in: .month,
@@ -127,7 +127,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
       firstDayWeekday: firstDayWeekday)
   }
   
-  func generateDay(
+  private func generateDay(
     offsetBy dayOffset: Int,
     for baseDate: Date,
     isWithinDisplayedMonth: Bool
@@ -147,7 +147,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return day
   }
   
-  func generateStartOfNextMonth(
+  private func generateStartOfNextMonth(
     using firstDayOfDisplayedMonth: Date
   ) -> [Day] {
     guard let lastDayInMonth = calendar.date(
@@ -167,7 +167,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  enum CalendarDataError: Error {
+  private enum CalendarDataError: Error {
     case metadataGeneration
   }
 }

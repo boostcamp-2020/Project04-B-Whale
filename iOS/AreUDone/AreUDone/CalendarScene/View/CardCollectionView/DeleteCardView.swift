@@ -14,7 +14,7 @@ class DeleteCardView: UIView {
   private lazy var deleteImageView: UIImageView = {
     let imageView = UIImageView()
     let image = UIImage(systemName: "trash")
-    imageView.tintColor = .black
+    imageView.tintColor = .white
     imageView.image = image
     
     return imageView
@@ -46,7 +46,7 @@ private extension DeleteCardView {
     configureDeleteImageView()
   }
   
-  func configureView(){
+  private func configureView() {
     backgroundColor = .systemRed
     layer.maskedCorners = [
       .layerMaxXMinYCorner,

@@ -8,10 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-<<<<<<< HEAD
-  
-=======
->>>>>>> 097a0a19e51fdcc8c40c017d7e53b56543a4893c
+
   func register<T: UICollectionViewCell>(_: T.Type) where T: Reusable {
     register(T.self, forCellWithReuseIdentifier: T.defaultReuseIdentifier)
   }
