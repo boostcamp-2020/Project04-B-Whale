@@ -9,7 +9,7 @@ export const IndexRouter = () => {
 
     router.use('/api/oauth', OAuthRouter());
     router.use('/api/user', passport.authenticate('jwt', { session: false }), UserRouter());
-    router.use('/api/board', BoardRouter());
+    router.use('/api/board', passport.authenticate('jwt', { session: false }), BoardRouter());
 
     return router;
 };
