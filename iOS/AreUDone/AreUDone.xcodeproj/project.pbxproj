@@ -395,7 +395,6 @@
 			isa = PBXGroup;
 			children = (
 				33B87E182565071C00354880 /* AreUDone */,
-				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 				BDD18B9E2567B432005DF00A /* background.mp4 */,
 				3383647625660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE325660E77005DF00A /* KeychainFramework */,
@@ -424,6 +423,7 @@
 				33B87E4C25650B2B00354880 /* Common */,
 				33B87E4D25650B3200354880 /* SignInScene */,
 				33EE016B2568EC48003D3221 /* CalendarScene */,
+				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";

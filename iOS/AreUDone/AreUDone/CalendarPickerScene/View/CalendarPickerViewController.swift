@@ -31,6 +31,7 @@ class CalendarPickerViewController: UIViewController {
     layout.minimumInteritemSpacing = 0
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.backgroundColor = .systemGroupedBackground
     collectionView.isScrollEnabled = false
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
@@ -70,7 +71,7 @@ class CalendarPickerViewController: UIViewController {
   
   // MARK: - Initializer
   
-  init(viewModel: CalendarPickerViewModelProtocol , baseDate: Date, selectedDateChanged: @escaping ((Date) -> Void)) {
+  init(viewModel: CalendarPickerViewModelProtocol, selectedDateChanged: @escaping ((Date) -> Void)) {
     self.viewModel = viewModel
     self.selectedDateChanged = selectedDateChanged
     
@@ -78,14 +79,16 @@ class CalendarPickerViewController: UIViewController {
     
     modalPresentationStyle = .overCurrentContext
     modalTransitionStyle = .crossDissolve
-    definesPresentationContext = true
+//    definesPresentationContext = true
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This controller must be initialized with code")
   }
   
-  // MARK: View Lifecycle
+  // MARK: - Life Cycle
+  
+  func 
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -94,9 +97,6 @@ class CalendarPickerViewController: UIViewController {
     viewModel.fetchInitialData()
     
     gestureRecognizer()
-    
-    
-    collectionView.backgroundColor = .systemGroupedBackground
     
     view.addSubview(dimmedBackgroundView)
     view.addSubview(collectionView)
@@ -111,16 +111,13 @@ class CalendarPickerViewController: UIViewController {
     ]
     
     constraints.append(contentsOf: [
-      //1
       collectionView.leadingAnchor.constraint(
         equalTo: view.readableContentGuide.leadingAnchor),
       collectionView.trailingAnchor.constraint(
         equalTo: view.readableContentGuide.trailingAnchor),
-      //2
       collectionView.centerYAnchor.constraint(
         equalTo: view.centerYAnchor,
         constant: 10),
-      //3
       collectionView.heightAnchor.constraint(
         equalTo: view.heightAnchor,
         multiplier: 0.5)
@@ -176,28 +173,6 @@ class CalendarPickerViewController: UIViewController {
     
   }
   
-//  + (CATransition *)swipeTransitionToLeftSide:(BOOL)leftSide
-//  {
-//      CATransition* transition = [CATransition animation];
-//      transition.startProgress = 0;
-//      transition.endProgress = 1.0;
-//      transition.type = kCATransitionPush;
-//
-//      transition.subtype = leftSide ? kCATransitionFromRight : kCATransitionFromLeft;
-//      transition.duration = AnimationDuration;
-//      return transition;
-//  }
-  
-//  UISwipeGestureRecognizer *swipeGestureL = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeToLeftCollectionView:)];
-//  swipeGestureL.direction = UISwipeGestureRecognizerDirectionLeft;
-//  [self.collectionView addGestureRecognizer:swipeGestureL];
-//
-//  - (void)didSwipeToLeftCollectionView:(UISwipeGestureRecognizer *)swipeGesture
-//  {
-//      [self.collectionView.layer addAnimation:[Animation swipeTransitionToLeftSide:YES] forKey:nil];
-//      [self.collectionView reloadData];
-//  }
-
 }
 
 extension CalendarPickerViewController {

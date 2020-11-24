@@ -67,7 +67,6 @@ private extension CalendarViewController {
   
   @objc func dateLabelDidTapped() {
     calendarCoordinator?.didTapOnDate(selectedDate: Date())
-    
   }
   
   func bindUI() {

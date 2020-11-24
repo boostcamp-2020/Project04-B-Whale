@@ -17,9 +17,9 @@ final class CalendarPickerViewCoordinator: Coordinator {
   
   func start() -> UIViewController {
     let viewModel = CalendarPickerViewModel()
-    viewModel.selectedDate = selectedDate // TODO: 수정
+    viewModel.selectedDate = selectedDate
     
-    let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel, baseDate: Date(), selectedDateChanged: { date in
+    let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel, selectedDateChanged: { date in
       print(date)
     })
     
