@@ -49,8 +49,8 @@ final class CalendarCoordinator: NavigationCoordinator {
 
 extension CalendarCoordinator {
   
-  func didTapOnDate() {
-    let calendarPickerCoordinator = CalendarPickerViewCoordinator()
+  func didTapOnDate(selectedDate: Date) {
+    let calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: selectedDate)
     
     let calendarPickerViewController = calendarPickerCoordinator.start()
     navigationController.present(calendarPickerViewController, animated: true)

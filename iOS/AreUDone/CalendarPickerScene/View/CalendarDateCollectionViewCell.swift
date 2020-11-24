@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarDateCollectionViewCell: UICollectionViewCell {
+class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
   private lazy var selectionBackgroundView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false

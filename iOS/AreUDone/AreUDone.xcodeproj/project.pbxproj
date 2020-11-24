@@ -28,6 +28,8 @@
 		3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601199256CBEEA009580A1 /* MonthMetadata.swift */; };
 		336011A2256CBEFF009580A1 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A1256CBEFF009580A1 /* Day.swift */; };
 		336011A7256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */; };
+		336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
+		336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -153,6 +155,8 @@
 		33601199256CBEEA009580A1 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
 		336011A1256CBEFF009580A1 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewCoordinator.swift; sourceTree = "<group>"; };
+		336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
+		336011B9256CDDA0009580A1 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +315,36 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		336011C1256CFC44009580A1 /* CalendarPickerScene */ = {
+			isa = PBXGroup;
+			children = (
+				336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */,
+				33601198256CBED2009580A1 /* Model */,
+				336011C3256CFCF5009580A1 /* View */,
+				336011C2256CFCDB009580A1 /* ViewModel */,
+			);
+			path = CalendarPickerScene;
+			sourceTree = "<group>";
+		};
+		336011C2256CFCDB009580A1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		336011C3256CFCF5009580A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				33601181256CBE51009580A1 /* CalendarPickerViewController.swift */,
+				33601186256CBE8D009580A1 /* CalendarPickerFooterView.swift */,
+				3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */,
+				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		338364572565573A00F92EE4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				33B87E182565071C00354880 /* AreUDone */,
+				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 				BDD18B9E2567B432005DF00A /* background.mp4 */,
 				3383647625660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE325660E77005DF00A /* KeychainFramework */,
@@ -469,9 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */,
-				336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */,
 				33EE016C2568EC5B003D3221 /* Resources */,
-				33601198256CBED2009580A1 /* Model */,
 				33EE016D2568EC63003D3221 /* View */,
 				33EE01742568ED15003D3221 /* ViewModel */,
 			);
@@ -512,6 +545,7 @@
 				BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */,
 				33F66CE82567A17C00959401 /* UIViewController+.swift */,
 				BDE27E2B256B9215002308B9 /* UITableView+.swift */,
+				336011B9256CDDA0009580A1 /* UICollectionView+.swift */,
 				336010D4256B891C009580A1 /* Date+.swift */,
 			);
 			path = Extension;
@@ -573,10 +607,6 @@
 			isa = PBXGroup;
 			children = (
 				33EE016E2568ECC7003D3221 /* CalendarViewController.swift */,
-				33601181256CBE51009580A1 /* CalendarPickerViewController.swift */,
-				33601186256CBE8D009580A1 /* CalendarPickerFooterView.swift */,
-				3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */,
-				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -782,6 +812,7 @@
 			files = (
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
+				336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */,
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				33601187256CBE8D009580A1 /* CalendarPickerFooterView.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
@@ -818,6 +849,7 @@
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
 				336010C3256B786E009580A1 /* Card.swift in Sources */,
+				336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDE27E32256B9342002308B9 /* Reusable.swift in Sources */,
