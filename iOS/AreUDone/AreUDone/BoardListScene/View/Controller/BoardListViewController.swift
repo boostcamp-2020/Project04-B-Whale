@@ -9,9 +9,17 @@ import UIKit
 
 class BoardListViewController: UIViewController {
   
+  
   // MARK: - Property
   
   weak var coordinator: BoardListCoordinator?
+
+  private let searchController: UISearchController = {
+      let searchController = UISearchController(searchResultsController: nil)
+      searchController.obscuresBackgroundDuringPresentation = false
+      searchController.searchBar.placeholder = "보드 검색"
+      return searchController
+  }()
 
   
   // MARK: - Initializer
@@ -31,10 +39,38 @@ class BoardListViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    bindUI()
+    configure()
   }
   
   
   // MARK: - Method
   
   
+}
+
+
+// MARK: - Extension
+
+private extension BoardListViewController {
+  
+  func bindUI() {
+    
+  }
+  
+  func configure() {
+    navigationItem.searchController = searchController
+    searchController.searchResultsUpdater = self
+  }
+}
+
+
+// MARK: UISearchResultsUpdating
+
+extension BoardListViewController: UISearchResultsUpdating {
+  
+  func updateSearchResults(for searchController: UISearchController) {
+    
+    guard let searchKeyword = searchController.searchBar.text else { return }
+  }
 }
