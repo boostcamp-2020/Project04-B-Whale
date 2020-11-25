@@ -107,19 +107,9 @@ describe('Board API Test', () => {
 
     test('GET /api/board가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {
         // given
-        const testTitle = 'test title';
-        const boardRepository = getRepository(Board);
-        const countOfBoardFirst = await boardRepository
-            .createQueryBuilder('board')
-            .select('board.id')
-            .addSelect('board.title')
-            .where('board.title = :title', { title: testTitle })
-            .getCount();
-
         const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
-
         const userRepository = getRepository(User);
-        const createUser = await userRepository.create(user);
+        const createUser = userRepository.create(user);
         const createdUser = await userRepository.save(createUser);
 
         const token = await jwtUtil.generateAccessToken({
@@ -134,17 +124,9 @@ describe('Board API Test', () => {
                 Authorization: token,
                 'Content-Type': 'application/json',
             })
-            .send({ title: testTitle });
-
-        const countOfBoardSecond = await boardRepository
-            .createQueryBuilder('board')
-            .select('board.id')
-            .addSelect('board.title')
-            .where('board.title = :title', { title: testTitle })
-            .getCount();
+            .send({ title: 'test title' });
 
         // then
         expect(response.status).toEqual(201);
-        expect(countOfBoardFirst).toEqual(countOfBoardSecond - 1);
     });
 });
