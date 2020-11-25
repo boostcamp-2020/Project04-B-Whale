@@ -7,9 +7,10 @@
 
 import UIKit
 
-final class CalendarPickerViewCoordinator: Coordinator {
+final class CalendarPickerViewCoordinator: NavigationCoordinator {
   
   private let selectedDate: Date
+  var navigationController: UINavigationController?
   
   init(selectedDate: Date) {
     self.selectedDate = selectedDate
@@ -19,10 +20,16 @@ final class CalendarPickerViewCoordinator: Coordinator {
     let viewModel = CalendarPickerViewModel()
     viewModel.selectedDate = selectedDate
     
-    let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel, selectedDateChanged: { date in
-      print(date)
-    })
+    let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel)
+    calendarPickerViewController.coordinator = self
     
     return calendarPickerViewController
+  }
+}
+
+extension CalendarPickerViewCoordinator {
+  
+  func dismiss() {
+    navigationController?.dismiss(animated: true)
   }
 }

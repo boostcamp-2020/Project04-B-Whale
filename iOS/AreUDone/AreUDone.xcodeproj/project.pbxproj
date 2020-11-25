@@ -30,7 +30,10 @@
 		336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
 		336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011CD256D15F0009580A1 /* CalendarCollectionView.swift */; };
-		336011D3256D1877009580A1 /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayLabel.swift */; };
+		336011D3256D1877009580A1 /* DayOfTheWeekLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */; };
+		336011EE256D4877009580A1 /* DateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011ED256D4877009580A1 /* DateStepper.swift */; };
+		336011F3256D48FA009580A1 /* DateStepper.xib in Resources */ = {isa = PBXBuildFile; fileRef = 336011F2256D48FA009580A1 /* DateStepper.xib */; };
+		336011FE256D5CFE009580A1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011FD256D5CFE009580A1 /* String+.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -159,7 +162,10 @@
 		336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
 		336011B9256CDDA0009580A1 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		336011CD256D15F0009580A1 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
-		336011D2256D1877009580A1 /* DayLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabel.swift; sourceTree = "<group>"; };
+		336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekLabel.swift; sourceTree = "<group>"; };
+		336011ED256D4877009580A1 /* DateStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStepper.swift; sourceTree = "<group>"; };
+		336011F2256D48FA009580A1 /* DateStepper.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateStepper.xib; sourceTree = "<group>"; };
+		336011FD256D5CFE009580A1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,13 +347,21 @@
 		336011C3256CFCF5009580A1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				33601181256CBE51009580A1 /* CalendarPickerViewController.swift */,
+				336011EC256D4736009580A1 /* Controller */,
 				3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */,
-				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
 				336011CD256D15F0009580A1 /* CalendarCollectionView.swift */,
-				336011D2256D1877009580A1 /* DayLabel.swift */,
+				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
+				336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		336011EC256D4736009580A1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				33601181256CBE51009580A1 /* CalendarPickerViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		338364572565573A00F92EE4 /* Model */ = {
@@ -530,6 +544,8 @@
 				BDE27E13256B7F8A002308B9 /* Controller */,
 				BD2AA745256CEC1600EA8791 /* CardCollectionView */,
 				BDE27E14256B7FA0002308B9 /* DateLabel.swift */,
+				336011ED256D4877009580A1 /* DateStepper.swift */,
+				336011F2256D48FA009580A1 /* DateStepper.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -561,6 +577,7 @@
 				BDE27E2B256B9215002308B9 /* UITableView+.swift */,
 				336011B9256CDDA0009580A1 /* UICollectionView+.swift */,
 				336010D4256B891C009580A1 /* Date+.swift */,
+				336011FD256D5CFE009580A1 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -781,6 +798,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
+				336011F3256D48FA009580A1 /* DateStepper.xib in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
@@ -833,6 +851,7 @@
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
+				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
@@ -846,7 +865,7 @@
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
-				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
+				336011D3256D1877009580A1 /* DayOfTheWeekLabel.swift in Sources */,
 				BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
@@ -869,6 +888,7 @@
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDE27E32256B9342002308B9 /* Reusable.swift in Sources */,
 				336010DE256B8E60009580A1 /* CardJsonFactory.swift in Sources */,
+				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,

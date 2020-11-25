@@ -11,6 +11,10 @@ enum Section {
   case main
 }
 
+protocol CalendarViewControllerDelegate: AnyObject {
+  func send(selectedDate: String)
+}
+
 final class CalendarViewController: UIViewController {
   
   typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
@@ -22,8 +26,7 @@ final class CalendarViewController: UIViewController {
   weak var calendarCoordinator: CalendarCoordinator?
   lazy var dataSource = configureDataSource()
   
-  @IBOutlet private weak var dateLabel: DateLabel!
-  @IBOutlet private weak var currentDateLabel: UILabel!
+  @IBOutlet weak var dateStepper: DateStepper!
   @IBOutlet weak var cardCollectionView: UICollectionView!
   
   
@@ -44,9 +47,12 @@ final class CalendarViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    dateStepper.delegate = self
+  
     bindUI()
+    viewModel.initializeDate()
     viewModel.fetchInitializeDailyCards()
-    configureDateLabelTapGesture()
     
     navigationController?.navigationBar.isHidden = true
   }
@@ -59,36 +65,33 @@ private extension CalendarViewController {
   
   // MARK:- Method
   
-  func configureDateLabelTapGesture() {
-    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dateLabelDidTapped))
-    dateLabel.addGestureRecognizer(tapRecognizer)
-    dateLabel.isUserInteractionEnabled = true
-  }
-  
-  @objc func dateLabelDidTapped() {
-    calendarCoordinator?.didTapOnDate(selectedDate: Date())
-  }
-  
   func bindUI() {
-    initializeCardTableViewBinding()
+    bindingInitializeCardCollectionView()
+    bindingUpdateDate()
   }
   
-  func initializeCardTableViewBinding() {
-    viewModel.bindingInitializeCardTableView { [weak self] cards in
+  func bindingInitializeCardCollectionView() {
+    viewModel.bindingInitializeCardCollectionView { [weak self] cards in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: cards, animatingDifferences: false)
       }
     }
   }
   
-  func updateCardTableViewBinding() {
-    viewModel.bindingUpdateCardTableView { [weak self] cards in
+  func bindingUpdateCardCollectionView() {
+    viewModel.bindingUpdateCardCollectionView { [weak self] cards in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: cards)
       }
     }
   }
-
+  
+  func bindingUpdateDate() {
+    viewModel.bindingUpdateDate { date in
+      self.dateStepper.updateDate(date: date)
+    }
+  }
+  
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       collectionView: cardCollectionView
@@ -115,7 +118,30 @@ private extension CalendarViewController {
 }
 
 
-// MARK:- Extension
+// MARK: DateStepperDelegate
+
+extension CalendarViewController: DateStepperDelegate {
+  func arrowDidTapped(direction: Direction, with date: String) {
+    viewModel.changeDate(to: date, direction: direction)
+  }
+  
+  func dateLabelDidTapped(of date: String) {
+    calendarCoordinator?.didTapOnDate(selectedDate: date.toDate(), delegate: self)
+  }
+}
+
+
+// MARK: CalendarViewControllerDelegate
+
+extension CalendarViewController: CalendarViewControllerDelegate {
+  
+  func send(selectedDate: String) {
+    viewModel.changeDate(to: selectedDate, direction: nil)
+  }
+}
+
+
+// MARK: CardCellDelegate
 
 extension CalendarViewController: CardCellDelegate {
   func delete(cardCell: CardCollectionViewCell) {
