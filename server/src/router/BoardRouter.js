@@ -11,5 +11,11 @@ export const BoardRouter = () => {
         res.status(200).json(data);
     });
 
+    router.post('/', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.createBoard(req.user.id, req.body.title);
+        res.status(201).json({ message: 'success' });
+    });
+
     return router;
 };
