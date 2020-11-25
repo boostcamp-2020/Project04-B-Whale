@@ -9,6 +9,12 @@ import UIKit
 
 class BoardListViewController: UIViewController {
   
+  enum Section {
+    case main
+  }
+  
+  typealias DataSource = UICollectionViewDiffableDataSource<Section, Board>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Board>
   
   // MARK: - Property
   
@@ -20,6 +26,9 @@ class BoardListViewController: UIViewController {
       searchController.searchBar.placeholder = "보드 검색"
       return searchController
   }()
+  
+  @IBOutlet weak var collectionView: BoardListCollectionView!
+  lazy var dataSource = configureDataSource()
 
   
   // MARK: - Initializer
@@ -41,6 +50,8 @@ class BoardListViewController: UIViewController {
     
     bindUI()
     configure()
+    
+    updateSnapshot()
   }
   
   
@@ -65,12 +76,41 @@ private extension BoardListViewController {
 }
 
 
+// MARK: Diffable DataSource
+
+private extension BoardListViewController {
+  
+  func configureDataSource() -> DataSource {
+    let dataSource = DataSource(
+      collectionView: collectionView
+    ) { (collectionView, indexPath, board) -> UICollectionViewCell? in
+      let cell: BoardListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+      cell.updateCell(board: board)
+      
+      return cell
+    }
+    
+    return dataSource
+  }
+  
+  func updateSnapshot() {
+    var snapshot = Snapshot()
+    
+    let boards = [Board(id: 1, title: "ddd")] // TODO: 임시 데이터 삭제 예정
+    
+    snapshot.appendSections([.main])
+    snapshot.appendItems(boards)
+    
+    dataSource.apply(snapshot, animatingDifferences: false)
+  }
+}
+
+
 // MARK: UISearchResultsUpdating
 
 extension BoardListViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    
-    guard let searchKeyword = searchController.searchBar.text else { return }
+//    guard let searchKeyword = searchController.searchBar.text else { return }
   }
 }

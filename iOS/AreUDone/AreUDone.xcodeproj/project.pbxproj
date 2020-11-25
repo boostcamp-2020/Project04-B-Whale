@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
+		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
+		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
 		336010C3256B786E009580A1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C2256B786E009580A1 /* Card.swift */; };
 		336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C7256B78CE009580A1 /* CardEndPoint.swift */; };
 		336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010CC256B7B2B009580A1 /* APICredentials.swift */; };
@@ -154,6 +157,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
+		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
 		336010C2256B786E009580A1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		336010C7256B78CE009580A1 /* CardEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEndPoint.swift; sourceTree = "<group>"; };
 		336010CC256B7B2B009580A1 /* APICredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
@@ -280,6 +286,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		335AC4C3256EA2CF006A5C4A /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */,
+				335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		336010DC256B8E34009580A1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18B332566403E005DF00A /* BoardService.swift */,
+				335AC4AE256E9A6B006A5C4A /* Board.swift */,
 			);
 			path = BoardService;
 			sourceTree = "<group>";
@@ -393,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				33601241256E5138009580A1 /* Controller */,
+				335AC4C3256EA2CF006A5C4A /* CollectionView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -953,15 +970,18 @@
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
 				336010C3256B786E009580A1 /* Card.swift in Sources */,
 				336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */,
+				335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDE27E32256B9342002308B9 /* Reusable.swift in Sources */,
 				336010DE256B8E60009580A1 /* CardJsonFactory.swift in Sources */,
 				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
+				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
+				335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
