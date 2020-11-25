@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailCardViewModelProtocol {
-  
+  func bindingDetailCardView(handler: @escaping (() -> Void))
 }
 
 final class DetailCardViewModel: DetailCardViewModelProtocol {
@@ -24,5 +24,10 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
   init(id: Int, cardService: CardServiceProtocol) {
     self.id = id
     self.cardService = cardService
+  }
+  
+  
+  func bindingDetailCardView(handler: @escaping (() -> Void)) {
+    
   }
 }

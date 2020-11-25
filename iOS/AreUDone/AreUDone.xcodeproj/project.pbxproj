@@ -85,6 +85,7 @@
 		BD2AA7A7256DF93800EA8791 /* DetailCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7A6256DF93800EA8791 /* DetailCardViewModel.swift */; };
 		BD2AA7B0256DFA5800EA8791 /* DetailCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA7AF256DFA5800EA8791 /* DetailCard.storyboard */; };
 		BD2AA7B5256DFBCD00EA8791 /* DetailCardCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7B4256DFBCD00EA8791 /* DetailCardCoordinator.swift */; };
+		BD2AA7C3256E3D3600EA8791 /* DetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7C2256E3D3600EA8791 /* DetailCard.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -204,6 +205,7 @@
 		BD2AA7A6256DF93800EA8791 /* DetailCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardViewModel.swift; sourceTree = "<group>"; };
 		BD2AA7AF256DFA5800EA8791 /* DetailCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailCard.storyboard; sourceTree = "<group>"; };
 		BD2AA7B4256DFBCD00EA8791 /* DetailCardCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardCoordinator.swift; sourceTree = "<group>"; };
+		BD2AA7C2256E3D3600EA8791 /* DetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCard.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -647,6 +649,7 @@
 				336010C2256B786E009580A1 /* Card.swift */,
 				336010C7256B78CE009580A1 /* CardEndPoint.swift */,
 				BDD18B2D25663F6D005DF00A /* CardService.swift */,
+				BD2AA7C2256E3D3600EA8791 /* DetailCard.swift */,
 			);
 			path = CardService;
 			sourceTree = "<group>";
@@ -888,6 +891,7 @@
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* DetailCardViewController.swift in Sources */,
+				BD2AA7C3256E3D3600EA8791 /* DetailCard.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
