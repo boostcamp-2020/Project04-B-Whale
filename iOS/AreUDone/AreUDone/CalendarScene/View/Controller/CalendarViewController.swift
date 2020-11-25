@@ -47,6 +47,11 @@ final class CalendarViewController: UIViewController {
     bindUI()
     configure()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = true
+  }
 }
 
 
@@ -60,7 +65,6 @@ private extension CalendarViewController {
     configureDateLabelTapGesture()
     cardCollectionView.delegate = self
     viewModel.fetchInitializeDailyCards()
-    navigationController?.navigationBar.isHidden = true
   }
   
   func configureDateLabelTapGesture() {
