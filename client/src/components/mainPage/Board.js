@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BoardTitle = styled.li`
@@ -11,8 +12,12 @@ const BoardTitle = styled.li`
     cursor: pointer;
 `;
 
-const Board = ({ title }) => {
-    return <BoardTitle>{title}</BoardTitle>;
+const Board = ({ id, title }) => {
+    return (
+        <Link to={`/board/${id}`}>
+            <BoardTitle>{title}</BoardTitle>
+        </Link>
+    );
 };
 
 export default Board;

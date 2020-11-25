@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { BoardsStatusContext } from '../../context/BoardsContext';
 import Board from './Board';
 
 const Wrapper = styled.div`
@@ -30,18 +31,22 @@ const AddBoardButton = styled.button`
 `;
 
 const SideBar = () => {
+    const { myBoards, invitedBoards } = useContext(BoardsStatusContext);
+
     return (
         <Wrapper>
             <BoardTitle>내가 만든 보드</BoardTitle>
             <BoardWrapper>
-                <Board title="보드 1" />
-                <Board title="보드 2" />
+                {myBoards.map((board) => {
+                    return <Board key={board.id} id={board.id} title={board.title} />;
+                })}
             </BoardWrapper>
             <AddBoardButton>+ 보드 추가하기</AddBoardButton>
             <BoardTitle>초대 받은 보드</BoardTitle>
             <BoardWrapper>
-                <Board title="보드 3" />
-                <Board title="보드 4" />
+                {invitedBoards.map((board) => {
+                    return <Board key={board.id} id={board.id} title={board.title} />;
+                })}
             </BoardWrapper>
         </Wrapper>
     );
