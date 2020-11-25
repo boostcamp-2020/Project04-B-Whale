@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import BoardsProvider from '../provider/BoardsProvider';
 import SideBar from './SideBar';
 
 const Wrapper = styled.div`
@@ -10,7 +11,9 @@ const Wrapper = styled.div`
 const Main = () => {
     return (
         <Wrapper>
-            <SideBar />
+            <BoardsProvider>
+                <SideBar />
+            </BoardsProvider>
         </Wrapper>
     );
 };
