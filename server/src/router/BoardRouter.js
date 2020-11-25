@@ -8,7 +8,7 @@ export const BoardRouter = () => {
         const boardService = BoardService.getInstance();
         const { id } = req.user;
         const data = await boardService.getBoardsByUserId(id);
-        res.status(200).json({ ...data });
+        res.status(200).json(data);
     });
 
     return router;

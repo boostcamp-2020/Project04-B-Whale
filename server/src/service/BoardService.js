@@ -25,18 +25,18 @@ export class BoardService extends BaseService {
             .createQueryBuilder('board')
             .select('board.id')
             .addSelect('board.title')
-            .innerJoin('board.invitations', 'invitation', 'invitation.user=:userId', { userId: id })
+            .innerJoin('board.invitations', 'invitation', 'invitation.user_id=:userId', {
+                userId: id,
+            })
             .getMany();
         return boards;
     }
 
     @Transactional()
     async getBoardsByUserId(userId) {
-        const data = {};
+        const promises = [this.getMyBoards(userId), this.getInvitedBoards(userId)];
+        const [myBoards, invitedBoards] = await Promise.all(promises);
 
-        data.myBoards = await this.getMyBoards(userId);
-        data.invitedBoards = await this.getInvitedBoards(userId);
-
-        return data;
+        return { myBoards, invitedBoards };
     }
 }
