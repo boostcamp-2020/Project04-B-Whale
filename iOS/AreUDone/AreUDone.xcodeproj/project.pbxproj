@@ -36,6 +36,11 @@
 		336011FE256D5CFE009580A1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011FD256D5CFE009580A1 /* String+.swift */; };
 		33601215256E40F1009580A1 /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33601213256E40EA009580A1 /* NanumBarunpenR.ttf */; };
 		33601216256E40F1009580A1 /* NanumBarunpenB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33601214256E40EA009580A1 /* NanumBarunpenB.ttf */; };
+		3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601229256E5022009580A1 /* BoardListCoordinator.swift */; };
+		33601236256E50FC009580A1 /* BoardList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33601235256E50FC009580A1 /* BoardList.storyboard */; };
+		3360123D256E512F009580A1 /* BoardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360123C256E512F009580A1 /* BoardListViewController.swift */; };
+		33601247256E5302009580A1 /* BoardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601246256E5302009580A1 /* BoardListViewModel.swift */; };
+		3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -170,6 +175,11 @@
 		336011FD256D5CFE009580A1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		33601213256E40EA009580A1 /* NanumBarunpenR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenR.ttf; sourceTree = "<group>"; };
 		33601214256E40EA009580A1 /* NanumBarunpenB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenB.ttf; sourceTree = "<group>"; };
+		33601229256E5022009580A1 /* BoardListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCoordinator.swift; sourceTree = "<group>"; };
+		33601235256E50FC009580A1 /* BoardList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BoardList.storyboard; sourceTree = "<group>"; };
+		3360123C256E512F009580A1 /* BoardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListViewController.swift; sourceTree = "<group>"; };
+		33601246256E5302009580A1 /* BoardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListViewModel.swift; sourceTree = "<group>"; };
+		3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarItemContentsFactory.swift; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,6 +378,49 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		33601227256E4FEF009580A1 /* BoardListScene */ = {
+			isa = PBXGroup;
+			children = (
+				33601229256E5022009580A1 /* BoardListCoordinator.swift */,
+				33601234256E50E6009580A1 /* Resources */,
+				33601228256E5012009580A1 /* View */,
+				33601245256E52E4009580A1 /* ViewModel */,
+			);
+			path = BoardListScene;
+			sourceTree = "<group>";
+		};
+		33601228256E5012009580A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				33601241256E5138009580A1 /* Controller */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		33601234256E50E6009580A1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				33601235256E50FC009580A1 /* BoardList.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		33601241256E5138009580A1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3360123C256E512F009580A1 /* BoardListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		33601245256E52E4009580A1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				33601246256E5302009580A1 /* BoardListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		338364572565573A00F92EE4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +431,7 @@
 				336010FF256B8FB5009580A1 /* CommentService */,
 				33601103256B8FBC009580A1 /* ActivityService */,
 				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
+				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
 			);
 			path = Model;
@@ -449,6 +503,7 @@
 				33B87E4D25650B3200354880 /* SignInScene */,
 				33EE016B2568EC48003D3221 /* CalendarScene */,
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
+				33601227256E4FEF009580A1 /* BoardListScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -815,6 +870,7 @@
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
+				33601236256E50FC009580A1 /* BoardList.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +908,7 @@
 				336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */,
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
+				33601247256E5302009580A1 /* BoardListViewModel.swift in Sources */,
 				336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */,
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
@@ -860,10 +917,12 @@
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
+				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
+				3360123D256E512F009580A1 /* BoardListViewController.swift in Sources */,
 				33601182256CBE51009580A1 /* CalendarPickerViewController.swift in Sources */,
 				BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
@@ -889,6 +948,7 @@
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
+				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
 				336010C3256B786E009580A1 /* Card.swift in Sources */,

@@ -12,9 +12,11 @@ extension UIStoryboard {
   enum Storyboard: String {
     case signin
     case calendar
+    case detailCard
+    case boardList
     
     var fileName: String {
-      return rawValue.capitalized
+      return (String(rawValue.first?.uppercased() ?? "")) + String(rawValue.dropFirst())
     }
   }
   
