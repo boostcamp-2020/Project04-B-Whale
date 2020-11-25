@@ -1,7 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+import SideBar from './SideBar';
+
+const Wrapper = styled.div`
+    width: 1100px;
+    margin: 0 auto;
+`;
 
 const Main = () => {
-    return <div>메인 페이지</div>;
+    return (
+        <Wrapper>
+            <SideBar />
+        </Wrapper>
+    );
 };
 
 export default Main;
