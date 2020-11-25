@@ -52,7 +52,7 @@ class DateStepper: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    
+//    dateLabel.font = UIFont(name: "NanumBarunpenB", size: 15)
     xibSetup()
   }
   

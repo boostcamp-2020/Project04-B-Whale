@@ -34,6 +34,8 @@
 		336011EE256D4877009580A1 /* DateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011ED256D4877009580A1 /* DateStepper.swift */; };
 		336011F3256D48FA009580A1 /* DateStepper.xib in Resources */ = {isa = PBXBuildFile; fileRef = 336011F2256D48FA009580A1 /* DateStepper.xib */; };
 		336011FE256D5CFE009580A1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011FD256D5CFE009580A1 /* String+.swift */; };
+		33601215256E40F1009580A1 /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33601213256E40EA009580A1 /* NanumBarunpenR.ttf */; };
+		33601216256E40F1009580A1 /* NanumBarunpenB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33601214256E40EA009580A1 /* NanumBarunpenB.ttf */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -166,6 +168,8 @@
 		336011ED256D4877009580A1 /* DateStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStepper.swift; sourceTree = "<group>"; };
 		336011F2256D48FA009580A1 /* DateStepper.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateStepper.xib; sourceTree = "<group>"; };
 		336011FD256D5CFE009580A1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		33601213256E40EA009580A1 /* NanumBarunpenR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenR.ttf; sourceTree = "<group>"; };
+		33601214256E40EA009580A1 /* NanumBarunpenB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenB.ttf; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,6 +406,8 @@
 		338364D125665CF200F92EE4 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				33601214256E40EA009580A1 /* NanumBarunpenB.ttf */,
+				33601213256E40EA009580A1 /* NanumBarunpenR.ttf */,
 				338364C825665CD900F92EE4 /* NanumSquareBold.ttf */,
 				338364C525665CD900F92EE4 /* NanumSquareLight.ttf */,
 				338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */,
@@ -797,7 +803,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33601215256E40F1009580A1 /* NanumBarunpenR.ttf in Resources */,
 				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
+				33601216256E40F1009580A1 /* NanumBarunpenB.ttf in Resources */,
 				336011F3256D48FA009580A1 /* DateStepper.xib in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,

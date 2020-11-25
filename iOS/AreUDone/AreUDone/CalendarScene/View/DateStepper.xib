@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="NanumBarunpenB.ttf">
+            <string>NanumBarunpen-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DateStepper" customModule="AreUDone" customModuleProvider="target">
             <connections>
@@ -22,22 +27,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bvN-B2-fCF">
-                    <rect key="frame" x="28" y="84" width="50" height="46.5"/>
+                    <rect key="frame" x="42" y="91.5" width="35" height="31.5"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="DwE-Ra-SNB"/>
+                        <constraint firstAttribute="height" constant="35" id="DwE-Ra-SNB"/>
                         <constraint firstAttribute="width" secondItem="bvN-B2-fCF" secondAttribute="height" multiplier="1:1" id="Vx5-KL-QPb"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-zl-PwM">
-                    <rect key="frame" x="286" y="84" width="50" height="46.5"/>
+                    <rect key="frame" x="287" y="91.5" width="35" height="31.5"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="ObO-9U-4XT"/>
+                        <constraint firstAttribute="height" constant="35" id="ObO-9U-4XT"/>
                         <constraint firstAttribute="width" secondItem="bKy-zl-PwM" secondAttribute="height" multiplier="1:1" id="Ql8-CI-YAn"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020.11.18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ih-3b-dAA">
-                    <rect key="frame" x="128" y="93" width="108" height="28"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020.11.18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ih-3b-dAA">
+                    <rect key="frame" x="117" y="91" width="130" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="130" id="Esj-oN-U9B"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="NanumBarunpen-Bold" family="NanumBarunpen" pointSize="25"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -47,10 +57,10 @@
             <constraints>
                 <constraint firstItem="bvN-B2-fCF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="5T2-I9-KN3"/>
                 <constraint firstItem="8Ih-3b-dAA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="RUg-3f-8Ag"/>
-                <constraint firstItem="8Ih-3b-dAA" firstAttribute="leading" secondItem="bvN-B2-fCF" secondAttribute="trailing" constant="50" id="TCT-4X-VEx"/>
                 <constraint firstItem="bKy-zl-PwM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="pA2-hg-iek"/>
                 <constraint firstItem="8Ih-3b-dAA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="t23-Rt-a5C"/>
-                <constraint firstItem="bKy-zl-PwM" firstAttribute="leading" secondItem="8Ih-3b-dAA" secondAttribute="trailing" constant="50" id="uQa-QL-4El"/>
+                <constraint firstItem="8Ih-3b-dAA" firstAttribute="leading" secondItem="bvN-B2-fCF" secondAttribute="trailing" constant="40" id="uQu-0f-5De"/>
+                <constraint firstItem="bKy-zl-PwM" firstAttribute="leading" secondItem="8Ih-3b-dAA" secondAttribute="trailing" constant="40" id="wYW-uy-Rij"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="127.53623188405798" y="360.9375"/>

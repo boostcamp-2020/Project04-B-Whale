@@ -14,6 +14,6 @@ extension String {
 
     dateFormatter.dateFormat = "yyyy.MM.dd"
     
-    return dateFormatter.date(from: self)!
+    return dateFormatter.date(from: self) ?? Date()
   }
 }
