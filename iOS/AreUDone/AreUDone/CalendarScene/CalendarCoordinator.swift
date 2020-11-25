@@ -15,8 +15,10 @@ final class CalendarCoordinator: NavigationCoordinator {
     return UIStoryboard.load(storyboard: .calendar)
   }
   private let router: Routable
-  private var navigationController: UINavigationController!
-  var calendarViewController: CalendarViewController!
+  
+  var navigationController: UINavigationController?
+  
+  private var calendarPickerCoordinator: NavigationCoordinator!
   
   
   // MARK: - Initializer
@@ -24,35 +26,35 @@ final class CalendarCoordinator: NavigationCoordinator {
   init(router: Routable) {
     self.router = router
   }
- 
+  
   // MARK: - Method
   
-  func setNavigationController(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-  
   func start() -> UIViewController {
-    calendarViewController = storyboard.instantiateViewController(
-            identifier: CalendarViewController.identifier,
-            creator: { coder in
-              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory())) // TODO: CardTrueJsonFactory 라고 프로그래머가 구별해서 넣어줘야 하는게 살짝 불편한데... 
-              let viewModel = CalendarViewModel(cardService: cardService)
-              return CalendarViewController(coder: coder, viewModel: viewModel)
-            }) as? CalendarViewController
     
-    
+    guard let calendarViewController = storyboard.instantiateViewController(
+            identifier: CalendarViewController.identifier, creator: { coder in
+      let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+      let viewModel = CalendarViewModel(cardService: cardService)
+      return CalendarViewController(coder: coder, viewModel: viewModel)
+    }) as? CalendarViewController else { return UIViewController() }
+
     calendarViewController.calendarCoordinator = self
-    
+
     return calendarViewController
   }
 }
 
 extension CalendarCoordinator {
   
-  func didTapOnDate(selectedDate: Date) {
-    let calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: selectedDate)
+  func didTapOnDate(selectedDate: Date, delegate: CalendarViewControllerDelegate) {
+    calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: selectedDate)
+    calendarPickerCoordinator.navigationController = navigationController
     
-    let calendarPickerViewController = calendarPickerCoordinator.start()
-    navigationController.present(calendarPickerViewController, animated: true)
+    guard let calendarPickerViewController = calendarPickerCoordinator.start()
+            as? CalendarPickerViewController
+    else { return }
+    
+    calendarPickerViewController.delegate = delegate
+    navigationController?.present(calendarPickerViewController, animated: true)
   }
 }

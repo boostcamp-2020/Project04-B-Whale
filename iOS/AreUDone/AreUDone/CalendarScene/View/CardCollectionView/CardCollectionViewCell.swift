@@ -49,6 +49,7 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   var delegate: CardCellDelegate?
   
+  
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
@@ -153,6 +154,7 @@ extension CardCollectionViewCell {
 // MARK:- Extension
 
 extension CardCollectionViewCell: UIScrollViewDelegate {
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.x <= 0 {
       scrollView.bounces = false
@@ -162,5 +164,4 @@ extension CardCollectionViewCell: UIScrollViewDelegate {
       delegate?.resetCellOffset(without: self)
     }
   }
-
 }
