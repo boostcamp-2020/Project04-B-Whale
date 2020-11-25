@@ -81,4 +81,70 @@ describe('Board API Test', () => {
         expect(myBoards).toHaveLength(1);
         expect(invitedBoards).toHaveLength(1);
     });
+
+    test('POST /api/board를 호출할 때, 요청 바디가 올바르지 않으면 400을 리턴한다.', async () => {
+        // given
+        // when
+        const response = await request(app.httpServer).post('/api/board').send({ title: null });
+
+        // then
+        expect(response.status).toEqual(400);
+    });
+
+    test('POST /api/board를 호출할 때, 권한이 없으면 401을 리턴한다.', async () => {
+        // given
+        const token = 'Bearer fakeToken';
+
+        // when
+        const response = await request(app.httpServer).post('/api/board').set({
+            Authorization: token,
+            'Content-Type': 'application/json',
+        });
+
+        // then
+        expect(response.status).toEqual(401);
+    });
+
+    test('GET /api/board가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {
+        // given
+        const testTitle = 'test title';
+        const boardRepository = getRepository(Board);
+        const countOfBoardFirst = await boardRepository
+            .createQueryBuilder('board')
+            .select('board.id')
+            .addSelect('board.title')
+            .where('board.title = :title', { title: testTitle })
+            .getCount();
+
+        const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+
+        const userRepository = getRepository(User);
+        const createUser = await userRepository.create(user);
+        const createdUser = await userRepository.save(createUser);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createdUser.id,
+            username: createdUser.name,
+        });
+
+        // when
+        const response = await request(app.httpServer)
+            .post('/api/board')
+            .set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            })
+            .send({ title: testTitle });
+
+        const countOfBoardSecond = await boardRepository
+            .createQueryBuilder('board')
+            .select('board.id')
+            .addSelect('board.title')
+            .where('board.title = :title', { title: testTitle })
+            .getCount();
+
+        // then
+        expect(response.status).toEqual(201);
+        expect(countOfBoardFirst).toEqual(countOfBoardSecond - 1);
+    });
 });
