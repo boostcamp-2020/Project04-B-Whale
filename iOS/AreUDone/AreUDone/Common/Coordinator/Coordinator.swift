@@ -14,7 +14,7 @@ protocol Coordinator {
 
 protocol NavigationCoordinator {
   
-  func setNavigationController(_ navigationController: UINavigationController)
+  var navigationController: UINavigationController? { get set }
   
   @discardableResult
   func start() -> UIViewController

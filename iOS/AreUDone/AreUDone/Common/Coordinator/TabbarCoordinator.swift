@@ -49,10 +49,11 @@ final class TabbarCoordinator: Coordinator {
   }
   
   private func configureController(with coordinator: NavigationCoordinator) {
+    var coordinator = coordinator
     let navigationController = UINavigationController()
     
     let viewController = coordinator.start()
-    coordinator.setNavigationController(navigationController)
+    coordinator.navigationController = navigationController
     
     navigationController.pushViewController(viewController, animated: false)
     navigationController.tabBarItem = UITabBarItem(title: "캘린더", image: UIImage(systemName: "circle"), tag: 0)
