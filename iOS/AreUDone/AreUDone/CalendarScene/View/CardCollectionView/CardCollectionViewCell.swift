@@ -71,7 +71,7 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   }
   
   func resetOffset() {
-    UIView.animate(withDuration: 0.3) {
+    UIView.animate(withDuration: 0.5) {
       self.scrollView.contentOffset.x = 0
     }
   }
@@ -105,15 +105,14 @@ private extension CardCollectionViewCell {
   func configureStackView() {
     scrollView.addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
-    if let superViewOfStackView = stackView.superview {
-      NSLayoutConstraint.activate([
-        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-        stackView.topAnchor.constraint(equalTo: superViewOfStackView.topAnchor),
-        stackView.bottomAnchor.constraint(equalTo: superViewOfStackView.bottomAnchor),
-        stackView.leadingAnchor.constraint(equalTo: superViewOfStackView.leadingAnchor),
-        stackView.trailingAnchor.constraint(equalTo: superViewOfStackView.trailingAnchor),
-      ])
-    }
+    
+    NSLayoutConstraint.activate([
+      stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+      stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+      stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+    ])
   }
   
   func configureCardContentView() {
@@ -155,7 +154,13 @@ extension CardCollectionViewCell {
 
 extension CardCollectionViewCell: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    scrollView.backgroundColor = scrollView.contentOffset.x <= 0 ? .clear : .systemRed
-    delegate?.resetCellOffset(without: self)
+    if scrollView.contentOffset.x <= 0 {
+      scrollView.bounces = false
+      scrollView.contentOffset.x = 0
+    } else {
+      scrollView.bounces = true
+      delegate?.resetCellOffset(without: self)
+    }
   }
+
 }
