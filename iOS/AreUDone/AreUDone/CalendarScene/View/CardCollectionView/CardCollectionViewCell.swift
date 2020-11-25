@@ -8,8 +8,9 @@
 import UIKit
 
 protocol CardCellDelegate {
-  func delete(cardCell: CardCollectionViewCell)
+  func remove(cell: CardCollectionViewCell)
   func resetCellOffset(without cell: CardCollectionViewCell)
+  func didSelect(for cell: CardCollectionViewCell)
 }
 
 class CardCollectionViewCell: UICollectionViewCell, Reusable {
@@ -119,6 +120,12 @@ private extension CardCollectionViewCell {
     stackView.addArrangedSubview(cardContentView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(cardContentViewTapped))
+    cardContentView.addGestureRecognizer(tapRecognizer)
+    
+    
     NSLayoutConstraint.activate([
       cardContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
     ])
@@ -127,11 +134,11 @@ private extension CardCollectionViewCell {
   func configureDeleteCardView() {
     stackView.addArrangedSubview(deleteCardView)
     deleteCardView.translatesAutoresizingMaskIntoConstraints = false
-    let deleteCardViewTapRecognizer = UITapGestureRecognizer(
+    let tapRecognizer = UITapGestureRecognizer(
       target: self,
       action: #selector(deleteCardViewTapped)
     )
-    deleteCardView.addGestureRecognizer(deleteCardViewTapRecognizer)
+    deleteCardView.addGestureRecognizer(tapRecognizer)
     
     NSLayoutConstraint.activate([
       deleteCardView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
@@ -146,7 +153,11 @@ private extension CardCollectionViewCell {
 extension CardCollectionViewCell {
   
   @objc private func deleteCardViewTapped() {
-    delegate?.delete(cardCell: self)
+    delegate?.remove(cell: self)
+  }
+  
+  @objc private func cardContentViewTapped() {
+    delegate?.didSelect(for: self)
   }
 }
 

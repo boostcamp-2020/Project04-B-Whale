@@ -38,6 +38,7 @@ final class SigninViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     bindUI()
+    backgroundPlay()
   }
   
   override func viewWillDisappear(_ animated: Bool) {

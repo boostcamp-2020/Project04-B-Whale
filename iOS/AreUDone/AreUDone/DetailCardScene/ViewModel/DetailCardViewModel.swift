@@ -13,4 +13,16 @@ protocol DetailCardViewModelProtocol {
 
 final class DetailCardViewModel: DetailCardViewModelProtocol {
   
+  // MARK:- Property
+  
+  private var cardService: CardServiceProtocol
+  private let id: Int
+  
+  
+  // MARK:- Initializer
+  
+  init(id: Int, cardService: CardServiceProtocol) {
+    self.id = id
+    self.cardService = cardService
+  }
 }

@@ -25,7 +25,9 @@ final class DetailCardViewController: UIViewController {
     fatalError("This controller must be initialized with code")
   }
   
+  
   // MARK:- Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
