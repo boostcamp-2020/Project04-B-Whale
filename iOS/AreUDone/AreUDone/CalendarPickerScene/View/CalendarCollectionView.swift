@@ -9,6 +9,7 @@ import UIKit
 
 final class CalendarCollectionView: UICollectionView {
   
+
   // MARK: - Property
   
   private var swipeHandler: ((Direction) -> Void)!
@@ -39,6 +40,7 @@ final class CalendarCollectionView: UICollectionView {
   ) {
     self.init(frame: frame, collectionViewLayout: layout)
     self.swipeHandler = swipeHandler
+
   }
   
   
@@ -53,6 +55,17 @@ final class CalendarCollectionView: UICollectionView {
     
     register(CalendarDateCollectionViewCell.self)
   }
+
+  func addGestureRecognizer() {
+    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+    leftSwipeGesture.direction = .left
+    
+    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+    rightSwipeGesture.direction = .right
+    
+    addGestureRecognizer(leftSwipeGesture)
+    addGestureRecognizer(rightSwipeGesture)
+  }
   
   @objc func didSwiped(recognizer: UISwipeGestureRecognizer) {
     switch recognizer.direction {
@@ -66,16 +79,4 @@ final class CalendarCollectionView: UICollectionView {
       break
     }
   }
-  
-  func addGestureRecognizer() {
-    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
-    leftSwipeGesture.direction = .left
-    
-    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
-    rightSwipeGesture.direction = .right
-    
-    addGestureRecognizer(leftSwipeGesture)
-    addGestureRecognizer(rightSwipeGesture)
-  }
-  
 }

@@ -9,6 +9,7 @@ import UIKit
 
 protocol CardCellDelegate {
   func delete(cardCell: CardCollectionViewCell)
+  func resetCellOffset(without cell: CardCollectionViewCell)
 }
 
 class CardCollectionViewCell: UICollectionViewCell, Reusable {
@@ -48,6 +49,7 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   var delegate: CardCellDelegate?
   
+  
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
@@ -67,6 +69,12 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   func updateCell(with card: Card) {
     cardContentView.updateContentView(with: card)
+  }
+  
+  func resetOffset() {
+    UIView.animate(withDuration: 0.5) {
+      self.scrollView.contentOffset.x = 0
+    }
   }
 }
 
@@ -98,15 +106,14 @@ private extension CardCollectionViewCell {
   func configureStackView() {
     scrollView.addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
-    if let superViewOfStackView = stackView.superview {
-      NSLayoutConstraint.activate([
-        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-        stackView.topAnchor.constraint(equalTo: superViewOfStackView.topAnchor),
-        stackView.bottomAnchor.constraint(equalTo: superViewOfStackView.bottomAnchor),
-        stackView.leadingAnchor.constraint(equalTo: superViewOfStackView.leadingAnchor),
-        stackView.trailingAnchor.constraint(equalTo: superViewOfStackView.trailingAnchor),
-      ])
-    }
+    
+    NSLayoutConstraint.activate([
+      stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+      stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+      stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+    ])
   }
   
   func configureCardContentView() {
@@ -147,7 +154,14 @@ extension CardCollectionViewCell {
 // MARK:- Extension
 
 extension CardCollectionViewCell: UIScrollViewDelegate {
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    scrollView.backgroundColor = scrollView.contentOffset.x <= 0 ? .clear : .systemRed
+    if scrollView.contentOffset.x <= 0 {
+      scrollView.bounces = false
+      scrollView.contentOffset.x = 0
+    } else {
+      scrollView.bounces = true
+      delegate?.resetCellOffset(without: self)
+    }
   }
 }

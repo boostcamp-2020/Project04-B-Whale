@@ -25,10 +25,10 @@ final class CalendarViewController: UIViewController {
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
   lazy var dataSource = configureDataSource()
-  
+
   @IBOutlet weak var dateStepper: DateStepper!
-  @IBOutlet weak var cardCollectionView: UICollectionView!
-  
+  @IBOutlet weak var cardCollectionView: CardCollectionView!
+
   
   // MARK: - Initializer
   
@@ -48,13 +48,8 @@ final class CalendarViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    dateStepper.delegate = self
-  
     bindUI()
-    viewModel.initializeDate()
-    viewModel.fetchInitializeDailyCards()
-    
-    navigationController?.navigationBar.isHidden = true
+    configure()
   }
 }
 
@@ -64,6 +59,16 @@ final class CalendarViewController: UIViewController {
 private extension CalendarViewController {
   
   // MARK:- Method
+  
+  func configure() {
+    cardCollectionView.delegate = self
+    viewModel.fetchInitializeDailyCards()
+      
+    dateStepper.delegate = self
+    viewModel.initializeDate()
+
+    navigationController?.navigationBar.isHidden = true
+  }
   
   func bindUI() {
     bindingInitializeCardCollectionView()
@@ -109,7 +114,7 @@ private extension CalendarViewController {
   
   func updateSnapshot(with item: Cards, animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-
+    
     snapshot.appendSections([""])
     snapshot.appendItems(item.cards)
     
@@ -144,6 +149,7 @@ extension CalendarViewController: CalendarViewControllerDelegate {
 // MARK: CardCellDelegate
 
 extension CalendarViewController: CardCellDelegate {
+  
   func delete(cardCell: CardCollectionViewCell) {
     if let indexPath = cardCollectionView.indexPath(for: cardCell),
        let item = dataSource.itemIdentifier(for: indexPath) {
@@ -151,5 +157,18 @@ extension CalendarViewController: CardCellDelegate {
       snapshot.deleteItems([item])
       
     }
+  }
+  
+  func resetCellOffset(without cell: CardCollectionViewCell) {
+    cardCollectionView.resetVisibleCellOffset(without: cell)
+  }
+}
+
+
+// MARK: UICollectionViewDelegate
+
+extension CalendarViewController: UICollectionViewDelegate {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cardCollectionView.resetVisibleCellOffset()
   }
 }

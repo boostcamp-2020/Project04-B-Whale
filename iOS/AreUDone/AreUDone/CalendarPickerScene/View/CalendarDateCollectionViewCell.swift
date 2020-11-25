@@ -79,7 +79,7 @@ private extension CalendarDateCollectionViewCell {
     selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
     let size = frame.width - 15
-    
+
     NSLayoutConstraint.activate([
       selectionBackgroundView.centerYAnchor.constraint(equalTo: numberLabel.centerYAnchor),
       selectionBackgroundView.centerXAnchor.constraint(equalTo: numberLabel.centerXAnchor),

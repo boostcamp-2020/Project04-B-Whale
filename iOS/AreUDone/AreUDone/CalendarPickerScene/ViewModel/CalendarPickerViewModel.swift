@@ -94,7 +94,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     
     return days
   }
-
+    
   private func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
     guard let numberOfDaysInMonth = calendar.range(
       of: .day,

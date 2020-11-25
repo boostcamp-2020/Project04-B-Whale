@@ -30,7 +30,7 @@
 		336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
 		336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011CD256D15F0009580A1 /* CalendarCollectionView.swift */; };
-		336011D3256D1877009580A1 /* DayOfTheWeekLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */; };
+		336011D3256D1877009580A1 /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayLabel.swift */; };
 		336011EE256D4877009580A1 /* DateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011ED256D4877009580A1 /* DateStepper.swift */; };
 		336011F3256D48FA009580A1 /* DateStepper.xib in Resources */ = {isa = PBXBuildFile; fileRef = 336011F2256D48FA009580A1 /* DateStepper.xib */; };
 		336011FE256D5CFE009580A1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011FD256D5CFE009580A1 /* String+.swift */; };
@@ -153,7 +153,7 @@
 		336010D4256B891C009580A1 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		336010DD256B8E60009580A1 /* CardJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardJsonFactory.swift; sourceTree = "<group>"; };
 		3360110A256B9123009580A1 /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
-		33601181256CBE51009580A1 /* CalendarPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewController.swift; sourceTree = "<group>"; };
+		33601181256CBE51009580A1 /* CalendarPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarPickerViewController.swift; path = ../CalendarPickerViewController.swift; sourceTree = "<group>"; };
 		3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerHeaderView.swift; sourceTree = "<group>"; };
 		33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCollectionViewCell.swift; sourceTree = "<group>"; };
 		33601199256CBEEA009580A1 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
 		336011B9256CDDA0009580A1 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		336011CD256D15F0009580A1 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
-		336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekLabel.swift; sourceTree = "<group>"; };
+		336011D2256D1877009580A1 /* DayLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabel.swift; sourceTree = "<group>"; };
 		336011ED256D4877009580A1 /* DateStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStepper.swift; sourceTree = "<group>"; };
 		336011F2256D48FA009580A1 /* DateStepper.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateStepper.xib; sourceTree = "<group>"; };
 		336011FD256D5CFE009580A1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -349,9 +349,9 @@
 			children = (
 				336011EC256D4736009580A1 /* Controller */,
 				3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */,
-				336011CD256D15F0009580A1 /* CalendarCollectionView.swift */,
 				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
-				336011D2256D1877009580A1 /* DayOfTheWeekLabel.swift */,
+				336011CD256D15F0009580A1 /* CalendarCollectionView.swift */,
+				336011D2256D1877009580A1 /* DayLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -865,7 +865,8 @@
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
-				336011D3256D1877009580A1 /* DayOfTheWeekLabel.swift in Sources */,
+				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
+				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
 				BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
