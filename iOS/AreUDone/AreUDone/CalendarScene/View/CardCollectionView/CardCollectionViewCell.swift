@@ -72,9 +72,10 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   }
   
   func resetOffset() {
-    UIView.animate(withDuration: 0.5) {
+    
+    UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
       self.scrollView.contentOffset.x = 0
-    }
+    }.startAnimation()
   }
 }
 
