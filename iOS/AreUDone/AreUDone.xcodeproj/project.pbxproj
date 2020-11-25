@@ -81,6 +81,9 @@
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
 		BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA73D256CDE8900EA8791 /* DeleteCardView.swift */; };
+		BD2AA7A1256DF8E400EA8791 /* DetailCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7A0256DF8E300EA8791 /* DetailCardViewController.swift */; };
+		BD2AA7A7256DF93800EA8791 /* DetailCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7A6256DF93800EA8791 /* DetailCardViewModel.swift */; };
+		BD2AA7B0256DFA5800EA8791 /* DetailCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA7AF256DFA5800EA8791 /* DetailCard.storyboard */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -196,6 +199,9 @@
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
 		BD2AA73D256CDE8900EA8791 /* DeleteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCardView.swift; sourceTree = "<group>"; };
+		BD2AA7A0256DF8E300EA8791 /* DetailCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardViewController.swift; sourceTree = "<group>"; };
+		BD2AA7A6256DF93800EA8791 /* DetailCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardViewModel.swift; sourceTree = "<group>"; };
+		BD2AA7AF256DFA5800EA8791 /* DetailCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailCard.storyboard; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -429,6 +435,7 @@
 				33B87E4D25650B3200354880 /* SignInScene */,
 				33EE016B2568EC48003D3221 /* CalendarScene */,
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
+				BD2AA79D256DF87D00EA8791 /* DetailCardScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -551,6 +558,48 @@
 				BD2AA73D256CDE8900EA8791 /* DeleteCardView.swift */,
 			);
 			path = CardCollectionView;
+			sourceTree = "<group>";
+		};
+		BD2AA79D256DF87D00EA8791 /* DetailCardScene */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA7AE256DFA3100EA8791 /* Resource */,
+				BD2AA79E256DF89700EA8791 /* View */,
+				BD2AA7A5256DF92100EA8791 /* ViewModel */,
+			);
+			path = DetailCardScene;
+			sourceTree = "<group>";
+		};
+		BD2AA79E256DF89700EA8791 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA79F256DF8AB00EA8791 /* Controller */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BD2AA79F256DF8AB00EA8791 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA7A0256DF8E300EA8791 /* DetailCardViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BD2AA7A5256DF92100EA8791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA7A6256DF93800EA8791 /* DetailCardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BD2AA7AE256DFA3100EA8791 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA7AF256DFA5800EA8791 /* DetailCard.storyboard */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		BDD18AB225653CB8005DF00A /* Extension */ = {
@@ -785,6 +834,7 @@
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
+				BD2AA7B0256DFA5800EA8791 /* DetailCard.storyboard in Resources */,
 				33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */,
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
@@ -834,6 +884,7 @@
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
+				BD2AA7A1256DF8E400EA8791 /* DetailCardViewController.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
@@ -843,6 +894,7 @@
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
 				336011A7256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift in Sources */,
+				BD2AA7A7256DF93800EA8791 /* DetailCardViewModel.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
