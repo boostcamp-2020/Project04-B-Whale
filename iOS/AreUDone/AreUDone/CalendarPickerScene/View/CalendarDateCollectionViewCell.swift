@@ -16,7 +16,6 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
     view.clipsToBounds = true
     view.layer.borderColor = UIColor.systemRed.cgColor
     view.layer.borderWidth = 2
-//    view.backgroundColor = .clear
     view.backgroundColor = .systemRed
     
     return view
@@ -79,8 +78,7 @@ private extension CalendarDateCollectionViewCell {
   func configureSelectionBackgroundView() {
     selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let size = traitCollection.horizontalSizeClass == .compact ?
-      min(min(frame.width, frame.height) - 10, 60) : 45
+    let size = frame.width - 15
     
     NSLayoutConstraint.activate([
       selectionBackgroundView.centerYAnchor.constraint(equalTo: numberLabel.centerYAnchor),
