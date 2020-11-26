@@ -61,7 +61,7 @@ class BoardListViewController: UIViewController {
     bindUI()
     configure()
     
-    updateSnapshot()
+    viewModel.initializeBoardListCollectionView()
   }
   
   
@@ -76,10 +76,18 @@ class BoardListViewController: UIViewController {
 private extension BoardListViewController {
   
   func bindUI() {
+    viewModel.bindingInitializeBoardListCollectionView { boards in
+      self.updateSnapshot(with: boards, false)
+    }
     
+    viewModel.bindingUpdateBoardListCollectionView { boards in
+      self.updateSnapshot(with: boards)
+    }
   }
   
   func configure() {
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.title = "보드 목록"
     navigationItem.searchController = searchController
     searchController.searchResultsUpdater = self
   }
@@ -95,7 +103,7 @@ private extension BoardListViewController {
       collectionView: collectionView
     ) { (collectionView, indexPath, board) -> UICollectionViewCell? in
       let cell: BoardListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-      cell.updateCell(board: board)
+      cell.update(with: board)
       
       return cell
     }
@@ -110,20 +118,19 @@ private extension BoardListViewController {
     return dataSource
   }
   
-  func updateSnapshot() {
+  func updateSnapshot(with boards: Boards, _ animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-    
-    let myBoards = [Board(id: 1, title: "보드 제목1")] // TODO: 임시 데이터 삭제 예정
-    let invitedBoards = [Board(id: 2, title: "보드 제목2"), Board(id: 3, title: "보드 제목3"),
-                         Board(id: 4, title: "보드 제목4"), Board(id: 5, title: "보드 제목5"),
-                         Board(id: 6, title: "보드 제목6"), Board(id: 7, title: "보드 제목7")] // TODO: 임시 데이터 삭제 예정
-    
+  
+    let myBoards = boards.myBoards
+    let invitedBoards = boards.invitedBoards
     
     snapshot.appendSections([.my, .invited])
     snapshot.appendItems(myBoards, toSection: .my)
     snapshot.appendItems(invitedBoards, toSection: .invited)
     
-    dataSource.apply(snapshot, animatingDifferences: false)
+    DispatchQueue.main.async {
+      self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
   }
 }
 

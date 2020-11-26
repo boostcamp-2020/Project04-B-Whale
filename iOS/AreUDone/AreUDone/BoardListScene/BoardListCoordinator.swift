@@ -33,7 +33,7 @@ class BoardListCoordinator: NavigationCoordinator {
     
     guard let boardListViewController = storyboard.instantiateViewController(
             identifier: BoardListViewController.identifier, creator: { coder in
-              let boardService = BoardService(router: self.router)
+              let boardService = BoardService(router: MockRouter(jsonFactory: BoardListTrueJsonFactory()))
       let viewModel = BoardListViewModel(boardService: boardService)
       return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
     }) as? BoardListViewController else { return UIViewController() }
