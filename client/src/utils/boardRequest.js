@@ -10,3 +10,14 @@ export const getBoards = async () => {
 
     return response;
 };
+
+export const createBoard = async (title) => {
+    const config = {
+        url: '/api/board',
+        method: 'POST',
+        data: { title },
+    };
+    const response = await request(config);
+
+    return response;
+};
