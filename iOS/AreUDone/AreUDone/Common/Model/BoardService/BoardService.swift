@@ -10,6 +10,10 @@ import NetworkFramework
 
 protocol BoardServiceProtocol: class {
   
+  func fetchAllBoards(completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func addBoard(withTitle title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func editBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func deleteBoard(withBoardId boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
 }
 
 class BoardService: BoardServiceProtocol {
@@ -28,4 +32,27 @@ class BoardService: BoardServiceProtocol {
   
   // MARK: - Method
   
+  func fetchAllBoards(completionHandler: @escaping (Result<Boards, APIError>) -> Void ) {
+    router.request(route: BoardEndPoint.fetchAllBoards) { result in
+      completionHandler(result)
+    }
+  }
+  
+  func addBoard(withTitle title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
+    router.request(route: BoardEndPoint.addBoard(title: title)) { result in
+      completionHandler(result)
+    }
+  }
+  
+  func editBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
+    router.request(route: BoardEndPoint.editBoard(boardId: boardId, title: title)) { result in
+      completionHandler(result)
+    }
+  }
+  
+  func deleteBoard(withBoardId boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
+    router.request(route: BoardEndPoint.deleteBoard(boardId: boardId)) { result in
+      completionHandler(result)
+    }
+  }
 }

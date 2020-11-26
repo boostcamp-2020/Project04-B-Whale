@@ -12,6 +12,8 @@
 		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
 		335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */; };
 		335AC4CF256F6C51006A5C4A /* SectionContentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */; };
+		335AC4DE256F73D7006A5C4A /* BoardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */; };
+		335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4E5256F7988006A5C4A /* BoardListJsonFactory.swift */; };
 		336010C3256B786E009580A1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C2256B786E009580A1 /* Card.swift */; };
 		336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C7256B78CE009580A1 /* CardEndPoint.swift */; };
 		336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010CC256B7B2B009580A1 /* APICredentials.swift */; };
@@ -164,6 +166,8 @@
 		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
 		335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewHeader.swift; sourceTree = "<group>"; };
 		335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionContentFactory.swift; sourceTree = "<group>"; };
+		335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardEndPoint.swift; sourceTree = "<group>"; };
+		335AC4E5256F7988006A5C4A /* BoardListJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListJsonFactory.swift; sourceTree = "<group>"; };
 		336010C2256B786E009580A1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		336010C7256B78CE009580A1 /* CardEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEndPoint.swift; sourceTree = "<group>"; };
 		336010CC256B7B2B009580A1 /* APICredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				33D2DE1B256B51CE008E3969 /* MockRouter.swift */,
 				33D2DE20256B5210008E3969 /* JsonFactory.swift */,
 				336010DD256B8E60009580A1 /* CardJsonFactory.swift */,
+				335AC4E5256F7988006A5C4A /* BoardListJsonFactory.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -329,8 +334,9 @@
 		336010F7256B8FA2009580A1 /* BoardService */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18B332566403E005DF00A /* BoardService.swift */,
 				335AC4AE256E9A6B006A5C4A /* Board.swift */,
+				335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */,
+				BDD18B332566403E005DF00A /* BoardService.swift */,
 			);
 			path = BoardService;
 			sourceTree = "<group>";
@@ -947,6 +953,7 @@
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
+				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
@@ -978,6 +985,7 @@
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
+				335AC4DE256F73D7006A5C4A /* BoardEndPoint.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
