@@ -76,7 +76,6 @@ const Modal = ({ onClose, visible }) => {
         const { status, data } = await createBoard(title);
         switch (status) {
             case 201:
-                onClose();
                 document.location = `board/${data.id}`;
                 break;
             case 400:
