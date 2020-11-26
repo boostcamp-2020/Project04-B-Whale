@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { createBoard } from '../../utils/boardRequest';
 
 const DimmedModal = styled.div`
     box-sizing: border-box;
@@ -60,15 +61,31 @@ const BoardTitleInput = styled.input.attrs({
 `;
 
 const Modal = ({ onClose, visible }) => {
+    const [title, setTitle] = useState('');
+    const createBoardInputHandler = (event) => {
+        setTitle(event.target.value);
+    };
+
     const onDimmedClick = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
     };
 
-    const createBoard = () => {
-        // axios
-        onClose();
+    const addBoard = async () => {
+        const { status, data } = await createBoard(title);
+        switch (status) {
+            case 201:
+                onClose();
+                document.location = `board/${data.id}`;
+                break;
+            case 400:
+            case 401:
+                window.location.href = '/login';
+                break;
+            default:
+                throw new Error(`Unhandled status type : ${status}`);
+        }
     };
 
     return (
@@ -78,8 +95,8 @@ const Modal = ({ onClose, visible }) => {
                 <ModalInner>
                     <CloseModalBtn onClick={onClose}>X</CloseModalBtn>
                     <ModalContents>
-                        <BoardTitleInput />
-                        <button type="button" onClick={createBoard}>
+                        <BoardTitleInput value={title} onChange={createBoardInputHandler} />
+                        <button type="button" onClick={addBoard}>
                             생성
                         </button>
                     </ModalContents>
