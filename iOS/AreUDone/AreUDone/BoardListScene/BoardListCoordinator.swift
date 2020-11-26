@@ -18,7 +18,7 @@ class BoardListCoordinator: NavigationCoordinator {
   private let router: Routable
   
   var navigationController: UINavigationController?
-  
+  private var boardDetailCoordinator: NavigationCoordinator!
   
   // MARK: - Initializer
   
@@ -44,4 +44,12 @@ class BoardListCoordinator: NavigationCoordinator {
   }
 }
 
-
+extension BoardListCoordinator {
+  
+  func boardItemDidTapped() {
+    boardDetailCoordinator = BoardDetailCoordinator()
+    
+    let viewController = boardDetailCoordinator.start()
+    navigationController?.pushViewController(viewController, animated: true)
+  }
+}

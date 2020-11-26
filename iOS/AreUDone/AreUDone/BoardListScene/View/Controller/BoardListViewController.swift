@@ -90,6 +90,8 @@ private extension BoardListViewController {
     navigationItem.title = "보드 목록"
     navigationItem.searchController = searchController
     searchController.searchResultsUpdater = self
+    
+    collectionView.delegate = self
   }
 }
 
@@ -131,6 +133,16 @@ private extension BoardListViewController {
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
+  }
+}
+
+// MARK: UICollectionViewDelegate
+
+extension BoardListViewController: UICollectionViewDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    coordinator?.boardItemDidTapped()
   }
 }
 
