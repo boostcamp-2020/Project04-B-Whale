@@ -13,8 +13,8 @@ export const BoardRouter = () => {
 
     router.post('/', async (req, res) => {
         const boardService = BoardService.getInstance();
-        await boardService.createBoard(req.user.id, req.body.title);
-        res.status(201).json({ message: 'success' });
+        const createdBoardId = await boardService.createBoard(req.user.id, req.body.title);
+        res.status(201).json({ id: createdBoardId });
     });
 
     return router;
