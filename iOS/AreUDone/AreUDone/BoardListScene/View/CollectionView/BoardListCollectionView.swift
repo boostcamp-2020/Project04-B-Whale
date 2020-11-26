@@ -27,9 +27,12 @@ final class BoardListCollectionView: UICollectionView {
   // MARK: - Method
   
   func configure() {
+    registerHeaderView(BoardListCollectionViewHeader.self)
     register(BoardListCollectionViewCell.self)
     let flowLayout = UICollectionViewFlowLayout()
-    flowLayout.itemSize = CGSize(width: 150, height: 150)
+    flowLayout.itemSize = CGSize(width: bounds.width, height: bounds.height/10)
+    flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: bounds.height/15)
+
     collectionViewLayout = flowLayout
   }
 }

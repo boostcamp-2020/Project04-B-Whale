@@ -10,6 +10,8 @@
 		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
 		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
+		335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */; };
+		335AC4CF256F6C51006A5C4A /* SectionContentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */; };
 		336010C3256B786E009580A1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C2256B786E009580A1 /* Card.swift */; };
 		336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010C7256B78CE009580A1 /* CardEndPoint.swift */; };
 		336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336010CC256B7B2B009580A1 /* APICredentials.swift */; };
@@ -160,6 +162,8 @@
 		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
+		335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewHeader.swift; sourceTree = "<group>"; };
+		335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionContentFactory.swift; sourceTree = "<group>"; };
 		336010C2256B786E009580A1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		336010C7256B78CE009580A1 /* CardEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEndPoint.swift; sourceTree = "<group>"; };
 		336010CC256B7B2B009580A1 /* APICredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
@@ -291,8 +295,17 @@
 			children = (
 				335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */,
 				335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */,
+				335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */,
 			);
 			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		335AC4D3256F6C6A006A5C4A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		336010DC256B8E34009580A1 /* Mock */ = {
@@ -399,6 +412,7 @@
 			children = (
 				33601229256E5022009580A1 /* BoardListCoordinator.swift */,
 				33601234256E50E6009580A1 /* Resources */,
+				335AC4D3256F6C6A006A5C4A /* Model */,
 				33601228256E5012009580A1 /* View */,
 				33601245256E52E4009580A1 /* ViewModel */,
 			);
@@ -942,6 +956,7 @@
 				3360123D256E512F009580A1 /* BoardListViewController.swift in Sources */,
 				33601182256CBE51009580A1 /* CalendarPickerViewController.swift in Sources */,
 				BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */,
+				335AC4CF256F6C51006A5C4A /* SectionContentFactory.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
@@ -979,6 +994,7 @@
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
+				335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 				335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */,

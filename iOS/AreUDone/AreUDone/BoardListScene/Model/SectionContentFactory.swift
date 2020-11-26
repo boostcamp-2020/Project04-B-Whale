@@ -18,7 +18,7 @@ struct SectionContentsFactory: SectionContentsFactoryable {
     case 0:
       return "나의 보드"
     case 1:
-      return "초대된 보드"
+      return "공유 보드"
     default:
       return ""
     }

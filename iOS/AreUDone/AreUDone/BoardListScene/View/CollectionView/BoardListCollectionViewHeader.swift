@@ -1,18 +1,17 @@
 //
-//  BoardListCollectionViewCell.swift
+//  BoardListCollectionViewHeader.swift
 //  AreUDone
 //
-//  Created by a1111 on 2020/11/25.
+//  Created by a1111 on 2020/11/26.
 //
 
 import UIKit
 
-final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
+final class BoardListCollectionViewHeader: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  private let titleLabel = UILabel()
-  
+  let titleLabel = UILabel()
   
   // MARK: - Initializer
   
@@ -24,7 +23,8 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .gray
+    
+    titleLabel.text = "샘플입니다"
     configure()
   }
   
@@ -35,17 +35,20 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
     configureTitle()
   }
   
-  private func configureTitle() {
+  func configureTitle() {
     addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
     ])
+    
+    
+    
+    
   }
   
-  func updateCell(board: Board) {
-    titleLabel.text = board.title
-  }
+  
+  
 }

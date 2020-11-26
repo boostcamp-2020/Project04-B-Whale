@@ -35,7 +35,7 @@ class BoardListCoordinator: NavigationCoordinator {
             identifier: BoardListViewController.identifier, creator: { coder in
               let boardService = BoardService(router: self.router)
       let viewModel = BoardListViewModel(boardService: boardService)
-      return BoardListViewController(coder: coder, viewModel: viewModel)
+      return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
     }) as? BoardListViewController else { return UIViewController() }
 
     boardListViewController.coordinator = self
