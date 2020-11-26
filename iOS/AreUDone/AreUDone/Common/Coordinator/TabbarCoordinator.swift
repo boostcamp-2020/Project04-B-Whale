@@ -40,8 +40,9 @@ final class TabbarCoordinator: Coordinator {
   
   func start() -> UIViewController {
     // TODO: 캘린더, 보드, 환경설정 넣을 예정
-    coordinators.forEach {
-      configureController(with: $0)
+    coordinators.enumerated().forEach { (index, coordinator) in
+      let itemContents = TabbarItemContentsFactory().load(order: index)
+      configureController(with: coordinator, itemContents)
     }
     
     tabbarController.viewControllers = controllers
@@ -49,7 +50,10 @@ final class TabbarCoordinator: Coordinator {
     return tabbarController
   }
   
-  private func configureController(with coordinator: NavigationCoordinator) {
+  private func configureController(
+    with coordinator: NavigationCoordinator,
+    _ itemContents: (name: String, image: String)
+  ) {
 
     var coordinator = coordinator
     let navigationController = UINavigationController()
@@ -57,9 +61,8 @@ final class TabbarCoordinator: Coordinator {
     let viewController = coordinator.start()
     coordinator.navigationController = navigationController
 
-    
     navigationController.pushViewController(viewController, animated: false)
-    navigationController.tabBarItem = UITabBarItem(title: "캘린더", image: UIImage(systemName: "circle"), tag: 0)
+    navigationController.tabBarItem = UITabBarItem(title: itemContents.name, image: UIImage(systemName: itemContents.image), tag: 0)
     
     controllers.append(navigationController)
   }
