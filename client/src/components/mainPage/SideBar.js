@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { BoardsStatusContext } from '../../context/BoardsContext';
 import Board from './Board';
+import AddBoardButton from './AddBoardButton';
 
 const Wrapper = styled.div`
     width: 20%;
@@ -21,15 +22,6 @@ const BoardTitle = styled.div`
 
 const BoardWrapper = styled.ul``;
 
-const AddBoardButton = styled.button`
-    width: 100%;
-    padding: 3px 0;
-    border: ${(props) => props.theme.border};
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
-`;
-
 const SideBar = () => {
     const { myBoards, invitedBoards } = useContext(BoardsStatusContext);
 
@@ -41,7 +33,7 @@ const SideBar = () => {
                     return <Board key={board.id} id={board.id} title={board.title} />;
                 })}
             </BoardWrapper>
-            <AddBoardButton>+ 보드 추가하기</AddBoardButton>
+            <AddBoardButton />
             <BoardTitle>초대 받은 보드</BoardTitle>
             <BoardWrapper>
                 {invitedBoards.map((board) => {
