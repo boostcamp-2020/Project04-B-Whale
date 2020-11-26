@@ -32,11 +32,12 @@ final class BoardListCollectionViewHeader: UICollectionReusableView, Reusable {
   // MARK: - Method
   
   private func configure() {
+    addSubview(titleLabel)
+    
     configureTitle()
   }
   
   func configureTitle() {
-    addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([

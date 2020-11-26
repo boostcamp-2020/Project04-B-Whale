@@ -32,11 +32,12 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   // MARK: - Method
   
   private func configure() {
+    addSubview(titleLabel)
+    
     configureTitle()
   }
   
   private func configureTitle() {
-    addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
@@ -45,7 +46,7 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
     ])
   }
   
-  func updateCell(board: Board) {
+  func update(with board: Board) {
     titleLabel.text = board.title
   }
 }
