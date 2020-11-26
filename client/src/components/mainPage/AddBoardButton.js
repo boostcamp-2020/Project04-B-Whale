@@ -14,13 +14,9 @@ const Button = styled.button`
 const AddBoardButton = () => {
     const [isModalDisplay, setIsModalDisplay] = useState(false);
 
-    const onClickAddBoard = () => {
-        setIsModalDisplay(true);
-    };
-
     return (
         <>
-            <Button onClick={onClickAddBoard}>+ 보드 추가하기</Button>
+            <Button onClick={() => setIsModalDisplay(true)}>+ 보드 추가하기</Button>
             <Modal onClose={() => setIsModalDisplay(false)} visible={isModalDisplay} />
         </>
     );
