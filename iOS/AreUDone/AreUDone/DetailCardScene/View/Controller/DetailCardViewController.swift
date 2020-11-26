@@ -7,18 +7,25 @@
 
 import UIKit
 
+enum CommentSection {
+  case main
+}
+
 final class DetailCardViewController: UIViewController {
+  
+  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, Comment>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, Comment>
   
   // MARK:- Property
   
   private let viewModel: DetailCardViewModelProtocol
   private var observer: NSKeyValueObservation?
+  private lazy var height = commentCollectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+  private lazy var dataSource = configureDataSource()
+
   
   private lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView()
-    scrollView.showsVerticalScrollIndicator = false
-    scrollView.showsHorizontalScrollIndicator = false
-    scrollView.backgroundColor = .red
     
     return scrollView
   }()
@@ -29,10 +36,17 @@ final class DetailCardViewController: UIViewController {
     return stackView
   }()
   
-  private lazy var detailCardTableView: UITableView = {
-    let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+  private lazy var commentTableView: UITableView = {
+    let tableView = UITableView()
     
     return tableView
+  }()
+  
+  private lazy var commentCollectionView: CommentCollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    let collectionView = CommentCollectionView(frame: CGRect(x: 0, y: 0, width: 320, height: 300), collectionViewLayout: layout)
+    
+    return collectionView
   }()
   
   
@@ -56,7 +70,33 @@ final class DetailCardViewController: UIViewController {
     configure()
     bindUI()
     
-    viewModel.fetchDetailCard()
+    DispatchQueue.main.async {
+      
+    }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    self.viewModel.fetchDetailCard()
+    
+    
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+  }
+  
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    
+    
+  }
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    
   }
 }
 
@@ -65,7 +105,31 @@ final class DetailCardViewController: UIViewController {
 
 private extension DetailCardViewController {
   
-  // TODO:- make datasource
+  func configureDataSource() -> DataSource {
+    let dataSource = DataSource(
+      collectionView: commentCollectionView
+    ) { (collectionView, indexPath, comment) -> UICollectionViewCell? in
+      let cell: CommentCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+      
+      cell.update(with: comment)
+      
+      return cell
+    }
+    
+    return dataSource
+  }
+  
+  func updateSnapshot(with item: [Comment], animatingDifferences: Bool = true) {
+    var snapshot = Snapshot()
+    
+    snapshot.appendSections([.main])
+    snapshot.appendItems(item)
+    
+    DispatchQueue.main.async {
+      self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+  }
 }
 
 
@@ -81,6 +145,9 @@ private extension DetailCardViewController {
     
     configureScrollView()
     configureStackView()
+    configureCommentcollectionView()
+//    configureCommentTableView()
+    
   }
   
   func configureScrollView() {
@@ -101,18 +168,33 @@ private extension DetailCardViewController {
     NSLayoutConstraint.activate([
       stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
       stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+//      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
       stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
     ])
   }
   
-  func configureDetailCardTableView() {
-    stackView.addArrangedSubview(detailCardTableView)
-    detailCardTableView.translatesAutoresizingMaskIntoConstraints = false
+  func configureCommentTableView() {
+    stackView.addArrangedSubview(commentTableView)
+    commentTableView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      detailCardTableView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+      commentTableView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+      commentTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    ])
+  }
+  
+  func configureCommentcollectionView() {
+    scrollView.addSubview(commentCollectionView)
+    commentCollectionView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      commentCollectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+      commentCollectionView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+      commentCollectionView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+      commentCollectionView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+      height
+//      commentCollectionView.heightAnchor.constraint(lessThanOrEqualToConstant: 0)
     ])
   }
 }
@@ -126,7 +208,7 @@ private extension DetailCardViewController {
     observationNavigationBar()
     bindingDetailCardContentView()
     bindingDetailCardDueDateView()
-    bindingDetailCardCommentsView()
+    bindingDetailCardCommentTableView()
   }
   
   private func observationNavigationBar() {
@@ -156,9 +238,11 @@ private extension DetailCardViewController {
     }
   }
   
-  private func bindingDetailCardCommentsView() {
-    viewModel.bindingDetailCardCommentsView { comments in
-      
+  private func bindingDetailCardCommentTableView() {
+    viewModel.bindingDetailCardCommentTableView { [weak self] comments in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: comments, animatingDifferences: false)
+      }
     }
   }
 }

@@ -8,33 +8,49 @@
 import Foundation
 
 struct DetailCard: Codable {
+  
   let id: Int
   let title: String
   let content: String
   let comments: [Comment]
   let board: Board
   let list: List
+}
+
+struct Comment: Codable, Hashable {
   
-  struct Comment: Codable {
-    let id: Int
-    let content: String
-    let createdAt: String
-    let user: User
-    
-    struct User: Codable {
-      let id: Int
-      let name: String
-      let profileImageUrl: String
-    }
+  static func == (lhs: Comment, rhs: Comment) -> Bool {
+    return lhs.id == rhs.id &&
+      lhs.content == rhs.content &&
+      lhs.createdAt == rhs.createdAt &&
+      lhs.user == rhs.user
   }
   
-  struct Board: Codable {
-    let id: Int
-    let title: String
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+    hasher.combine(content)
+    hasher.combine(createdAt)
+    hasher.combine(user)
   }
   
-  struct List: Codable {
-    let id: Int
-    let title: String
-  }
+  let id: Int
+  let content: String
+  let createdAt: String
+  let user: User
+}
+
+struct User: Codable, Hashable {
+  let id: Int
+  let name: String
+  let profileImageUrl: String
+}
+
+struct Board: Codable {
+  let id: Int
+  let title: String
+}
+
+struct List: Codable {
+  let id: Int
+  let title: String
 }

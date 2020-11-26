@@ -89,6 +89,10 @@
 		BD2AA7EE256F421E00EA8791 /* DetailCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7ED256F421E00EA8791 /* DetailCardStackView.swift */; };
 		BD2AA7F3256F424800EA8791 /* DetailCardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7F2256F424800EA8791 /* DetailCardContentView.swift */; };
 		BD2AA7F8256F4E3900EA8791 /* DetailCardDueDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7F7256F4E3900EA8791 /* DetailCardDueDateView.swift */; };
+		BD2AA7FD256F633600EA8791 /* CommentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7FC256F633600EA8791 /* CommentTableView.swift */; };
+		BD2AA802256F637E00EA8791 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA801256F637E00EA8791 /* CommentTableViewCell.swift */; };
+		BD2AA80A256F8B5900EA8791 /* CommentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */; };
+		BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -212,6 +216,10 @@
 		BD2AA7ED256F421E00EA8791 /* DetailCardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardStackView.swift; sourceTree = "<group>"; };
 		BD2AA7F2256F424800EA8791 /* DetailCardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardContentView.swift; sourceTree = "<group>"; };
 		BD2AA7F7256F4E3900EA8791 /* DetailCardDueDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardDueDateView.swift; sourceTree = "<group>"; };
+		BD2AA7FC256F633600EA8791 /* CommentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableView.swift; sourceTree = "<group>"; };
+		BD2AA801256F637E00EA8791 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionView.swift; sourceTree = "<group>"; };
+		BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -588,6 +596,10 @@
 				BD2AA7ED256F421E00EA8791 /* DetailCardStackView.swift */,
 				BD2AA7F2256F424800EA8791 /* DetailCardContentView.swift */,
 				BD2AA7F7256F4E3900EA8791 /* DetailCardDueDateView.swift */,
+				BD2AA7FC256F633600EA8791 /* CommentTableView.swift */,
+				BD2AA801256F637E00EA8791 /* CommentTableViewCell.swift */,
+				BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */,
+				BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -890,6 +902,7 @@
 			files = (
 				336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */,
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
+				BD2AA7FD256F633600EA8791 /* CommentTableView.swift in Sources */,
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */,
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
@@ -897,7 +910,10 @@
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
+				BD2AA802256F637E00EA8791 /* CommentTableViewCell.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
+				BD2AA80A256F8B5900EA8791 /* CommentCollectionView.swift in Sources */,
+				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* DetailCardViewController.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* DetailCard.swift in Sources */,

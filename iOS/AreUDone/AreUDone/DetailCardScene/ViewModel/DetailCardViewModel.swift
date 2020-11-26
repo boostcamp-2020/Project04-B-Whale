@@ -10,7 +10,7 @@ import Foundation
 protocol DetailCardViewModelProtocol {
   func bindingDetailCardContentView(handler: @escaping ((String) -> Void))
   func bindingDetailCardDueDateView(handler: @escaping ((String) -> Void))
-  func bindingDetailCardCommentsView(handler: @escaping (([DetailCard.Comment]) -> Void))
+  func bindingDetailCardCommentTableView(handler: @escaping (([Comment]) -> Void))
   
   func fetchDetailCard()
 }
@@ -24,7 +24,7 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
   
   private var detailCardContentViewHandler: ((String) -> Void)?
   private var detailCardDueDateViewHandler: ((String) -> Void)?
-  private var detailCardCommentsViewHandler: (([DetailCard.Comment]) -> Void)?
+  private var detailCardCommentsViewHandler: (([Comment]) -> Void)?
   
   // MARK:- Initializer
   
@@ -42,7 +42,7 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
     detailCardDueDateViewHandler = handler
   }
   
-  func bindingDetailCardCommentsView(handler: @escaping (([DetailCard.Comment]) -> Void)) {
+  func bindingDetailCardCommentTableView(handler: @escaping (([Comment]) -> Void)) {
     detailCardCommentsViewHandler = handler
   }
   
@@ -54,11 +54,11 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
     
     let dueDate = "2020-11-26"
     
-    let user1 = DetailCard.Comment.User(id: 0, name: "서명렬", profileImageUrl: "")
-    let user2 = DetailCard.Comment.User(id: 1, name: "심영민", profileImageUrl: "")
+    let user1 = User(id: 0, name: "서명렬", profileImageUrl: "")
+    let user2 = User(id: 1, name: "심영민", profileImageUrl: "")
     
-    let comment1 = DetailCard.Comment(id: 0, content: "안녕하세요", createdAt: "2020-11-26", user: user1)
-    let comment2 = DetailCard.Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment1 = Comment(id: 0, content: "안녕하세요", createdAt: "2020-11-26", user: user1)
+    let comment2 = Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     
     detailCardContentViewHandler?(content)
     detailCardDueDateViewHandler?(dueDate)

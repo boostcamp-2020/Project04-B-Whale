@@ -20,7 +20,7 @@ final class CalendarViewController: UIViewController {
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
-  lazy var dataSource = configureDataSource()
+  private lazy var dataSource = configureDataSource()
   
   @IBOutlet private weak var dateLabel: DateLabel!
   @IBOutlet private weak var currentDateLabel: UILabel!
