@@ -5,9 +5,16 @@ import Board from './Board';
 
 const Wrapper = styled.div`
     position: absolute;
+    width: 100%;
+    height: 100%;
+`;
+
+const DropdownWrapper = styled.div`
+    position: relative;
+    top: 4%;
+    left: 0.6em;
     width: 200px;
     height: 200px;
-    margin: 5px;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
@@ -23,23 +30,31 @@ const BoardTitle = styled.div`
 
 const BoardWrapper = styled.ul``;
 
-const BoardsDropdown = () => {
+const BoardsDropdown = ({ onClose }) => {
     const { myBoards, invitedBoards } = useContext(BoardsStatusContext);
 
+    const onClickClose = (e) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
     return (
-        <Wrapper>
-            <BoardTitle>내가 만든 보드</BoardTitle>
-            <BoardWrapper>
-                {myBoards.map((board) => {
-                    return <Board key={board.id} id={board.id} title={board.title} />;
-                })}
-            </BoardWrapper>
-            <BoardTitle>초대 받은 보드</BoardTitle>
-            <BoardWrapper>
-                {invitedBoards.map((board) => {
-                    return <Board key={board.id} id={board.id} title={board.title} />;
-                })}
-            </BoardWrapper>
+        <Wrapper onClick={onClickClose}>
+            <DropdownWrapper>
+                <BoardTitle>내가 만든 보드</BoardTitle>
+                <BoardWrapper>
+                    {myBoards.map((board) => {
+                        return <Board key={board.id} id={board.id} title={board.title} />;
+                    })}
+                </BoardWrapper>
+                <BoardTitle>초대 받은 보드</BoardTitle>
+                <BoardWrapper>
+                    {invitedBoards.map((board) => {
+                        return <Board key={board.id} id={board.id} title={board.title} />;
+                    })}
+                </BoardWrapper>
+            </DropdownWrapper>
         </Wrapper>
     );
 };

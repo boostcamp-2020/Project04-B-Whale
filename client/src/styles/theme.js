@@ -10,6 +10,7 @@ const desktop = `(max-width: ${sizes.desktop})`;
 // 사용할 색깔
 const colors = {
     redColor: '#f73f52',
+    whiteColor: '#f5f5f5',
 };
 
 // 자주 사용하는 css style
