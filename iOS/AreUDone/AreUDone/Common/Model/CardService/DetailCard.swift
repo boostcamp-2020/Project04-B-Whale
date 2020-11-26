@@ -11,7 +11,7 @@ struct DetailCard: Codable {
   let id: Int
   let title: String
   let content: String
-  let comment: [Comment]
+  let comments: [Comment]
   let board: Board
   let list: List
   
@@ -24,6 +24,7 @@ struct DetailCard: Codable {
     struct User: Codable {
       let id: Int
       let name: String
+      let profileImageUrl: String
     }
   }
   
