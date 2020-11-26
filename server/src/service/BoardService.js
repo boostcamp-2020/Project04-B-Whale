@@ -48,5 +48,7 @@ export class BoardService extends BaseService {
         };
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
+
+        return createBoard.id;
     }
 }
