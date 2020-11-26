@@ -14,6 +14,7 @@ extension UIStoryboard {
     case calendar
     case detailCard
     case boardList
+    case boardDetail
     
     var fileName: String {
       return (String(rawValue.first?.uppercased() ?? "")) + String(rawValue.dropFirst())
