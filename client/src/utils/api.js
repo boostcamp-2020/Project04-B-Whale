@@ -9,15 +9,17 @@ import axios from 'axios';
 
 const request = async (config) => {
     try {
+        const token = localStorage.getItem('jwt');
+
         const res = await axios({
             headers: {
-                Authorization: config.token,
+                Authorization: token,
                 'Content-Type': 'application/json',
             },
             ...config,
-            url: process.env.BASE_URL + config.url,
+            url: process.env.REACT_APP_BASE_URL + config.url,
         });
-        return { status: res.status, ...res.data };
+        return { status: res.status, data: res.data };
     } catch ({ response }) {
         return { status: response.status };
     }
