@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './create-board-modal';
+import BoardsButton from './BoardsButton';
 
 const HeaderDiv = styled.div`
     display: flex;
     justify-content: space-between;
-    line-height: 50px;
+    align-items: center;
     width: 100%;
     height: 10%;
+    min-height: 50px;
     background-color: #f73f52;
 `;
 
 const HeaderTitle = styled.div`
     color: white;
-`;
-
-const BoardsBtn = styled.button`
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: yellow;
 `;
 
 const AddBoardBtn = styled.button`
@@ -32,7 +28,6 @@ const LogoutBtn = styled.button`
 `;
 
 const Header = () => {
-    const [getBoardsModalVisible, setGetBoardsModalVisible] = useState(false);
     const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
 
     const logoutHandler = () => {
@@ -44,7 +39,7 @@ const Header = () => {
     return (
         <>
             <HeaderDiv>
-                <BoardsBtn onClick={() => setGetBoardsModalVisible(true)}>Boards</BoardsBtn>
+                <BoardsButton />
                 <HeaderTitle>TODO LIST</HeaderTitle>
 
                 <div>
@@ -56,12 +51,6 @@ const Header = () => {
                 <Modal
                     visible={createBoardModalVisible}
                     onClose={() => setCreateBoardModalVisible(false)}
-                />
-            )}
-            {getBoardsModalVisible && (
-                <Modal
-                    visible={getBoardsModalVisible}
-                    onClose={() => setGetBoardsModalVisible(false)}
                 />
             )}
         </>

@@ -11,12 +11,12 @@ const Wrapper = styled.div`
 
 const Main = () => {
     return (
-        <Wrapper>
-            <BoardsProvider>
-                <Header />
+        <BoardsProvider>
+            <Header />
+            <Wrapper>
                 <SideBar />
-            </BoardsProvider>
-        </Wrapper>
+            </Wrapper>
+        </BoardsProvider>
     );
 };
 
