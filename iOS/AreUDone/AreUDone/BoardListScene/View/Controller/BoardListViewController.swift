@@ -67,7 +67,6 @@ class BoardListViewController: UIViewController {
   
   // MARK: - Method
   
-  
 }
 
 
@@ -77,7 +76,7 @@ private extension BoardListViewController {
   
   func bindUI() {
     viewModel.bindingInitializeBoardListCollectionView { boards in
-      self.updateSnapshot(with: boards, false)
+      self.updateSnapshot(with: boards, animatingDifferences: false)
     }
     
     viewModel.bindingUpdateBoardListCollectionView { boards in
@@ -120,7 +119,7 @@ private extension BoardListViewController {
     return dataSource
   }
   
-  func updateSnapshot(with boards: Boards, _ animatingDifferences: Bool = true) {
+  func updateSnapshot(with boards: Boards, animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
   
     let myBoards = boards.myBoards
