@@ -50,6 +50,7 @@ extension BoardListCoordinator {
     boardDetailCoordinator = BoardDetailCoordinator()
     
     let viewController = boardDetailCoordinator.start()
+    viewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(viewController, animated: true)
   }
 }
