@@ -57,4 +57,12 @@ extension CalendarCoordinator {
     calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
   }
+  
+  func showDetailCard(for id: Int) {
+    let router = Router()
+    let detailCardCoordinator = DetailCardCoordinator(id: id, router: router)
+    
+    let detailCardViewController = detailCardCoordinator.start()
+    navigationController.pushViewController(detailCardViewController, animated: true)
+  }
 }

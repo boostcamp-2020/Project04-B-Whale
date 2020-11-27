@@ -51,6 +51,11 @@ final class CalendarViewController: UIViewController {
     bindUI()
     configure()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = true
+  }
 }
 
 
@@ -66,8 +71,6 @@ private extension CalendarViewController {
       
     dateStepper.delegate = self
     viewModel.initializeDate()
-
-    navigationController?.navigationBar.isHidden = true
   }
   
   func bindUI() {
@@ -150,8 +153,8 @@ extension CalendarViewController: CalendarViewControllerDelegate {
 
 extension CalendarViewController: CardCellDelegate {
   
-  func delete(cardCell: CardCollectionViewCell) {
-    if let indexPath = cardCollectionView.indexPath(for: cardCell),
+  func remove(cell: CardCollectionViewCell) {
+    if let indexPath = cardCollectionView.indexPath(for: cell),
        let item = dataSource.itemIdentifier(for: indexPath) {
       var snapshot = dataSource.snapshot()
       snapshot.deleteItems([item])
@@ -162,12 +165,20 @@ extension CalendarViewController: CardCellDelegate {
   func resetCellOffset(without cell: CardCollectionViewCell) {
     cardCollectionView.resetVisibleCellOffset(without: cell)
   }
+  
+  func didSelect(for cell: CardCollectionViewCell) {
+    if let indexPath = cardCollectionView.indexPath(for: cell),
+       let card = dataSource.itemIdentifier(for: indexPath) {
+      calendarCoordinator?.showDetailCard(for: card.id)
+    }
+  }
 }
 
 
 // MARK: UICollectionViewDelegate
 
 extension CalendarViewController: UICollectionViewDelegate {
+  
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     cardCollectionView.resetVisibleCellOffset()
   }
