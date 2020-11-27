@@ -28,7 +28,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="699" width="272" height="56"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Obc-CD-fb9" secondAttribute="height" multiplier="4.85:1" id="Xg4-Cf-Kll"/>
                                     <constraint firstAttribute="height" constant="56" id="gNi-5O-DF0"/>
@@ -98,7 +98,7 @@
     <resources>
         <image name="NaverSignInIcon" width="578" height="125"/>
         <image name="app_logo" width="405" height="154"/>
-        <image name="applelogo" catalog="system" width="103" height="128"/>
+        <image name="applelogo" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

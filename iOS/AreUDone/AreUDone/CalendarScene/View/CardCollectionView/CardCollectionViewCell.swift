@@ -50,6 +50,7 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   var delegate: CardCellDelegate?
   
+  
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
@@ -72,9 +73,10 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   }
   
   func resetOffset() {
-    UIView.animate(withDuration: 0.5) {
+    
+    UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
       self.scrollView.contentOffset.x = 0
-    }
+    }.startAnimation()
   }
 }
 
@@ -164,6 +166,7 @@ extension CardCollectionViewCell {
 // MARK:- Extension
 
 extension CardCollectionViewCell: UIScrollViewDelegate {
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.x <= 0 {
       scrollView.bounces = false
@@ -173,5 +176,4 @@ extension CardCollectionViewCell: UIScrollViewDelegate {
       delegate?.resetCellOffset(without: self)
     }
   }
-
 }
