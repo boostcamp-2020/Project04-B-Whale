@@ -63,6 +63,6 @@ extension CalendarCoordinator {
     let detailCardCoordinator = DetailCardCoordinator(id: id, router: router)
     
     let detailCardViewController = detailCardCoordinator.start()
-    navigationController.pushViewController(detailCardViewController, animated: true)
+    navigationController?.pushViewController(detailCardViewController, animated: true)
   }
 }
