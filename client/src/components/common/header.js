@@ -31,9 +31,8 @@ const Header = () => {
     const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
 
     const logoutHandler = () => {
-        // logout 로직
-        // 로컬스토리지 jwt 삭제하고
-        // 로그인화면으로
+        localStorage.removeItem('jwt');
+        document.location = '/';
     };
 
     return (
