@@ -7,7 +7,9 @@
 
 import UIKit
 
-class SigninButton: UIButton {
+final class SigninButton: UIButton {
+  
+  // MARK: - Initializer
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
@@ -20,6 +22,11 @@ class SigninButton: UIButton {
     
     configure()
   }
+}
+
+extension SigninButton {
+  
+  // MARK: - Method
   
   private func configure() {
     layer.cornerRadius = 5

@@ -8,15 +8,20 @@
 import UIKit
 
 extension UIStoryboard {
+  
   enum Storyboard: String {
     case signin
+    case calendar
+    case detailCard
+    case boardList
+    case boardDetail
     
     var fileName: String {
-      return rawValue.capitalized
+      return (String(rawValue.first?.uppercased() ?? "")) + String(rawValue.dropFirst())
     }
   }
   
-  class func storyboard(storyboard: Storyboard, bundle: Bundle? = nil) -> UIStoryboard {
-    return UIStoryboard(name: storyboard.fileName, bundle: bundle)
+  static func load(storyboard: Storyboard, bundle: Bundle? = nil) -> Self {
+    return .init(name: storyboard.fileName, bundle: bundle)
   }
 }

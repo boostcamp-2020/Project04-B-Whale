@@ -5,20 +5,29 @@
 //  Created by a1111 on 2020/11/18.
 //
 
-import Foundation
+import UIKit
+import NetworkFramework
 
 protocol CoordinatorFactoryable {
-  func makeCoordinator(by isValid: Bool) -> Coordinator
+  func coordinator(by isValid: SigninCheckResult, with router: Routable) -> Coordinator
 }
 
 final class InitCoorndinatorFactory: CoordinatorFactoryable {
   
-  func makeCoordinator(by isValid: Bool) -> Coordinator {
-    switch isValid {
-    case true:
-      print("탭바")
-      return SigninCoordinator() // TODO: TabbarCoordinator 만들어주기
-    case false:
+  func coordinator(by result: SigninCheckResult, with router: Routable) -> Coordinator {
+    switch result {
+    case .isSigned:
+      let coordinators: [NavigationCoordinator] = [
+        CalendarCoordinator(router: router),
+        BoardListCoordinator(router: router)
+      ]
+      return TabbarCoordinator(
+        router: router,
+        signInCoordinator: SigninCoordinator(),
+        tabbarController: UITabBarController(),
+        coordinators: coordinators
+      )
+    case .isNotSigned:
       return SigninCoordinator()
     }
   }

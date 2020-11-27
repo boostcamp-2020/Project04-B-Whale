@@ -8,5 +8,15 @@
 import UIKit
 
 protocol Coordinator {
+  @discardableResult
   func start() -> UIViewController
 }
+
+protocol NavigationCoordinator {
+  
+  var navigationController: UINavigationController? { get set }
+  
+  @discardableResult
+  func start() -> UIViewController
+}
+
