@@ -15,7 +15,7 @@ struct List: Codable {
   let id: Int
   let title: String
   let position: Int
-  let cards: [Card]
+  var cards: [Card]
 }
 
 extension List: Hashable {

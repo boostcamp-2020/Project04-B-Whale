@@ -49,16 +49,21 @@ final class BoardDetailViewController: UIViewController {
       Card(id: 1, title: "카드1", dueDate: "날짜1", position: 0, commentCount: 0),
       Card(id: 1, title: "카드2", dueDate: "날짜", position: 0, commentCount: 0)
     ]
-    let items = Lists(lists: [
+    
+    let cards2 = [
+      Card(id: 1, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
+      Card(id: 1, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0)
+    ]
+    let items = [
       List(id: 0, title: "데이터1", position: 0, cards: cards),
-      List(id: 1, title: "데이터2", position: 0, cards: []),
+      List(id: 1, title: "데이터2", position: 0, cards: cards2),
       List(id: 2, title: "데이터3", position: 0, cards: []),
       List(id: 3, title: "데이터3", position: 0, cards: []),
       List(id: 4, title: "데이터3", position: 0, cards: []),
       List(id: 5, title: "데이터3", position: 0, cards: []),
       List(id: 6, title: "데이터3", position: 0, cards: []),
       List(id: 7, title: "데이터3", position: 0, cards: [])
-    ])
+    ]
     updateSnapshot(with: items, animatingDifferences: false)
   }
 }
@@ -74,6 +79,28 @@ extension BoardDetailViewController {
   func configure() {
     navigationItem.largeTitleDisplayMode = .never
   }
+  
+  func indexPath(of cell: UICollectionViewCell) -> IndexPath? {
+    if let indexPath = collectionView.indexPath(for: cell) {
+      return indexPath
+    }
+    return nil
+  }
+  
+  func update(from sourceCell: UICollectionViewCell, _ sourceCards: [Card],
+              to destinationCell: UICollectionViewCell, _ destinationCards: [Card]) {
+    
+    guard let sourceListIndexPath = collectionView.indexPath(for: sourceCell),
+          let destinationListIndexPath = collectionView.indexPath(for: destinationCell)
+    else { return }
+    
+    var lists = dataSource.snapshot().itemIdentifiers(inSection: .main)
+    lists[sourceListIndexPath.item].cards = sourceCards
+    lists[destinationListIndexPath.item].cards = destinationCards
+    
+    updateSnapshot(with: lists, animatingDifferences: false)
+    print(sourceCards, destinationCards)
+  }
 }
 
 
@@ -88,6 +115,8 @@ extension BoardDetailViewController {
       let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.backgroundColor = .gray
+      
+      cell.parentVc = self
       cell.update(with: list.cards)
       
       return cell
@@ -96,11 +125,11 @@ extension BoardDetailViewController {
     return dataSource
   }
   
-  func updateSnapshot(with items: Lists, animatingDifferences: Bool = true) {
+  func updateSnapshot(with items: [List], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
     
     snapshot.appendSections([.main])
-    snapshot.appendItems(items.lists)
+    snapshot.appendItems(items)
     
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
