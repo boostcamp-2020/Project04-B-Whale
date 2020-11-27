@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HsP-xz-0RX" customClass="BoardListCollectionView" customModule="AreUDone" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ndS-Qa-BcR">
                                     <size key="itemSize" width="128" height="128"/>
@@ -45,7 +45,7 @@
                             <constraint firstItem="HsP-xz-0RX" firstAttribute="leading" secondItem="cM7-ka-MNx" secondAttribute="leading" id="FfI-QT-A0F"/>
                             <constraint firstItem="cM7-ka-MNx" firstAttribute="bottom" secondItem="HsP-xz-0RX" secondAttribute="bottom" id="UBc-po-MSc"/>
                             <constraint firstItem="cM7-ka-MNx" firstAttribute="trailing" secondItem="HsP-xz-0RX" secondAttribute="trailing" id="pul-JP-5em"/>
-                            <constraint firstItem="HsP-xz-0RX" firstAttribute="top" secondItem="cM7-ka-MNx" secondAttribute="top" id="qAL-gN-dd6"/>
+                            <constraint firstItem="HsP-xz-0RX" firstAttribute="top" secondItem="dPQ-PY-Vsn" secondAttribute="top" id="qAL-gN-dd6"/>
                         </constraints>
                     </view>
                     <connections>
