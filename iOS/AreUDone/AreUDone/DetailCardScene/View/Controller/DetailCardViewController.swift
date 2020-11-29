@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CommentSection {
+enum CommentSection: CaseIterable {
   case main
 }
 
@@ -20,14 +20,12 @@ final class DetailCardViewController: UIViewController {
   
   private let viewModel: DetailCardViewModelProtocol
   private var observer: NSKeyValueObservation?
-  private lazy var height = commentCollectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
   private lazy var dataSource = configureDataSource()
-
   
   private lazy var scrollView: UIScrollView = {
-    let scrollView = UIScrollView()
-    
-    return scrollView
+    let view = UIScrollView()
+    view.showsVerticalScrollIndicator = false
+    return view
   }()
   
   private lazy var stackView: DetailCardStackView = {
@@ -36,15 +34,9 @@ final class DetailCardViewController: UIViewController {
     return stackView
   }()
   
-  private lazy var commentTableView: UITableView = {
-    let tableView = UITableView()
-    
-    return tableView
-  }()
-  
   private lazy var commentCollectionView: CommentCollectionView = {
     let layout = UICollectionViewFlowLayout()
-    let collectionView = CommentCollectionView(frame: CGRect(x: 0, y: 0, width: 320, height: 300), collectionViewLayout: layout)
+    let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
     
     return collectionView
   }()
@@ -71,32 +63,8 @@ final class DetailCardViewController: UIViewController {
     bindUI()
     
     DispatchQueue.main.async {
-      
+      self.viewModel.fetchDetailCard()
     }
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    self.viewModel.fetchDetailCard()
-    
-    
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-  }
-  
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-    
-    
-  }
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-    
   }
 }
 
@@ -121,14 +89,13 @@ private extension DetailCardViewController {
   
   func updateSnapshot(with item: [Comment], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-    
+
     snapshot.appendSections([.main])
-    snapshot.appendItems(item)
+    snapshot.appendItems(item, toSection: .main)
     
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
-    
   }
 }
 
@@ -138,63 +105,40 @@ private extension DetailCardViewController {
 private extension DetailCardViewController {
   
   func configure() {
+    configureView()
+    configureScrollView()
+    configureStackView()
+  }
+  
+  func configureView(){
     navigationController?.navigationBar.isHidden = false
     navigationController?.navigationBar.prefersLargeTitles = true
     
     view.addSubview(scrollView)
-    
-    configureScrollView()
-    configureStackView()
-    configureCommentcollectionView()
-//    configureCommentTableView()
-    
+    scrollView.addSubview(stackView)
+    stackView.addArrangedSubview(commentCollectionView)
   }
   
   func configureScrollView() {
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-      scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
     ])
   }
   
   func configureStackView() {
-    scrollView.addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
       stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+      stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
       stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-      stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
-    ])
-  }
-  
-  func configureCommentTableView() {
-    stackView.addArrangedSubview(commentTableView)
-    commentTableView.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      commentTableView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-      commentTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
-    ])
-  }
-  
-  func configureCommentcollectionView() {
-    scrollView.addSubview(commentCollectionView)
-    commentCollectionView.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      commentCollectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
-      commentCollectionView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-      commentCollectionView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-      commentCollectionView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-      height
-//      commentCollectionView.heightAnchor.constraint(lessThanOrEqualToConstant: 0)
+      stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+      stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
     ])
   }
 }
@@ -241,7 +185,7 @@ private extension DetailCardViewController {
   private func bindingDetailCardCommentTableView() {
     viewModel.bindingDetailCardCommentTableView { [weak self] comments in
       DispatchQueue.main.async {
-        self?.updateSnapshot(with: comments, animatingDifferences: false)
+        self?.updateSnapshot(with: comments, animatingDifferences: true)
       }
     }
   }

@@ -59,9 +59,15 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
     
     let comment1 = Comment(id: 0, content: "안녕하세요", createdAt: "2020-11-26", user: user1)
     let comment2 = Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment3 = Comment(id: 2, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment4 = Comment(id: 3, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment5 = Comment(id: 4, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment6 = Comment(id: 5, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment7 = Comment(id: 6, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment8 = Comment(id: 7, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     
     detailCardContentViewHandler?(content)
     detailCardDueDateViewHandler?(dueDate)
-    detailCardCommentsViewHandler?([comment1, comment2])
+    detailCardCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8])
   }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailCardDueDateView: UITableViewCell, Reusable {
+final class DetailCardDueDateView: UIView {
   
   // MARK:- Property
   

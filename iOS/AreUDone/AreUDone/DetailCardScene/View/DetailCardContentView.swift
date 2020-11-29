@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailCardContentView: UITableViewCell, Reusable {
+final class DetailCardContentView: UIView {
   
   // MARK:- Property
   
@@ -34,8 +34,8 @@ final class DetailCardContentView: UITableViewCell, Reusable {
     configure()
   }
   
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  override init(frame: CGRect) {
+    super.init(frame: frame)
     
     configure()
   }

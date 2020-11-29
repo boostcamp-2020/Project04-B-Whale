@@ -9,6 +9,18 @@ import UIKit
 
 class CommentCollectionView: UICollectionView {
 
+  override var contentSize:CGSize {
+    didSet {
+      invalidateIntrinsicContentSize()
+    }
+  }
+  
+  override var intrinsicContentSize: CGSize {
+    layoutIfNeeded()
+    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+  }
+  
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -22,6 +34,8 @@ class CommentCollectionView: UICollectionView {
   }
 
   private func configure() {
+    backgroundColor = .white
+    isScrollEnabled = false
     configureFlowLayout()
     registerCell()
   }
@@ -30,6 +44,8 @@ class CommentCollectionView: UICollectionView {
     let layout = UICollectionViewFlowLayout()
     let height = UIScreen.main.bounds.height * 0.1
     let width = UIScreen.main.bounds.width * 0.8
+//    layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 80)
+//    layout.headerReferenceSize = .zero
     layout.itemSize = CGSize(width: width, height: height)
     layout.minimumInteritemSpacing = 10
     
@@ -37,6 +53,9 @@ class CommentCollectionView: UICollectionView {
   }
   
   private func registerCell() {
+//    registerHeader(DetailCardContentView.self)
+//    registerHeader(DetailCardDueDateView.self)
+//    registerHeader(HeaderView.self)
     register(CommentCollectionViewCell.self)
   }
 }
