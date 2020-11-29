@@ -143,7 +143,7 @@ extension CalendarViewController: CardCellDelegate {
   func didSelect(for cell: CardCollectionViewCell) {
     if let indexPath = cardCollectionView.indexPath(for: cell),
        let card = dataSource.itemIdentifier(for: indexPath) {
-      calendarCoordinator?.showDetailCard(for: card.id)
+      calendarCoordinator?.showCardDetail(for: card.id)
     }
   }
 }

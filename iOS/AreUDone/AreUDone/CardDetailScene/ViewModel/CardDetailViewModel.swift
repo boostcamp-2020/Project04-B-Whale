@@ -1,5 +1,5 @@
 //
-//  DetailCardViewModel.swift
+//  CardDetailViewModel.swift
 //  AreUDone
 //
 //  Created by 서명렬 on 2020/11/25.
@@ -7,24 +7,24 @@
 
 import Foundation
 
-protocol DetailCardViewModelProtocol {
-  func bindingDetailCardContentView(handler: @escaping ((String) -> Void))
-  func bindingDetailCardDueDateView(handler: @escaping ((String) -> Void))
-  func bindingDetailCardCommentTableView(handler: @escaping (([Comment]) -> Void))
+protocol CardDetailViewModelProtocol {
+  func bindingCardDetailContentView(handler: @escaping ((String) -> Void))
+  func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
+  func bindingCardDetailCommentTableView(handler: @escaping (([Comment]) -> Void))
   
   func fetchDetailCard()
 }
 
-final class DetailCardViewModel: DetailCardViewModelProtocol {
+final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   // MARK:- Property
   
   private var cardService: CardServiceProtocol
   private let id: Int
   
-  private var detailCardContentViewHandler: ((String) -> Void)?
-  private var detailCardDueDateViewHandler: ((String) -> Void)?
-  private var detailCardCommentsViewHandler: (([Comment]) -> Void)?
+  private var cardDetailContentViewHandler: ((String) -> Void)?
+  private var cardDetailDueDateViewHandler: ((String) -> Void)?
+  private var cardDetailCommentsViewHandler: (([Comment]) -> Void)?
   
   // MARK:- Initializer
   
@@ -34,16 +34,16 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
   }
   
   
-  func bindingDetailCardContentView(handler: @escaping ((String) -> Void)) {
-    detailCardContentViewHandler = handler
+  func bindingCardDetailContentView(handler: @escaping ((String) -> Void)) {
+    cardDetailContentViewHandler = handler
   }
   
-  func bindingDetailCardDueDateView(handler: @escaping ((String) -> Void)) {
-    detailCardDueDateViewHandler = handler
+  func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void)) {
+    cardDetailDueDateViewHandler = handler
   }
   
-  func bindingDetailCardCommentTableView(handler: @escaping (([Comment]) -> Void)) {
-    detailCardCommentsViewHandler = handler
+  func bindingCardDetailCommentTableView(handler: @escaping (([Comment]) -> Void)) {
+    cardDetailCommentsViewHandler = handler
   }
   
   func fetchDetailCard() {
@@ -66,8 +66,8 @@ final class DetailCardViewModel: DetailCardViewModelProtocol {
     let comment7 = Comment(id: 6, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     let comment8 = Comment(id: 7, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     
-    detailCardContentViewHandler?(content)
-    detailCardDueDateViewHandler?(dueDate)
-    detailCardCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8])
+    cardDetailContentViewHandler?(content)
+    cardDetailDueDateViewHandler?(dueDate)
+    cardDetailCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8])
   }
 }

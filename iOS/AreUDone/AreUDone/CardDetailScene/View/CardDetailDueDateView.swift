@@ -1,5 +1,5 @@
 //
-//  DetailCardContentView.swift
+//  CardDetailDueDateView.swift
 //  AreUDone
 //
 //  Created by 서명렬 on 2020/11/26.
@@ -7,22 +7,22 @@
 
 import UIKit
 
-final class DetailCardContentView: UIView {
+final class CardDetailDueDateView: UIView {
   
   // MARK:- Property
   
   private lazy var titleLable: UILabel = {
     let label = UILabel()
-    label.text = "내용"
+    label.text = "마감 날짜"
     label.font = UIFont(name: "Chalkduster", size: 20)
     
     return label
   }()
   
-  private lazy var contentLabel: UILabel = {
+  private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-    
+
     return label
   }()
   
@@ -43,24 +43,21 @@ final class DetailCardContentView: UIView {
   
   // MARK:- Method
   
-  func update(content: String) {
-    contentLabel.text = content
+  func update(dueDate: String) {
+    dueDateLabel.text = dueDate
   }
-  
-  
 }
 
 
-private extension DetailCardContentView {
+private extension CardDetailDueDateView {
   
   func configure() {
-    backgroundColor = .green
-    
+    backgroundColor = .systemPink
     addSubview(titleLable)
-    addSubview(contentLabel)
+    addSubview(dueDateLabel)
     
     configureTitleLabel()
-    configureContentLabel()
+    configureDueDateLabel()
   }
   
   func configureTitleLabel() {
@@ -73,14 +70,14 @@ private extension DetailCardContentView {
     ])
   }
   
-  func configureContentLabel() {
-    contentLabel.translatesAutoresizingMaskIntoConstraints = false
+  func configureDueDateLabel() {
+    dueDateLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      contentLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-      contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+      dueDateLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
+      dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+      dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
     ])
   }
 }

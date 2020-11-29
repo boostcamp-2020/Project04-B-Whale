@@ -1,5 +1,5 @@
 //
-//  DetailCardViewController.swift
+//  CardDetailViewController.swift
 //  AreUDone
 //
 //  Created by 서명렬 on 2020/11/25.
@@ -11,14 +11,14 @@ enum CommentSection: CaseIterable {
   case main
 }
 
-final class DetailCardViewController: UIViewController {
+final class CardDetailViewController: UIViewController {
   
   typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, Comment>
   typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, Comment>
   
   // MARK:- Property
   
-  private let viewModel: DetailCardViewModelProtocol
+  private let viewModel: CardDetailViewModelProtocol
   private var observer: NSKeyValueObservation?
   private lazy var dataSource = configureDataSource()
   
@@ -28,8 +28,8 @@ final class DetailCardViewController: UIViewController {
     return view
   }()
   
-  private lazy var stackView: DetailCardStackView = {
-    let stackView = DetailCardStackView()
+  private lazy var stackView: CardDetailStackView = {
+    let stackView = CardDetailStackView()
     
     return stackView
   }()
@@ -44,7 +44,7 @@ final class DetailCardViewController: UIViewController {
   
   // MARK:- Initializer
   
-  init?(coder: NSCoder, viewModel: DetailCardViewModelProtocol) {
+  init?(coder: NSCoder, viewModel: CardDetailViewModelProtocol) {
     self.viewModel = viewModel
     
     super.init(coder: coder)
@@ -71,7 +71,7 @@ final class DetailCardViewController: UIViewController {
 
 // MARK:- Extension
 
-private extension DetailCardViewController {
+private extension CardDetailViewController {
   
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
@@ -102,7 +102,7 @@ private extension DetailCardViewController {
 
 // MARK:- Extension Configure Method
 
-private extension DetailCardViewController {
+private extension CardDetailViewController {
   
   func configure() {
     configureView()
@@ -146,13 +146,13 @@ private extension DetailCardViewController {
 
 // MARK:- Extension BindUI
 
-private extension DetailCardViewController {
+private extension CardDetailViewController {
   
   private func bindUI() {
     observationNavigationBar()
-    bindingDetailCardContentView()
-    bindingDetailCardDueDateView()
-    bindingDetailCardCommentTableView()
+    bindingCardDetailContentView()
+    bindingCardDetailDueDateView()
+    bindingCardDetailCommentTableView()
   }
   
   private func observationNavigationBar() {
@@ -170,20 +170,20 @@ private extension DetailCardViewController {
       })
   }
   
-  private func bindingDetailCardContentView() {
-    viewModel.bindingDetailCardContentView { [weak self] content in
+  private func bindingCardDetailContentView() {
+    viewModel.bindingCardDetailContentView { [weak self] content in
       self?.stackView.updateContentView(with: content)
     }
   }
   
-  private func bindingDetailCardDueDateView() {
-    viewModel.bindingDetailCardDueDateView { [weak self] dueDate in
+  private func bindingCardDetailDueDateView() {
+    viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
       self?.stackView.updateDueDateView(with: dueDate)
     }
   }
   
-  private func bindingDetailCardCommentTableView() {
-    viewModel.bindingDetailCardCommentTableView { [weak self] comments in
+  private func bindingCardDetailCommentTableView() {
+    viewModel.bindingCardDetailCommentTableView { [weak self] comments in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
       }

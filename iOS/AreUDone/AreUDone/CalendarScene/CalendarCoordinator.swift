@@ -56,11 +56,11 @@ extension CalendarCoordinator {
     navigationController.present(calendarPickerViewController, animated: true)
   }
   
-  func showDetailCard(for id: Int) {
+  func showCardDetail(for id: Int) {
     let router = Router()
-    let detailCardCoordinator = DetailCardCoordinator(id: id, router: router)
+    let cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
     
-    let detailCardViewController = detailCardCoordinator.start()
-    navigationController.pushViewController(detailCardViewController, animated: true)
+    let cardDetailViewController = cardDetailCoordinator.start()
+    navigationController.pushViewController(cardDetailViewController, animated: true)
   }
 }

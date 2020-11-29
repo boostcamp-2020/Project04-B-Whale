@@ -1,5 +1,5 @@
 //
-//  DetailCard.swift
+//  CardDetail.swift
 //  AreUDone
 //
 //  Created by 서명렬 on 2020/11/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailCard: Codable {
+struct CardDetail: Codable {
   
   let id: Int
   let title: String
