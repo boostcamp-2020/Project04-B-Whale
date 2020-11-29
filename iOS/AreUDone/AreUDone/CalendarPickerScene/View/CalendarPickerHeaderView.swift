@@ -119,6 +119,7 @@ private extension CalendarPickerHeaderView {
     
     for dayNumber in 1...7 {
       let title = dayOfWeekLetter(for: dayNumber)
+
       let dayLabel = DayLabel(title: title)
       dayOfWeekStackView.addArrangedSubview(dayLabel)
     }

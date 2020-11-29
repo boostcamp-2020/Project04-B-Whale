@@ -10,12 +10,13 @@ import Foundation
 protocol CalendarPickerViewModelProtocol {
   
   func bindingInitializeDate(handler: @escaping ([Day], Date) -> Void)
-  func bindingUpdateDate(handler: @escaping ([Day], Date) -> Void)
-  func bindingChangeSelectedDate(handler: @escaping ([Day]) -> Void)
+  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void)
+  func bindingSendSelectedDate(handler: @escaping (String) -> Void)
   
-  func fetchInitialData()
-  func fetchUpdatedMonth(to months: Int)
-  func changeSelectedDate(to date: Date)
+  func fetchInitialCalendar()
+  func fetchUpdatedCalendar(to months: Int)
+  func updateSelectedDate(to date: Date)
+  func sendSelectedDate()
 }
 
 final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
@@ -24,7 +25,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   private var initializeCalendarHandler: (([Day], Date) -> Void)?
   private var updateCalendarHandler: (([Day], Date) -> Void)?
-  private var updateSelectedDayHandler: (([Day]) -> Void)?
+  private var sendSelectedDateHandler: ((String) -> Void)?
   
   var selectedDate: Date!
   private lazy var basedate: Date! = selectedDate
@@ -44,69 +45,56 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     initializeCalendarHandler = handler
   }
   
-  func bindingUpdateDate(handler: @escaping ([Day], Date) -> Void) {
+  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void) {
     updateCalendarHandler = handler
   }
   
-  func bindingChangeSelectedDate(handler: @escaping ([Day]) -> Void) {
-    updateSelectedDayHandler = handler
+  func bindingSendSelectedDate(handler: @escaping (String) -> Void) {
+    sendSelectedDateHandler = handler
   }
   
-  func fetchInitialData() {
-    let days = generateDaysInMonth(for: selectedDate)
+  func fetchInitialCalendar() {
+    let days = daysInMonth(for: selectedDate)
     initializeCalendarHandler?(days, selectedDate)
   }
   
-  func fetchUpdatedMonth(to months: Int) {
+  func fetchUpdatedCalendar(to months: Int) {
     basedate = (self.calendar.date(
       byAdding: .month,
       value: months,
       to: basedate
     )) ?? basedate
     
-    let days = generateDaysInMonth(for: basedate)
+    let days = daysInMonth(for: basedate)
     updateCalendarHandler?(days, basedate)
   }
   
-  func changeSelectedDate(to date: Date) {
+  func updateSelectedDate(to date: Date) {
     selectedDate = date
     
-    let days = generateDaysInMonth(for: date)
-    updateSelectedDayHandler?(days)
+    let days = daysInMonth(for: date)
+    updateCalendarHandler?(days, selectedDate)
+  }
+  
+  func sendSelectedDate() {
+    let date = selectedDate.toString()
+    sendSelectedDateHandler?(date)
   }
   
   
-  // MARK: Calendar 계산 Method
+  // MARK: Calendar 계산
   
-  private func generateDaysInMonth(for baseDate: Date) -> [Day] {
-    guard let metadata = try? monthMetadata(for: baseDate) else {
+  private func daysInMonth(for baseDate: Date) -> [Day] {
+    guard let monthMetadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
     
-    let numberOfDaysInMonth = metadata.numberOfDays
-    let offsetInInitialRow = metadata.firstDayWeekday
-    let firstDayOfMonth = metadata.firstDay
+    var days = makeDays(using: monthMetadata) // 이전 달 + 해당 달
+    days += makeDaysOfNextMonth(using: days.count, monthMetadata.firstDay) // + 다음 달
     
-    var days: [Day] = (1..<(numberOfDaysInMonth + offsetInInitialRow)).map
-    { day in
-      
-      let isWithinDisplayedMonth = day >= offsetInInitialRow
-      
-      let dayOffset =
-        isWithinDisplayedMonth ?
-        day - offsetInInitialRow :
-        -(offsetInInitialRow - day)
-      
-      return generateDay(
-        offsetBy: dayOffset,
-        for: firstDayOfMonth,
-        isWithinDisplayedMonth: isWithinDisplayedMonth)
-    }
-    
-    days += generateStartOfNextMonth(using: firstDayOfMonth)
     return days
   }
-  
+    
   private func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
     guard let numberOfDaysInMonth = calendar.range(
       of: .day,
@@ -124,10 +112,10 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return MonthMetadata(
       numberOfDays: numberOfDaysInMonth,
       firstDay: firstDayOfMonth,
-      firstDayWeekday: firstDayWeekday)
+      firstDayIndex: firstDayWeekday)
   }
   
-  private func generateDay(
+  private func makeDay(
     offsetBy dayOffset: Int,
     for baseDate: Date,
     isWithinDisplayedMonth: Bool
@@ -135,31 +123,53 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     let date = calendar.date(
       byAdding: .day,
       value: dayOffset,
-      to: baseDate)
-      ?? baseDate
+      to: baseDate) ?? baseDate
     
-    let day = Day(
+    return Day(
       date: date,
       number: dateFormatter.string(from: date),
       isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
       isWithinDisplayedMonth: isWithinDisplayedMonth
     )
-    return day
   }
   
-  private func generateStartOfNextMonth(
-    using firstDayOfDisplayedMonth: Date
+  private func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
+    let numberOfDaysInMonth = monthMetadata.numberOfDays        // 한 달의 일 수
+    let firstDayOfMonth = monthMetadata.firstDay                // 해당 달의 첫 번째 날
+    let firstDayOfMonthIndex = monthMetadata.firstDayIndex      // 해당 달의 첫 번째 날의 인덱스
+    
+    let days: [Day] = (1..<(numberOfDaysInMonth + firstDayOfMonthIndex)).map
+    {
+      day in
+      
+      let isWithinDisplayedMonth = day >= firstDayOfMonthIndex
+      
+      let dayOffset =
+        isWithinDisplayedMonth ?
+        day - firstDayOfMonthIndex :
+        -(firstDayOfMonthIndex - day)
+      
+      return makeDay(
+        offsetBy: dayOffset,
+        for: firstDayOfMonth,
+        isWithinDisplayedMonth: isWithinDisplayedMonth)
+    }
+    return days
+  }
+  
+  private func makeDaysOfNextMonth(
+    using counts: Int, _ firstDayOfDisplayedMonth: Date
   ) -> [Day] {
     guard let lastDayInMonth = calendar.date(
       byAdding: DateComponents(month: 1, day: -1),
       to: firstDayOfDisplayedMonth
     ) else { return [] }
     
-    let additionalDays = 7 - calendar.component(.weekday, from: lastDayInMonth)
+    let additionalDays = 42 - counts
     guard additionalDays > 0 else { return [] }
     
     let days = (1...additionalDays).map {
-      return generateDay(
+      return makeDay(
         offsetBy: $0,
         for: lastDayInMonth,
         isWithinDisplayedMonth: false)
