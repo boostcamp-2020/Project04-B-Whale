@@ -13,6 +13,7 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void))
   
   func fetchDetailCard()
+  func addComment(with comment: String)
 }
 
 final class CardDetailViewModel: CardDetailViewModelProtocol {
@@ -72,5 +73,9 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardDetailContentViewHandler?(content)
     cardDetailDueDateViewHandler?(dueDate)
     cardDetailCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8, comment9, comment10, comment11])
+  }
+  
+  func addComment(with comment: String) {
+    // TODO:- CommentService
   }
 }

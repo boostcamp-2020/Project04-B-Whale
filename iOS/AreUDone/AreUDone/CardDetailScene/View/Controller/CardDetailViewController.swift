@@ -117,12 +117,16 @@ private extension CardDetailViewController {
     configureScrollView()
     configureStackView()
     configureCommentView()
+    addEndEdittingGesture()
   }
   
   func configureView(){
     navigationController?.navigationBar.isHidden = false
     navigationController?.navigationBar.prefersLargeTitles = true
+    
     commentView.delegate = self
+    scrollView.delegate = self
+    
     addKeyboardNotification()
     
     view.addSubview(scrollView)
@@ -164,58 +168,12 @@ private extension CardDetailViewController {
       commentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
   }
-}
-
-
-// MARK:- Extension BindUI
-
-private extension CardDetailViewController {
   
-  private func bindUI() {
-    observationNavigationBar()
-    bindingCardDetailContentView()
-    bindingCardDetailDueDateView()
-    bindingCardDetailCommentTableView()
+  func addEndEdittingGesture() {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+    tapGestureRecognizer.delegate = self
+    view.addGestureRecognizer(tapGestureRecognizer)
   }
-  
-  private func observationNavigationBar() {
-    observer = navigationController?.navigationBar.observe(
-      \.bounds,
-      options: [.new, .initial],
-      changeHandler: { (navigationBar, changes) in
-        if let height = changes.newValue?.height {
-          if height > 44.0 {
-            //Large Title
-          } else {
-            //Small Title
-          }
-        }
-      })
-  }
-  
-  private func bindingCardDetailContentView() {
-    viewModel.bindingCardDetailContentView { [weak self] content in
-      self?.stackView.updateContentView(with: content)
-    }
-  }
-  
-  private func bindingCardDetailDueDateView() {
-    viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
-      self?.stackView.updateDueDateView(with: dueDate)
-    }
-  }
-  
-  private func bindingCardDetailCommentTableView() {
-    viewModel.bindingCardDetailCommentTableView { [weak self] comments in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: comments, animatingDifferences: true)
-      }
-    }
-  }
-}
-
-
-private extension CardDetailViewController {
   
   func addKeyboardNotification() {
     NotificationCenter.default.addObserver(
@@ -232,30 +190,105 @@ private extension CardDetailViewController {
       object: nil
     )
   }
+}
+
+
+// MARK:- Extension BindUI
+
+private extension CardDetailViewController {
+  
+  func bindUI() {
+    observationNavigationBar()
+    bindingCardDetailContentView()
+    bindingCardDetailDueDateView()
+    bindingCardDetailCommentTableView()
+  }
+  
+  func observationNavigationBar() {
+    observer = navigationController?.navigationBar.observe(
+      \.bounds,
+      options: [.new, .initial],
+      changeHandler: { (navigationBar, changes) in
+        if let height = changes.newValue?.height {
+          if height > 44.0 {
+            //Large Title
+          } else {
+            //Small Title
+          }
+        }
+      })
+  }
+  
+  func bindingCardDetailContentView() {
+    viewModel.bindingCardDetailContentView { [weak self] content in
+      self?.stackView.updateContentView(with: content)
+    }
+  }
+  
+  func bindingCardDetailDueDateView() {
+    viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
+      self?.stackView.updateDueDateView(with: dueDate)
+    }
+  }
+  
+  func bindingCardDetailCommentTableView() {
+    viewModel.bindingCardDetailCommentTableView { [weak self] comments in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: comments, animatingDifferences: true)
+      }
+    }
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CardDetailViewController {
   
   @objc func keyboardWillShow(_ notification: Notification) {
     if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
       let keybaordRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keybaordRectangle.height
-      //      commentView.frame.origin.y -= keyboardHeight
       commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-      scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 60, right: 0)
+      scrollView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
   }
   
   @objc func keyboardWillHide(_ notification: Notification) {
     commentView.transform = .identity
-    scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    scrollView.transform = .identity
+  }
+  
+  @objc func endEditing() {
+    view.endEditing(true)
   }
 }
+
 
 // MARK:- Extension CommentViewDelegate
 
 extension CardDetailViewController: CommentViewDelegate {
   
-  func commentTextFieldEditted() {
+  func commentSaveButtonTapped(with comment: String) {
+    viewModel.addComment(with: comment)
   }
+}
+
+
+// MARK:- Extension ScrollViewDelegate
+
+extension CardDetailViewController: UIScrollViewDelegate {
   
-  func commentSaveButtonTapped() {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    view.endEditing(true)
+  }
+}
+
+
+// MARK:- Extension UIGestureRecognizerDelegate
+
+extension CardDetailViewController: UIGestureRecognizerDelegate {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return touch.view?.isDescendant(of: commentView) == true ? false : true
   }
 }

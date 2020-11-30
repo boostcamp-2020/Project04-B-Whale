@@ -8,8 +8,7 @@
 import UIKit
 
 protocol CommentViewDelegate {
-  func commentTextFieldEditted()
-  func commentSaveButtonTapped()
+  func commentSaveButtonTapped(with comment: String)
 }
 
 final class CommentView: UIView {
@@ -34,6 +33,7 @@ final class CommentView: UIView {
     let button = UIButton()
     let image = UIImage(systemName: "paperplane.fill")
     button.setImage(image, for: .normal)
+    button.isEnabled = false
     
     return button
   }()
@@ -69,15 +69,27 @@ private extension CommentView {
     configureProfileImageView()
     configureCommentTextField()
     configureCommentSaveButton()
+    
+    addingTarget()
+  }
+  
+  func addingTarget() {
+    commentTextField.addTarget(
+      self,
+      action: #selector(commentTextFieldEditting),
+      for: .editingChanged
+    )
+    commentSaveButton.addTarget(
+      self,
+      action: #selector(commentSaveButtonTapped),
+      for: .touchUpInside
+    )
   }
   
   func configureView(){
     backgroundColor = .white
     layer.borderColor = UIColor.lightGray.cgColor
     layer.borderWidth = 0.3
-    
-//    commentTextField.addTarget(self, action: #selector(commentTextFieldEditted), for: .editingDidBegin)
-    commentSaveButton.addTarget(self, action: #selector(commentSaveButtonTapped), for: .touchUpInside)
   }
   
   func configureProfileImageView() {
@@ -119,12 +131,19 @@ private extension CommentView {
 
 private extension CommentView {
   
-  @objc func commentTextFieldEditted() {
-    delegate?.commentTextFieldEditted()
+  @objc func commentTextFieldEditting() {
+    if let comment = commentTextField.text {
+      commentSaveButton.isEnabled = comment != "" ? true : false
+    }
   }
   
   @objc func commentSaveButtonTapped() {
-    delegate?.commentSaveButtonTapped()
-    commentTextField.resignFirstResponder()
+    if let comment = commentTextField.text,
+       comment != "" {
+      delegate?.commentSaveButtonTapped(with: comment)
+      commentSaveButton.isEnabled = false
+      commentTextField.text = ""
+      commentTextField.resignFirstResponder()
+    }
   }
 }
