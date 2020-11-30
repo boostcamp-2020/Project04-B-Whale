@@ -58,15 +58,15 @@ describe('Board API Test', () => {
         });
 
         const boardRepository = getRepository(Board);
-        const board1 = { id: 1, title: 'board1', creator: createdUser1.id };
-        const board2 = { id: 2, title: 'board2', creator: createdUser2.id };
-        const createBoard1 = await boardRepository.create(board1);
-        const createBoard2 = await boardRepository.create(board2);
+        const board1 = { id: 1, title: 'board1', creator: createdUser1.id, color: '#000000' };
+        const board2 = { id: 2, title: 'board2', creator: createdUser2.id, color: '#000000' };
+        const createBoard1 = boardRepository.create(board1);
+        const createBoard2 = boardRepository.create(board2);
         const [createdBoard1] = await boardRepository.save([createBoard1, createBoard2]);
 
         const invitationRepository = getRepository(Invitation);
         const invitedBoard = { user: createdUser2.id, board: createdBoard1.id };
-        const createInvitedBoard = await invitationRepository.create(invitedBoard);
+        const createInvitedBoard = invitationRepository.create(invitedBoard);
         await invitationRepository.save(createInvitedBoard);
 
         // when
@@ -105,7 +105,7 @@ describe('Board API Test', () => {
         expect(response.status).toEqual(401);
     });
 
-    test('GET /api/board가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {
+    test('POST /api/board가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {
         // given
         const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
         const userRepository = getRepository(User);
@@ -124,7 +124,7 @@ describe('Board API Test', () => {
                 Authorization: token,
                 'Content-Type': 'application/json',
             })
-            .send({ title: 'test title' });
+            .send({ title: 'test title', color: '#000000' });
 
         // then
         expect(response.status).toEqual(201);
