@@ -23,6 +23,14 @@ final class BoardDetailViewController: UIViewController {
   
   @IBOutlet weak var collectionView: BoardDetailCollectionView!
   lazy var dataSource = configureDataSource()
+  @IBOutlet private weak var collectionView: UICollectionView!
+  private let pageControl: UIPageControl = {
+    let pageControl = UIPageControl()
+    
+    pageControl.numberOfPages = 7
+    
+    return pageControl
+  }()
   
   // MARK: - Initializer
   
@@ -133,6 +141,28 @@ extension BoardDetailViewController {
     
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+extension BoardDetailViewController {
+  
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+
+    let offset = (
+      layout.sectionInset.left
+        + layout.itemSize.width
+        + layout.minimumLineSpacing
+        + layout.itemSize.width/2
+    ) - (view.bounds.width/2)
+
+    let index = scrollView.contentOffset.x / offset
+
+    var renewedIndex: CGFloat
+    if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+      renewedIndex = floor(index) // 왼쪽
+    } else {
+      renewedIndex = ceil(index)  // 오른쪽
     }
+
+    targetContentOffset.pointee = CGPoint(x: renewedIndex * offset, y: 0)
+    pageControl.currentPage = Int(renewedIndex)
   }
 }
