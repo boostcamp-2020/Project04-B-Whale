@@ -131,7 +131,7 @@ private extension BoardDetailViewController {
       + flowLayout.itemSize.width/2) - (view.bounds.width/2)
     
     flowLayout.footerReferenceSize = CGSize(
-      width: offset + flowLayout.sectionInset.left,
+      width: flowLayout.minimumLineSpacing + flowLayout.itemSize.width + flowLayout.sectionInset.left,
       height: 80
     )
     collectionView.collectionViewLayout = flowLayout
