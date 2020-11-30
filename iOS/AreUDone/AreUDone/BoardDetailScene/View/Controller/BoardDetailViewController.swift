@@ -49,9 +49,7 @@ final class BoardDetailViewController: UIViewController {
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     
-    let appearance = UINavigationBarAppearance()
-    appearance.configureWithDefaultBackground()
-    navigationController?.navigationBar.standardAppearance = appearance
+    resetNavigationAppearance()
   }
   
   
@@ -59,6 +57,12 @@ final class BoardDetailViewController: UIViewController {
   
   private func updatePageControlNumber(to numbers: Int) {
     pageControl.numberOfPages = numbers
+  }
+  
+  private func resetNavigationAppearance() {
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithDefaultBackground()
+    navigationController?.navigationBar.standardAppearance = appearance
   }
 }
 
