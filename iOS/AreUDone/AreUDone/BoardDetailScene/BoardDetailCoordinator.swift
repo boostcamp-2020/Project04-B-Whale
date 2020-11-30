@@ -30,4 +30,10 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   }
 }
 
+extension BoardDetailCoordinator {
+  
+  func pop() {
+    navigationController?.popViewController(animated: true)
+  }
+}
 
