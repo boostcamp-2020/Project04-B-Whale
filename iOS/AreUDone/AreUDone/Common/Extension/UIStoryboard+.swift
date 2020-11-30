@@ -12,7 +12,7 @@ extension UIStoryboard {
   enum Storyboard: String {
     case signin
     case calendar
-    case detailCard
+    case cardDetail
     case boardList
     case boardDetail
     
