@@ -48,6 +48,7 @@ extension BoardListCoordinator {
   
   func boardItemDidTapped() {
     boardDetailCoordinator = BoardDetailCoordinator()
+    boardDetailCoordinator.navigationController = navigationController
     
     let viewController = boardDetailCoordinator.start()
     viewController.hidesBottomBarWhenPushed = true

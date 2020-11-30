@@ -61,13 +61,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     let comment2 = CardDetail.Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     let comment3 = CardDetail.Comment(id: 2, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     let comment4 = CardDetail.Comment(id: 3, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment5 = CardDetail.Comment(id: 4, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment5 = CardDetail.Comment(id: 4, content: "안녕하세요rkskekekekfdsfjdfsjfdsfdsfdsfdsfsdfsdfdsfsdfdsfsdafdsfesdfwefesswfwefdddwefsdfsklfjdsddddfsdfds hjkkkkkk", createdAt: "2020-11-26", user: user2)
     let comment6 = CardDetail.Comment(id: 5, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     let comment7 = CardDetail.Comment(id: 6, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     let comment8 = CardDetail.Comment(id: 7, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment9 = CardDetail.Comment(id: 8, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment10 = CardDetail.Comment(id: 9, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment11 = CardDetail.Comment(id: 10, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     
     cardDetailContentViewHandler?(content)
     cardDetailDueDateViewHandler?(dueDate)
-    cardDetailCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8])
+    cardDetailCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8, comment9, comment10, comment11])
   }
 }

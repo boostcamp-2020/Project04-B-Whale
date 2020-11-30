@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="v67-Bg-D8O" customClass="BoardDetailCollectionView" customModule="AreUDone" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="788"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="f1O-Jt-Ykp">
                                     <size key="itemSize" width="128" height="128"/>
@@ -42,7 +42,7 @@
                         <viewLayoutGuide key="safeArea" id="Vp8-FY-DO7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Vp8-FY-DO7" firstAttribute="bottom" secondItem="v67-Bg-D8O" secondAttribute="bottom" id="8a8-Nt-7U8"/>
+                            <constraint firstItem="Vp8-FY-DO7" firstAttribute="bottom" secondItem="v67-Bg-D8O" secondAttribute="bottom" constant="30" id="8a8-Nt-7U8"/>
                             <constraint firstItem="v67-Bg-D8O" firstAttribute="leading" secondItem="Vp8-FY-DO7" secondAttribute="leading" id="X2u-P2-UAd"/>
                             <constraint firstItem="Vp8-FY-DO7" firstAttribute="trailing" secondItem="v67-Bg-D8O" secondAttribute="trailing" id="aPo-gD-lrO"/>
                             <constraint firstItem="v67-Bg-D8O" firstAttribute="top" secondItem="Vp8-FY-DO7" secondAttribute="top" id="vWZ-W1-KSm"/>

@@ -56,7 +56,7 @@ private extension CardDetailStackView {
     axis = .vertical
     distribution = .fill
 //    backgroundColor = .blue
-    spacing = 10
+    spacing = 20
     
     addArrangedSubview(cardDetailContentView)
     addArrangedSubview(cardDetailDueDateView)
