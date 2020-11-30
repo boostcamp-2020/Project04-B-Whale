@@ -62,6 +62,7 @@ extension CalendarCoordinator {
     let router = Router()
     let cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
     let cardDetailViewController = cardDetailCoordinator.start()
+    cardDetailViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(cardDetailViewController, animated: true)
 
   }
