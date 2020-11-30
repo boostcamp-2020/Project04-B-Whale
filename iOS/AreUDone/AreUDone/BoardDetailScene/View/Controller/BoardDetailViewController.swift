@@ -23,6 +23,8 @@ final class BoardDetailViewController: UIViewController {
     return pageControl
   }()
   
+  var offset: CGFloat!
+  
   // MARK: - Initializer
   
   required init?(coder: NSCoder, viewModel: BoardDetailViewModelProtocol) {
@@ -69,7 +71,7 @@ extension BoardDetailViewController {
     
     let navigationAppearance = UINavigationBarAppearance()
     navigationAppearance.configureWithTransparentBackground()
-    navigationAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+    navigationAppearance.backgroundEffect = UIBlurEffect(style: .systemChromeMaterialDark)
     navigationController?.navigationBar.standardAppearance = navigationAppearance
     
     navigationItem.leftBarButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
@@ -78,7 +80,6 @@ extension BoardDetailViewController {
     navigationItem.rightBarButtonItem = CustomBarButtonItem(imageName: "ellipsis" ) { [weak self] in
       
     }
-    
   }
   
   func configureCollectionView() {
@@ -91,17 +92,28 @@ extension BoardDetailViewController {
     let flowLayout = UICollectionViewFlowLayout()
     
     let sectionSpacing: CGFloat = 25
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: sectionSpacing)
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: 0)
     flowLayout.scrollDirection = .horizontal
     flowLayout.itemSize = CGSize(
       width: view.bounds.width - (sectionSpacing * 2),
       height: view.bounds.height * 0.8
     )
     
+    offset = (flowLayout.sectionInset.left
+      + flowLayout.itemSize.width
+      + flowLayout.minimumLineSpacing
+      + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+    
+    flowLayout.footerReferenceSize = CGSize(
+      width: offset + flowLayout.sectionInset.left,
+      height: 80
+    )
+    
     collectionView.collectionViewLayout = flowLayout
     collectionView.showsHorizontalScrollIndicator = false
     
     collectionView.register(BoardDetailCollectionViewCell.self)
+    collectionView.registerFooterView(BoardDetailFooterView.self)
   }
   
   func configurePageControl() {
@@ -134,19 +146,21 @@ extension BoardDetailViewController: UICollectionViewDataSource {
 
 extension BoardDetailViewController: UICollectionViewDelegate {
   
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let footerView: BoardDetailFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
+    
+    // TODO: 추후 수정 예정
+    footerView.addHandler = { [weak self] text in
+      self?.viewModel.insertList(list: List(id: 4, title: text, position: 0, cards: []))
+      self?.collectionView.reloadSections(IndexSet(integer: 0))
+    }
+    return footerView
+  }
 }
 
 extension BoardDetailViewController {
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-
-    let offset = (
-      layout.sectionInset.left
-        + layout.itemSize.width
-        + layout.minimumLineSpacing
-        + layout.itemSize.width/2
-    ) - (view.bounds.width/2)
 
     let index = scrollView.contentOffset.x / offset
 

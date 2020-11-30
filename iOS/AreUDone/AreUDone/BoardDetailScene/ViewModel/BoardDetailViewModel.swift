@@ -11,6 +11,7 @@ protocol BoardDetailViewModelProtocol {
   
   func numberOfLists() -> Int
   func fetchList(at index: Int) -> List
+  func insertList(list: List)
 }
 
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
@@ -50,12 +51,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     List(id: 0, title: "데이터1", position: 0, cards: cards),
     List(id: 1, title: "데이터2", position: 0, cards: cards2),
     List(id: 2, title: "데이터3", position: 0, cards: cards3),
-    List(id: 3, title: "데이터4", position: 0, cards: []),
-    List(id: 4, title: "데이터5", position: 0, cards: []),
-    List(id: 5, title: "데이터5", position: 0, cards: []),
-    List(id: 6, title: "데이터5", position: 0, cards: []),
-
-
+    List(id: 3, title: "데이터4", position: 0, cards: [])
   ]
   
   // MARK: - Initializer
@@ -73,6 +69,10 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   
   func fetchList(at index: Int) -> List {
     lists[index]
+  }
+  
+  func insertList(list: List) {
+    lists.append(list)
   }
 }
 
