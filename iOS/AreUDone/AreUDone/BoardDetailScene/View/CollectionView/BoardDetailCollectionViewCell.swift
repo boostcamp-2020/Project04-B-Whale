@@ -10,29 +10,33 @@ import MobileCoreServices
 
 final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   
-  enum Section {
-    case main
-  }
-  
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, Card>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Card>
+  // MARK: - Property
   
   lazy var collectionView: ListCollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
-    flowLayout.itemSize = CGSize(width: bounds.width, height: 40)
+  
+    flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: 45)
+    flowLayout.footerReferenceSize = CGSize(width: bounds.width, height: 45)
+    flowLayout.itemSize = CGSize(width: bounds.width - 40, height: 40)
+    
+    flowLayout.sectionInset = UIEdgeInsets.sameInset(inset: 10)
+   
+    flowLayout.sectionHeadersPinToVisibleBounds = true
+    flowLayout.sectionFootersPinToVisibleBounds = true
     
     let collectionView = ListCollectionView(frame: .zero, collectionViewLayout: flowLayout)
-    collectionView.collectionViewLayout = flowLayout
+    collectionView.contentInset = UIEdgeInsets.sameInset(inset: 5)
+    
     return collectionView
   }()
-  lazy var dataSource = configureDataSource()
-  weak var parentVc: BoardDetailViewController?
+  
+  private var viewModel: ListViewModelProtocol!
+  
   
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    
     
     configure()
   }
@@ -43,24 +47,25 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     configure()
   }
   
-  override func prepareForReuse() {
-    super.prepareForReuse()
-    
-    print("재사용")
-  }
-  
+ 
   // MARK: - Method
   
   private func configure() {
     addSubview(collectionView)
-    
+
     configureCollectionView()
-    configureDropDrag()
   }
   
-  private func configureCollectionView() {
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
+  
+  private func configureCollectionView() {    
+    collectionView.delegate = self
+    collectionView.dataSource = self
     
+    collectionView.dragInteractionEnabled = true
+    collectionView.dragDelegate = self
+    collectionView.dropDelegate = self
+    
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: topAnchor),
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -69,15 +74,10 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     ])
   }
   
-  private func configureDropDrag() {
-    collectionView.dragInteractionEnabled = true
-    collectionView.dragDelegate = self
-    collectionView.dropDelegate = self
-  }
-  
-  func update(with cards: [Card]) {
-    print("호출")
-    updateSnapshot(to: dataSource, with: cards, animatingDifferences: true)
+  func update(with viewModel: ListViewModelProtocol) {
+    self.viewModel = viewModel
+    
+    collectionView.reloadData()
   }
 }
 
@@ -85,173 +85,158 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
 // MARK: - Extension
 
 
-// MARK: Drag Delegate
+// MARK: UITableView DataSource
+
+extension BoardDetailCollectionViewCell: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfCards()
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell: ListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+    
+    cell.update(with: viewModel.fetchCard(at: indexPath.row))
+    
+    return cell
+  }
+}
+
+
+// MARK: UITableView Delegate
+
+extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    switch kind {
+    case UICollectionView.elementKindSectionHeader:
+      let headerView: ListHeaderView = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
+      return headerView
+      
+    case UICollectionView.elementKindSectionFooter:
+      let footerView: ListFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
+      return footerView
+      
+    default:
+      return UICollectionReusableView()
+    }
+  }
+}
+
+
+// MARK: UITableView Drag Delegate
 
 extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
   
+  // 1. 드래깅 시작
   func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-    print("드래깅 시작")
-    let cards = dataSource.snapshot().itemIdentifiers(inSection: .main)
-//    let cardString = cards[indexPath.item].title.data(using: .utf8)
-    let itemProvider = NSItemProvider(object: cards[indexPath.item])
-//    let itemProvider = NSItemProvider(item: cardString! as NSData, typeIdentifier: kUTTypePlainText as String)
-    let dragItem = UIDragItem(itemProvider: itemProvider)
-    session.localContext = (indexPath, dataSource, self)
+    let card = viewModel.fetchCard(at: indexPath.row)
+    let itemProvider = NSItemProvider(object: card)
     
+    let dragItem = UIDragItem(itemProvider: itemProvider)
+    
+    session.localContext = (viewModel, indexPath, collectionView)
     return [dragItem]
   }
 }
 
 
-// MARK: Drop Delegate
+// MARK: UITableView Drop Delegate
 
-// viewmodel 넘겨줘서 여기서 갱신하도록
 extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   
+  // 2. 드래깅 중
+  func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+    return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+  }
+  
+  // 3. 드래깅 끝
   func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-    print("드래깅 끝(드롭)")
-    
     guard coordinator.session.hasItemsConforming(
             toTypeIdentifiers: [kUTTypeData as String])
     else { return }
     
+    processDraggedItem(by: collectionView, and: coordinator)
+  }
+  
+  func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
     
     // 드래그한 아이템의 객체를 비동기적으로 로드
-    coordinator.session.loadObjects(ofClass: Card.self) { [self] item in
+    coordinator.session.loadObjects(ofClass: List.Card.self) { [self] item in
+      guard let card = item.first as? List.Card else { return }
       
-      guard let card = item.first as? Card else { return }
-      print("통과")
       let source = coordinator.items.first?.sourceIndexPath
       let destination = coordinator.destinationIndexPath
-    
+            
       switch (source, destination) {
-      
-      // 같은 컬렉션뷰
-      case (.some(let sourceIndexPath), .some(_)) :
-        var cards = self.dataSource.snapshot().itemIdentifiers(inSection: .main)
-        
-        cards.remove(at: sourceIndexPath.item)
-        cards.insert(card, at: 0)
-      
-        updateSnapshot(to: dataSource, with: cards)
-        
-      // cell 이 있는 컬렉션뷰에 삽입할 때
+      ///  ** 1. 같은 테이블뷰**
+      case (.some(let sourceIndexPath), .some(let destinationIndexPath)):
+        changeData(inSame: collectionView, about: card, by: sourceIndexPath, and: destinationIndexPath)
+                
+      /// **2. 다른 테이블뷰: cell 이 있는 테이블뷰에 삽입할 때(insert)**
       case (nil, .some(let destinationIndexPath)):
-        
-        // 목적지: Destination Index
-        let destinationCards = insertedDestinationCards(card: card, index: destinationIndexPath.item)
-        updateSnapshot(to: dataSource, with: destinationCards)
-        
-        
-        // 출발지: Source Index
         let localContext = coordinator.session.localDragSession?.localContext
-
-        guard let (
-          sourceIndexPath,
-          sourceDataSource,
-          sourceCell
-        ) = localContext as? (
-          IndexPath,
-          DataSource,
-          UICollectionViewCell
-        ) else { return }
         
-        let sourceCards = removedSourceCards(dataSource: sourceDataSource, index: sourceIndexPath.item)
-        updateSnapshot(to: sourceDataSource, with: sourceCards)
-        
-        // 상위 컬렉션뷰 갱신
-        parentVc?.update(from: sourceCell, sourceCards, to: self, destinationCards)
-      
-      // cell 이 없는 컬렉션뷰에 삽입할 때
+        insertData(with: localContext) {
+          viewModel.insert(card: card, at: destinationIndexPath.row)
+          
+          let row = destinationIndexPath.row
+          collectionView.insertItems(at: [IndexPath(row: row, section: 0)])
+        }
+                
+      /// **3. 다른 테이블뷰: cell 이 없는 컬렉션뷰에 삽입할 때(append)**
+      case (.some(_), nil):
+        fallthrough
       case (nil, nil):
-        
-        let destinationCards = appendedDestinationCards(card: card)
-        updateSnapshot(to: dataSource, with: destinationCards)
-        
-        // 출발지: Source Index
         let localContext = coordinator.session.localDragSession?.localContext
-
-        guard let (
-          sourceIndexPath,
-          sourceDataSource,
-          sourceCell
-        ) = localContext as? (
-          IndexPath,
-          DataSource,
-          UICollectionViewCell
-        ) else { return }
         
-        let sourceCards = removedSourceCards(dataSource: sourceDataSource, index: sourceIndexPath.item)
-        updateSnapshot(to: sourceDataSource, with: sourceCards)
-        
-        // 상위 컬렉션뷰 갱신
-        parentVc?.update(from: sourceCell, sourceCards, to: self, destinationCards)
-        
-      default:
-        break
+        insertData(with: localContext) {
+          viewModel.append(card: card)
+          
+          let row = viewModel.numberOfCards()-1
+          collectionView.insertItems(at: [IndexPath(row: row, section: 0)])
+        }
       }
     }
   }
   
-  func removedSourceCards(dataSource: DataSource, index: Int) -> [Card] {
-    var sourceCards = dataSource.snapshot().itemIdentifiers(inSection: .main)
+  func changeData(
+    inSame collectionView: UICollectionView,
+    about card: List.Card,
+    by sourceIndexPath: IndexPath,
+    and destinationIndexPath: IndexPath
+  ) {
+    let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
     
-    sourceCards.remove(at: index)
+    viewModel.removeCard(at: sourceIndexPath.row)
+    viewModel.insert(card: card, at: destinationIndexPath.row)
     
-    return sourceCards
+    collectionView.reloadItems(at: updatedIndexPaths)
   }
   
-  func appendedDestinationCards(card: Card) -> [Card] {
-    var destinationCards = self.dataSource.snapshot().itemIdentifiers(inSection: .main)
-    destinationCards.append(card)
+  func insertData(
+    with localContext: Any?,
+    _ insertDestinationTableViewDataHandler: () -> Void
+  ) {
+    removeSourceTableViewData(localContext: localContext)
     
-    return destinationCards
+    insertDestinationTableViewDataHandler()
   }
   
-  func insertedDestinationCards(card: Card, index: Int) -> [Card] {
-    var destinationCards = self.dataSource.snapshot().itemIdentifiers(inSection: .main)
+  func removeSourceTableViewData(localContext: Any?) {
+    guard let (
+            sourceViewModel,
+            sourceIndexPath,
+            collectionView) = localContext
+            as? (
+              ListViewModelProtocol,
+              IndexPath,
+              UICollectionView
+            ) else { return }
     
-//    let card = Card(id: 0, title: string, dueDate: "", commentCount: 0)
-    destinationCards.insert(card, at: index)
-    
-    return destinationCards
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-    print("드래깅중")
-    return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    sourceViewModel.removeCard(at: sourceIndexPath.row)
+    collectionView.reloadSections(IndexSet(integer: 0))
   }
 }
 
 
-// MARK: Diffable DataSource
 
-extension BoardDetailCollectionViewCell {
-  
-  func configureDataSource() -> DataSource {
-    let dataSource = DataSource(
-      collectionView: collectionView
-    ) { (collectionView, indexPath, card) -> UICollectionViewCell? in
-      let cell: ListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-      
-//      cell.addInteraction(UIDropInteraction(delegate: self))
-      cell.backgroundColor = .darkGray
-      cell.update(with: card)
-      
-      return cell
-    }
-    
-    return dataSource
-  }
-  
-  func updateSnapshot(to dataSource: DataSource, with items: [Card], animatingDifferences: Bool = true) {
-    var snapshot = Snapshot()
-    
-    snapshot.appendSections([.main])
-    snapshot.appendItems(items)
-    
-    DispatchQueue.main.async {
-      dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
-    }
-  }
-}
