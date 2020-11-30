@@ -7,7 +7,7 @@
 
 import UIKit
 
-fianl class CardDetailContentLabel: PaddingLabel {
+final class CardDetailContentLabel: PaddingLabel {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
