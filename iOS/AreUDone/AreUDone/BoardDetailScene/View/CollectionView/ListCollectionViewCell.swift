@@ -13,7 +13,6 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   
   private let titleLabel = UILabel()
   
-  
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {
@@ -35,6 +34,14 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
     addSubview(titleLabel)
     
     configureTitle()
+    
+    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 1)
+    layer.cornerRadius = 5
+    
+    layer.shadowColor = UIColor.black.cgColor
+    layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    layer.shadowRadius = 0.3
+    layer.shadowOpacity = 0.3
   }
   
   private func configureTitle() {
@@ -46,7 +53,7 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
     ])
   }
   
-  func update(with card: Card) {
+  func update(with card: List.Card) {
     titleLabel.text = card.title
   }
 }

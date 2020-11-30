@@ -189,7 +189,10 @@ private extension CalendarPickerViewController {
     snapshot.appendSections([.main])
     snapshot.appendItems(item)
     
-    dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
+      self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }.startAnimation()
+    
   }
 }
 
