@@ -17,7 +17,10 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
   func coordinator(by result: SigninCheckResult, with router: Routable) -> Coordinator {
     switch result {
     case .isSigned:
-      let coordinators = [CalendarCoordinator(router: router)]
+      let coordinators: [NavigationCoordinator] = [
+        CalendarCoordinator(router: router),
+        BoardListCoordinator(router: router)
+      ]
       return TabbarCoordinator(
         router: router,
         signInCoordinator: SigninCoordinator(),

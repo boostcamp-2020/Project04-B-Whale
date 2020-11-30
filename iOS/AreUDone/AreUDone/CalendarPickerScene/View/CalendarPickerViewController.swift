@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 final class CalendarPickerViewController: UIViewController {
   
   enum Section {
@@ -24,32 +25,41 @@ final class CalendarPickerViewController: UIViewController {
     view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
     return view
   }()
-  
+  private lazy var headerView = CalendarPickerHeaderView()
   private lazy var collectionView: CalendarCollectionView = {
     
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     
-    let collectionView = CalendarCollectionView(frame: .zero, collectionViewLayout: layout)
+    let collectionView = CalendarCollectionView(
+      frame: .zero,
+      collectionViewLayout: layout
+    ) { direction in
+      
+      switch direction {
+      case .right:
+        self.viewModel.fetchUpdatedCalendar(to: -1)
+        
+      case .left:
+        self.viewModel.fetchUpdatedCalendar(to: 1)
+      }
+    }
     collectionView.delegate = self
     
     return collectionView
   }()
-  
-  private lazy var headerView = CalendarPickerHeaderView()
-  
-  private let selectedDateChanged: ((Date) -> Void)
-  
+    
   private let viewModel: CalendarPickerViewModelProtocol
   lazy var dataSource = configureDataSource()
+  weak var delegate: CalendarViewControllerDelegate?
+  weak var coordinator: CalendarPickerViewCoordinator?
   
   
   // MARK: - Initializer
   
-  init(viewModel: CalendarPickerViewModelProtocol, selectedDateChanged: @escaping ((Date) -> Void)) {
+  init(viewModel: CalendarPickerViewModelProtocol) {
     self.viewModel = viewModel
-    self.selectedDateChanged = selectedDateChanged
     
     super.init(nibName: nil, bundle: nil)
     
@@ -70,58 +80,37 @@ final class CalendarPickerViewController: UIViewController {
     addGestureRecognizer()
     configureConstraints()
     
-    viewModel.fetchInitialData()
+    viewModel.fetchInitialCalendar()
   }
 }
 
 private extension CalendarPickerViewController {
   
   func bindUI() {
-    viewModel.bindingInitializeDate { days, selectedDate in
-      self.updateSnapshot(with: days, animatingDifferences: false)
-      self.headerView.baseDate = selectedDate
+    viewModel.bindingInitializeDate { [weak self] days, selectedDate in
+      self?.updateSnapshot(with: days, animatingDifferences: false)
+      self?.headerView.baseDate = selectedDate
     }
     
-    viewModel.bindingUpdateDate { days, selectedDate in
-      self.updateSnapshot(with: days)
-      self.headerView.baseDate = selectedDate
+    viewModel.bindingUpdateCalendar { [weak self] days, selectedDate in
+      self?.updateSnapshot(with: days)
+      self?.headerView.baseDate = selectedDate
     }
     
-    viewModel.bindingChangeSelectedDate { days in
-      self.updateSnapshot(with: days)
+    viewModel.bindingSendSelectedDate { [weak self] date in
+      self?.delegate?.send(selectedDate: date)
     }
-  }
-  
-  @objc func didSwiped(recognizer: UISwipeGestureRecognizer) {
-    switch recognizer.direction {
-    case .left:
-      self.viewModel.fetchUpdatedMonth(to: 1)
-      
-    case .right:
-      self.viewModel.fetchUpdatedMonth(to: -1)
-      
-    default:
-      break
-    }
-  }
-  
-  @objc func didTapped() {
-    dismiss(animated: true)
   }
   
   func addGestureRecognizer() {
-    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
-    leftSwipeGesture.direction = .left
-    
-    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
-    rightSwipeGesture.direction = .right
-    
-    collectionView.addGestureRecognizer(leftSwipeGesture)
-    collectionView.addGestureRecognizer(rightSwipeGesture)
-    
-    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapped))
-    
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewDidTapped))
     dimmedBackgroundView.addGestureRecognizer(tapRecognizer)
+  }
+  
+  @objc func dimmerViewDidTapped() {
+    viewModel.sendSelectedDate()
+    coordinator?.dismiss()
+//    dismiss(animated: true) // 프레젠테이션 로직 옮겨주기
   }
 }
 
@@ -213,7 +202,7 @@ extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
     guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarDateCollectionViewCell,
           let day = cell.day else { return }
     
-    viewModel.changeSelectedDate(to: day.date)
+    viewModel.updateSelectedDate(to: day.date)
   }
   
   func collectionView(

@@ -20,10 +20,10 @@ extension UICollectionView {
     register(nib, forCellWithReuseIdentifier: T.defaultReuseIdentifier)
   }
   
-  func registerHeader<T: UICollectionReusableView>(_: T.Type) where T: Reusable {
+  func registerHeaderView<T: UICollectionReusableView>(_: T.Type) where T: Reusable {
     register(
       T.self,
-      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, 
       withReuseIdentifier: T.defaultReuseIdentifier
     )
   }
@@ -38,16 +38,16 @@ extension UICollectionView {
     
     return cell
   }
-  
-  func dequeueReusableHeader<T: UICollectionReusableView>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
-    guard let header: T = dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: T.defaultReuseIdentifier,
-            for: indexPath
+
+  func dequeReusableHeaderView<T: UICollectionReusableView>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
+    guard let headerView: T = dequeueReusableSupplementaryView(
+      ofKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: T.defaultReuseIdentifier,
+      for: indexPath
     ) as? T else {
       return T()
     }
-    
-    return header
+
+    return headerView
   }
 }
