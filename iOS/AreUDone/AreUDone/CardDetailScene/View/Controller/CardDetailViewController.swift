@@ -25,6 +25,8 @@ final class CardDetailViewController: UIViewController {
   private lazy var scrollView: UIScrollView = {
     let view = UIScrollView()
     view.showsVerticalScrollIndicator = false
+    view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    
     return view
   }()
   
@@ -39,6 +41,12 @@ final class CardDetailViewController: UIViewController {
     let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
     
     return collectionView
+  }()
+  
+  private lazy var commentView: CommentView = {
+    let view = CommentView()
+    
+    return view
   }()
   
   
@@ -89,7 +97,7 @@ private extension CardDetailViewController {
   
   func updateSnapshot(with item: [CardDetail.Comment], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-
+    
     snapshot.appendSections([.main])
     snapshot.appendItems(item, toSection: .main)
     
@@ -108,13 +116,17 @@ private extension CardDetailViewController {
     configureView()
     configureScrollView()
     configureStackView()
+    configureCommentView()
   }
   
   func configureView(){
     navigationController?.navigationBar.isHidden = false
     navigationController?.navigationBar.prefersLargeTitles = true
+    commentView.delegate = self
+    addKeyboardNotification()
     
     view.addSubview(scrollView)
+    view.addSubview(commentView)
     scrollView.addSubview(stackView)
     stackView.addArrangedSubview(commentCollectionView)
   }
@@ -139,6 +151,17 @@ private extension CardDetailViewController {
       stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
       stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+    ])
+  }
+  
+  func configureCommentView() {
+    commentView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      commentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      commentView.heightAnchor.constraint(equalToConstant: 60),
+      commentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      commentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
   }
 }
@@ -188,5 +211,51 @@ private extension CardDetailViewController {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
       }
     }
+  }
+}
+
+
+private extension CardDetailViewController {
+  
+  func addKeyboardNotification() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
+  }
+  
+  @objc func keyboardWillShow(_ notification: Notification) {
+    if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+      let keybaordRectangle = keyboardFrame.cgRectValue
+      let keyboardHeight = keybaordRectangle.height
+      //      commentView.frame.origin.y -= keyboardHeight
+      commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+      scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 60, right: 0)
+    }
+  }
+  
+  @objc func keyboardWillHide(_ notification: Notification) {
+    commentView.transform = .identity
+    scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+  }
+}
+
+// MARK:- Extension CommentViewDelegate
+
+extension CardDetailViewController: CommentViewDelegate {
+  
+  func commentTextFieldEditted() {
+  }
+  
+  func commentSaveButtonTapped() {
   }
 }
