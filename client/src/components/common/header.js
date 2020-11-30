@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from './create-board-modal';
+import Modal from './CreateBoardModal';
 import BoardsButton from './BoardsButton';
 
 const HeaderDiv = styled.div`
