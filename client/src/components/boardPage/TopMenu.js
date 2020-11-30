@@ -33,16 +33,22 @@ const MenuButton = styled.button`
     padding: 5px 10px;
 `;
 
-const TopMenu = () => {
+const TopMenu = (props) => {
     return (
         <MenuDiv>
             <div style={{ width: '50%' }}>
                 <BoardTitle>보드이름</BoardTitle>
-                <ButtonForGettingInvitedUser>참여자 목록</ButtonForGettingInvitedUser>
+                <ButtonForGettingInvitedUser
+                    onClick={() => props.setInvitedDropdownDisplay(!props.invitedDropdownDisplay)}
+                >
+                    참여자 목록
+                </ButtonForGettingInvitedUser>
                 <InviteButton>초대하기</InviteButton>
             </div>
             <div style={{ width: '5%' }}>
-                <MenuButton>메뉴</MenuButton>
+                <MenuButton onClick={() => props.setSidebarDisplay(!props.sidebarDisplay)}>
+                    메뉴
+                </MenuButton>
             </div>
         </MenuDiv>
     );
