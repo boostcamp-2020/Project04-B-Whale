@@ -64,5 +64,6 @@ extension CalendarCoordinator {
     
     let cardDetailViewController = cardDetailCoordinator.start()
     navigationController?.pushViewController(cardDetailViewController, animated: true)
+
   }
 }
