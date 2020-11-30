@@ -11,6 +11,7 @@ import NetworkFramework
 final class CalendarCoordinator: NavigationCoordinator {
   
   // MARK: - Property
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .calendar)
   }
@@ -26,6 +27,7 @@ final class CalendarCoordinator: NavigationCoordinator {
   init(router: Routable) {
     self.router = router
   }
+  
   
   // MARK: - Method
   
@@ -43,6 +45,9 @@ final class CalendarCoordinator: NavigationCoordinator {
     return calendarViewController
   }
 }
+
+
+// MARK:- Extension
 
 extension CalendarCoordinator {
   
@@ -63,6 +68,5 @@ extension CalendarCoordinator {
     let cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
     let cardDetailViewController = cardDetailCoordinator.start()
     navigationController?.pushViewController(cardDetailViewController, animated: true)
-
   }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DeleteCardView: UIView {
+final class DeleteCardView: UIView {
 
   // MARK:- Property
   
@@ -37,7 +37,7 @@ class DeleteCardView: UIView {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 private extension DeleteCardView {
   

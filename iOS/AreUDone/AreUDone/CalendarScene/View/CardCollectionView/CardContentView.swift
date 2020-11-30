@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardContentView: UIView {
+final class CardContentView: UIView {
 
   // MARK:- Property
 
@@ -56,9 +56,10 @@ class CardContentView: UIView {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 private extension CardContentView {
+  
   func configure() {
     configureView()
     configureTitleLabel()

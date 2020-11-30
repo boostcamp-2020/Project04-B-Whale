@@ -12,6 +12,7 @@ enum Section {
 }
 
 protocol CalendarViewControllerDelegate: AnyObject {
+  
   func send(selectedDate: String)
 }
 
@@ -60,46 +61,9 @@ final class CalendarViewController: UIViewController {
 }
 
 
-// MARK: - Extension
+// MARK:- Extension CollectionView DataSource
 
 private extension CalendarViewController {
-  
-  // MARK:- Method
-  
-  func configure() {
-    cardCollectionView.delegate = self
-    viewModel.fetchInitializeDailyCards()
-    
-    dateStepper.delegate = self
-    viewModel.initializeDate()
-  }
-  
-  func bindUI() {
-    bindingInitializeCardCollectionView()
-    bindingUpdateDate()
-  }
-  
-  func bindingInitializeCardCollectionView() {
-    viewModel.bindingInitializeCardCollectionView { [weak self] cards in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: cards, animatingDifferences: false)
-      }
-    }
-  }
-  
-  func bindingUpdateCardCollectionView() {
-    viewModel.bindingUpdateCardCollectionView { [weak self] cards in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: cards)
-      }
-    }
-  }
-  
-  func bindingUpdateDate() {
-    viewModel.bindingUpdateDate { date in
-      self.dateStepper.updateDate(date: date)
-    }
-  }
   
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
@@ -127,9 +91,56 @@ private extension CalendarViewController {
 }
 
 
+// MARK: - Extension Configure Method
+
+private extension CalendarViewController {
+  
+  func configure() {
+    cardCollectionView.delegate = self
+    viewModel.fetchInitializeDailyCards()
+    
+    dateStepper.delegate = self
+    viewModel.initializeDate()
+  }
+}
+
+
+// MARK:- Extension BindUI
+
+private extension CalendarViewController {
+  
+  func bindUI() {
+    bindingInitializeCardCollectionView()
+    bindingUpdateDate()
+  }
+  
+  func bindingInitializeCardCollectionView() {
+    viewModel.bindingInitializeCardCollectionView { [weak self] cards in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: cards, animatingDifferences: false)
+      }
+    }
+  }
+  
+  func bindingUpdateCardCollectionView() {
+    viewModel.bindingUpdateCardCollectionView { [weak self] cards in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: cards)
+      }
+    }
+  }
+  
+  func bindingUpdateDate() {
+    viewModel.bindingUpdateDate { date in
+      self.dateStepper.updateDate(date: date)
+    }
+  }
+}
+
 // MARK: DateStepperDelegate
 
 extension CalendarViewController: DateStepperDelegate {
+  
   func arrowDidTapped(direction: Direction, with date: String) {
     viewModel.changeDate(to: date, direction: direction)
   }
@@ -140,7 +151,7 @@ extension CalendarViewController: DateStepperDelegate {
 }
 
 
-// MARK: CalendarViewControllerDelegate
+// MARK: Extension CalendarViewControllerDelegate
 
 extension CalendarViewController: CalendarViewControllerDelegate {
   
@@ -150,7 +161,7 @@ extension CalendarViewController: CalendarViewControllerDelegate {
 }
 
 
-// MARK: CardCellDelegate
+// MARK: Extension CardCellDelegate
 
 extension CalendarViewController: CardCellDelegate {
   
@@ -176,7 +187,7 @@ extension CalendarViewController: CardCellDelegate {
 }
 
 
-// MARK: UICollectionViewDelegate
+// MARK: Extension UICollectionViewDelegate
 
 extension CalendarViewController: UICollectionViewDelegate {
   

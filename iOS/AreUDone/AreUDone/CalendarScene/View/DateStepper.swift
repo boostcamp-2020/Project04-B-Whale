@@ -18,7 +18,7 @@ protocol DateStepperDelegate: class {
   func dateLabelDidTapped(of date: String)
 }
 
-class DateStepper: UIView {
+final class DateStepper: UIView {
   
   // MARK: - Property
   
@@ -28,14 +28,42 @@ class DateStepper: UIView {
   
   weak var delegate: DateStepperDelegate?
   
+  
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
-    xibSetup()
+    configure()
+  }
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    
+    configure()
+  }
+  
+  
+  // MARK:- Method
+  
+  func updateDate(date: String) {
+    dateLabel.text = date
+  }
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension DateStepper {
+  
+  func configure() {
     backgroundColor = .clear
     
+    addingGesture()
+    nibSetup()
+  }
+  
+  func addingGesture() {
     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dateLabelDidTapped))
     dateLabel.addGestureRecognizer(tapRecognizer)
     dateLabel.isUserInteractionEnabled = true
@@ -48,46 +76,42 @@ class DateStepper: UIView {
     rightArrow.addGestureRecognizer(leftTapRecognizer)
     rightArrow.isUserInteractionEnabled = true
   }
+}
+
+// MARK:- Extension NibLoad
+
+private extension DateStepper {
   
-  
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-//    dateLabel.font = UIFont(name: "NanumBarunpenB", size: 15)
-    xibSetup()
-  }
-  
-  func updateDate(date: String) {
-    dateLabel.text = date
-  }
-  
-  @objc private func rightArrowDidTapped() {
-    guard let date = dateLabel.text else { return }
-    delegate?.arrowDidTapped(direction: .right, with: date)
-  }
-  
-  @objc private func leftArrowDidTapped() {
-    guard let date = dateLabel.text else { return }
-    delegate?.arrowDidTapped(direction: .left, with: date)
-  }
-  
-  @objc private func dateLabelDidTapped() {
-    guard let date = dateLabel.text else { return }
-    delegate?.dateLabelDidTapped(of: date)
-  }
-  
-  
-  private func loadViewFromNib() -> UIView? {
+  func loadViewFromNib() -> UIView? {
     let bundle = Bundle(for: type(of: self))
     let nib = UINib(nibName: String(describing: DateStepper.self), bundle: bundle)
     return nib.instantiate(withOwner: self, options: nil).first! as? UIView
   }
   
-  private func xibSetup() {
+  func nibSetup() {
     guard let view = loadViewFromNib() else { return }
     view.frame = bounds
     view.backgroundColor = .clear
     addSubview(view)
   }
+}
+
+// MARK:- Extension obj-c
+
+private extension DateStepper {
   
+  @objc func rightArrowDidTapped() {
+    guard let date = dateLabel.text else { return }
+    delegate?.arrowDidTapped(direction: .right, with: date)
+  }
   
+  @objc func leftArrowDidTapped() {
+    guard let date = dateLabel.text else { return }
+    delegate?.arrowDidTapped(direction: .left, with: date)
+  }
+  
+  @objc func dateLabelDidTapped() {
+    guard let date = dateLabel.text else { return }
+    delegate?.dateLabelDidTapped(of: date)
+  }
 }

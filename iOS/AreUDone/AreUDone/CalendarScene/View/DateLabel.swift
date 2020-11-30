@@ -22,21 +22,22 @@ final class DateLabel: UILabel {
     
     configure()
   }
+  
+  
+  // MARK:- Method
+  
+  func update(withText text: String) {
+    self.text = text
+  }
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 extension DateLabel {
-  
-  // MARK:- Method
   
   private func configure(){
     textAlignment = .center
     font = UIFont(name: "ChalkboardSE-Bold", size: 30)
-  }
-  
-  func update(withText text: String) {
-    self.text = text
   }
 }

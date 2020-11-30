@@ -8,12 +8,13 @@
 import UIKit
 
 protocol CardCellDelegate {
+  
   func remove(cell: CardCollectionViewCell)
   func resetCellOffset(without cell: CardCollectionViewCell)
   func didSelect(for cell: CardCollectionViewCell)
 }
 
-class CardCollectionViewCell: UICollectionViewCell, Reusable {
+final class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK:- Property
   
@@ -73,7 +74,6 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
   }
   
   func resetOffset() {
-    
     UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
       self.scrollView.contentOffset.x = 0
     }.startAnimation()
@@ -81,7 +81,7 @@ class CardCollectionViewCell: UICollectionViewCell, Reusable {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 private extension CardCollectionViewCell {
   func configure() {
@@ -163,7 +163,7 @@ extension CardCollectionViewCell {
   }
 }
 
-// MARK:- Extension
+// MARK:- Extension UIScrollViewDelegate
 
 extension CardCollectionViewCell: UIScrollViewDelegate {
   
