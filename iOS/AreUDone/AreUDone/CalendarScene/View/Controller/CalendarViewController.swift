@@ -24,7 +24,8 @@ final class CalendarViewController: UIViewController {
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
-  lazy var dataSource = configureDataSource()
+
+  private lazy var dataSource = configureDataSource()
 
   @IBOutlet weak var dateStepper: DateStepper!
   @IBOutlet weak var cardCollectionView: CardCollectionView!
@@ -68,7 +69,7 @@ private extension CalendarViewController {
   func configure() {
     cardCollectionView.delegate = self
     viewModel.fetchInitializeDailyCards()
-      
+    
     dateStepper.delegate = self
     viewModel.initializeDate()
   }
@@ -169,7 +170,7 @@ extension CalendarViewController: CardCellDelegate {
   func didSelect(for cell: CardCollectionViewCell) {
     if let indexPath = cardCollectionView.indexPath(for: cell),
        let card = dataSource.itemIdentifier(for: indexPath) {
-      calendarCoordinator?.showDetailCard(for: card.id)
+      calendarCoordinator?.showCardDetail(for: card.id)
     }
   }
 }
