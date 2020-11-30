@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Board } from './Board';
 import { Comment } from './Comment';
 import { Invitation } from './Invitation';
+import { Member } from './Member';
 
 @Entity()
 export class User {
@@ -25,4 +26,7 @@ export class User {
 
     @OneToMany(() => Comment, (comment) => comment.user)
     comments;
+
+    @OneToMany(() => Member, (member) => member.user)
+    members;
 }

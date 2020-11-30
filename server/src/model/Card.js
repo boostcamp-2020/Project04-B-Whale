@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Comment } from './Comment';
 import { List } from './List';
+import { Member } from './Member';
 
 @Entity()
 export class Card {
@@ -25,4 +26,7 @@ export class Card {
 
     @OneToMany(() => Comment, (comment) => comment.card)
     comments;
+
+    @OneToMany(() => Member, (member) => member.card)
+    members;
 }
