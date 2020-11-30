@@ -50,4 +50,9 @@ export class BoardService extends BaseService {
         await this.boardRepository.save(createBoard);
         return createBoard.id;
     }
+
+    @Transactional()
+    async getDetailBoard(boardId) {
+        console.log('보드 상세 조회');
+    }
 }
