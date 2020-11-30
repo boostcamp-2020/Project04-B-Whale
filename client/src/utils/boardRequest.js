@@ -21,3 +21,14 @@ export const createBoard = async (title) => {
 
     return response;
 };
+
+export const getDetailBoard = async (id) => {
+    const config = {
+        url: `/api/board/${id}`,
+        method: 'GET',
+    };
+
+    const response = await request(config);
+
+    return response;
+};
