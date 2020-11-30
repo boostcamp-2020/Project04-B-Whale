@@ -47,9 +47,9 @@ final class CommentTextField: UITextField {
 
 // MARK:- Extension Configure Method
 
-extension CommentView {
+private extension CommentTextField {
   
-  private func configure() {
+  func configure() {
     placeholder = "댓글을 입력하세요..."
     layer.borderWidth = 0.6
     layer.borderColor = UIColor.black.cgColor
