@@ -11,8 +11,18 @@ final class ListFooterView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  let titleLabel = UILabel()
-  let baseView = UIView()
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    return titleLabel
+  }()
+  private let baseView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
   
   
   // MARK: - Initializer
@@ -28,32 +38,36 @@ final class ListFooterView: UICollectionReusableView, Reusable {
     
     configure()
   }
-  
-  
-  // MARK: - Method
-  
+}
+ 
+
+// MARK: - Extension Configure
+
+private extension ListFooterView {
+    
   private func configure() {
     addSubview(baseView)
     baseView.addSubview(titleLabel)
     
+    configureView()
     configureBaseView()
     configureTitle()
-    
+  }
+  
+  func configureView() {
+    backgroundColor = .clear
+  }
+  
+  func configureBaseView() {
     baseView.layer.cornerRadius = 10
     
     baseView.layer.shadowColor = UIColor.black.cgColor
     baseView.layer.shadowOffset = .zero
     baseView.layer.shadowRadius = 1
     baseView.layer.shadowOpacity = 1
+    
     baseView.backgroundColor = .white
     
-    backgroundColor = .clear
-  }
-  
-  func configureBaseView() {
-    baseView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    
-    baseView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       baseView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
       baseView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -64,8 +78,6 @@ final class ListFooterView: UICollectionReusableView, Reusable {
   
   func configureTitle() {
     titleLabel.text = "카드 추가"
-    
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: baseView.centerXAnchor),

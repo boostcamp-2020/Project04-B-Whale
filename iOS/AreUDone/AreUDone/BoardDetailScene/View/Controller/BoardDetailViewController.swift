@@ -17,13 +17,12 @@ final class BoardDetailViewController: UIViewController {
   @IBOutlet private weak var collectionView: UICollectionView!
   private let pageControl: UIPageControl = {
     let pageControl = UIPageControl()
-    
-    pageControl.numberOfPages = 7
+    pageControl.translatesAutoresizingMaskIntoConstraints = false
     
     return pageControl
   }()
+  private var offset: CGFloat!
   
-  var offset: CGFloat!
   
   // MARK: - Initializer
   
@@ -46,28 +45,45 @@ final class BoardDetailViewController: UIViewController {
     bindUI()
     configure()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithDefaultBackground()
+    navigationController?.navigationBar.standardAppearance = appearance
+  }
+  
+  
+  // MARK: - Method
+  
+  private func updatePageControlNumber(to numbers: Int) {
+    pageControl.numberOfPages = numbers
+  }
 }
 
-// MARK: - Extension
 
-extension BoardDetailViewController {
+// MARK: - Extension Configure Method
+
+private extension BoardDetailViewController {
   
   func bindUI() {
     
   }
   
   func configure() {
-    navigationItem.largeTitleDisplayMode = .never
+    // TODO: 추후 수정 (서버로부터 받아오도록)
     view.backgroundColor = #colorLiteral(red: 0.3077110052, green: 0.5931787491, blue: 0.2305498123, alpha: 1)
     
     view.addSubview(pageControl)
     
+    configurePageControl()
     configureNavigationBar()
     configureCollectionView()
-    configurePageControl()
   }
   
   func configureNavigationBar() {
+    navigationItem.largeTitleDisplayMode = .never
     
     let navigationAppearance = UINavigationBarAppearance()
     navigationAppearance.configureWithTransparentBackground()
@@ -83,17 +99,27 @@ extension BoardDetailViewController {
   }
   
   func configureCollectionView() {
-    collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-    collectionView.backgroundColor = .clear
-    
     collectionView.dataSource = self
     collectionView.delegate = self
     
+    collectionView.backgroundColor = .clear
+    
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+    
+    configureCollectionViewFlowLayout()
+    
+    collectionView.register(BoardDetailCollectionViewCell.self)
+    collectionView.registerFooterView(BoardDetailFooterView.self)
+  }
+  
+  func configureCollectionViewFlowLayout() {
     let flowLayout = UICollectionViewFlowLayout()
     
     let sectionSpacing: CGFloat = 25
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: 0)
     flowLayout.scrollDirection = .horizontal
+    
     flowLayout.itemSize = CGSize(
       width: view.bounds.width - (sectionSpacing * 2),
       height: view.bounds.height * 0.8
@@ -108,17 +134,10 @@ extension BoardDetailViewController {
       width: offset + flowLayout.sectionInset.left,
       height: 80
     )
-    
     collectionView.collectionViewLayout = flowLayout
-    collectionView.showsHorizontalScrollIndicator = false
-    
-    collectionView.register(BoardDetailCollectionViewCell.self)
-    collectionView.registerFooterView(BoardDetailFooterView.self)
   }
-  
+
   func configurePageControl() {
-    
-    pageControl.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
@@ -127,10 +146,16 @@ extension BoardDetailViewController {
   }
 }
 
+
+// MARK: - Extension UICollectionViewDataSource
+
 extension BoardDetailViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfLists()
+    let numberOfPages = viewModel.numberOfLists()
+    updatePageControlNumber(to: numberOfPages)
+    
+    return numberOfPages
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -144,6 +169,9 @@ extension BoardDetailViewController: UICollectionViewDataSource {
   }
 }
 
+
+// MARK: - Extension UICollectionViewDelegate
+
 extension BoardDetailViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -153,15 +181,18 @@ extension BoardDetailViewController: UICollectionViewDelegate {
     footerView.addHandler = { [weak self] text in
       self?.viewModel.insertList(list: List(id: 4, title: text, position: 0, cards: []))
       self?.collectionView.reloadSections(IndexSet(integer: 0))
+      self?.pageControl.currentPage += 1
     }
     return footerView
   }
 }
 
+
+// MARK: - Extension UICollectionView Scroll
+
 extension BoardDetailViewController {
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
     let index = scrollView.contentOffset.x / offset
 
     var renewedIndex: CGFloat

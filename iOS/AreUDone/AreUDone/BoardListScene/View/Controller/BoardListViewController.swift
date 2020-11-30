@@ -85,7 +85,6 @@ private extension BoardListViewController {
   }
   
   func configure() {
-    hidesBottomBarWhenPushed = true
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationItem.title = "보드 목록"
     navigationItem.searchController = searchController

@@ -27,6 +27,7 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
   }()
   var addHandler: ((String) -> Void)?
   
+  
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {
@@ -40,11 +41,14 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
     
     configure()
   }
+}
   
+
+// MARK: - Extension Configure Method
+
+private extension BoardDetailFooterView {
   
-  // MARK: - Method
-  
-  private func configure() {
+  func configure() {
     addSubview(button)
     addSubview(titleInputView)
 
@@ -84,8 +88,7 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
     titleInputView.alpha = 0
   }
   
-  @objc private func buttonTapped() {
-    
+  @objc func buttonTapped() {
     UIView.transition(
       with: titleInputView,
       duration: 0.3,
@@ -95,6 +98,9 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
       }, completion: nil)
   }
 }
+
+
+// MARK: - Extension CustomTextFieldDelegate
 
 extension BoardDetailFooterView: CustomTextFieldDelegate {
   

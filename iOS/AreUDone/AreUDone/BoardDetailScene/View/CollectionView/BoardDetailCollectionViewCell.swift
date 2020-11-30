@@ -12,7 +12,9 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK: - Property
   
-  lazy var collectionView: ListCollectionView = {
+  private var viewModel: ListViewModelProtocol!
+  
+  private lazy var collectionView: ListCollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
   
     flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: 45)
@@ -25,12 +27,11 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     flowLayout.sectionFootersPinToVisibleBounds = true
     
     let collectionView = ListCollectionView(frame: .zero, collectionViewLayout: flowLayout)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.contentInset = UIEdgeInsets.sameInset(inset: 5)
     
     return collectionView
   }()
-  
-  private var viewModel: ListViewModelProtocol!
   
   
   // MARK: - Initializer
@@ -49,31 +50,7 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   
  
   // MARK: - Method
-  
-  private func configure() {
-    addSubview(collectionView)
 
-    configureCollectionView()
-  }
-  
-  
-  private func configureCollectionView() {    
-    collectionView.delegate = self
-    collectionView.dataSource = self
-    
-    collectionView.dragInteractionEnabled = true
-    collectionView.dragDelegate = self
-    collectionView.dropDelegate = self
-    
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: topAnchor),
-      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-      collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
-    ])
-  }
-  
   func update(with viewModel: ListViewModelProtocol) {
     self.viewModel = viewModel
     
@@ -82,10 +59,35 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
 }
 
 
-// MARK: - Extension
+// MARK: - Extension Configure
+
+private extension BoardDetailCollectionViewCell {
+  
+  func configure() {
+    addSubview(collectionView)
+
+    configureCollectionView()
+  }
+  
+  func configureCollectionView() {
+    collectionView.delegate = self
+    collectionView.dataSource = self
+    
+    collectionView.dragInteractionEnabled = true
+    collectionView.dragDelegate = self
+    collectionView.dropDelegate = self
+    
+    NSLayoutConstraint.activate([
+      collectionView.topAnchor.constraint(equalTo: topAnchor),
+      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
+    ])
+  }
+}
 
 
-// MARK: UITableView DataSource
+// MARK: - Extension UICollectionView DataSource
 
 extension BoardDetailCollectionViewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,7 +104,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDataSource {
 }
 
 
-// MARK: UITableView Delegate
+// MARK: - Extension UICollectionView Delegate
 
 extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
   
@@ -123,7 +125,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
 }
 
 
-// MARK: UITableView Drag Delegate
+// MARK: - Extension UICollectionView Drag Delegate
 
 extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
   
@@ -140,7 +142,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
 }
 
 
-// MARK: UITableView Drop Delegate
+// MARK: - Extension UICollectionView Drop Delegate
 
 extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   
@@ -158,7 +160,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
     processDraggedItem(by: collectionView, and: coordinator)
   }
   
-  func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
+  private func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
     
     // 드래그한 아이템의 객체를 비동기적으로 로드
     coordinator.session.loadObjects(ofClass: List.Card.self) { [self] item in
@@ -199,7 +201,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
     }
   }
   
-  func changeData(
+  private func changeData(
     inSame collectionView: UICollectionView,
     about card: List.Card,
     by sourceIndexPath: IndexPath,
@@ -213,7 +215,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
     collectionView.reloadItems(at: updatedIndexPaths)
   }
   
-  func insertData(
+  private func insertData(
     with localContext: Any?,
     _ insertDestinationTableViewDataHandler: () -> Void
   ) {
@@ -222,7 +224,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
     insertDestinationTableViewDataHandler()
   }
   
-  func removeSourceTableViewData(localContext: Any?) {
+  private func removeSourceTableViewData(localContext: Any?) {
     guard let (
             sourceViewModel,
             sourceIndexPath,
@@ -237,6 +239,3 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
     collectionView.reloadSections(IndexSet(integer: 0))
   }
 }
-
-
-

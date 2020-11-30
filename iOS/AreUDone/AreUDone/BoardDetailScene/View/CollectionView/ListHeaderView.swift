@@ -11,7 +11,13 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  let titleLabel = UILabel()
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    return titleLabel
+  }()
+  
   
   // MARK: - Initializer
   
@@ -24,19 +30,24 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    titleLabel.text = "TODO"
-    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 0.745906464)
     configure()
   }
-  
-  
-  // MARK: - Method
-  
-  private func configure() {
+}
+
+
+// MARK: - Extension Configure
+
+private extension ListHeaderView {
+
+  func configure() {
     addSubview(titleLabel)
     
+    configureView()
     configureTitle()
-    
+  }
+  
+  func configureView() {
+    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 0.745906464)
     layer.cornerRadius = 5
     
     layer.shadowColor = UIColor.black.cgColor
@@ -44,9 +55,9 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
     layer.shadowRadius = 0.4
     layer.shadowOpacity = 0.3
   }
-  
+
   func configureTitle() {
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    titleLabel.text = "TODO"
     
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),

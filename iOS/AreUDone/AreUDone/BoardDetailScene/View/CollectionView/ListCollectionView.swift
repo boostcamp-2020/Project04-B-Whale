@@ -22,9 +22,11 @@ final class ListCollectionView: UICollectionView {
     
     configure()
   }
-  
-  
-  // MARK: - Method
+}
+
+// MARK: - Extension Configure
+
+extension ListCollectionView {
   
   func configure() {
     register(ListCollectionViewCell.self)
