@@ -13,8 +13,8 @@ enum CommentSection: CaseIterable {
 
 final class CardDetailViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, Comment>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, Comment>
+  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, CardDetail.Comment>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, CardDetail.Comment>
   
   // MARK:- Property
   
@@ -87,7 +87,7 @@ private extension CardDetailViewController {
     return dataSource
   }
   
-  func updateSnapshot(with item: [Comment], animatingDifferences: Bool = true) {
+  func updateSnapshot(with item: [CardDetail.Comment], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
 
     snapshot.appendSections([.main])

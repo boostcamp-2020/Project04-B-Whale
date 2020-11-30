@@ -10,7 +10,7 @@ import Foundation
 protocol CardDetailViewModelProtocol {
   func bindingCardDetailContentView(handler: @escaping ((String) -> Void))
   func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
-  func bindingCardDetailCommentTableView(handler: @escaping (([Comment]) -> Void))
+  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void))
   
   func fetchDetailCard()
 }
@@ -24,7 +24,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   private var cardDetailContentViewHandler: ((String) -> Void)?
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
-  private var cardDetailCommentsViewHandler: (([Comment]) -> Void)?
+  private var cardDetailCommentsViewHandler: (([CardDetail.Comment]) -> Void)?
   
   // MARK:- Initializer
   
@@ -42,7 +42,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardDetailDueDateViewHandler = handler
   }
   
-  func bindingCardDetailCommentTableView(handler: @escaping (([Comment]) -> Void)) {
+  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void)) {
     cardDetailCommentsViewHandler = handler
   }
   
@@ -54,17 +54,17 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     
     let dueDate = "2020-11-26"
     
-    let user1 = User(id: 0, name: "서명렬", profileImageUrl: "")
-    let user2 = User(id: 1, name: "심영민", profileImageUrl: "")
+    let user1 = CardDetail.Comment.User(id: 0, name: "서명렬", profileImageUrl: "")
+    let user2 = CardDetail.Comment.User(id: 1, name: "심영민", profileImageUrl: "")
     
-    let comment1 = Comment(id: 0, content: "안녕하세요", createdAt: "2020-11-26", user: user1)
-    let comment2 = Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment3 = Comment(id: 2, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment4 = Comment(id: 3, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment5 = Comment(id: 4, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment6 = Comment(id: 5, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment7 = Comment(id: 6, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
-    let comment8 = Comment(id: 7, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment1 = CardDetail.Comment(id: 0, content: "안녕하세요", createdAt: "2020-11-26", user: user1)
+    let comment2 = CardDetail.Comment(id: 1, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment3 = CardDetail.Comment(id: 2, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment4 = CardDetail.Comment(id: 3, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment5 = CardDetail.Comment(id: 4, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment6 = CardDetail.Comment(id: 5, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment7 = CardDetail.Comment(id: 6, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
+    let comment8 = CardDetail.Comment(id: 7, content: "안녕하세요", createdAt: "2020-11-26", user: user2)
     
     cardDetailContentViewHandler?(content)
     cardDetailDueDateViewHandler?(dueDate)
