@@ -68,23 +68,39 @@ final class CustomTextField: UIView {
     configure()
   }
   
-  
   // MARK: - Method
   
-  private func configure() {
-    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 1)
-    layer.cornerRadius = 10
-    
+  @objc private func addButtonTapped() {
+    delegate?.addButtonTapped(text: textFieldView.text ?? "")
+  }
+  
+  @objc private func cancelButtonTapped() {
+    delegate?.closeButtonTapped()
+  }
+}
+
+
+// MARK: - Extension Configure
+
+private extension CustomTextField {
+  
+  func configure() {
     addSubview(textFieldView)
     addSubview(cancelButton)
     addSubview(addButton)
     
+    configureView()
     configureTextFieldView()
     configureCancelButton()
     configureAddButton()
   }
   
-  private func configureTextFieldView() {
+  func configureView() {
+    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 1)
+    layer.cornerRadius = 10
+  }
+  
+  func configureTextFieldView() {
     NSLayoutConstraint.activate([
       textFieldView.centerXAnchor.constraint(equalTo: centerXAnchor),
       textFieldView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
@@ -95,14 +111,14 @@ final class CustomTextField: UIView {
     ])
   }
   
-  private func configureCancelButton() {
+  func configureCancelButton() {
     NSLayoutConstraint.activate([
       cancelButton.leadingAnchor.constraint(equalTo: textFieldView.leadingAnchor, constant: 10),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
     ])
   }
   
-  private func configureAddButton() {
+  func configureAddButton() {
     NSLayoutConstraint.activate([
       addButton.trailingAnchor.constraint(equalTo: textFieldView.trailingAnchor, constant: -10),
       addButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
@@ -110,16 +126,6 @@ final class CustomTextField: UIView {
   }
 }
 
-extension CustomTextField {
-  
-  @objc private func addButtonTapped() {
-    delegate?.addButtonTapped(text: textFieldView.text ?? "")
-  }
-  
-  @objc private func cancelButtonTapped() {
-    delegate?.closeButtonTapped()
-  }
-}
 
 
 final class TextField: UITextField {

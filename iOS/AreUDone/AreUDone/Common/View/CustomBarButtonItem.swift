@@ -12,8 +12,14 @@ final class CustomBarButtonItem: UIBarButtonItem {
   // MARK: - Property
 
   var handler: () -> Void
-  private let button = UIButton()
+  private let button: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+
+    return button
+  }()
   private let imageName: String
+  
   
   // MARK: - Initializer
   
@@ -29,17 +35,17 @@ final class CustomBarButtonItem: UIBarButtonItem {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+}
+
+// MARK: - Extension Configure
+
+private extension CustomBarButtonItem {
   
-  
-  // MARK: - Method
-  
-  private func configure() {
-    
+  func configure() {
     button.setImage(UIImage(systemName: imageName), for: .normal)
     button.tintColor = .white
     button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
-    button.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       button.widthAnchor.constraint(equalToConstant: 30),
       button.heightAnchor.constraint(equalTo: button.widthAnchor)
@@ -48,7 +54,7 @@ final class CustomBarButtonItem: UIBarButtonItem {
     customView = button
   }
   
-  @objc private func buttonTapped() {
+  @objc func buttonTapped() {
     handler()
   }
 }
