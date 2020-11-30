@@ -14,7 +14,7 @@ final class CardDetailDueDateView: UIView {
   private lazy var titleLable: UILabel = {
     let label = UILabel()
     label.text = "마감 날짜"
-    label.font = UIFont(name: "Chalkduster", size: 20)
+    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
     
     return label
   }()
@@ -22,7 +22,8 @@ final class CardDetailDueDateView: UIView {
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-
+    label.font = UIFont(name: "AmericanTypewriter", size: 15)
+    
     return label
   }()
   
@@ -52,7 +53,6 @@ final class CardDetailDueDateView: UIView {
 private extension CardDetailDueDateView {
   
   func configure() {
-    backgroundColor = .systemPink
     addSubview(titleLable)
     addSubview(dueDateLabel)
     
@@ -64,8 +64,8 @@ private extension CardDetailDueDateView {
     titleLable.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+      titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       titleLable.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
   }
@@ -75,8 +75,8 @@ private extension CardDetailDueDateView {
     
     NSLayoutConstraint.activate([
       dueDateLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
-      dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+      dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
+      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
       dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
     ])
   }

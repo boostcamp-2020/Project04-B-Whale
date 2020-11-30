@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CommentCollectionView: UICollectionView {
+final class CommentCollectionView: UICollectionView {
 
   override var contentSize:CGSize {
     didSet {
@@ -43,19 +43,13 @@ class CommentCollectionView: UICollectionView {
   private func configureFlowLayout() {
     let layout = UICollectionViewFlowLayout()
     let height = UIScreen.main.bounds.height * 0.1
-    let width = UIScreen.main.bounds.width * 0.8
-//    layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 80)
-//    layout.headerReferenceSize = .zero
-    layout.itemSize = CGSize(width: width, height: height)
+    let width = UIScreen.main.bounds.width * 0.9
+    layout.estimatedItemSize = CGSize(width: width, height: height)
     layout.minimumInteritemSpacing = 10
-    
     collectionViewLayout = layout
   }
   
   private func registerCell() {
-//    registerHeader(DetailCardContentView.self)
-//    registerHeader(DetailCardDueDateView.self)
-//    registerHeader(HeaderView.self)
     register(CommentCollectionViewCell.self)
   }
 }

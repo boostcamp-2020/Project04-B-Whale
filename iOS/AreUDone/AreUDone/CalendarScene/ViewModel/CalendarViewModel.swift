@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CalendarViewModelProtocol {
+  
   func bindingInitializeCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateDate(handler: @escaping (String) -> Void)
@@ -21,38 +22,14 @@ protocol CalendarViewModelProtocol {
 }
 
 final class CalendarViewModel: CalendarViewModelProtocol {
-  func bindingUpdateDate(handler: @escaping (String) -> Void) {
-    updateDateHandler = handler
-  }
-  
-  func initializeDate() {
-    let date = Date().toString()
-    updateDateHandler?(date)
-  }
-  
-  func changeDate(to date: String, direction: Direction?) {
-    let date = date.toDate()
-    
-    if let direction = direction {
-      let day = direction == .left ? -1 : 1
-      let calendar = Calendar(identifier: .gregorian)
-      if let updatedDate = calendar.date(byAdding: DateComponents(day: day), to: date)?.toString() {
-        updateDateHandler?(updatedDate)
-      }
-    } else {
-      updateDateHandler?(date.toString())
-    }
-  }
-  
-  private var updateDateHandler: ((String) -> Void)?
   
   // MARK: - Property
   
   private var initializeCardTableViewHandler: ((Cards) -> Void)?
   private var updateCardTableViewHandler: ((Cards) -> Void)?
+  private var updateDateHandler: ((String) -> Void)?
   
   let cardService: CardServiceProtocol
-  
   
   
   // MARK:- Initializer
@@ -78,6 +55,29 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   
   func fetchUpdateDailyCards() {
     fetchDailyCards(with: updateCardTableViewHandler)
+  }
+  
+  func bindingUpdateDate(handler: @escaping (String) -> Void) {
+    updateDateHandler = handler
+  }
+  
+  func initializeDate() {
+    let date = Date().toString()
+    updateDateHandler?(date)
+  }
+  
+  func changeDate(to date: String, direction: Direction?) {
+    let date = date.toDate()
+    
+    if let direction = direction {
+      let day = direction == .left ? -1 : 1
+      let calendar = Calendar(identifier: .gregorian)
+      if let updatedDate = calendar.date(byAdding: DateComponents(day: day), to: date)?.toString() {
+        updateDateHandler?(updatedDate)
+      }
+    } else {
+      updateDateHandler?(date.toString())
+    }
   }
   
   private func fetchDailyCards(with handler: ((Cards) -> Void)?) {
