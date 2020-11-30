@@ -9,20 +9,11 @@ import UIKit
 
 final class BoardDetailViewController: UIViewController {
   
-  enum Section {
-    case main
-  }
-  
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, List>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, List>
-  
   // MARK: - Property
   
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
   
-  @IBOutlet weak var collectionView: BoardDetailCollectionView!
-  lazy var dataSource = configureDataSource()
   @IBOutlet private weak var collectionView: UICollectionView!
   private let pageControl: UIPageControl = {
     let pageControl = UIPageControl()
@@ -49,30 +40,9 @@ final class BoardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     bindUI()
     configure()
-    
-    let cards = [
-      Card(id: 1, title: "카드1", dueDate: "날짜1", position: 0, commentCount: 0),
-      Card(id: 1, title: "카드2", dueDate: "날짜", position: 0, commentCount: 0)
-    ]
-    
-    let cards2 = [
-      Card(id: 1, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-      Card(id: 1, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0)
-    ]
-    let items = [
-      List(id: 0, title: "데이터1", position: 0, cards: cards),
-      List(id: 1, title: "데이터2", position: 0, cards: cards2),
-      List(id: 2, title: "데이터3", position: 0, cards: []),
-      List(id: 3, title: "데이터3", position: 0, cards: []),
-      List(id: 4, title: "데이터3", position: 0, cards: []),
-      List(id: 5, title: "데이터3", position: 0, cards: []),
-      List(id: 6, title: "데이터3", position: 0, cards: []),
-      List(id: 7, title: "데이터3", position: 0, cards: [])
-    ]
-    updateSnapshot(with: items, animatingDifferences: false)
   }
 }
 
@@ -86,61 +56,86 @@ extension BoardDetailViewController {
   
   func configure() {
     navigationItem.largeTitleDisplayMode = .never
+    view.backgroundColor = #colorLiteral(red: 0.3077110052, green: 0.5931787491, blue: 0.2305498123, alpha: 1)
+    
+    view.addSubview(pageControl)
+    
+    configureNavigationBar()
+    configureCollectionView()
+    configurePageControl()
   }
   
-  func indexPath(of cell: UICollectionViewCell) -> IndexPath? {
-    if let indexPath = collectionView.indexPath(for: cell) {
-      return indexPath
+  func configureNavigationBar() {
+    
+    let navigationAppearance = UINavigationBarAppearance()
+    navigationAppearance.configureWithTransparentBackground()
+    navigationAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+    navigationController?.navigationBar.standardAppearance = navigationAppearance
+    
+    navigationItem.leftBarButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
+      self?.coordinator?.pop()
     }
-    return nil
+    navigationItem.rightBarButtonItem = CustomBarButtonItem(imageName: "ellipsis" ) { [weak self] in
+      
+    }
+    
   }
   
-  func update(from sourceCell: UICollectionViewCell, _ sourceCards: [Card],
-              to destinationCell: UICollectionViewCell, _ destinationCards: [Card]) {
+  func configureCollectionView() {
+    collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+    collectionView.backgroundColor = .clear
     
-    guard let sourceListIndexPath = collectionView.indexPath(for: sourceCell),
-          let destinationListIndexPath = collectionView.indexPath(for: destinationCell)
-    else { return }
+    collectionView.dataSource = self
+    collectionView.delegate = self
     
-    var lists = dataSource.snapshot().itemIdentifiers(inSection: .main)
-    lists[sourceListIndexPath.item].cards = sourceCards
-    lists[destinationListIndexPath.item].cards = destinationCards
+    let flowLayout = UICollectionViewFlowLayout()
     
-    updateSnapshot(with: lists, animatingDifferences: false)
-    print(sourceCards, destinationCards)
+    let sectionSpacing: CGFloat = 25
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: sectionSpacing)
+    flowLayout.scrollDirection = .horizontal
+    flowLayout.itemSize = CGSize(
+      width: view.bounds.width - (sectionSpacing * 2),
+      height: view.bounds.height * 0.8
+    )
+    
+    collectionView.collectionViewLayout = flowLayout
+    collectionView.showsHorizontalScrollIndicator = false
+    
+    collectionView.register(BoardDetailCollectionViewCell.self)
+  }
+  
+  func configurePageControl() {
+    
+    pageControl.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+      pageControl.heightAnchor.constraint(equalToConstant: 10)
+    ])
   }
 }
 
-
-// MARK: Diffable DataSource
-
-extension BoardDetailViewController {
+extension BoardDetailViewController: UICollectionViewDataSource {
   
-  func configureDataSource() -> DataSource {
-    let dataSource = DataSource(
-      collectionView: collectionView
-    ) { (collectionView, indexPath, list) -> UICollectionViewCell? in
-      let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-      
-      cell.backgroundColor = .gray
-      
-      cell.parentVc = self
-      cell.update(with: list.cards)
-      
-      return cell
-    }
-    
-    return dataSource
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfLists()
   }
   
-  func updateSnapshot(with items: [List], animatingDifferences: Bool = true) {
-    var snapshot = Snapshot()
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
-    snapshot.appendSections([.main])
-    snapshot.appendItems(items)
+    let list = viewModel.fetchList(at: indexPath.item)
+    let viewModel = ListViewModel(list: list)
     
-    DispatchQueue.main.async {
-      self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    cell.update(with: viewModel)
+    return cell
+  }
+}
+
+extension BoardDetailViewController: UICollectionViewDelegate {
+  
+}
+
 extension BoardDetailViewController {
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
