@@ -27,25 +27,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
   private var cardDetailCommentsViewHandler: (([CardDetail.Comment]) -> Void)?
   
+  
   // MARK:- Initializer
   
   init(id: Int, cardService: CardServiceProtocol) {
     self.id = id
     self.cardService = cardService
   }
+
   
-  
-  func bindingCardDetailContentView(handler: @escaping ((String) -> Void)) {
-    cardDetailContentViewHandler = handler
-  }
-  
-  func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void)) {
-    cardDetailDueDateViewHandler = handler
-  }
-  
-  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void)) {
-    cardDetailCommentsViewHandler = handler
-  }
+  // MARK:- Method
   
   func fetchDetailCard() {
     let content = """
@@ -77,5 +68,23 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   func addComment(with comment: String) {
     // TODO:- CommentService
+  }
+}
+
+
+// MARK:- Extension BindUI
+
+extension CardDetailViewModel {
+  
+  func bindingCardDetailContentView(handler: @escaping ((String) -> Void)) {
+    cardDetailContentViewHandler = handler
+  }
+  
+  func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void)) {
+    cardDetailDueDateViewHandler = handler
+  }
+  
+  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void)) {
+    cardDetailCommentsViewHandler = handler
   }
 }

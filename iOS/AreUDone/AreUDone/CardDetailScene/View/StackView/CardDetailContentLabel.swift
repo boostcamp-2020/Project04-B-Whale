@@ -9,6 +9,8 @@ import UIKit
 
 final class CardDetailContentLabel: PaddingLabel {
   
+  // MARK:- Initializer
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -20,8 +22,14 @@ final class CardDetailContentLabel: PaddingLabel {
     
     configure()
   }
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension CardDetailContentLabel {
   
-  private func configure() {
+  func configure() {
     layer.borderWidth = 0.5
     layer.borderColor = UIColor.lightGray.cgColor
     layer.cornerRadius = 2
@@ -30,11 +38,10 @@ final class CardDetailContentLabel: PaddingLabel {
     font = UIFont(name: "AmericanTypewriter-Condensed", size: 15)
     backgroundColor = .white
     
-    
     configureShadow()
   }
   
-  private func configureShadow() {
+  func configureShadow() {
     layer.shadowColor = UIColor.black.cgColor
     layer.shadowOffset = CGSize(width: bounds.width + 3, height: bounds.height + 3)
     layer.masksToBounds = false

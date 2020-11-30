@@ -9,7 +9,12 @@ import UIKit
 
 final class CommentTextField: UITextField {
   
+  // MARK:- Property
+  
   private let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+  
+  
+  // MARK:- Initializer
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
@@ -23,6 +28,9 @@ final class CommentTextField: UITextField {
     configure()
   }
   
+  
+  // MARK:- Method
+  
   override func textRect(forBounds bounds: CGRect) -> CGRect {
     return bounds.inset(by: padding)
   }
@@ -34,6 +42,12 @@ final class CommentTextField: UITextField {
   override func editingRect(forBounds bounds: CGRect) -> CGRect {
     return bounds.inset(by: padding)
   }
+}
+
+
+// MARK:- Extension Configure Method
+
+extension CommentView {
   
   private func configure() {
     placeholder = "댓글을 입력하세요..."

@@ -56,7 +56,7 @@ final class CommentView: UIView {
 }
 
 
-// MARK:- Extension Configure
+// MARK:- Extension Configure Method
 
 private extension CommentView {
   
@@ -127,7 +127,7 @@ private extension CommentView {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension obj-c
 
 private extension CommentView {
   
