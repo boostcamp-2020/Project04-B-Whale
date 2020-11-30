@@ -117,6 +117,8 @@
 		BD2AA7F8256F4E3900EA8791 /* CardDetailDueDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */; };
 		BD2AA80A256F8B5900EA8791 /* CommentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */; };
 		BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */; };
+		BD2AA89B2574A2C000EA8791 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */; };
+		BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -268,6 +270,8 @@
 		BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailDueDateView.swift; sourceTree = "<group>"; };
 		BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
+		BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailContentLabel.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -779,10 +783,12 @@
 			children = (
 				BD2AA79F256DF8AB00EA8791 /* Controller */,
 				BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */,
-				BD2AA7F2256F424800EA8791 /* CardDetailContentView.swift */,
 				BD2AA7ED256F421E00EA8791 /* CardDetailStackView.swift */,
+				BD2AA7F2256F424800EA8791 /* CardDetailContentView.swift */,
 				BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */,
 				BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */,
+				BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */,
+				BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1143,6 +1149,7 @@
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				335AC529256FE76D006A5C4A /* ListCollectionView.swift in Sources */,
+				BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				335AC4DE256F73D7006A5C4A /* BoardEndPoint.swift in Sources */,
@@ -1159,6 +1166,7 @@
 				335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */,
 				33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */,
 				335AC517256FDCFC006A5C4A /* BoardDetailCollectionView.swift in Sources */,
+				BD2AA89B2574A2C000EA8791 /* PaddingLabel.swift in Sources */,
 				BDD18B4025664077005DF00A /* CommentService.swift in Sources */,
 				BDE27E32256B9342002308B9 /* Reusable.swift in Sources */,
 				336010DE256B8E60009580A1 /* CardJsonFactory.swift in Sources */,

@@ -14,7 +14,7 @@ final class CardDetailContentView: UIView {
   private lazy var titleLable: UILabel = {
     let label = UILabel()
     label.text = "내용"
-    label.font = UIFont(name: "Chalkduster", size: 20)
+    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
     
     return label
   }()
@@ -22,6 +22,7 @@ final class CardDetailContentView: UIView {
   private lazy var contentLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
+    label.font = UIFont(name: "AmericanTypewriter", size: 15)
     
     return label
   }()
@@ -54,8 +55,6 @@ final class CardDetailContentView: UIView {
 private extension CardDetailContentView {
   
   func configure() {
-    backgroundColor = .green
-    
     addSubview(titleLable)
     addSubview(contentLabel)
     
@@ -68,7 +67,7 @@ private extension CardDetailContentView {
     
     NSLayoutConstraint.activate([
       titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       titleLable.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
   }
@@ -78,8 +77,8 @@ private extension CardDetailContentView {
     
     NSLayoutConstraint.activate([
       contentLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+      contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
+      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
       contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
     ])
   }
