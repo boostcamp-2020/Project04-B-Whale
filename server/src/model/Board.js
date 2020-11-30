@@ -12,6 +12,9 @@ export class Board {
     @Column({ name: 'title', type: 'varchar' })
     title;
 
+    @Column({ name: 'color', type: 'varchar' })
+    color;
+
     @ManyToOne(() => User, (user) => user.boards, { nullable: false })
     @JoinColumn({ name: 'creator_id' })
     creator;
