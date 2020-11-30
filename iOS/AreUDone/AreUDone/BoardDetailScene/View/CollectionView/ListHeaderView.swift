@@ -1,17 +1,17 @@
 //
-//  ListCollectionViewCell.swift
+//  ListHeaderView.swift
 //  AreUDone
 //
-//  Created by a1111 on 2020/11/26.
+//  Created by a1111 on 2020/11/29.
 //
 
 import UIKit
 
-final class ListCollectionViewCell: UICollectionViewCell, Reusable {
+final class ListHeaderView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  private let titleLabel = UILabel()
+  let titleLabel = UILabel()
   
   // MARK: - Initializer
   
@@ -24,6 +24,8 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
+    titleLabel.text = "TODO"
+    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 0.745906464)
     configure()
   }
   
@@ -35,25 +37,21 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
     
     configureTitle()
     
-    backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 1)
     layer.cornerRadius = 5
     
     layer.shadowColor = UIColor.black.cgColor
-    layer.shadowOffset = CGSize(width: 0, height: 0.5)
-    layer.shadowRadius = 0.3
+    layer.shadowOffset = CGSize(width: 0, height: 1)
+    layer.shadowRadius = 0.4
     layer.shadowOpacity = 0.3
   }
   
-  private func configureTitle() {
+  func configureTitle() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
     ])
   }
-  
-  func update(with card: List.Card) {
-    titleLabel.text = card.title
-  }
 }
+
