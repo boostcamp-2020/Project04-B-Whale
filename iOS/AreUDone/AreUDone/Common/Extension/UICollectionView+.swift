@@ -24,6 +24,10 @@ extension UICollectionView {
     register(T.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: T.defaultReuseIdentifier)
   }
   
+  func registerFooterView<T: UICollectionReusableView>(_: T.Type) where T: Reusable {
+    register(T.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: T.defaultReuseIdentifier)
+  }
+  
   func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
     guard let cell: T = dequeueReusableCell(
       withReuseIdentifier: T.defaultReuseIdentifier,
@@ -46,4 +50,17 @@ extension UICollectionView {
     
     return headerView
   }
+  
+  func dequeReusableFooterView<T: UICollectionReusableView>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
+    guard let footerView: T = dequeueReusableSupplementaryView(
+      ofKind: UICollectionView.elementKindSectionFooter,
+      withReuseIdentifier: T.defaultReuseIdentifier,
+      for: indexPath
+    ) as? T else {
+      return T()
+    }
+    
+    return footerView
+  }
+  
 }
