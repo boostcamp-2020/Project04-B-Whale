@@ -14,9 +14,7 @@ export const CardRouter = () => {
         const { id: userId } = req.user;
         const { startdate: startDate, enddate: endDate, member } = queryParser(q);
 
-        const { myBoards, invitedBoards } = await boardService.getBoardsByUserId(userId);
-        let boardIds = myBoards.map((ele) => ele.id);
-        boardIds = [...boardIds, ...invitedBoards.map((ele) => ele.id)];
+        const boardIds = await boardService.getBoardIdsByUserId(userId);
 
         const config = { startDate, endDate, boardIds };
         if (member === 'me') {

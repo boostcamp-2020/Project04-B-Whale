@@ -41,6 +41,20 @@ export class BoardService extends BaseService {
     }
 
     @Transactional()
+    async getBoardIdsByUserId(userId) {
+        const boards = await this.boardRepository
+            .createQueryBuilder('board')
+            .select('board.id', 'id')
+            .leftJoin('board.invitations', 'invitation')
+            .where(`board.creator_id=:userId or user_id=:userId`, { userId })
+            .getRawMany();
+
+        const boardIds = boards.map((ele) => ele.id);
+
+        return boardIds;
+    }
+
+    @Transactional()
     async createBoard({ userId, title, color }) {
         const board = {
             creator: userId,
