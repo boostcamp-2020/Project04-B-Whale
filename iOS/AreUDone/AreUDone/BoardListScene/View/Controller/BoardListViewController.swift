@@ -91,6 +91,7 @@ private extension BoardListViewController {
     searchController.searchResultsUpdater = self
     
     collectionView.delegate = self
+    
   }
 }
 
