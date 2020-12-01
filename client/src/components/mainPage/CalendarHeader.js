@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 const HeaderWrapper = styled.div`
@@ -27,8 +28,7 @@ const CalendarHeader = () => {
             <DateButton>
                 <MdChevronLeft size={30} />
             </DateButton>
-            {/* TODO: 선택된 달을 기준으로 년, 월을 변경할 것 */}
-            <DateTitle>2020.11</DateTitle>
+            <DateTitle>{moment().format('YYYY.MM')}</DateTitle>
             <DateButton>
                 <MdChevronRight size={30} />
             </DateButton>

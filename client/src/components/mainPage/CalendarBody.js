@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import CalendarDate from './CalendarDate';
 
 const BodyWrapper = styled.div`
@@ -14,10 +15,11 @@ const Row = styled.div`
         background-color: ${(props) => props.theme.lightRedColor};
         color: ${(props) => props.theme.whiteColor};
     }
-    & > .past {
+    & > .grayed {
         background-color: ${(props) => props.theme.lightGrayColor};
+        color: ${(props) => props.theme.grayColor};
     }
-    & > .clickedDate {
+    & > .selected {
         background-color: ${(props) => props.theme.blueColor};
         color: ${(props) => props.theme.whiteColor};
     }
@@ -43,6 +45,39 @@ const Day = styled.div`
 `;
 
 const CalendarBody = () => {
+    const makeCalendar = () => {
+        const today = moment();
+        const startWeek = today.clone().startOf('month').week();
+        const endWeek =
+            today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
+        const calendar = [];
+        for (let week = startWeek; week <= endWeek; week += 1) {
+            calendar.push(
+                <Row key={week}>
+                    {Array(7)
+                        .fill(0)
+                        .map((_, i) => {
+                            const current = today.clone().week(week).startOf('week').add(i, 'day');
+                            const isToday =
+                                today.format('YYYYMMDD') === current.format('YYYYMMDD')
+                                    ? 'today'
+                                    : '';
+                            const isGrayed =
+                                current.format('MM') === today.format('MM') ? '' : 'grayed';
+                            return (
+                                <CalendarDate
+                                    key={current.format('YYYY-MM-DD')}
+                                    className={`${isToday} ${isGrayed}`}
+                                    date={current.format('D')}
+                                />
+                            );
+                        })}
+                </Row>,
+            );
+        }
+        return calendar;
+    };
+
     return (
         <BodyWrapper>
             <Row>
@@ -54,25 +89,7 @@ const CalendarBody = () => {
                 <Day>금</Day>
                 <Day>토</Day>
             </Row>
-            {/* TODO: 선택된 달을 기준으로 달력을 변경할 것 */}
-            <Row>
-                <CalendarDate className="past" date={1} />
-                <CalendarDate className="past" date={2} />
-                <CalendarDate className="today" date={3} />
-                <CalendarDate date={4} />
-                <CalendarDate date={5} />
-                <CalendarDate className="clickedDate" date={6} />
-                <CalendarDate date={7} />
-            </Row>
-            <Row>
-                <CalendarDate date={8} />
-                <CalendarDate date={9} />
-                <CalendarDate date={10} count={2} />
-                <CalendarDate date={11} />
-                <CalendarDate date={12} />
-                <CalendarDate date={13} />
-                <CalendarDate date={14} count={1} />
-            </Row>
+            {makeCalendar()}
         </BodyWrapper>
     );
 };
