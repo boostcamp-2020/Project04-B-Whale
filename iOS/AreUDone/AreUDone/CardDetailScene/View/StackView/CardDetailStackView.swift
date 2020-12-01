@@ -69,6 +69,10 @@ final class CardDetailStackView: UIStackView {
   func setupContentViewDelegate<T: UIViewController>(_ delegate: T) where T: CardDetailContentViewDelegate {
     cardDetailContentView.delegate = delegate.self
   }
+  
+  func setupDueDateViewDelegate<T: UIViewController>(_ delegate: T) where T: CardDetailDueDateViewDelegate {
+    cardDetailDueDateView.delegate = delegate.self
+  }
 }
 
 

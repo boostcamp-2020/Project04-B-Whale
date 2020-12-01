@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol CardDetailDueDateViewDelegate {
+  
+  func cardDetailDueDateEditButtonTapped()
+}
+
+
 final class CardDetailDueDateView: UIView {
   
   // MARK:- Property
@@ -37,6 +43,9 @@ final class CardDetailDueDateView: UIView {
     
     return button
   }()
+  
+  var delegate: CardDetailDueDateViewDelegate?
+  
   
   // MARK:- Initializer
   
@@ -101,5 +110,13 @@ private extension CardDetailDueDateView {
       editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
       editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
+  }
+}
+
+
+private extension CardDetailDueDateView {
+  
+  @objc func editButtonTapped() {
+    delegate?.cardDetailDueDateEditButtonTapped()
   }
 }

@@ -133,6 +133,7 @@ private extension CardDetailViewController {
     commentView.delegate = self
     scrollView.delegate = self
     stackView.setupContentViewDelegate(self)
+    stackView.setupDueDateViewDelegate(self)
     
     addKeyboardNotification()
     
@@ -311,6 +312,16 @@ extension CardDetailViewController: UIGestureRecognizerDelegate {
 extension CardDetailViewController: CardDetailContentViewDelegate {
   
   func cardDetailContentEditButtonTapped() {
+    
+  }
+}
+
+
+// MARK:- Extension CardDetailDueDateViewDelegate
+
+extension CardDetailViewController: CardDetailDueDateViewDelegate {
+  
+  func cardDetailDueDateEditButtonTapped() {
     
   }
 }
