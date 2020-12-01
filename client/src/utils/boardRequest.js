@@ -32,3 +32,15 @@ export const getDetailBoard = async (id) => {
 
     return response;
 };
+
+export const inviteUserIntoBoard = async (boardId, userId) => {
+    const config = {
+        url: `/api/board/${boardId}/invitation`,
+        method: 'POST',
+        data: { userId },
+    };
+
+    const response = await request(config);
+
+    return response;
+};
