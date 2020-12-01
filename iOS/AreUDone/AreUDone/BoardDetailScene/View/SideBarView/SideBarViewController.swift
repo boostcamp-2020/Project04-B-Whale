@@ -196,6 +196,9 @@ extension SideBarViewController: SideBarViewProtocol {
   }
 }
 
+
+// MARK: - Extension UIGestureRecognizerDelegate
+
 extension SideBarViewController: UIGestureRecognizerDelegate {
   
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
