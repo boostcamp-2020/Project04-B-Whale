@@ -56,8 +56,18 @@ private extension ContentInputViewController {
   
   func configure() {
     view.addSubview(contentTextView)
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(cancelButtonTapped))
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .done, target: self, action: nil)
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: "취소",
+      style: .done,
+      target: self,
+      action: #selector(cancelButtonTapped)
+    )
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      title: "저장",
+      style: .done,
+      target: self,
+      action: #selector(saveButtonTapped)
+    )
     
     configureContentTextView()
   }
@@ -90,6 +100,8 @@ private extension ContentInputViewController {
 }
 
 
+// MARK:- Extension obj-c
+
 private extension ContentInputViewController {
   
   @objc func cancelButtonTapped() {
@@ -97,10 +109,16 @@ private extension ContentInputViewController {
       alertType: .dataLoss,
       alertStyle: .actionSheet
     ) {
-      self.navigationController?.popViewController(animated: true)
+      self.contentInputCoordinator?.dismiss()
     }
     cancelAction: { }
     
     present(alert, animated: true, completion: nil)
+  }
+  
+  @objc func saveButtonTapped() {
+    guard let content = contentTextView.text else { return }
+    viewModel.updateContent(with: content)
+    contentInputCoordinator?.dismiss()
   }
 }

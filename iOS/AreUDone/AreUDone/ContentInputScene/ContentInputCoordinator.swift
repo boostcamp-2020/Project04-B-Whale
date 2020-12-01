@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import NetworkFramework
 
-final class ContentInputCoordinator: Coordinator {
+final class ContentInputCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
@@ -15,11 +16,15 @@ final class ContentInputCoordinator: Coordinator {
     return UIStoryboard.load(storyboard: .contentInput)
   }
   
+  var navigationController: UINavigationController?
+  
   private let content: String
+  private let router: Routable
   
   // MARK:- Initializer
   
-  init(content: String) {
+  init(content: String, router: Routable) {
+    self.router = router
     self.content = content
   }
   
@@ -31,8 +36,8 @@ final class ContentInputCoordinator: Coordinator {
             identifier: ContentInputViewController.identifier,
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
-              
-              let viewModel = ContentInputViewModel(content: self.content)
+              let service = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+              let viewModel = ContentInputViewModel(content: self.content, cardService: service)
               
               return ContentInputViewController(
                 coder: coder,
@@ -44,5 +49,13 @@ final class ContentInputCoordinator: Coordinator {
     contentInputViewController.contentInputCoordinator = self
     
     return contentInputViewController
+  }
+}
+
+
+extension ContentInputCoordinator {
+  
+  func dismiss() {
+    navigationController?.popViewController(animated: true)
   }
 }

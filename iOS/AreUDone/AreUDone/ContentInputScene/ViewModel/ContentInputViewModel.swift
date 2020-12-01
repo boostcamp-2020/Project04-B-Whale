@@ -11,23 +11,40 @@ protocol ContentInputViewModelProtocol {
   func bindingInitializeContent(handler: @escaping ((String) -> Void))
   
   func initailizeContent()
+  func updateContent(with content: String)
 }
 
 final class ContentInputViewModel: ContentInputViewModelProtocol {
   
+  // MARK:- Property
+  
   private var content: String
+  private let cardService: CardServiceProtocol
   
   private var initializeContentHandler: ((String) -> Void)?
   
-  init(content: String) {
+  
+  // MARK:- Initializer
+  
+  init(content: String, cardService: CardServiceProtocol) {
+    self.cardService = cardService
     self.content = content
   }
+  
+  
+  // MARK:- Method
   
   func initailizeContent() {
     initializeContentHandler?(content)
   }
+  
+  func updateContent(with content: String) {
+    // TODO:- Service를 통해 Card Content 업데이트
+  }
 }
 
+
+// MARK:- Extension bindUI
 
 extension ContentInputViewModel {
   

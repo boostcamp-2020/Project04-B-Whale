@@ -67,15 +67,14 @@ final class CardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     configure()
     bindUI()
-    
-    viewModel.fetchDetailCard()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+    viewModel.fetchDetailCard()
     navigationController?.navigationBar.isHidden = false
   }
 }

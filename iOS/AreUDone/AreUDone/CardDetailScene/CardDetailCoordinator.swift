@@ -18,7 +18,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
   }
   private let router: Routable
   private let id: Int
-  
+  private var contentInputCoordinator: NavigationCoordinator!
   
   // MARK:- Initializer
   
@@ -55,7 +55,8 @@ final class CardDetailCoordinator: NavigationCoordinator {
 extension CardDetailCoordinator {
   
   func showContentInput(with content: String) {
-    let contentInputCoordinator = ContentInputCoordinator(content: content)
+    contentInputCoordinator = ContentInputCoordinator(content: content, router: router)
+    contentInputCoordinator.navigationController = navigationController
     let contentInputViewController = contentInputCoordinator.start()
 
     navigationController?.pushViewController(
