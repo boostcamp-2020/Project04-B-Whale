@@ -174,6 +174,7 @@
 		BD2AA8BD2574D0A200EA8791 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8BC2574D0A200EA8791 /* CommentView.swift */; };
 		BD2AA8C22574D8AA00EA8791 /* CommentTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8C12574D8AA00EA8791 /* CommentTextField.swift */; };
 		BD2AA8CD2575230B00EA8791 /* CommentCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */; };
+		BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -338,6 +339,7 @@
 		BD2AA8BC2574D0A200EA8791 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		BD2AA8C12574D8AA00EA8791 /* CommentTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextField.swift; sourceTree = "<group>"; };
 		BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewHeader.swift; sourceTree = "<group>"; };
+		BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailLocationView.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -902,6 +904,7 @@
 				BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */,
 				BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */,
 				BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */,
+				BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -912,7 +915,7 @@
 				BD2AA7ED256F421E00EA8791 /* CardDetailStackView.swift */,
 				BD2AA7F2256F424800EA8791 /* CardDetailContentView.swift */,
 				BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */,
-				BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */,
+				BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */,
 			);
 			path = StackView;
 			sourceTree = "<group>";
@@ -1284,6 +1287,7 @@
 				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
+				BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,

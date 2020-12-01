@@ -12,6 +12,8 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
   func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void))
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void))
+  func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
+  func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
@@ -28,6 +30,8 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
   private var cardDetailCommentsViewHandler: (([CardDetail.Comment]) -> Void)?
   private var cardDetailNavigationBarTitleHandler: ((String) -> Void)?
+  private var cardDetailListTitleHandler: ((String) -> Void)?
+  private var cardDetailBoardTitleHandler: ((String) -> Void)?
   
   
   // MARK:- Initializer
@@ -49,6 +53,8 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     let dueDate = "2020-11-26"
     
     let title = "리스트 끝내기"
+    let listTitle = "TODO"
+    let boardTitle = "프로젝트1"
     
     let user1 = CardDetail.Comment.User(id: 0, name: "서명렬", profileImageUrl: "")
     let user2 = CardDetail.Comment.User(id: 1, name: "심영민", profileImageUrl: "")
@@ -69,6 +75,8 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardDetailDueDateViewHandler?(dueDate)
     cardDetailCommentsViewHandler?([comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8, comment9, comment10, comment11])
     cardDetailNavigationBarTitleHandler?(title)
+    cardDetailListTitleHandler?(listTitle)
+    cardDetailBoardTitleHandler?(boardTitle)
   }
   
   func addComment(with comment: String) {
@@ -95,5 +103,13 @@ extension CardDetailViewModel {
   
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void)) {
     cardDetailNavigationBarTitleHandler = handler
+  }
+  
+  func bindingCardDetailListTitle(handler: @escaping ((String) -> Void)) {
+    cardDetailListTitleHandler = handler
+  }
+  
+  func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void)) {
+    cardDetailBoardTitleHandler = handler
   }
 }

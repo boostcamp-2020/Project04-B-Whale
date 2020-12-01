@@ -19,7 +19,6 @@ final class CardDetailViewController: UIViewController {
   // MARK:- Property
   
   private let viewModel: CardDetailViewModelProtocol
-  private var observer: NSKeyValueObservation?
   private lazy var dataSource = configureDataSource()
   
   private lazy var scrollView: UIScrollView = {
@@ -153,7 +152,7 @@ private extension CardDetailViewController {
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
       stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
       stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -201,26 +200,12 @@ private extension CardDetailViewController {
 private extension CardDetailViewController {
   
   func bindUI() {
-    observationNavigationBar()
     bindingCardDetailContentView()
     bindingCardDetailDueDateView()
     bindingCardDetailCommentTableView()
     bindingCardDetailNavigationBarTitle()
-  }
-  
-  func observationNavigationBar() {
-    observer = navigationController?.navigationBar.observe(
-      \.bounds,
-      options: [.new, .initial],
-      changeHandler: { (navigationBar, changes) in
-        if let height = changes.newValue?.height {
-          if height > 44.0 {
-            //Large Title
-          } else {
-            //Small Title
-          }
-        }
-      })
+    bindingCardDetailListTitle()
+    bindingCardDetailBoardTitle()
   }
   
   func bindingCardDetailContentView() {
@@ -247,6 +232,18 @@ private extension CardDetailViewController {
     viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
 //      self?.title = title
       self?.navigationItem.title = title
+    }
+  }
+  
+  func bindingCardDetailListTitle() {
+    viewModel.bindingCardDetailListTitle { [weak self] title in
+      self?.stackView.updateListOfLocationView(with: title)
+    }
+  }
+  
+  func bindingCardDetailBoardTitle() {
+    viewModel.bindingCardDetailBoardTitle { [weak self] title in
+      self?.stackView.updateBoardOfLocationView(with: title)
     }
   }
 }
