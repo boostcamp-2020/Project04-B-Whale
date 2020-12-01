@@ -19,8 +19,15 @@ export const BoardRouter = () => {
 
     router.get('/:id', async (req, res) => {
         const boardService = BoardService.getInstance();
-        const detailBoard = await boardService.getDetailBoard(req.user.id, req.body.title);
-        res.status(204).json({ data: detailBoard });
+        const detailBoard = await boardService.getDetailBoard(req.params.id);
+        res.status(200).json(detailBoard);
     });
+
+    router.post('/:id/invitation', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.inviteUserIntoBoard(req.params.id, req.body.userId);
+        res.status(201);
+    });
+
     return router;
 };
