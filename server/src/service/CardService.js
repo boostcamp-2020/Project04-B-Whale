@@ -13,7 +13,7 @@ export class CardService extends BaseService {
     }
 
     @Transactional()
-    async getCardCountByPeriod(startDate, endDate, boardIds, userId) {
+    async getCardCountByPeriod({ startDate, endDate, boardIds, userId }) {
         let query = this.cardRepository
             .createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
