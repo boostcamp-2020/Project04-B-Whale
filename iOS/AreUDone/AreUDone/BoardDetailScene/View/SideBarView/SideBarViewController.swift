@@ -1,0 +1,196 @@
+//
+//  SideBarViewController.swift
+//  AreUDone
+//
+//  Created by a1111 on 2020/12/01.
+//
+
+import UIKit
+
+protocol SideBarViewProtocol {
+  
+  func start()
+  func configureTopHeight(to topHeight: CGFloat)
+  func view() -> UIView
+  func expandSideBar()
+}
+
+final class SideBarViewController: UIViewController {
+  
+  // MARK: - Enum
+  
+  enum SideBarState {
+    case collapsed
+    case expanded
+  }
+  
+  
+  // MARK: - Property
+  
+  private lazy var sideBarMinimumX: CGFloat = view.bounds.width * 0.25
+  private lazy var sideBarMaximumX: CGFloat = view.bounds.width
+  private lazy var sideBarLatestX: CGFloat = sideBarMaximumX // 제스쳐 start 시 갱신되는 가장 최신의 X 좌표
+  private var sideBarCurrentState: SideBarState = .collapsed
+  private lazy var sideBarView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    
+    return view
+  }()
+  
+  private let animationTime: TimeInterval = 0.2
+  private let maximumAlpha: CGFloat = 0.3
+  private var topHeight: CGFloat = 0
+  
+  
+  // MARK: - Life Cycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+}
+
+
+// MARK: - Extension Configure Method
+
+private extension SideBarViewController {
+  
+  func configure() {
+    view.addSubview(sideBarView)
+    
+    configureView()
+    configureSideBarView()
+  }
+  
+  func configureView() {
+    self.configureBackground(toAlpha: 0)
+    
+    view.isUserInteractionEnabled = false
+    
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewTapped))
+    view.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  func configureSideBarView() {
+    sideBarView.frame = CGRect(
+      x: view.bounds.width,
+      y: topHeight,
+      width: view.bounds.width - sideBarMinimumX + 5,
+      height: view.bounds.height - topHeight
+    )
+    
+    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(sideBarDragged))
+    sideBarView.addGestureRecognizer(panGestureRecognizer)
+  }
+  
+  func configureBackground(toAlpha alpha: CGFloat) {
+    self.view.backgroundColor = UIColor.black.withAlphaComponent(alpha)
+  }
+}
+
+
+// MARK: - Extension Drag Method
+
+private extension SideBarViewController {
+  
+  @objc func sideBarDragged(recognizer: UIPanGestureRecognizer) {
+    
+    let alpha = (1 - (sideBarView.frame.origin.x - sideBarMinimumX) / (sideBarMaximumX - sideBarMinimumX)) * maximumAlpha
+    configureBackground(toAlpha: alpha)
+    
+    switch recognizer.state {
+    case .began:
+      sideBarLatestX = sideBarView.frame.origin.x
+      
+    case .changed:
+      let translation = recognizer.translation(in: sideBarView)
+      let expectedX = sideBarLatestX + translation.x
+      
+      if (sideBarMinimumX...sideBarMaximumX) ~= expectedX {
+        sideBarView.frame.origin.x = expectedX
+      }
+      
+    case .ended:
+      let velocity = recognizer.velocity(in: sideBarView)
+      if velocity.x > 1000 {
+        animateSideBarView(to: .collapsed, withDuration: animationTime)
+        return
+      }
+      
+      // SideBarView X 좌표 기준 자동 확대 / 축소
+      let sideBarMidX = (sideBarMaximumX + sideBarMinimumX) / 2
+      
+      if (sideBarMinimumX...sideBarMidX) ~= sideBarView.frame.origin.x {
+        animateSideBarView(to: .expanded, withDuration: animationTime)
+      } else {
+        animateSideBarView(to: .collapsed, withDuration: animationTime)
+      }
+      
+    default:
+      break
+    }
+  }
+  
+  @objc func dimmerViewTapped() {
+    animateSideBarView(to: .collapsed, withDuration: animationTime)
+  }
+  
+  func animateSideBarView (to state: SideBarState, withDuration duration: TimeInterval, bounce: CGFloat = 0) {
+    
+    let frameAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut) {
+      switch state {
+      case .expanded:
+        self.sideBarView.frame.origin.x = self.sideBarMinimumX - 5
+        
+        self.view.isUserInteractionEnabled = true
+        self.configureBackground(toAlpha: self.maximumAlpha)
+        
+        self.sideBarCurrentState = .expanded
+        
+      case .collapsed:
+        self.sideBarView.frame.origin.x = self.sideBarMaximumX
+        
+        self.view.isUserInteractionEnabled = false
+        self.configureBackground(toAlpha: 0)
+        
+        self.sideBarCurrentState = .collapsed
+      }
+    }
+    
+    frameAnimator.addCompletion { _ in
+      switch state {
+      case .expanded:
+        UIViewPropertyAnimator(duration: 0.1, curve: .easeIn) {
+          self.sideBarView.frame.origin.x = self.sideBarMinimumX
+        }.startAnimation()
+      default:
+        break
+      }
+    }
+    
+    sideBarLatestX = sideBarView.frame.origin.x
+    frameAnimator.startAnimation()
+  }
+}
+
+
+// MARK: - Extension SideBarViewProtocol
+
+extension SideBarViewController: SideBarViewProtocol {
+  
+  func start() {
+    configure()
+  }
+  
+  func configureTopHeight(to topHeight: CGFloat) {
+    self.topHeight = topHeight
+  }
+  
+  func view() -> UIView {
+    return view
+  }
+  
+  func expandSideBar() {
+    animateSideBarView(to: .expanded, withDuration: animationTime)
+  }
+}
