@@ -53,6 +53,44 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async getDetailBoard(boardId) {
-        console.log('보드 상세 조회');
+        const boardDetail = await this.boardRepository
+            .createQueryBuilder('board')
+            .innerJoin('board.creator', 'creator')
+            .innerJoin('board.invitations', 'invitations')
+            .innerJoin('invitations.user', 'user')
+            .leftJoin('board.lists', 'lists')
+            .leftJoin('lists.cards', 'cards')
+            .leftJoin('cards.comments', 'comments')
+            .select([
+                'board',
+                'creator.id',
+                'creator.name',
+                'invitations',
+                'user.id',
+                'user.name',
+                'user.profileImageUrl',
+                'lists',
+                'cards.id',
+                'cards.title',
+                'cards.position',
+                'cards.dueDate',
+            ])
+            .loadRelationCountAndMap('cards.commentCount', 'cards.comments')
+            .where('board.id = :id', { id: boardId })
+            .getOne();
+
+        delete Object.assign(boardDetail, { invitedUsers: boardDetail.invitations }).invitations;
+        boardDetail.invitedUsers = boardDetail.invitedUsers.map((v) => v.user);
+        return boardDetail;
+    }
+
+    @Transactional()
+    async inviteUserIntoBoard(boardId, userId) {
+        const invitation = {
+            board: boardId,
+            user: userId,
+        };
+        const createInvitation = this.invitationRepository.create(invitation);
+        await this.invitationRepository.save(createInvitation);
     }
 }
