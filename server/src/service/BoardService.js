@@ -46,7 +46,7 @@ export class BoardService extends BaseService {
             .createQueryBuilder('board')
             .select('board.id', 'id')
             .leftJoin('board.invitations', 'invitation')
-            .where(`board.creator_id=:userId or user_id=:userId`, { userId })
+            .where(`board.creator_id=:userId or invitation.user_id=:userId`, { userId })
             .getRawMany();
 
         const boardIds = boards.map((ele) => ele.id);

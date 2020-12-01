@@ -18,7 +18,7 @@ export class CardService extends BaseService {
             .createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
             .addSelect('count(1)', 'count')
-            .innerJoin('card.list', 'list', 'list.board_id IN(:boardIds)', { boardIds })
+            .innerJoin('card.list', 'list', 'list.board_id IN(:...boardIds)', { boardIds })
             .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
             .groupBy(`date_format(card.due_date, '%Y-%m-%d')`);
 
