@@ -128,7 +128,6 @@ private extension CardDetailViewController {
   
   func configureView(){
     navigationController?.navigationBar.isHidden = false
-    navigationController?.navigationBar.prefersLargeTitles = true
     
     commentView.delegate = self
     scrollView.delegate = self
