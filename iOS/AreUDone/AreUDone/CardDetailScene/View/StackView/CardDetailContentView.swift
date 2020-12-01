@@ -92,15 +92,16 @@ private extension CardDetailContentView {
       contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
       contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-      contentLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
   }
   
   func configureEditButton() {
     NSLayoutConstraint.activate([
-      editButton.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: 5),
-      editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      editButton.centerYAnchor.constraint(equalTo: contentLabel.centerYAnchor)
+      editButton.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+      editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor),
+      editButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
+      editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
   }
 }

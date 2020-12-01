@@ -11,7 +11,7 @@ final class CardDetailDueDateView: UIView {
   
   // MARK:- Property
   
-  private lazy var titleLable: UILabel = {
+  private lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "마감 날짜"
@@ -68,7 +68,7 @@ private extension CardDetailDueDateView {
     layer.borderWidth = 0.3
     layer.borderColor = UIColor.lightGray.cgColor
     
-    addSubview(titleLable)
+    addSubview(titleLabel)
     addSubview(dueDateLabel)
     addSubview(editButton)
     
@@ -79,26 +79,27 @@ private extension CardDetailDueDateView {
   
   func configureTitleLabel() {
     NSLayoutConstraint.activate([
-      titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-      titleLable.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+      titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
   }
   
   func configureDueDateLabel() {
     NSLayoutConstraint.activate([
-      dueDateLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
+      dueDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
       dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-      dueDateLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
   }
   
   func configureEditButton() {
     NSLayoutConstraint.activate([
-      editButton.leadingAnchor.constraint(equalTo: dueDateLabel.trailingAnchor, constant: 5),
+      editButton.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+      editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor),
       editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      editButton.centerYAnchor.constraint(equalTo: dueDateLabel.centerYAnchor)
+      editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
   }
 }
