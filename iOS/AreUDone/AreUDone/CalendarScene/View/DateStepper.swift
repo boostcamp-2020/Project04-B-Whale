@@ -59,8 +59,8 @@ private extension DateStepper {
   func configure() {
     backgroundColor = .clear
     
-    addingGesture()
     nibSetup()
+    addingGesture()
   }
   
   func addingGesture() {
