@@ -132,6 +132,7 @@ private extension CardDetailViewController {
   func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
+    stackView.setupContentViewDelegate(self)
     
     addKeyboardNotification()
     
@@ -234,7 +235,6 @@ private extension CardDetailViewController {
   
   func bindingCardDetailNavigationBarTitle() {
     viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
-//      self?.title = title
       self?.navigationItem.title = title
     }
   }
@@ -302,5 +302,15 @@ extension CardDetailViewController: UIScrollViewDelegate {
 extension CardDetailViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view?.isDescendant(of: commentView) == true ? false : true
+  }
+}
+
+
+// MARK:- Extension CardDetailContentViewDelegate
+
+extension CardDetailViewController: CardDetailContentViewDelegate {
+  
+  func cardDetailContentEditButtonTapped() {
+    
   }
 }

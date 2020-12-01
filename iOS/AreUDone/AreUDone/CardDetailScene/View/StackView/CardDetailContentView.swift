@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol CardDetailContentViewDelegate {
+  
+  func cardDetailContentEditButtonTapped()
+}
+
 final class CardDetailContentView: UIView {
   
   // MARK:- Property
@@ -38,6 +43,7 @@ final class CardDetailContentView: UIView {
     return button
   }()
   
+  var delegate: CardDetailContentViewDelegate?
   
   // MARK:- Initializer
   
@@ -77,6 +83,7 @@ private extension CardDetailContentView {
     configureTitleLabel()
     configureContentLabel()
     configureEditButton()
+    addingTarget()
   }
   
   func configureTitleLabel() {
@@ -103,5 +110,19 @@ private extension CardDetailContentView {
       editButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
       editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
+  }
+  
+  func addingTarget() {
+    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CardDetailContentView {
+  
+  @objc func editButtonTapped() {
+    delegate?.cardDetailContentEditButtonTapped()
   }
 }
