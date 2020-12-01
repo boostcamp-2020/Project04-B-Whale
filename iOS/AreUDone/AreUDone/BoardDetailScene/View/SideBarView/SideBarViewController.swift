@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SideBarViewProtocol {
+protocol SideBarViewControllerProtocol {
   
   func start()
   func configureTopHeight(to topHeight: CGFloat)
@@ -31,8 +31,15 @@ final class SideBarViewController: UIViewController {
   private lazy var sideBarMaximumX: CGFloat = view.bounds.width
   private lazy var sideBarLatestX: CGFloat = sideBarMaximumX // 제스쳐 start 시 갱신되는 가장 최신의 X 좌표
   private var sideBarCurrentState: SideBarState = .collapsed
-  private lazy var sideBarView: UIView = {
-    let view = UIView()
+  private lazy var sideBarView: SideBarView = {
+    let frame = CGRect(
+      x: view.bounds.width,
+      y: topHeight,
+      width: view.bounds.width - sideBarMinimumX + 5,
+      height: view.bounds.height - topHeight
+    )
+    
+    let view = SideBarView(frame: frame)
     view.backgroundColor = .white
     
     return view
@@ -73,13 +80,6 @@ private extension SideBarViewController {
   }
   
   func configureSideBarView() {
-    sideBarView.frame = CGRect(
-      x: view.bounds.width,
-      y: topHeight,
-      width: view.bounds.width - sideBarMinimumX + 5,
-      height: view.bounds.height - topHeight
-    )
-    
     let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(sideBarDragged))
     sideBarView.addGestureRecognizer(panGestureRecognizer)
   }
@@ -177,7 +177,7 @@ private extension SideBarViewController {
 
 // MARK: - Extension SideBarViewProtocol
 
-extension SideBarViewController: SideBarViewProtocol {
+extension SideBarViewController: SideBarViewControllerProtocol {
   
   func start() {
     configure()

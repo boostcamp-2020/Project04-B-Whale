@@ -23,7 +23,7 @@ final class BoardDetailViewController: UIViewController {
   }()
   private var scrollOffset: CGFloat!
   
-  private let sideBarViewController: SideBarViewProtocol = {
+  private let sideBarViewController: SideBarViewControllerProtocol = {
     let controller = SideBarViewController()
     
     return controller
