@@ -71,6 +71,12 @@ final class CardDetailViewController: UIViewController {
     
     viewModel.fetchDetailCard()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    navigationController?.navigationBar.isHidden = false
+  }
 }
 
 
@@ -123,9 +129,7 @@ private extension CardDetailViewController {
     addEndEdittingGesture()
   }
   
-  func configureView(){
-    navigationController?.navigationBar.isHidden = false
-    
+  func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
     

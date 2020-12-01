@@ -13,6 +13,7 @@ final class CardDetailContentView: UIView {
   
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "내용"
     label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
     
@@ -21,11 +22,22 @@ final class CardDetailContentView: UIView {
   
   private lazy var contentLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.font = UIFont(name: "AmericanTypewriter", size: 15)
     
     return label
   }()
+  
+  private lazy var editButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "square.and.pencil")
+    button.setImage(image, for: .normal)
+    
+    return button
+  }()
+  
   
   // MARK:- Initializer
   
@@ -55,16 +67,19 @@ final class CardDetailContentView: UIView {
 private extension CardDetailContentView {
   
   func configure() {
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
+    
     addSubview(titleLabel)
     addSubview(contentLabel)
+    addSubview(editButton)
     
     configureTitleLabel()
     configureContentLabel()
+    configureEditButton()
   }
   
   func configureTitleLabel() {
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -73,13 +88,19 @@ private extension CardDetailContentView {
   }
   
   func configureContentLabel() {
-    contentLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+      contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+      contentLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    ])
+  }
+  
+  func configureEditButton() {
+    NSLayoutConstraint.activate([
+      editButton.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: 5),
+      editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
+      editButton.centerYAnchor.constraint(equalTo: contentLabel.centerYAnchor)
     ])
   }
 }
