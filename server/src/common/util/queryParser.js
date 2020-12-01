@@ -7,9 +7,7 @@ export const queryParser = (queryString) => {
     const result = {};
 
     queryString.split(separator).forEach((ele) => {
-        const keyValue = ele.split(delimiter);
-        const key = keyValue[0];
-        const value = keyValue[1];
+        const [key, value] = ele.split(delimiter);
 
         result[key] = value;
     });
