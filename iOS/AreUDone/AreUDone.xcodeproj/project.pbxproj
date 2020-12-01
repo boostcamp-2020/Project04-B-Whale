@@ -207,6 +207,8 @@
 		BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */; };
 		BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */; };
 		BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */; };
+		BDEA7BEB2576385000CF6B11 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */; };
+		BDEA7BF025763AB300CF6B11 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,6 +378,8 @@
 		BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputViewController.swift; sourceTree = "<group>"; };
 		BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputViewModel.swift; sourceTree = "<group>"; };
 		BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputCoordinator.swift; sourceTree = "<group>"; };
+		BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
+		BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -658,6 +662,7 @@
 				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
 				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
+				BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -939,6 +944,7 @@
 				336010D4256B891C009580A1 /* Date+.swift */,
 				336011FD256D5CFE009580A1 /* String+.swift */,
 				33638DFD2573C660006033CF /* UIEdgeInsets+.swift */,
+				BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1277,6 +1283,7 @@
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
+				BDEA7BEB2576385000CF6B11 /* AlertFactory.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
 				335AC52E256FE7C7006A5C4A /* ListCollectionViewCell.swift in Sources */,
@@ -1349,6 +1356,7 @@
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 				335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */,
+				BDEA7BF025763AB300CF6B11 /* UIAlertController+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
