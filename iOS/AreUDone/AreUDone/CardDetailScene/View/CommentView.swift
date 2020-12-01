@@ -33,7 +33,7 @@ final class CommentView: UIView {
     let button = UIButton()
     let image = UIImage(systemName: "paperplane.fill")
     button.setImage(image, for: .normal)
-    button.isEnabled = false
+    //    button.isEnabled = false
     
     return button
   }()
@@ -132,18 +132,21 @@ private extension CommentView {
 private extension CommentView {
   
   @objc func commentTextFieldEditting() {
-    if let comment = commentTextField.text {
-      commentSaveButton.isEnabled = comment != "" ? true : false
-    }
+    guard let comment = commentTextField.text else { return }
+    
+    commentSaveButton.isEnabled = !comment.isEmpty ? true : false
   }
   
   @objc func commentSaveButtonTapped() {
-    if let comment = commentTextField.text,
-       comment != "" {
-      delegate?.commentSaveButtonTapped(with: comment)
-      commentSaveButton.isEnabled = false
-      commentTextField.text = ""
-      commentTextField.resignFirstResponder()
-    }
+    guard
+      let comment = commentTextField.text,
+      !comment.isEmpty
+    else { return }
+    
+    delegate?.commentSaveButtonTapped(with: comment)
+    commentSaveButton.isEnabled = false
+    commentTextField.text = .none
+    commentTextField.resignFirstResponder()
+    
   }
 }
