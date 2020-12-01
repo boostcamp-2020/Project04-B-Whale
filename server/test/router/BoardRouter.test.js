@@ -129,4 +129,18 @@ describe('Board API Test', () => {
         // then
         expect(response.status).toEqual(201);
     });
+
+    test('GET /api/board/{boardId} 호출 시, 권한이 없으면 401을 리턴한다', async () => {
+        const token = 'Bearer fakeToken';
+        const boardId = 1;
+        const response = await request(app.httpServer).get(`/api/board/${boardId}`).set({
+            Authorization: token,
+            'Content-Type': 'application/json',
+        });
+        expect(response.status).toEqual(401);
+    });
+
+    // test('GET /api/board/{boardId} 호출 시, 유저 또는 보드 비존재 시 404 리턴.', async () => {});
+
+    // test('GET /api/board/{boardId}가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {});
 });
