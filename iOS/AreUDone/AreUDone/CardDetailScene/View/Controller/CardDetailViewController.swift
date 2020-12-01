@@ -256,11 +256,13 @@ private extension CardDetailViewController {
       let keybaordRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keybaordRectangle.height
       commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+      stackView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
   }
   
   @objc func keyboardWillHide(_ notification: Notification) {
     commentView.transform = .identity
+    stackView.transform = .identity
   }
   
   @objc func endEditing() {
