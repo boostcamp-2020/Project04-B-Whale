@@ -13,7 +13,6 @@ protocol CalendarViewModelProtocol {
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateDate(handler: @escaping (String) -> Void)
   
-  
   func fetchInitializeDailyCards()
   func fetchUpdateDailyCards()
   
@@ -40,26 +39,6 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   
   
   // MARK:- Method
-  
-  func bindingInitializeCardCollectionView(handler: @escaping (Cards) -> Void) {
-    initializeCardTableViewHandler = handler
-  }
-  
-  func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void) {
-    updateCardTableViewHandler = handler
-  }
-  
-  func fetchInitializeDailyCards() {
-    fetchDailyCards(with: initializeCardTableViewHandler)
-  }
-  
-  func fetchUpdateDailyCards() {
-    fetchDailyCards(with: updateCardTableViewHandler)
-  }
-  
-  func bindingUpdateDate(handler: @escaping (String) -> Void) {
-    updateDateHandler = handler
-  }
   
   func initializeDate() {
     let date = Date().toString()
@@ -93,3 +72,28 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   }
 }
 
+
+// MARK:- Extension BindUI
+
+extension CalendarViewModel {
+  
+  func bindingInitializeCardCollectionView(handler: @escaping (Cards) -> Void) {
+    initializeCardTableViewHandler = handler
+  }
+  
+  func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void) {
+    updateCardTableViewHandler = handler
+  }
+  
+  func fetchInitializeDailyCards() {
+    fetchDailyCards(with: initializeCardTableViewHandler)
+  }
+  
+  func fetchUpdateDailyCards() {
+    fetchDailyCards(with: updateCardTableViewHandler)
+  }
+  
+  func bindingUpdateDate(handler: @escaping (String) -> Void) {
+    updateDateHandler = handler
+  }
+}

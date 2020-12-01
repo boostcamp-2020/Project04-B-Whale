@@ -26,24 +26,6 @@ final class CardCollectionView: UICollectionView {
   
   // MARK:- Method
   
-  private func configure() {
-    let height = UIScreen.main.bounds.height * 0.15
-    contentInset = UIEdgeInsets(top: height, left: 0, bottom: height / 2, right: 0)
-    
-    register(CardCollectionViewCell.self)
-    configureFlowLayout()
-  }
-  
-  private func configureFlowLayout() {
-    let layout = UICollectionViewFlowLayout()
-    let height = UIScreen.main.bounds.height * 0.1
-    let width = UIScreen.main.bounds.width * 0.8
-    layout.itemSize = CGSize(width: width, height: height)
-    layout.minimumInteritemSpacing = 10
-    
-    collectionViewLayout = layout
-  }
-  
   func resetVisibleCellOffset(without cell: CardCollectionViewCell? = nil) {
     guard let cells = visibleCells as? [CardCollectionViewCell] else { return }
 
@@ -52,5 +34,29 @@ final class CardCollectionView: UICollectionView {
         $0.resetOffset()
       }
     })
+  }
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension CardCollectionView {
+  
+  func configure() {
+    let height = UIScreen.main.bounds.height * 0.15
+    contentInset = UIEdgeInsets(top: height, left: 0, bottom: height / 2, right: 0)
+    
+    register(CardCollectionViewCell.self)
+    configureFlowLayout()
+  }
+  
+  func configureFlowLayout() {
+    let layout = UICollectionViewFlowLayout()
+    let height = UIScreen.main.bounds.height * 0.1
+    let width = UIScreen.main.bounds.width * 0.8
+    layout.itemSize = CGSize(width: width, height: height)
+    layout.minimumInteritemSpacing = 10
+    
+    collectionViewLayout = layout
   }
 }
