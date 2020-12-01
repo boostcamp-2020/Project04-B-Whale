@@ -26,7 +26,7 @@ final class ListCollectionView: UICollectionView {
 
 // MARK: - Extension Configure Method
 
-extension ListCollectionView {
+private extension ListCollectionView {
   
   func configure() {
     register(ListCollectionViewCell.self)

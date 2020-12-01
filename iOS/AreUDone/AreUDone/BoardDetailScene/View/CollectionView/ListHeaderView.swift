@@ -57,6 +57,7 @@ private extension ListHeaderView {
   }
 
   func configureTitle() {
+    // TODO: 수정 예정
     titleLabel.text = "TODO"
     
     NSLayoutConstraint.activate([

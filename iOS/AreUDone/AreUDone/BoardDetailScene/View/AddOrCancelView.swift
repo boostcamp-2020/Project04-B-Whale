@@ -1,5 +1,5 @@
 //
-//  CustomTextField.swift
+//  AddOrCancelView.swift
 //  AreUDone
 //
 //  Created by a1111 on 2020/11/30.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol CustomTextFieldDelegate: AnyObject {
+protocol AddOrCancelViewDelegate: AnyObject {
   
   func addButtonTapped(text: String)
-  func closeButtonTapped()
+  func cancelButtonTapped()
 }
 
 final class AddOrCancelView: UIView {
   
   // MARK: - Property
   
-  weak var delegate: CustomTextFieldDelegate?
+  weak var delegate: AddOrCancelViewDelegate?
   
   private lazy var textFieldView: TextField = {
     let textField = TextField()
@@ -76,7 +76,7 @@ final class AddOrCancelView: UIView {
   }
   
   @objc private func cancelButtonTapped() {
-    delegate?.closeButtonTapped()
+    delegate?.cancelButtonTapped()
   }
 }
 

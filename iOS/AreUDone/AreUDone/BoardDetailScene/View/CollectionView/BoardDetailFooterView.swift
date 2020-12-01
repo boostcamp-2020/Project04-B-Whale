@@ -15,14 +15,21 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
+    button.layer.masksToBounds = true
+    button.layer.cornerRadius = 10
+    
+    button.setTitle("리스트 추가", for: .normal)
+    
     return button
   }()
   
-  private lazy var titleInputView: CustomTextField = {
-    let view = CustomTextField()
+  private lazy var titleInputView: AddOrCancelView = {
+    let view = AddOrCancelView()
     view.delegate = self
     view.translatesAutoresizingMaskIntoConstraints = false
     
+    view.alpha = 0
+
     return view
   }()
   var addHandler: ((String) -> Void)?
@@ -57,10 +64,6 @@ private extension BoardDetailFooterView {
   }
   
   func configureButton() {
-    button.layer.masksToBounds = true
-    button.layer.cornerRadius = 10
-    
-    button.setTitle("리스트 추가", for: .normal)
     button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
     NSLayoutConstraint.activate([
@@ -84,8 +87,6 @@ private extension BoardDetailFooterView {
       titleInputView.trailingAnchor.constraint(equalTo: button.trailingAnchor),
       titleInputView.heightAnchor.constraint(equalToConstant: button.frame.height * 2)
     ])
-    
-    titleInputView.alpha = 0
   }
   
   @objc func buttonTapped() {
@@ -97,19 +98,20 @@ private extension BoardDetailFooterView {
         self.titleInputView.alpha = 1
       }, completion: nil)
   }
+  
 }
 
 
 // MARK: - Extension CustomTextFieldDelegate
 
-extension BoardDetailFooterView: CustomTextFieldDelegate {
+extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
   func addButtonTapped(text: String) {
     addHandler?(text)
-    closeButtonTapped()
+    cancelButtonTapped()
   }
   
-  func closeButtonTapped() {
+  func cancelButtonTapped() {
     self.titleInputView.alpha = 0
     
     UIView.transition(
