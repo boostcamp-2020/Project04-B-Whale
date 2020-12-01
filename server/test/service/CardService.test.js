@@ -90,7 +90,7 @@ describe('Card Service Test', () => {
         const cardCountList = await cardService.getCardCountByPeriod({
             startDate: '2020-07-01',
             endDate: '2020-07-31',
-            boardIds: [createBoard1.id],
+            userId: createUser1.id,
         });
 
         // then
@@ -100,7 +100,7 @@ describe('Card Service Test', () => {
         expect(data3).toEqual(cardData3);
     });
 
-    test('정상적인 사용자가 startDate, endDate 기간동안의 member에 속한 카드 조회', async () => {
+    test('로그인 중인 정상적인 사용자가 startDate, endDate 기간동안의 member에 속한 카드 조회', async () => {
         // given
         const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
 
@@ -149,8 +149,8 @@ describe('Card Service Test', () => {
         const cardCountList = await cardService.getCardCountByPeriod({
             startDate: '2020-07-01',
             endDate: '2020-07-31',
-            boardIds: [createBoard1.id],
             userId: createUser1.id,
+            member: 'me',
         });
 
         // then

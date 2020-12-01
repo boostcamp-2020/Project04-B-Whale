@@ -1,5 +1,6 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
+import { BoardService } from './BoardService';
 
 export class CardService extends BaseService {
     static instance = null;
@@ -12,8 +13,7 @@ export class CardService extends BaseService {
         return CardService.instance;
     }
 
-    @Transactional()
-    async getCardCountByPeriod({ startDate, endDate, boardIds, userId }) {
+    async getCardCounts({ startDate, endDate, boardIds, userId }) {
         let query = this.cardRepository
             .createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
@@ -28,5 +28,20 @@ export class CardService extends BaseService {
 
         const cardCountList = await query.getRawMany();
         return cardCountList;
+    }
+
+    @Transactional()
+    async getCardCountByPeriod({ startDate, endDate, userId, member }) {
+        const boardService = BoardService.getInstance();
+
+        const boardIds = await boardService.getBoardIdsByUserId(userId);
+        const config = { startDate, endDate, boardIds };
+
+        if (member === 'me') {
+            config.userId = userId;
+        }
+
+        const cardCounts = await this.getCardCounts(config);
+        return cardCounts;
     }
 }
