@@ -35,7 +35,7 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
 }
 
 
-// MARK: - Extension Configure
+// MARK: - Extension Configure Method
 
 private extension ListHeaderView {
 

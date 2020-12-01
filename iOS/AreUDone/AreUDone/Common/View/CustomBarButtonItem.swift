@@ -37,7 +37,7 @@ final class CustomBarButtonItem: UIBarButtonItem {
   }
 }
 
-// MARK: - Extension Configure
+// MARK: - Extension Configure Method
 
 private extension CustomBarButtonItem {
   

@@ -42,7 +42,7 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
 }
 
 
-// MARK: - Extension Configure
+// MARK: - Extension Configure Method
 
 private extension ListCollectionViewCell {
   

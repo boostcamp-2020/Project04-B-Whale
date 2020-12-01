@@ -24,7 +24,7 @@ final class ListCollectionView: UICollectionView {
   }
 }
 
-// MARK: - Extension Configure
+// MARK: - Extension Configure Method
 
 extension ListCollectionView {
   

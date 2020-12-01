@@ -80,7 +80,7 @@ final class CustomTextField: UIView {
 }
 
 
-// MARK: - Extension Configure
+// MARK: - Extension Configure Method
 
 private extension CustomTextField {
   
