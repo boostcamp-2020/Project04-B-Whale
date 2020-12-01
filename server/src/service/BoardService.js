@@ -41,10 +41,11 @@ export class BoardService extends BaseService {
     }
 
     @Transactional()
-    async createBoard(userId, title) {
+    async createBoard({ userId, title, color }) {
         const board = {
             creator: userId,
             title,
+            color,
         };
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
