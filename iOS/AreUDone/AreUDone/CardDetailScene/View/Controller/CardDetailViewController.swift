@@ -70,9 +70,7 @@ final class CardDetailViewController: UIViewController {
     configure()
     bindUI()
     
-    DispatchQueue.main.async {
-      self.viewModel.fetchDetailCard()
-    }
+    viewModel.fetchDetailCard()
   }
 }
 
@@ -207,6 +205,7 @@ private extension CardDetailViewController {
     bindingCardDetailContentView()
     bindingCardDetailDueDateView()
     bindingCardDetailCommentTableView()
+    bindingCardDetailNavigationBarTitle()
   }
   
   func observationNavigationBar() {
@@ -241,6 +240,13 @@ private extension CardDetailViewController {
       DispatchQueue.main.async {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
       }
+    }
+  }
+  
+  func bindingCardDetailNavigationBarTitle() {
+    viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
+//      self?.title = title
+      self?.navigationItem.title = title
     }
   }
 }
