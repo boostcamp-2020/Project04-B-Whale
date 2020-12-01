@@ -41,7 +41,7 @@ describe('JwtUtil.validateAccessToken() Test', () => {
 
         try {
             // when
-            const decoded = await jwtUtil.validateAccessToken(token);
+            await jwtUtil.validateAccessToken(token);
             fail();
         } catch (error) {
             // then

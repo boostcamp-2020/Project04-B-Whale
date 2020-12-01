@@ -22,5 +22,6 @@ module.exports = {
         'import/no-default-export': 'error',
         'import/no-cycle': 'off',
         'class-methods-use-this': 'off',
+        'no-unused-vars': 'warn',
     },
 };
