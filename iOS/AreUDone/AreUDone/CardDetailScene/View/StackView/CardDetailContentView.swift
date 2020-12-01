@@ -9,7 +9,7 @@ import UIKit
 
 protocol CardDetailContentViewDelegate {
   
-  func cardDetailContentEditButtonTapped()
+  func cardDetailContentEditButtonTapped(with content: String)
 }
 
 final class CardDetailContentView: UIView {
@@ -123,6 +123,7 @@ private extension CardDetailContentView {
 private extension CardDetailContentView {
   
   @objc func editButtonTapped() {
-    delegate?.cardDetailContentEditButtonTapped()
+    guard let content = contentLabel.text else { return }
+    delegate?.cardDetailContentEditButtonTapped(with: content)
   }
 }

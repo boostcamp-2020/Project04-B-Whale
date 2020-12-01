@@ -203,6 +203,10 @@
 		BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E2B256B9215002308B9 /* UITableView+.swift */; };
 		BDE27E32256B9342002308B9 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E31256B9342002308B9 /* Reusable.swift */; };
 		BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E36256B934B002308B9 /* NibLoadable.swift */; };
+		BDEA7BD32576244900CF6B11 /* ContentInput.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDEA7BD22576244900CF6B11 /* ContentInput.storyboard */; };
+		BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */; };
+		BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */; };
+		BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -368,6 +372,10 @@
 		BDE27E2B256B9215002308B9 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		BDE27E31256B9342002308B9 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		BDE27E36256B934B002308B9 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		BDEA7BD22576244900CF6B11 /* ContentInput.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContentInput.storyboard; sourceTree = "<group>"; };
+		BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputViewController.swift; sourceTree = "<group>"; };
+		BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputViewModel.swift; sourceTree = "<group>"; };
+		BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -721,6 +729,7 @@
 				33EE016B2568EC48003D3221 /* CalendarScene */,
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 				BD2AA79D256DF87D00EA8791 /* CardDetailScene */,
+				BDEA7BCE257623EA00CF6B11 /* ContentInputScene */,
 				33601227256E4FEF009580A1 /* BoardListScene */,
 				335AC4ED256F8ABE006A5C4A /* BoardDetailScene */,
 			);
@@ -1004,6 +1013,49 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		BDEA7BCE257623EA00CF6B11 /* ContentInputScene */ = {
+			isa = PBXGroup;
+			children = (
+				BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */,
+				BDEA7BCF2576240F00CF6B11 /* Resources */,
+				BDEA7BD02576241D00CF6B11 /* View */,
+				BDEA7BDC2576256400CF6B11 /* ViewModel */,
+			);
+			path = ContentInputScene;
+			sourceTree = "<group>";
+		};
+		BDEA7BCF2576240F00CF6B11 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BDEA7BD22576244900CF6B11 /* ContentInput.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BDEA7BD02576241D00CF6B11 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BDEA7BD12576242900CF6B11 /* Controller */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDEA7BD12576242900CF6B11 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BDEA7BDC2576256400CF6B11 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1159,6 +1211,7 @@
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
+				BDEA7BD32576244900CF6B11 /* ContentInput.storyboard in Resources */,
 				BD2AA7B0256DFA5800EA8791 /* CardDetail.storyboard in Resources */,
 				33EE018A2568F47D003D3221 /* Calendar.storyboard in Resources */,
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
@@ -1212,10 +1265,12 @@
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
+				BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
 				BD2AA80A256F8B5900EA8791 /* CommentCollectionView.swift in Sources */,
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
+				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
@@ -1287,6 +1342,7 @@
 				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
+				BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */,
 				BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */,

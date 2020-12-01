@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CommentSection: CaseIterable {
+enum CommentSection {
   case main
 }
 
@@ -19,6 +19,7 @@ final class CardDetailViewController: UIViewController {
   // MARK:- Property
   
   private let viewModel: CardDetailViewModelProtocol
+  weak var cardDetailCoordinator: CardDetailCoordinator?
   private lazy var dataSource = configureDataSource()
   
   private lazy var scrollView: UIScrollView = {
@@ -311,8 +312,8 @@ extension CardDetailViewController: UIGestureRecognizerDelegate {
 
 extension CardDetailViewController: CardDetailContentViewDelegate {
   
-  func cardDetailContentEditButtonTapped() {
-    
+  func cardDetailContentEditButtonTapped(with content: String) {
+    cardDetailCoordinator?.showContentInput(with: content)
   }
 }
 
