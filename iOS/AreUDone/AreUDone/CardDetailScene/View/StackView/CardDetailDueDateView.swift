@@ -9,7 +9,7 @@ import UIKit
 
 protocol CardDetailDueDateViewDelegate {
   
-  func cardDetailDueDateEditButtonTapped()
+  func cardDetailDueDateEditButtonTapped(with dateString: String)
 }
 
 
@@ -29,7 +29,6 @@ final class CardDetailDueDateView: UIView {
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
     label.font = UIFont(name: "AmericanTypewriter", size: 15)
     
     return label
@@ -84,6 +83,7 @@ private extension CardDetailDueDateView {
     configureTitleLabel()
     configureDueDateLabel()
     configureEditButton()
+    addingTarget()
   }
   
   func configureTitleLabel() {
@@ -111,12 +111,17 @@ private extension CardDetailDueDateView {
       editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
   }
+  
+  func addingTarget() {
+    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+  }
 }
 
 
 private extension CardDetailDueDateView {
   
   @objc func editButtonTapped() {
-    delegate?.cardDetailDueDateEditButtonTapped()
+    guard let dateString = dueDateLabel.text else { return }
+    delegate?.cardDetailDueDateEditButtonTapped(with: dateString)
   }
 }

@@ -19,6 +19,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
   private let router: Routable
   private let id: Int
   private var contentInputCoordinator: NavigationCoordinator!
+  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
   
   // MARK:- Initializer
   
@@ -63,5 +64,18 @@ extension CardDetailCoordinator {
       contentInputViewController,
       animated: true
     )
+  }
+  
+  func showCalendar(with stringToDate: String) {
+    let date = stringToDate.toDateFormat(with: .dash)
+    calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: date)
+    calendarPickerCoordinator.navigationController = navigationController
+    
+    guard let calendarPickerViewController = calendarPickerCoordinator.start()
+            as? CalendarPickerViewController
+    else { return }
+    
+//    calendarPickerViewController.delegate = delegate
+    navigationController?.present(calendarPickerViewController, animated: true)
   }
 }

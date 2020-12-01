@@ -321,7 +321,7 @@ extension CardDetailViewController: CardDetailContentViewDelegate {
 
 extension CardDetailViewController: CardDetailDueDateViewDelegate {
   
-  func cardDetailDueDateEditButtonTapped() {
-    
+  func cardDetailDueDateEditButtonTapped(with dateString: String) {
+    cardDetailCoordinator?.showCalendar(with: dateString)
   }
 }

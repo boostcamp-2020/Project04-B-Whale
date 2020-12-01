@@ -11,7 +11,7 @@ import KeychainFramework
 
 enum CardEndPoint {
   
-  case fetchDailyCards(date: String)
+  case fetchDailyCards(dateString: String)
 }
 
 extension CardEndPoint: EndPointable {
@@ -29,8 +29,8 @@ extension CardEndPoint: EndPointable {
   
   var query: HTTPQuery? {
     switch self {
-    case .fetchDailyCards(let date): // ?q=date:2020-01-01
-      return ["q": "date:\(date)"]
+    case .fetchDailyCards(let dateString): // ?q=date:2020-01-01
+      return ["q": "date:\(dateString)"]
     }
   }
   
