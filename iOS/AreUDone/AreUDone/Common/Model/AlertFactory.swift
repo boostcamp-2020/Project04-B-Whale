@@ -32,9 +32,9 @@ class AlertFactory {
 
 struct DataLossAlert: AlertProtocol {
   
-  var title: String? { return "경고!!" }
-  var message: String? { return "내용이 저장되지 않습니다." }
-  var actionTitle: String? { return "확인" }
+  var title: String? { return "변경사항이 저장되지 않습니다." }
+  var message: String? { return nil }
+  var actionTitle: String? { return "버리기" }
   var cancelTitle: String? { return "취소" }
   var style: UIAlertController.Style
 }

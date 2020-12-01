@@ -10,7 +10,7 @@ import UIKit
 extension UIAlertController {
   
   var defaultCancelButtonTitle: String {
-    return "취소"
+    return "확인"
   }
   
   convenience init(alertType: AlertType,
@@ -21,7 +21,7 @@ extension UIAlertController {
     
     self.init(title: alert.title,
               message: alert.message,
-              preferredStyle: .alert)
+              preferredStyle: alertStyle)
     
     let cancelButtonTitle = alert.cancelTitle ?? defaultCancelButtonTitle
     let cancelAlertAction = UIAlertAction(
@@ -30,12 +30,13 @@ extension UIAlertController {
     ) { _ in
       cancelAction?()
     }
+    
     self.addAction(cancelAlertAction)
     
     if let confirmActionTitle = alert.actionTitle {
       let confirmAlertAction = UIAlertAction(
         title: confirmActionTitle,
-        style: .default
+        style: .destructive
       ) { _ in
         confirmAction?()
       }

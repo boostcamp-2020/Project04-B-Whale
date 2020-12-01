@@ -93,6 +93,14 @@ private extension ContentInputViewController {
 private extension ContentInputViewController {
   
   @objc func cancelButtonTapped() {
-    navigationController?.popViewController(animated: true)
+    let alert = UIAlertController(
+      alertType: .dataLoss,
+      alertStyle: .actionSheet
+    ) {
+      self.navigationController?.popViewController(animated: true)
+    }
+    cancelAction: { }
+    
+    present(alert, animated: true, completion: nil)
   }
 }
