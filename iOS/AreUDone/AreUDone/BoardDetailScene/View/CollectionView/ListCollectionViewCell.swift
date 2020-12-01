@@ -11,7 +11,13 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK: - Property
   
-  private let titleLabel = UILabel()
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    return titleLabel
+  }()
+  
   
   // MARK: - Initializer
   
@@ -30,11 +36,24 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  private func configure() {
+  func update(with card: List.Card) {
+    titleLabel.text = card.title
+  }
+}
+
+
+// MARK: - Extension Configure Method
+
+private extension ListCollectionViewCell {
+  
+  func configure() {
     addSubview(titleLabel)
     
+    configureView()
     configureTitle()
-    
+  }
+  
+  func configureView() {
     backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 1)
     layer.cornerRadius = 5
     
@@ -44,16 +63,10 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
     layer.shadowOpacity = 0.3
   }
   
-  private func configureTitle() {
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+  func configureTitle() {
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
-  }
-  
-  func update(with card: List.Card) {
-    titleLabel.text = card.title
   }
 }
