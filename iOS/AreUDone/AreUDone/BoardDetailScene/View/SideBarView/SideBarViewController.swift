@@ -68,6 +68,7 @@ private extension SideBarViewController {
     view.isUserInteractionEnabled = false
     
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewTapped))
+    tapGestureRecognizer.delegate = self
     view.addGestureRecognizer(tapGestureRecognizer)
   }
   
@@ -192,5 +193,12 @@ extension SideBarViewController: SideBarViewProtocol {
   
   func expandSideBar() {
     animateSideBarView(to: .expanded, withDuration: animationTime)
+  }
+}
+
+extension SideBarViewController: UIGestureRecognizerDelegate {
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return touch.view?.isDescendant(of: sideBarView) == true ? false : true
   }
 }
