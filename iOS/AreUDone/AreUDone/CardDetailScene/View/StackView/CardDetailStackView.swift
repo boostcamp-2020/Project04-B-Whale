@@ -23,8 +23,8 @@ final class CardDetailStackView: UIStackView {
     return view
   }()
   
-  // MARK:- Initializer
   
+  // MARK:- Initializer
   
   required init(coder: NSCoder) {
     super.init(coder: coder)
@@ -37,6 +37,9 @@ final class CardDetailStackView: UIStackView {
     
     configure()
   }
+  
+  
+  // MARK:- Method
   
   func updateContentView(with content: String) {
     cardDetailContentView.update(content: content)

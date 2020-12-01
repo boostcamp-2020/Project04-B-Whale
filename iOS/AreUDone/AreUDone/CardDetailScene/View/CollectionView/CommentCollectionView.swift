@@ -9,6 +9,8 @@ import UIKit
 
 final class CommentCollectionView: UICollectionView {
 
+  // MARK:- Property
+  
   override var contentSize:CGSize {
     didSet {
       invalidateIntrinsicContentSize()
@@ -21,6 +23,8 @@ final class CommentCollectionView: UICollectionView {
   }
   
   
+  // MARK:- Initializer
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -32,24 +36,33 @@ final class CommentCollectionView: UICollectionView {
     
     configure()
   }
+}
 
-  private func configure() {
+
+// MARK:- Extension Configure Method
+
+private extension CommentCollectionView {
+  
+  func configure() {
     backgroundColor = .white
     isScrollEnabled = false
+    
     configureFlowLayout()
     registerCell()
   }
   
-  private func configureFlowLayout() {
+  func configureFlowLayout() {
     let layout = UICollectionViewFlowLayout()
     let height = UIScreen.main.bounds.height * 0.1
     let width = UIScreen.main.bounds.width * 0.9
     layout.estimatedItemSize = CGSize(width: width, height: height)
     layout.minimumInteritemSpacing = 10
+    layout.headerReferenceSize = CGSize(width: width, height: height / 2)
     collectionViewLayout = layout
   }
   
-  private func registerCell() {
+  func registerCell() {
+    registerHeaderView(CommentCollectionViewHeader.self)
     register(CommentCollectionViewCell.self)
   }
 }

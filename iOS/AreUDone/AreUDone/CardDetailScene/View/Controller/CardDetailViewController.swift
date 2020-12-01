@@ -25,6 +25,8 @@ final class CardDetailViewController: UIViewController {
   private lazy var scrollView: UIScrollView = {
     let view = UIScrollView()
     view.showsVerticalScrollIndicator = false
+    view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    
     return view
   }()
   
@@ -39,6 +41,12 @@ final class CardDetailViewController: UIViewController {
     let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
     
     return collectionView
+  }()
+  
+  private lazy var commentView: CommentView = {
+    let view = CommentView()
+    
+    return view
   }()
   
   
@@ -69,7 +77,7 @@ final class CardDetailViewController: UIViewController {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension CollectionView DataSource
 
 private extension CardDetailViewController {
   
@@ -84,12 +92,18 @@ private extension CardDetailViewController {
       return cell
     }
     
+    dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+      let header: CommentCollectionViewHeader = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
+      
+      return header
+    }
+    
     return dataSource
   }
   
   func updateSnapshot(with item: [CardDetail.Comment], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-
+    
     snapshot.appendSections([.main])
     snapshot.appendItems(item, toSection: .main)
     
@@ -108,13 +122,20 @@ private extension CardDetailViewController {
     configureView()
     configureScrollView()
     configureStackView()
+    configureCommentView()
+    addEndEdittingGesture()
   }
   
   func configureView(){
     navigationController?.navigationBar.isHidden = false
-    navigationController?.navigationBar.prefersLargeTitles = true
+    
+    commentView.delegate = self
+    scrollView.delegate = self
+    
+    addKeyboardNotification()
     
     view.addSubview(scrollView)
+    view.addSubview(commentView)
     scrollView.addSubview(stackView)
     stackView.addArrangedSubview(commentCollectionView)
   }
@@ -141,6 +162,39 @@ private extension CardDetailViewController {
       stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
     ])
   }
+  
+  func configureCommentView() {
+    commentView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      commentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      commentView.heightAnchor.constraint(equalToConstant: 60),
+      commentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      commentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    ])
+  }
+  
+  func addEndEdittingGesture() {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+    tapGestureRecognizer.delegate = self
+    view.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  func addKeyboardNotification() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
+  }
 }
 
 
@@ -148,14 +202,14 @@ private extension CardDetailViewController {
 
 private extension CardDetailViewController {
   
-  private func bindUI() {
+  func bindUI() {
     observationNavigationBar()
     bindingCardDetailContentView()
     bindingCardDetailDueDateView()
     bindingCardDetailCommentTableView()
   }
   
-  private func observationNavigationBar() {
+  func observationNavigationBar() {
     observer = navigationController?.navigationBar.observe(
       \.bounds,
       options: [.new, .initial],
@@ -170,23 +224,76 @@ private extension CardDetailViewController {
       })
   }
   
-  private func bindingCardDetailContentView() {
+  func bindingCardDetailContentView() {
     viewModel.bindingCardDetailContentView { [weak self] content in
       self?.stackView.updateContentView(with: content)
     }
   }
   
-  private func bindingCardDetailDueDateView() {
+  func bindingCardDetailDueDateView() {
     viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
       self?.stackView.updateDueDateView(with: dueDate)
     }
   }
   
-  private func bindingCardDetailCommentTableView() {
+  func bindingCardDetailCommentTableView() {
     viewModel.bindingCardDetailCommentTableView { [weak self] comments in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
       }
     }
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CardDetailViewController {
+  
+  @objc func keyboardWillShow(_ notification: Notification) {
+    if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+      let keybaordRectangle = keyboardFrame.cgRectValue
+      let keyboardHeight = keybaordRectangle.height
+      commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+      stackView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+    }
+  }
+  
+  @objc func keyboardWillHide(_ notification: Notification) {
+    commentView.transform = .identity
+    stackView.transform = .identity
+  }
+  
+  @objc func endEditing() {
+    view.endEditing(true)
+  }
+}
+
+
+// MARK:- Extension CommentViewDelegate
+
+extension CardDetailViewController: CommentViewDelegate {
+  
+  func commentSaveButtonTapped(with comment: String) {
+    viewModel.addComment(with: comment)
+  }
+}
+
+
+// MARK:- Extension ScrollViewDelegate
+
+extension CardDetailViewController: UIScrollViewDelegate {
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    view.endEditing(true)
+  }
+}
+
+
+// MARK:- Extension UIGestureRecognizerDelegate
+
+extension CardDetailViewController: UIGestureRecognizerDelegate {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return touch.view?.isDescendant(of: commentView) == true ? false : true
   }
 }

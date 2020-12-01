@@ -47,10 +47,10 @@ final class CardDetailContentView: UIView {
   func update(content: String) {
     contentLabel.text = content
   }
-  
-  
 }
 
+
+// MARK:- Extension Configure Method
 
 private extension CardDetailContentView {
   

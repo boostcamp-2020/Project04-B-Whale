@@ -45,6 +45,9 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
       return width
   }()
   
+  
+  // MARK:- Initializer
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
@@ -56,6 +59,9 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     
     configure()
   }
+  
+  
+  // MARK:- Method
   
   override func systemLayoutSizeFitting(
     _ targetSize: CGSize,
