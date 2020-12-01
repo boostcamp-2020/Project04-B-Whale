@@ -46,6 +46,7 @@ private extension CommentCollectionView {
   func configure() {
     backgroundColor = .white
     isScrollEnabled = false
+    
     configureFlowLayout()
     registerCell()
   }
@@ -56,10 +57,12 @@ private extension CommentCollectionView {
     let width = UIScreen.main.bounds.width * 0.9
     layout.estimatedItemSize = CGSize(width: width, height: height)
     layout.minimumInteritemSpacing = 10
+    layout.headerReferenceSize = CGSize(width: width, height: height / 2)
     collectionViewLayout = layout
   }
   
   func registerCell() {
+    registerHeaderView(CommentCollectionViewHeader.self)
     register(CommentCollectionViewCell.self)
   }
 }

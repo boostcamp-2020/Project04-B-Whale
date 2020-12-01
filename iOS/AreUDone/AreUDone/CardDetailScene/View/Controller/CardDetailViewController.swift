@@ -92,6 +92,12 @@ private extension CardDetailViewController {
       return cell
     }
     
+    dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+      let header: CommentCollectionViewHeader = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
+      
+      return header
+    }
+    
     return dataSource
   }
   
@@ -250,13 +256,11 @@ private extension CardDetailViewController {
       let keybaordRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keybaordRectangle.height
       commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-      scrollView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
   }
   
   @objc func keyboardWillHide(_ notification: Notification) {
     commentView.transform = .identity
-    scrollView.transform = .identity
   }
   
   @objc func endEditing() {
