@@ -144,7 +144,41 @@ describe('Board API Test', () => {
         expect(response.status).toEqual(401);
     });
 
-    // test('GET /api/board/{boardId} 호출 시, 유저 또는 보드 비존재 시 404 리턴.', async () => {});
+    // test('GET /api/board/{boardId} 호출 시, 유저 또는 보드 비존재 시 404 리턴.', async () => {
+    //     const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+    //     const userRepository = getRepository(User);
+    //     const createUser = userRepository.create(user);
+    //     const createdUser = await userRepository.save(createUser);
 
-    // test('GET /api/board/{boardId}가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {});
+    //     const token = await jwtUtil.generateAccessToken({
+    //         userId: createdUser.id,
+    //         username: createdUser.name,
+    //     });
+    //     const boardId = null;
+    //     const response = await request(app.httpServer).get(`/api/board/${1}`).set({
+    //         Authorization: token,
+    //         'Content-Type': 'application/json',
+    //     });
+
+    //     // expect(response.status).toEqual(404);
+    // });
+
+    test('GET /api/board/{boardId}가 정상적으로 호출되었을 때, 200을 리턴한다.', async () => {
+        const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+        const userRepository = getRepository(User);
+        const createUser = userRepository.create(user);
+        const createdUser = await userRepository.save(createUser);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createdUser.id,
+            username: createdUser.name,
+        });
+
+        const boardId = 1;
+        const response = await request(app.httpServer).get(`/api/board/${boardId}`).set({
+            Authorization: token,
+            'Content-Type': 'application/json',
+        });
+        expect(response.status).toEqual(200);
+    });
 });
