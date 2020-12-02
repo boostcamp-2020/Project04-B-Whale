@@ -36,7 +36,7 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  func update(with card: List.Card) {
+  func update(with card: Card) {
     titleLabel.text = card.title
   }
 }

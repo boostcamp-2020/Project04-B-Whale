@@ -45,7 +45,7 @@ class BoardService: BoardServiceProtocol {
   }
   
   func editBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
-    router.request(route: BoardEndPoint.editBoard(boardId: boardId, title: title)) { result in
+    router.request(route: BoardEndPoint.updateBoard(boardId: boardId, title: title)) { result in
       completionHandler(result)
     }
   }
