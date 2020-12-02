@@ -57,8 +57,8 @@ export class BoardService extends BaseService {
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
             .innerJoin('board.creator', 'creator')
-            .innerJoin('board.invitations', 'invitations')
-            .innerJoin('invitations.user', 'user')
+            .leftJoin('board.invitations', 'invitations')
+            .leftJoin('invitations.user', 'user')
             .leftJoin('board.lists', 'lists')
             .leftJoin('lists.cards', 'cards')
             .leftJoin('cards.comments', 'comments')
@@ -80,8 +80,11 @@ export class BoardService extends BaseService {
             .where('board.id = :id', { id: boardId })
             .getOne();
 
-        delete Object.assign(boardDetail, { invitedUsers: boardDetail.invitations }).invitations;
-        boardDetail.invitedUsers = boardDetail.invitedUsers.map((v) => v.user);
+        if (boardDetail && boardDetail.invitations.length) {
+            delete Object.assign(boardDetail, { invitedUsers: boardDetail.invitations })
+                .invitations;
+            boardDetail.invitedUsers = boardDetail.invitedUsers.map((v) => v.user);
+        }
         return boardDetail;
     }
 
