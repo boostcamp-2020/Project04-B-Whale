@@ -28,15 +28,12 @@ final class SigninViewModel: SigninViewModelProtocol {
   private var naverSigninHandler: ((EndPointable) -> Void)?
   private var appleSigninHandler: ((EndPointable) -> Void)?
   private var videoPlayHandler: ((AVPlayerLayer) -> Void)?
-  
-  private let userService: UserServiceProtocol
   private var videoPlayerLooper: VideoPlayerLoopable?
   
   
   // MARK: - Initializer
   
-  init(userService: UserServiceProtocol, videoPlayerLooper: VideoPlayerLoopable) {
-    self.userService = userService
+  init(videoPlayerLooper: VideoPlayerLoopable) {
     self.videoPlayerLooper = videoPlayerLooper
   }
   
