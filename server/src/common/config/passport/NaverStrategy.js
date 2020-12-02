@@ -6,9 +6,9 @@ export class NaverStrategy extends Strategy {
     constructor() {
         super(
             {
-                clientID: process.env.OAUTH_NAVER_CLIENT_ID || null,
-                clientSecret: process.env.OAUTH_NAVER_CLIENT_SECRET || null,
-                callbackURL: process.env.OAUTH_NAVER_CALLBACK_URL || null,
+                clientID: process.env.OAUTH_NAVER_CLIENT_ID,
+                clientSecret: process.env.OAUTH_NAVER_CLIENT_SECRET,
+                callbackURL: process.env.OAUTH_NAVER_CALLBACK_URL,
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
