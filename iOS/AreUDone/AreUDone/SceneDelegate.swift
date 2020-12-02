@@ -16,9 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   private var sceneCoordinator: Coordinator!
   
   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-    guard let url = URLContexts.first?.url else { return }
-    guard url.absoluteString.starts(with: "areudoneios://") else { return }
-    guard let token = url.absoluteString.split(separator: "=").last.map({ String($0) }) else { return }
+    guard
+      let url = URLContexts.first?.url,
+      url.absoluteString.starts(with: "areudoneios://"),
+      let token = url.absoluteString.split(separator: "=").last.map({ String($0) })
+    else { return }
     
     Keychain.shared.save(value: token, forKey: "token")
     
