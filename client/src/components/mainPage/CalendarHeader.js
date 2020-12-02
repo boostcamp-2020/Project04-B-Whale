@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import { CalendarStatusContext } from '../../context/CalendarContext';
+import { CalendarDispatchContext, CalendarStatusContext } from '../../context/CalendarContext';
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -23,15 +23,21 @@ const DateButton = styled.button.attrs({ type: 'button' })`
 
 const CalendarHeader = () => {
     const { selectedDate } = useContext(CalendarStatusContext);
+    const calendarDispatch = useContext(CalendarDispatchContext);
+
+    const onClickMoveMonth = (next) => {
+        const changeDate = selectedDate.clone();
+        const date = next ? changeDate.add(1, 'month') : changeDate.subtract(1, 'month');
+        calendarDispatch({ type: 'CHANGE_MONTH', date });
+    };
 
     return (
         <HeaderWrapper>
-            {/* TODO: button 클릭시, 이전 이후달로 이동 */}
-            <DateButton>
+            <DateButton onClick={() => onClickMoveMonth(false)}>
                 <MdChevronLeft size={30} />
             </DateButton>
             <DateTitle>{selectedDate.format('YYYY.MM')}</DateTitle>
-            <DateButton>
+            <DateButton onClick={() => onClickMoveMonth(true)}>
                 <MdChevronRight size={30} />
             </DateButton>
         </HeaderWrapper>

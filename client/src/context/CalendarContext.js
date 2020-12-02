@@ -3,7 +3,6 @@ import moment from 'moment';
 
 export const initCalendar = {
     today: moment(),
-    currentMonth: moment().month(),
     selectedDate: moment(),
 };
 
@@ -13,7 +12,6 @@ export const CalendarReducer = (state, action) => {
             const { date } = action;
             return {
                 ...state,
-                currentMonth: date.clone().month(),
                 selectedDate: date.clone(),
             };
         }

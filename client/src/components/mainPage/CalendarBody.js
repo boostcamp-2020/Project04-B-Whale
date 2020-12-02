@@ -11,13 +11,13 @@ const Row = styled.div`
     display: flex;
     justify-content: space-around;
 
-    & > .today {
-        background-color: ${(props) => props.theme.lightRedColor};
-        color: ${(props) => props.theme.whiteColor};
-    }
     & > .grayed {
         background-color: ${(props) => props.theme.lightGrayColor};
         color: ${(props) => props.theme.grayColor};
+    }
+    & > .today {
+        background-color: ${(props) => props.theme.lightRedColor};
+        color: ${(props) => props.theme.whiteColor};
     }
     & > .selected {
         background-color: ${(props) => props.theme.blueColor};
