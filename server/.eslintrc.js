@@ -23,5 +23,6 @@ module.exports = {
         'import/no-cycle': 'off',
         'class-methods-use-this': 'off',
         'no-unused-vars': 'warn',
+        'no-underscore-dangle': 'off',
     },
 };
