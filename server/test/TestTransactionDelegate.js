@@ -4,11 +4,13 @@ import {
 } from 'typeorm-transactional-cls-hooked';
 
 export class TestTransactionDelegate {
+    static SAVEPOINT = 'here';
+
     @Transactional()
     static async transaction(callback) {
-        const entityManager = getEntityManagerOrTransactionManager();
-        await entityManager.query('SAVEPOINT STARTPOINT');
+        const em = getEntityManagerOrTransactionManager('default');
+        await em.query(`SAVEPOINT ${TestTransactionDelegate.SAVEPOINT}`);
         await callback();
-        await entityManager.query('ROLLBACK TO STARTPOINT');
+        await em.query(`ROLLBACK TO ${TestTransactionDelegate.SAVEPOINT}`);
     }
 }

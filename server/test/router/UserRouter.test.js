@@ -22,13 +22,13 @@ describe('UserRouter Test', () => {
     test('GET /api/user/me: user0을 조회했을 때 user0 반환 상태 코드 200', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
-            const entityManager = getEntityManagerOrTransactionManager();
-            const user0 = entityManager.create(User, {
+            const em = getEntityManagerOrTransactionManager('default');
+            const user0 = em.create(User, {
                 socialId: '1234567890',
                 name: 'geonhonglee',
                 profileImageUrl: '',
             });
-            await entityManager.save(user0);
+            await em.save(user0);
 
             const accessToken = await jwtUtil.generateAccessToken({
                 userId: user0.id,

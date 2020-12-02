@@ -21,13 +21,13 @@ describe('UserService Test', () => {
         const userService = UserService.getInstance();
         await TestTransactionDelegate.transaction(async () => {
             // given
-            const entityManager = getEntityManagerOrTransactionManager();
-            const user0 = entityManager.create(User, {
+            const em = getEntityManagerOrTransactionManager('default');
+            const user0 = em.create(User, {
                 socialId: '1234567890',
                 name: 'geonhonglee',
                 profileImageUrl: '',
             });
-            await entityManager.save(user0);
+            await em.save(user0);
 
             // when
             const _user0 = await userService.getUserById(user0.id);
