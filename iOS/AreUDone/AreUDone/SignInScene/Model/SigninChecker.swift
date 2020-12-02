@@ -20,7 +20,7 @@ protocol SigninCheckable {
 final class SigninChecker: SigninCheckable {
   
   func check() -> SigninCheckResult {
-    if let _ = Keychain.shared.loadValue(forKey: "") {
+    if let _ = Keychain.shared.loadValue(forKey: "token") {
       return .isSigned
     }
     return .isNotSigned
