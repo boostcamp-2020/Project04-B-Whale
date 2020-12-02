@@ -85,6 +85,95 @@ struct CardTrueJsonFactory: JsonFactory {
                 ]
             }
             """.data(using: .utf8)
+    case CardEndPoint.fetchDetailCard:
+      return """
+            {
+                "id": 1,
+                "title": "재밌게 끝내기",
+                "content": "2주밖에 남지 않았습니다. 열심히 하겠습니다ㅠㅠ",
+                "dueDate": "2020-12-02",
+                "comments" : [
+                    {
+                        "id": 1,
+                        "content": "화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 0,
+                            "name": "서명렬",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 2,
+                        "content": "화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 0,
+                            "name": "서명렬",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 3,
+                        "content": "화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 1,
+                            "name": "심영민",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 4,
+                        "content": "화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 1,
+                            "name": "심영민",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 5,
+                        "content": "웹도 화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 3,
+                            "name": "신동훈",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 6,
+                        "content": "웹도 화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 4,
+                            "name": "이건홍",
+                            "profileImageUrl": ""
+                        }
+                    },
+                    {
+                        "id": 7,
+                        "content": "웹도 화이팅!123",
+                        "createdAt": "2020-12-02",
+                        "user": {
+                            "id": 5,
+                            "name": "박수연",
+                            "profileImageUrl": ""
+                        }
+                    }
+                ],
+                "board": {
+                    "id": 0,
+                    "title": "AreUDone Project"
+                },
+                "list": {
+                    "id": 0,
+                    "title": "Doing"
+                }
+            }
+            """.data(using: .utf8)
     default:
       return nil
     }
@@ -103,3 +192,17 @@ struct CardFalseJsonFactory: JsonFactory {
     }
   }
 }
+
+/*
+ 
+ {
+     "id": 0,
+     "content": "화이팅!123",
+     "createdAt": "2020-12-02",
+     "user": {
+         "id": 0,
+         "name": "서명렬",
+         "profileImageUrl": ""
+     }
+ },
+ */
