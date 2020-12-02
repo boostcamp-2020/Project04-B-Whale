@@ -216,13 +216,17 @@ private extension CardDetailViewController {
   
   func bindingCardDetailContentView() {
     viewModel.bindingCardDetailContentView { [weak self] content in
-      self?.stackView.updateContentView(with: content)
+      DispatchQueue.main.async {
+        self?.stackView.updateContentView(with: content)
+      }
     }
   }
   
   func bindingCardDetailDueDateView() {
     viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
-      self?.stackView.updateDueDateView(with: dueDate)
+      DispatchQueue.main.async {
+        self?.stackView.updateDueDateView(with: dueDate)
+      }
     }
   }
   
@@ -236,19 +240,25 @@ private extension CardDetailViewController {
   
   func bindingCardDetailNavigationBarTitle() {
     viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
-      self?.navigationItem.title = title
+      DispatchQueue.main.async {
+        self?.navigationItem.title = title
+      }
     }
   }
   
   func bindingCardDetailListTitle() {
     viewModel.bindingCardDetailListTitle { [weak self] title in
-      self?.stackView.updateListOfLocationView(with: title)
+      DispatchQueue.main.async {
+        self?.stackView.updateListOfLocationView(with: title)
+      }
     }
   }
   
   func bindingCardDetailBoardTitle() {
     viewModel.bindingCardDetailBoardTitle { [weak self] title in
-      self?.stackView.updateBoardOfLocationView(with: title)
+      DispatchQueue.main.async {
+        self?.stackView.updateBoardOfLocationView(with: title)
+      }
     }
   }
 }
