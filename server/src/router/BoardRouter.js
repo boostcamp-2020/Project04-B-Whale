@@ -24,6 +24,9 @@ export const BoardRouter = () => {
     router.get('/:id', async (req, res) => {
         const boardService = BoardService.getInstance();
         const detailBoard = await boardService.getDetailBoard(req.params.id);
+        if (!detailBoard) {
+            res.sendStatus(404);
+        }
         res.status(200).json(detailBoard);
     });
 
