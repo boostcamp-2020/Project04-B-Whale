@@ -2,6 +2,8 @@ import path from 'path';
 import { DatabaseType } from './DatabaseType';
 
 class ConnectionOptionGenerator {
+    static SQLITE_DATABASE = ':memory:';
+
     constructor(databaseEnv) {
         this.databaseEnv = databaseEnv;
     }
@@ -20,11 +22,11 @@ class ConnectionOptionGenerator {
             case DatabaseType.MYSQL:
                 connectionOption.url = this.databaseEnv.getDatabaseUrl();
                 connectionOption.connectTimeout = 3000;
-                // connectionOption.acquireTimeout = 5000;
+                connectionOption.acquireTimeout = 5000;
                 connectionOption.extra.connectionLimit = this.databaseEnv.getDatabaseConnectionLimit();
                 break;
             case DatabaseType.SQLITE:
-                connectionOption.database = this.databaseEnv.getSqliteDatabase();
+                connectionOption.database = ConnectionOptionGenerator.SQLITE_DATABASE;
                 break;
             default:
         }
