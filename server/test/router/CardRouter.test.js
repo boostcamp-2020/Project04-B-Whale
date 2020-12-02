@@ -49,6 +49,110 @@ describe('Board API Test', () => {
         expect(response.status).toEqual(401);
     });
 
+    test('GET /api/card/count를 호출할 때, queryString에 q변수가 없으면 400을 리턴한다.', async () => {
+        // given
+        const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
+
+        const userRepository = getRepository(User);
+        const createUser1 = userRepository.create(user1);
+        await userRepository.save([createUser1]);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createUser1.id,
+            username: createUser1.name,
+        });
+
+        // when
+        const response = await request(app.httpServer).get(`/api/card/count`).set({
+            Authorization: token,
+            'Content-Type': 'application/json',
+        });
+
+        // then
+        expect(response.status).toEqual(400);
+    });
+
+    test('GET /api/card/count를 호출할 때, q변수에 startDate, endDate 값이 하나라도 없으면 400을 리턴한다.', async () => {
+        // given
+        const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
+
+        const userRepository = getRepository(User);
+        const createUser1 = userRepository.create(user1);
+        await userRepository.save([createUser1]);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createUser1.id,
+            username: createUser1.name,
+        });
+
+        // when
+        const startDate = '2020-07-01';
+        const response = await request(app.httpServer)
+            .get(`/api/card/count?q=startdate:${startDate}`)
+            .set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+
+        // then
+        expect(response.status).toEqual(400);
+    });
+
+    test(`GET /api/card/count를 호출할 때, q변수에 startDate, endDate의 format이 'yyyy-MM-dd'가 아니면 400을 리턴한다.`, async () => {
+        // given
+        const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
+
+        const userRepository = getRepository(User);
+        const createUser1 = userRepository.create(user1);
+        await userRepository.save([createUser1]);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createUser1.id,
+            username: createUser1.name,
+        });
+
+        // when
+        const startDate = '2020-7-1';
+        const endDate = '2020-7-31';
+        const response = await request(app.httpServer)
+            .get(`/api/card/count?q=startdate:${startDate} enddate:${endDate}`)
+            .set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+
+        // then
+        expect(response.status).toEqual(400);
+    });
+
+    test('GET /api/card/count를 호출할 때, q변수에 member가 me가 아니면 400을 리턴한다.', async () => {
+        // given
+        const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
+
+        const userRepository = getRepository(User);
+        const createUser1 = userRepository.create(user1);
+        await userRepository.save([createUser1]);
+
+        const token = await jwtUtil.generateAccessToken({
+            userId: createUser1.id,
+            username: createUser1.name,
+        });
+
+        // when
+        const startDate = '2020-07-01';
+        const endDate = '2020-07-31';
+        const member = 'other';
+        const response = await request(app.httpServer)
+            .get(`/api/card/count?q=startdate:${startDate} enddate:${endDate} member:${member}`)
+            .set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+
+        // then
+        expect(response.status).toEqual(400);
+    });
+
     test(`GET /api/card/count?q=startdate:'yyyy-MM-dd' enddate:'yyyy-MM-dd'가 정상적으로 호출되었을 때, 200을 리턴한다.`, async () => {
         // given
         const user1 = { name: 'user1', socialId: '1234', profileImageUrl: 'image' };
@@ -203,8 +307,9 @@ describe('Board API Test', () => {
         // when
         const startDate = '2020-07-01';
         const endDate = '2020-07-31';
+        const member = 'me';
         const response = await request(app.httpServer)
-            .get(`/api/card/count?q=startdate:${startDate} enddate:${endDate} member:me`)
+            .get(`/api/card/count?q=startdate:${startDate} enddate:${endDate} member:${member}`)
             .set({
                 Authorization: token,
                 'Content-Type': 'application/json',
