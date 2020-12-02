@@ -6,3 +6,50 @@
 //
 
 import Foundation
+import NetworkFramework
+import KeychainFramework
+
+enum ActivityEndPoint {
+  
+  case fetchActivities(boardId: Int)
+}
+
+extension ActivityEndPoint: EndPointable {
+  var environmentBaseURL: String {
+    return "\(APICredentials.ip)/api/activity"
+  }
+  
+  var baseURL: URLComponents {
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    return url
+  }
+  
+  var query: HTTPQuery? {
+    switch self {
+    case .fetchActivities(let boardId):
+      return ["boardId": "\(boardId)"]
+    }
+  }
+  
+  var httpMethod: HTTPMethod? {
+    switch self {
+    case .fetchActivities:
+      return .get
+    }
+  }
+  
+  var headers: HTTPHeader? {
+    guard let accessToken = Keychain.shared.loadValue(forKey: "token")
+    else { return nil }
+    
+    return [
+      "Authorization": "Bearer \(accessToken))",
+      "Cotent-Type": "application/json",
+      "Accept": "application/json"
+    ]
+  }
+  
+  var bodies: HTTPBody? {
+    return nil
+  }
+}

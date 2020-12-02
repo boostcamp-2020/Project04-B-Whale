@@ -10,9 +10,11 @@ import NetworkFramework
 
 protocol ActivityServiceProtocol {
   
+  func fetchActivities(withBoardId boardId: Int, completionHandler: @escaping (Result<Activities, APIError>) -> Void )
 }
 
 class ActivityService: ActivityServiceProtocol {
+ 
   
   // MARK: - Property
   
@@ -28,4 +30,9 @@ class ActivityService: ActivityServiceProtocol {
   
   // MARK: - Method
   
+  func fetchActivities(withBoardId boardId: Int, completionHandler: @escaping (Result<Activities, APIError>) -> Void ) {
+    router.request(route: ActivityEndPoint.fetchActivities(boardId: boardId)) { result in
+      completionHandler(result)
+    }
+  }
 }

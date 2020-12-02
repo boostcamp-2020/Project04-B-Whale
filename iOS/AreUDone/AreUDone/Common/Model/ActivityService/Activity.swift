@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct Activities: Codable {
+    let activities: [Activity]
+}
+
+struct Activity: Codable {
+    let id, boardId: Int
+    let content, createdAt: String
+}
