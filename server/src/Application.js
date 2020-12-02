@@ -33,10 +33,15 @@ export class Application {
     }
 
     async initialize() {
-        await this.initEnvironment();
-        this.initPassport();
-        this.registerMiddleware();
-        await this.initDatabase();
+        try {
+            await this.initEnvironment();
+            this.initPassport();
+            this.registerMiddleware();
+            await this.initDatabase();
+        } catch (error) {
+            console.error(error);
+            process.exit();
+        }
     }
 
     async initEnvironment() {
