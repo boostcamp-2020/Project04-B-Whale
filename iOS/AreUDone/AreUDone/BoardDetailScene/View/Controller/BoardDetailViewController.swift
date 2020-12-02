@@ -21,9 +21,15 @@ final class BoardDetailViewController: UIViewController {
     
     return pageControl
   }()
-  private var offset: CGFloat!
+  private var scrollOffset: CGFloat!
   
+  private let sideBarViewController: SideBarViewProtocol = {
+    let controller = SideBarViewController()
+    
+    return controller
+  }()
   
+
   // MARK: - Initializer
   
   required init?(coder: NSCoder, viewModel: BoardDetailViewModelProtocol) {
@@ -33,7 +39,7 @@ final class BoardDetailViewController: UIViewController {
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This controller must be initialized with code")
   }
   
   
@@ -41,9 +47,15 @@ final class BoardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     bindUI()
     configure()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    configureSideBarView()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -86,6 +98,14 @@ private extension BoardDetailViewController {
     configureCollectionView()
   }
   
+  func configurePageControl() {
+    NSLayoutConstraint.activate([
+      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+      pageControl.heightAnchor.constraint(equalToConstant: 10)
+    ])
+  }
+  
   func configureNavigationBar() {
     navigationItem.largeTitleDisplayMode = .never
     
@@ -98,7 +118,7 @@ private extension BoardDetailViewController {
       self?.coordinator?.pop()
     }
     navigationItem.rightBarButtonItem = CustomBarButtonItem(imageName: "ellipsis" ) { [weak self] in
-      
+      self?.sideBarViewController.expandSideBar()
     }
   }
   
@@ -129,10 +149,10 @@ private extension BoardDetailViewController {
       height: view.bounds.height * 0.8
     )
     
-    offset = (flowLayout.sectionInset.left
-      + flowLayout.itemSize.width
-      + flowLayout.minimumLineSpacing
-      + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+    scrollOffset = (flowLayout.sectionInset.left
+                + flowLayout.itemSize.width
+                + flowLayout.minimumLineSpacing
+                + flowLayout.itemSize.width/2) - (view.bounds.width/2)
     
     flowLayout.footerReferenceSize = CGSize(
       width: flowLayout.minimumLineSpacing + flowLayout.itemSize.width + flowLayout.sectionInset.left,
@@ -140,16 +160,26 @@ private extension BoardDetailViewController {
     )
     collectionView.collectionViewLayout = flowLayout
   }
+  
+  func configureSideBarView() {
+    let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+    let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
+    let topBarHeight = statusBarHeight + navigationBarHeight
 
-  func configurePageControl() {
-    NSLayoutConstraint.activate([
-      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
-      pageControl.heightAnchor.constraint(equalToConstant: 10)
-    ])
+    sideBarViewController.configureTopHeight(to: topBarHeight)
+    sideBarViewController.start()
+
+    let sideBarView = sideBarViewController.view()
+    sideBarView.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: view.bounds.width,
+      height: view.bounds.height
+    )
+    
+    view.addSubview(sideBarViewController.view())
   }
 }
-
 
 // MARK: - Extension UICollectionViewDataSource
 
@@ -197,16 +227,16 @@ extension BoardDetailViewController: UICollectionViewDelegate {
 extension BoardDetailViewController {
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let index = scrollView.contentOffset.x / offset
-
+    let index = scrollView.contentOffset.x / scrollOffset
+    
     var renewedIndex: CGFloat
     if scrollView.contentOffset.x > targetContentOffset.pointee.x {
       renewedIndex = floor(index) // 왼쪽
     } else {
       renewedIndex = ceil(index)  // 오른쪽
     }
-
-    targetContentOffset.pointee = CGPoint(x: renewedIndex * offset, y: 0)
+    
+    targetContentOffset.pointee = CGPoint(x: renewedIndex * scrollOffset, y: 0)
     pageControl.currentPage = Int(renewedIndex)
   }
 }
