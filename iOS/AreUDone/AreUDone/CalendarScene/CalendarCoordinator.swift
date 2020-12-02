@@ -53,7 +53,7 @@ final class CalendarCoordinator: NavigationCoordinator {
 
 extension CalendarCoordinator {
   
-  func didTapOnDate(selectedDate: Date, delegate: CalendarViewControllerDelegate) {
+  func didTapOnDate(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
     calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: selectedDate)
     calendarPickerCoordinator.navigationController = navigationController
     

@@ -11,11 +11,6 @@ enum Section {
   case main
 }
 
-protocol CalendarViewControllerDelegate: AnyObject {
-  
-  func send(selectedDate: String)
-}
-
 final class CalendarViewController: UIViewController {
   
   typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
@@ -153,7 +148,7 @@ extension CalendarViewController: DateStepperDelegate {
 
 // MARK: Extension CalendarViewControllerDelegate
 
-extension CalendarViewController: CalendarViewControllerDelegate {
+extension CalendarViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
     viewModel.changeDate(to: selectedDate, direction: nil)
