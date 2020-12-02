@@ -39,7 +39,8 @@ final class SigninCoordinator: Coordinator {
 extension SigninCoordinator {
   
   func openURL(endPoint: EndPointable) {
-    guard let url = URL(string: "") else { return }
+    guard let url = URL(string: endPoint.environmentBaseURL) else { return }
+    
     if UIApplication.shared.canOpenURL(url) {
       UIApplication.shared.open(url)
     }

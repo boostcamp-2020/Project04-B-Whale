@@ -8,5 +8,5 @@
 import Foundation
 
 enum APICredentials {
-  static let ip = ""
+  static let ip = "http://118.67.133.30:5000"
 }

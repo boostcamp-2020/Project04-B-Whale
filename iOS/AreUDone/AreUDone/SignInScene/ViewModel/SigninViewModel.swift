@@ -11,12 +11,8 @@ import NetworkFramework
 
 protocol SigninViewModelProtocol {
   
-  func naverSigninBinding(handler: @escaping ((EndPointable) -> Void))
-  func appleSigninBinding(handler: @escaping ((EndPointable) -> Void))
   func videoPlayBinding(handler: @escaping((AVPlayerLayer) -> Void))
   
-  func naverSigninButtonTapped()
-  func appleSigninButtonTapped()
   func videoPlay()
   func videoRemove()
 }
@@ -25,10 +21,7 @@ final class SigninViewModel: SigninViewModelProtocol {
 
   // MARK: - Property
   
-  private var naverSigninHandler: ((EndPointable) -> Void)?
-  private var appleSigninHandler: ((EndPointable) -> Void)?
   private var videoPlayHandler: ((AVPlayerLayer) -> Void)?
-  
   private var videoPlayerLooper: VideoPlayerLoopable?
   
   
@@ -40,29 +33,6 @@ final class SigninViewModel: SigninViewModelProtocol {
   
   
   // MARK: - Method
-  
-  func naverSigninBinding(handler: @escaping ((EndPointable) -> Void)) {
-    naverSigninHandler = handler
-
-  }
-  
-  func appleSigninBinding(handler: @escaping ((EndPointable) -> Void)) {
-    appleSigninHandler = handler
-  }
-  
-  func videoPlayBinding(handler: @escaping ((AVPlayerLayer) -> Void)) {
-    videoPlayHandler = handler
-  }
-  
-  func naverSigninButtonTapped() {
-    // TODO: 네트워크 Service 객체에 네이버 로그인 요청
-    
-  }
-  
-  func appleSigninButtonTapped() {
-    // TODO: 네트워크 Service 객체에 애플 로그인 요청
-
-  }
   
   func videoPlay() {
     if let playerLayer = videoPlayerLooper?.configureVideoLayer(
@@ -77,5 +47,15 @@ final class SigninViewModel: SigninViewModelProtocol {
   func videoRemove() {
     videoPlayerLooper?.remove()
     videoPlayerLooper = nil
+  }
+}
+
+
+// MARK:- Extension bindUI
+
+extension SigninViewModel {
+  
+  func videoPlayBinding(handler: @escaping ((AVPlayerLayer) -> Void)) {
+    videoPlayHandler = handler
   }
 }
