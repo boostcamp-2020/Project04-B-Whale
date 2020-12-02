@@ -24,11 +24,9 @@ final class MockRouter: Routable {
   
   // MARK: - Method
   
-  func request<T: Decodable>(route: EndPointable, completionHandler: ((Result<T, APIError>) -> Void)? = nil) {
+  func request<T: Decodable>(route: EndPointable, completionHandler: @escaping ((Result<T, APIError>) -> Void)) {
     
     DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-      guard let completionHandler = completionHandler else { return }
-      
       guard let data = self.jsonFactory.loadJson(endPoint: route) else {
         completionHandler(.failure(.data))
         return
@@ -42,5 +40,9 @@ final class MockRouter: Routable {
         completionHandler(.failure(.decodingJSON))
       }
     }
+  }
+  
+  func request(route: EndPointable, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+    
   }
 }

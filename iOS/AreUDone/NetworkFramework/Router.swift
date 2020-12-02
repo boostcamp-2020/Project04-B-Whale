@@ -12,12 +12,11 @@ final public class Router: Routable {
   
   public init() { }
   
-  public func request<T: Decodable>(route: EndPointable, completionHandler: ((Result<T,APIError>) -> Void)? = nil) {
+  public func request<T: Decodable>(route: EndPointable, completionHandler: @escaping ((Result<T,APIError>) -> Void)) {
     let session = URLSession.shared
     
     guard let request = configureRequest(from: route) else { return }
     task = session.dataTask(with: request) { data, response, error in
-      guard let completionHandler = completionHandler else { return }
       
       guard let data = data else {
         completionHandler(.failure(.data))
@@ -49,6 +48,10 @@ final public class Router: Routable {
       }
     }
     task?.resume()
+  }
+  
+  public func request(route: EndPointable, completionHandler: @escaping ((Result<Void,APIError>) -> Void)) {
+    
   }
 }
 
