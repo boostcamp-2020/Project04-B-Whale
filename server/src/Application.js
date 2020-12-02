@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { validateOrReject } from 'class-validator';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection } from 'typeorm';
 import {
     initializeTransactionalContext,
     patchTypeORMRepositoryWithBaseRepository,
@@ -72,9 +72,5 @@ export class Application {
     initPassport() {
         passport.use(new NaverStrategy());
         passport.use(new JwtStrategy());
-    }
-
-    async close() {
-        await getConnection().close();
     }
 }
