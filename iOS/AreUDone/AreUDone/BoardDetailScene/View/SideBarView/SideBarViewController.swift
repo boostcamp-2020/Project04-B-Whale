@@ -39,7 +39,7 @@ final class SideBarViewController: UIViewController {
       height: view.bounds.height - topHeight
     )
     
-    let view = SideBarView(frame: frame)
+    let view = SideBarView(frame: frame, viewModel: viewModel)
     view.backgroundColor = .white
     
     return view
@@ -48,6 +48,23 @@ final class SideBarViewController: UIViewController {
   private let animationTime: TimeInterval = 0.2
   private let maximumAlpha: CGFloat = 0.3
   private var topHeight: CGFloat = 0
+  
+  private let viewModel: SideBarViewModelProtocol
+  
+  
+  init(
+    nibName: String,
+    bundle: Bundle?,
+    viewModel: SideBarViewModelProtocol
+  ) {
+    self.viewModel = viewModel
+    
+    super.init(nibName: nibName, bundle: bundle)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   
   // MARK: - Life Cycle
@@ -70,7 +87,7 @@ private extension SideBarViewController {
   }
   
   func configureView() {
-    self.configureBackground(toAlpha: 0)
+    configureBackground(toAlpha: 0)
     
     view.isUserInteractionEnabled = false
     

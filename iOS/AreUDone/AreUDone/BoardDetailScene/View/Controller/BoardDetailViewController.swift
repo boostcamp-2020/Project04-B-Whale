@@ -23,17 +23,18 @@ final class BoardDetailViewController: UIViewController {
   }()
   private var scrollOffset: CGFloat!
   
-  private let sideBarViewController: SideBarViewControllerProtocol = {
-    let controller = SideBarViewController()
-    
-    return controller
-  }()
+  private let sideBarViewController: SideBarViewControllerProtocol
   
-
+  
   // MARK: - Initializer
   
-  required init?(coder: NSCoder, viewModel: BoardDetailViewModelProtocol) {
+  required init?(
+    coder: NSCoder,
+    viewModel: BoardDetailViewModelProtocol,
+    sideBarViewController: SideBarViewControllerProtocol
+  ) {
     self.viewModel = viewModel
+    self.sideBarViewController = sideBarViewController
     
     super.init(coder: coder)
   }
@@ -50,6 +51,8 @@ final class BoardDetailViewController: UIViewController {
     
     bindUI()
     configure()
+    
+    viewModel.updateBoardDetailCollectionView()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -84,7 +87,11 @@ final class BoardDetailViewController: UIViewController {
 private extension BoardDetailViewController {
   
   func bindUI() {
-    
+    viewModel.bindingUpdateBoardDetailCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadData()
+      }
+    }
   }
   
   func configure() {
@@ -150,9 +157,9 @@ private extension BoardDetailViewController {
     )
     
     scrollOffset = (flowLayout.sectionInset.left
-                + flowLayout.itemSize.width
-                + flowLayout.minimumLineSpacing
-                + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+                      + flowLayout.itemSize.width
+                      + flowLayout.minimumLineSpacing
+                      + flowLayout.itemSize.width/2) - (view.bounds.width/2)
     
     flowLayout.footerReferenceSize = CGSize(
       width: flowLayout.minimumLineSpacing + flowLayout.itemSize.width + flowLayout.sectionInset.left,
@@ -165,10 +172,10 @@ private extension BoardDetailViewController {
     let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
     let topBarHeight = statusBarHeight + navigationBarHeight
-
+    
     sideBarViewController.configureTopHeight(to: topBarHeight)
     sideBarViewController.start()
-
+    
     let sideBarView = sideBarViewController.view()
     sideBarView.frame = CGRect(
       x: 0,
@@ -195,7 +202,9 @@ extension BoardDetailViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
-    let list = viewModel.fetchList(at: indexPath.item)
+    guard let list = viewModel.fetchList(at: indexPath.item)
+    else { return UICollectionViewCell() }
+    
     let viewModel = ListViewModel(list: list)
     
     cell.update(with: viewModel)

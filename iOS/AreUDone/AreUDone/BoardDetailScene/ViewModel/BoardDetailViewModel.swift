@@ -9,8 +9,12 @@ import Foundation
 
 protocol BoardDetailViewModelProtocol {
   
+  func bindingUpdateBoardDetailCollectionView(handler: @escaping () -> Void)
+  
+  func updateBoardDetailCollectionView()
+  
   func numberOfLists() -> Int
-  func fetchList(at index: Int) -> List
+  func fetchList(at index: Int) -> List?
   func insertList(list: List)
 }
 
@@ -19,64 +23,56 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   // MARK: - Property
   
   private let boardService: BoardServiceProtocol
+  private let boardId: Int
   
-  let cards = [
-    List.Card(id: 1, title: "카드1", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 2, title: "카드2", dueDate: "날짜", position: 0, commentCount: 0)
-  ]
+  private var updateBoardDetailCollectionViewHandler: (() -> Void)?
   
-  let cards2 = [
-    List.Card(id: 3, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 4, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0)
-  ]
-  
-  let cards3 = [
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0),
-    List.Card(id: 5, title: "카드3", dueDate: "날짜1", position: 0, commentCount: 0),
-    List.Card(id: 6, title: "카드4", dueDate: "날짜", position: 0, commentCount: 0)
-  ]
-  
-  lazy var lists = [
-    List(id: 0, title: "데이터1", position: 0, cards: cards),
-    List(id: 1, title: "데이터2", position: 0, cards: cards2),
-    List(id: 2, title: "데이터3", position: 0, cards: cards3),
-    List(id: 3, title: "데이터4", position: 0, cards: [])
-  ]
-  
+  private var boardDetail: BoardDetail? {
+    didSet {
+      updateBoardDetailCollectionViewHandler?()
+    }
+  }
+
   // MARK: - Initializer
   
-  init(boardService: BoardServiceProtocol) {
+  init(boardService: BoardServiceProtocol, boardId: Int) {
     self.boardService = boardService
+    self.boardId = boardId
   }
   
   
   // MARK: - Method
   
   func numberOfLists() -> Int {
-    lists.count
+    boardDetail?.lists.count ?? 0
   }
   
-  func fetchList(at index: Int) -> List {
-    lists[index]
+  func fetchList(at index: Int) -> List? {
+    boardDetail?.lists[index]
   }
   
   func insertList(list: List) {
-    lists.append(list)
+    boardDetail?.lists.append(list)
+  }
+  
+  func updateBoardDetailCollectionView() {
+    boardService.fetchBoardDetail(withBoardId: boardId) { result in
+      switch result {
+      case .success(let boardDetail):
+        self.boardDetail = boardDetail
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
 }
 
+
+// MARK: - Extension bindUI
+
 extension BoardDetailViewModel {
   
-  
+  func bindingUpdateBoardDetailCollectionView(handler: @escaping () -> Void) {
+    updateBoardDetailCollectionViewHandler = handler
+  }
 }

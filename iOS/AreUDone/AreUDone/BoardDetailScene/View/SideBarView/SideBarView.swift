@@ -9,6 +9,12 @@ import UIKit
 
 final class SideBarView: UIView {
   
+  enum Section {
+    case member
+    case activity
+  }
+  
+  
   // MARK: - Property
   
   @IBOutlet weak var collectionView: UICollectionView! {
@@ -25,25 +31,25 @@ final class SideBarView: UIView {
     }
   }
   
+  private let viewModel: SideBarViewModelProtocol
+  
   
   // MARK: - Initializer
   
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
+  init(frame: CGRect, viewModel: SideBarViewModelProtocol) {
+    self.viewModel = viewModel
+    
+    super.init(frame: frame)
     
     configure()
   }
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-   
-    configure()
+  required init?(coder: NSCoder) {
+    fatalError("The class should initialized with code")
   }
   
   
   // MARK: - Method
-  
-  
   
 }
 
@@ -53,6 +59,9 @@ private extension SideBarView {
   
   func configure() {
     nibSetup()
+    bindUI()
+    
+    viewModel.updateActivitiesInCollectionView()
   }
 }
 
@@ -61,17 +70,19 @@ private extension SideBarView {
 
 extension SideBarView: UICollectionViewDataSource {
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1
+    return 1 // TODO: 팩토리로 변경 예정
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 35
+    return viewModel.numberOfActivities()
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: SideBarCollectionViewActivityCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
-    cell.update(with: "더미 데이터")
+    let activity = viewModel.fetchActivity(at: indexPath.row)
+    cell.update(with: activity)
+    
     return cell
   }
 }
@@ -80,14 +91,14 @@ extension SideBarView: UICollectionViewDataSource {
 // MARK: - Extension UICollectionView Delegate
 
 extension SideBarView: UICollectionViewDelegate {
-
+  
 }
 
 
 // MARK:- Extension NibLoad
 
 private extension SideBarView {
-
+  
   func nibSetup() {
     guard let view = loadViewFromNib() else { return }
     view.frame = bounds
@@ -99,5 +110,25 @@ private extension SideBarView {
     let bundle = Bundle(for: type(of: self))
     let nib = UINib(nibName: String(describing: SideBarView.self), bundle: bundle)
     return nib.instantiate(withOwner: self, options: nil).first! as? UIView
+  }
+}
+
+
+// MARK: - Extension UIBind
+
+private extension SideBarView {
+  
+  func bindUI() {
+    viewModel.bindingUpdateMembersInCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadSections(IndexSet(integer: 0))
+      }
+    }
+    
+    viewModel.bindingUpdateActivitiesInCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadSections(IndexSet(integer: 0)) // TODO: 1로 수정
+      }
+    }
   }
 }
