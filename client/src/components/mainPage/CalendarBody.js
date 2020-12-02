@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CalendarDate from './CalendarDate';
-import { CalendarStatusContext } from '../../context/CalendarContext';
+import { CalendarDispatchContext, CalendarStatusContext } from '../../context/CalendarContext';
 
 const BodyWrapper = styled.div`
     padding: 8px;
@@ -46,6 +46,12 @@ const Day = styled.div`
 
 const CalendarBody = () => {
     const { today, selectedDate } = useContext(CalendarStatusContext);
+    const calendarDispatch = useContext(CalendarDispatchContext);
+
+    const onClickChangeSelectedDate = (clickedDate) => {
+        // TODO: count data를 가져와서 count 값 세팅해줄 것
+        calendarDispatch({ type: 'CHANGE_SELECTED_DATE', selectedDate: clickedDate });
+    };
 
     const makeCalendar = () => {
         const startWeek = selectedDate.clone().startOf('month').week();
@@ -62,6 +68,7 @@ const CalendarBody = () => {
                         .map((_, i) => {
                             const current = selectedDate
                                 .clone()
+                                .startOf('month')
                                 .week(week)
                                 .startOf('week')
                                 .add(i, 'day');
@@ -79,7 +86,8 @@ const CalendarBody = () => {
                                 <CalendarDate
                                     key={current.format('YYYY-MM-DD')}
                                     className={`${isToday} ${isSelected} ${isGrayed}`}
-                                    date={current.format('D')}
+                                    onClick={onClickChangeSelectedDate}
+                                    date={current}
                                 />
                             );
                         })}

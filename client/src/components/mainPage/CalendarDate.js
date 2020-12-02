@@ -51,10 +51,10 @@ const CardCount = styled.div`
     }
 `;
 
-const Date = ({ className, date, count }) => {
+const Date = ({ className, onClick, date, count }) => {
     return (
-        <DateWrapper className={className}>
-            <DateNumber>{date}</DateNumber>
+        <DateWrapper className={className} onClick={() => onClick(date)}>
+            <DateNumber>{date.format('D')}</DateNumber>
             <CardCountWrapper count={count}>
                 <BsCardChecklist size={24} />
                 <CardCount>{count || 0}</CardCount>
