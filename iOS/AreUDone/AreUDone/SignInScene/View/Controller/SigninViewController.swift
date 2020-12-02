@@ -54,7 +54,7 @@ final class SigninViewController: UIViewController {
   }
   
   @IBAction func naverSigninButtonTapped(_ sender: Any) {
-    viewModel.naverSigninButtonTapped()
+    signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .naver))
   }
 }
 
