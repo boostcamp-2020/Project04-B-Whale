@@ -51,7 +51,25 @@ final public class Router: Routable {
   }
   
   public func request(route: EndPointable, completionHandler: @escaping ((Result<Void,APIError>) -> Void)) {
+    let session = URLSession.shared
     
+    guard let request = configureRequest(from: route) else { return }
+    
+    task = session.dataTask(with: request) { (data, response, error) in
+      if let response = response as? HTTPURLResponse {
+        let responseError = self.handleNetworkResponseError(response)
+        
+        switch responseError {
+        case nil: // 200번
+          completionHandler(.success(()))
+        default: // 300~500번
+          if let responseError = responseError {
+            completionHandler(.failure(responseError))
+          }
+        }
+      }
+    }
+    task?.resume()
   }
 }
 
