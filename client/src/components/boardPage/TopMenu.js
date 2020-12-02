@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import BoardDetailContext from '../../context/BoardDetailContext';
 
 const MenuDiv = styled.div`
     display: flex;
@@ -7,7 +8,7 @@ const MenuDiv = styled.div`
     line-height: 40px;
     width: 100%;
     min-height: 30px;
-    padding-left: 10%;
+    padding-left: 200px;
 `;
 
 const BoardTitle = styled.span`
@@ -34,16 +35,32 @@ const MenuButton = styled.button`
 `;
 
 const TopMenu = (props) => {
+    const { boardDetail } = useContext(BoardDetailContext);
+
     return (
         <MenuDiv>
             <div style={{ width: '50%' }}>
-                <BoardTitle>보드이름</BoardTitle>
+                <BoardTitle>{boardDetail.title}</BoardTitle>
                 <ButtonForGettingInvitedUser
-                    onClick={() => props.setInvitedDropdownDisplay(!props.invitedDropdownDisplay)}
+                    onClick={(evt) =>
+                        props.setInvitedDropdownDisplay({
+                            visible: true,
+                            offsetY: evt.target.getBoundingClientRect().left,
+                        })
+                    }
                 >
                     참여자 목록
                 </ButtonForGettingInvitedUser>
-                <InviteButton>초대하기</InviteButton>
+                <InviteButton
+                    onClick={(evt) =>
+                        props.setAskoverDropdownDisplay({
+                            visible: true,
+                            offsetY: evt.target.getBoundingClientRect().left,
+                        })
+                    }
+                >
+                    초대하기
+                </InviteButton>
             </div>
             <div style={{ width: '5%' }}>
                 <MenuButton onClick={() => props.setSidebarDisplay(!props.sidebarDisplay)}>
