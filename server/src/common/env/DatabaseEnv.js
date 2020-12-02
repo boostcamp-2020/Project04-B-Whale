@@ -1,4 +1,4 @@
-import { IsBoolean, IsIn, IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
+import { IsBoolean, IsIn, IsNotEmpty, IsNumber, ValidateIf } from 'class-validator';
 import { DatabaseType } from '../config/database/DatabaseType';
 
 class DatabaseEnv {
@@ -25,11 +25,6 @@ class DatabaseEnv {
 
     databaseLogging;
 
-    @ValidateIf((o) => o.databaseType === DatabaseType.SQLITE)
-    @IsNotEmpty()
-    @IsString()
-    sqliteDatabase;
-
     constructor() {
         this.databaseType = process.env.DATABASE_TYPE;
         this.databaseUrl = process.env.DATABASE_URL ?? null;
@@ -47,7 +42,6 @@ class DatabaseEnv {
                 : JSON.parse(process.env.DATABASE_SYNCHRONIZE.toLowerCase());
         this.databaseLogging =
             process.env.DATABASE_LOGGING === undefined ? ['error'] : this.splitDatabaseLogging();
-        this.sqliteDatabase = process.env.SQLITE_DATABASE ?? ':memory:';
     }
 
     splitDatabaseLogging() {
@@ -80,10 +74,6 @@ class DatabaseEnv {
 
     getDatabaseLogging() {
         return this.databaseLogging;
-    }
-
-    getSqliteDatabase() {
-        return this.sqliteDatabase;
     }
 }
 
