@@ -16,6 +16,12 @@
 		333BA55B257692AF0057ACA4 /* SideBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 333BA55A257692AF0057ACA4 /* SideBarView.xib */; };
 		333BA560257695CD0057ACA4 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 333BA55F257695CD0057ACA4 /* SideBarViewController.xib */; };
 		333BA56825769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */; };
+		333BA56D25776ABE0057ACA4 /* BoardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA56C25776ABE0057ACA4 /* BoardDetail.swift */; };
+		333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA577257775950057ACA4 /* BoardDetailJsonFactory.swift */; };
+		333BA57D25777CF50057ACA4 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */; };
+		333BA582257791180057ACA4 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA581257791180057ACA4 /* Activity.swift */; };
+		333BA587257792690057ACA4 /* ActivityEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA586257792690057ACA4 /* ActivityEndPoint.swift */; };
+		333BA58C2577987A0057ACA4 /* ActivityJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */; };
 		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
 		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
@@ -251,6 +257,12 @@
 		333BA55A257692AF0057ACA4 /* SideBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBarView.xib; sourceTree = "<group>"; };
 		333BA55F257695CD0057ACA4 /* SideBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
 		333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarCollectionViewActivityCell.swift; sourceTree = "<group>"; };
+		333BA56C25776ABE0057ACA4 /* BoardDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetail.swift; sourceTree = "<group>"; };
+		333BA577257775950057ACA4 /* BoardDetailJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailJsonFactory.swift; sourceTree = "<group>"; };
+		333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
+		333BA581257791180057ACA4 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		333BA586257792690057ACA4 /* ActivityEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEndPoint.swift; sourceTree = "<group>"; };
+		333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityJsonFactory.swift; sourceTree = "<group>"; };
 		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
@@ -494,6 +506,7 @@
 			children = (
 				335AC50A256F8D28006A5C4A /* BoardDetailViewModel.swift */,
 				335AC54C25727BF2006A5C4A /* ListViewModel.swift */,
+				333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -519,6 +532,8 @@
 				33D2DE20256B5210008E3969 /* JsonFactory.swift */,
 				336010DD256B8E60009580A1 /* CardJsonFactory.swift */,
 				335AC4E5256F7988006A5C4A /* BoardListJsonFactory.swift */,
+				333BA577257775950057ACA4 /* BoardDetailJsonFactory.swift */,
+				333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -535,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				335AC4AE256E9A6B006A5C4A /* Board.swift */,
+				333BA56C25776ABE0057ACA4 /* BoardDetail.swift */,
 				335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */,
 				BDD18B332566403E005DF00A /* BoardService.swift */,
 			);
@@ -561,7 +577,9 @@
 		33601103256B8FBC009580A1 /* ActivityService */ = {
 			isa = PBXGroup;
 			children = (
+				333BA581257791180057ACA4 /* Activity.swift */,
 				BDD18B452566408F005DF00A /* ActivityService.swift */,
+				333BA586257792690057ACA4 /* ActivityEndPoint.swift */,
 			);
 			path = ActivityService;
 			sourceTree = "<group>";
@@ -1228,7 +1246,9 @@
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				33601247256E5302009580A1 /* BoardListViewModel.swift in Sources */,
 				335AC51C256FDDAB006A5C4A /* BoardDetailCollectionViewCell.swift in Sources */,
+				333BA56D25776ABE0057ACA4 /* BoardDetail.swift in Sources */,
 				333BA5142574D06C0057ACA4 /* AddOrCancelView.swift in Sources */,
+				333BA58C2577987A0057ACA4 /* ActivityJsonFactory.swift in Sources */,
 				336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */,
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
@@ -1250,6 +1270,7 @@
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
 				3360123D256E512F009580A1 /* BoardListViewController.swift in Sources */,
 				33601182256CBE51009580A1 /* CalendarPickerViewController.swift in Sources */,
+				333BA582257791180057ACA4 /* Activity.swift in Sources */,
 				BD2AA7F3256F424800EA8791 /* CardDetailContentView.swift in Sources */,
 				BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */,
 				BD2AA7B5256DFBCD00EA8791 /* CardDetailCoordinator.swift in Sources */,
@@ -1258,6 +1279,7 @@
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
+				333BA57D25777CF50057ACA4 /* SideBarViewModel.swift in Sources */,
 				336011A7256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift in Sources */,
 				BD2AA7A7256DF93800EA8791 /* CardDetailViewModel.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
@@ -1292,6 +1314,7 @@
 				333BA55325768F3B0057ACA4 /* SideBarView.swift in Sources */,
 				335AC4EF256F8ADF006A5C4A /* BoardDetailCoordinator.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
+				333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
@@ -1299,6 +1322,7 @@
 				336010C3256B786E009580A1 /* Card.swift in Sources */,
 				336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */,
 				BD2AA7F8256F4E3900EA8791 /* CardDetailDueDateView.swift in Sources */,
+				333BA587257792690057ACA4 /* ActivityEndPoint.swift in Sources */,
 				335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */,
 				33638DE62573958B006033CF /* ListHeaderView.swift in Sources */,
 				333BA56825769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift in Sources */,

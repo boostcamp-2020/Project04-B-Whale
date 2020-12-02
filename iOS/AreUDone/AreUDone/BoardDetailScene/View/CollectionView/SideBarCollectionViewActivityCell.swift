@@ -35,8 +35,9 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  func update(with text: String) {
-    titleLabel.text = text
+  func update(with activity: Activity?) {
+    guard let activity = activity else { return }
+    titleLabel.text = activity.content
   }
 }
 
