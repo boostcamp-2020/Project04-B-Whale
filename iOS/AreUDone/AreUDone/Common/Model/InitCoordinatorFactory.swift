@@ -23,12 +23,12 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
       ]
       return TabbarCoordinator(
         router: router,
-        signInCoordinator: SigninCoordinator(),
+        signInCoordinator: SigninCoordinator(router: router),
         tabbarController: UITabBarController(),
         coordinators: coordinators
       )
     case .isNotSigned:
-      return SigninCoordinator()
+      return SigninCoordinator(router: router)
     }
   }
 }

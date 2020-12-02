@@ -15,7 +15,11 @@ final class SigninCoordinator: Coordinator {
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .signin)
   }
+  private let router: Routable
   
+  init(router: Routable) {
+    self.router = router
+  }
   
   // MARK: - Method
   
@@ -23,7 +27,8 @@ final class SigninCoordinator: Coordinator {
     guard let signInViewController = storyboard.instantiateViewController(
             identifier: SigninViewController.identifier,
             creator: { coder in
-              let viewModel = SigninViewModel(videoPlayerLooper: VideoPlayerLooper())
+              let userService = UserService(router: self.router)
+              let viewModel = SigninViewModel(userService: userService, videoPlayerLooper: VideoPlayerLooper())
               return SigninViewController(coder: coder, viewModel: viewModel)
             }) as? SigninViewController
     else { return UIViewController() }

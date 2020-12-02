@@ -211,6 +211,7 @@
 		BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */; };
 		BDEA7BEB2576385000CF6B11 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */; };
 		BDEA7BF025763AB300CF6B11 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */; };
+		BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BFA2577768D00CF6B11 /* UserEndPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -384,6 +385,7 @@
 		BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputCoordinator.swift; sourceTree = "<group>"; };
 		BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
+		BDEA7BFA2577768D00CF6B11 /* UserEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -532,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18B2325663E74005DF00A /* UserService.swift */,
+				BDEA7BFA2577768D00CF6B11 /* UserEndPoint.swift */,
 			);
 			path = UserService;
 			sourceTree = "<group>";
@@ -1321,6 +1324,7 @@
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
 				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
+				BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */,
 				BD2AA8BD2574D0A200EA8791 /* CommentView.swift in Sources */,
 				33638DEE25739971006033CF /* ListCollectionView.swift in Sources */,
 				BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */,
