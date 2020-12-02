@@ -8,14 +8,14 @@
 import Foundation
 import NetworkFramework
 
+enum LoginFlatform: String {
+  case naver
+  case apple
+}
+
 enum UserEndPoint {
   
-  enum Flatform: String {
-    case naver
-    case apple
-  }
-  
-  case requestLogin(flatform: Flatform)
+  case requestLogin(flatform: LoginFlatform)
 }
 
 extension UserEndPoint: EndPointable {
@@ -23,7 +23,7 @@ extension UserEndPoint: EndPointable {
   var environmentBaseURL: String {
     switch self {
     case .requestLogin(let flatform):
-      return "\(APICredentials.ip)/api/auth/login/\(flatform.rawValue)"
+      return "\(APICredentials.ip)/api/oauth/login/\(flatform.rawValue)"
     }
   }
   
@@ -60,6 +60,4 @@ extension UserEndPoint: EndPointable {
   var bodies: HTTPBody? {
     return nil
   }
-  
-  
 }
