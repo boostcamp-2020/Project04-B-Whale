@@ -21,6 +21,7 @@ class ConnectionOptionGenerator {
                 connectionOption.url = this.databaseEnv.getDatabaseUrl();
                 connectionOption.connectTimeout = 3000;
                 // connectionOption.acquireTimeout = 5000;
+                connectionOption.bigNumberStrings = false;
                 connectionOption.extra.connectionLimit = this.databaseEnv.getDatabaseConnectionLimit();
                 break;
             case DatabaseType.SQLITE:
