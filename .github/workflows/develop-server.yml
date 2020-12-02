@@ -31,7 +31,7 @@ jobs:
           echo NODE_ENV=test >> .env
           echo DATABASE_TYPE=mysql >> .env.test
           echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@localhost:3306/${MYSQL_DATABASE} >> .env.test
-          echo DATABASE_DROP_SCHEMA=true >> .env.test
+          echo DATABASE_DROP_SCHEMA=false >> .env.test
           echo DATABASE_SYNCHRONIZE=true >> .env.test
           echo JWT_SECRET=sjfklajslfjaslfjals >> .env.test
           echo OAUTH_NAVER_CLIENT_ID=vdEhOcPIbq3NUryKWnDh >> .env.test
