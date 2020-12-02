@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
+import BoardDetailContext from '../../context/BoardDetailContext';
+import InvitedUserDetail from './InvitedUserDetail';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -11,21 +13,33 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 15%;
-    left: 14em;
+    top: 14%;
+    left: ${(props) => props.offsetY}px;
     width: 200px;
-    height: 200px;
+    height: auto;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
     overflow: auto;
     z-index: 2;
+    max-height: 500px;
+    overflow: scroll;
 `;
 
 const InvitedUserDropdown = (props) => {
+    const wrapper = useRef();
+    const { boardDetail } = useContext(BoardDetailContext);
+    const { invitedDropdownDisplay } = props;
+    const onClose = (evt) => {
+        if (evt.target === wrapper.current) props.setInvitedDropdownDisplay({ visible: false });
+    };
     return (
-        <Wrapper onClick={() => props.setInvitedDropdownDisplay(false)}>
-            <DropdownWrapper />
+        <Wrapper onClick={onClose} ref={wrapper}>
+            <DropdownWrapper offsetY={invitedDropdownDisplay.offsetY}>
+                {boardDetail.invitedUsers.map(({ profileImageUrl, name, id }) => (
+                    <InvitedUserDetail profileImageUrl={profileImageUrl} name={name} key={id} />
+                ))}
+            </DropdownWrapper>
         </Wrapper>
     );
 };
