@@ -10,14 +10,14 @@ const DateWrapper = styled.div`
     font-size: 20px;
     cursor: pointer;
 
-    &:hover {
-        background-color: #00ff00;
-    }
     &:first-child {
         color: ${(props) => props.theme.redColor};
     }
     &:last-child {
         color: ${(props) => props.theme.blueColor};
+    }
+    &:hover {
+        background-color: #00ff00;
     }
 `;
 
