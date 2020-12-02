@@ -12,7 +12,7 @@ struct BoardDetail: Codable {
     let creator: Creator
     let title, color: String
     let invitedUsers: [InvitedUser]
-    let lists: [List]
+    var lists: [List]
 }
 
 // MARK: - Creator
@@ -23,5 +23,5 @@ struct Creator: Codable {
 
 struct InvitedUser: Codable {
     let id: Int
-    let name, profileImageURL: String
+    let name, profileImageUrl: String
 }
