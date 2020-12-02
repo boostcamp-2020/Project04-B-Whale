@@ -9,7 +9,8 @@ import Foundation
 import NetworkFramework
 
 protocol CardServiceProtocol {
-  func fetchDailyCards(date: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
+  func fetchDailyCards(dateString: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
+  func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void))
 }
 
 class CardService: CardServiceProtocol {
@@ -28,9 +29,19 @@ class CardService: CardServiceProtocol {
   
   // MARK: - Method
   
-  func fetchDailyCards(date: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
-    router.request(route: CardEndPoint.fetchDailyCards(date: date)) { (result: Result<Cards, APIError>) in
+  func fetchDailyCards(dateString: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
+    router.request(route: CardEndPoint.fetchDailyCards(dateString: dateString)) { (result: Result<Cards, APIError>) in
       completionHandler(result)
     }
+  }
+  
+  func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void)) {
+    router.request(route: CardEndPoint.fetchDetailCard(id: id)) { (result: Result<CardDetail, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func updateCard() {
+    
   }
 }

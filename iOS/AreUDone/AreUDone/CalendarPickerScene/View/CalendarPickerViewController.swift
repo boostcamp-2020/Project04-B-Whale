@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CalendarPickerViewControllerDelegate: AnyObject {
+  
+  func send(selectedDate: String)
+}
 
 final class CalendarPickerViewController: UIViewController {
   
@@ -52,7 +56,9 @@ final class CalendarPickerViewController: UIViewController {
     
   private let viewModel: CalendarPickerViewModelProtocol
   lazy var dataSource = configureDataSource()
-  weak var delegate: CalendarViewControllerDelegate?
+  
+  //TODO:- 물어보기 delegate의 위치와 이름
+  weak var delegate: CalendarPickerViewControllerDelegate?
   weak var coordinator: CalendarPickerViewCoordinator?
   
   

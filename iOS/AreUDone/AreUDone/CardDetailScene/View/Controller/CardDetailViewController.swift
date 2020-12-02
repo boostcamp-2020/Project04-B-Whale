@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CommentSection: CaseIterable {
+enum CommentSection {
   case main
 }
 
@@ -19,6 +19,7 @@ final class CardDetailViewController: UIViewController {
   // MARK:- Property
   
   private let viewModel: CardDetailViewModelProtocol
+  weak var cardDetailCoordinator: CardDetailCoordinator?
   private lazy var dataSource = configureDataSource()
   
   private lazy var scrollView: UIScrollView = {
@@ -66,10 +67,15 @@ final class CardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     configure()
     bindUI()
-    
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     viewModel.fetchDetailCard()
+    navigationController?.navigationBar.isHidden = false
   }
 }
 
@@ -123,11 +129,11 @@ private extension CardDetailViewController {
     addEndEdittingGesture()
   }
   
-  func configureView(){
-    navigationController?.navigationBar.isHidden = false
-    
+  func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
+    stackView.setupContentViewDelegate(self)
+    stackView.setupDueDateViewDelegate(self)
     
     addKeyboardNotification()
     
@@ -230,7 +236,6 @@ private extension CardDetailViewController {
   
   func bindingCardDetailNavigationBarTitle() {
     viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
-//      self?.title = title
       self?.navigationItem.title = title
     }
   }
@@ -298,5 +303,25 @@ extension CardDetailViewController: UIScrollViewDelegate {
 extension CardDetailViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view?.isDescendant(of: commentView) == true ? false : true
+  }
+}
+
+
+// MARK:- Extension CardDetailContentViewDelegate
+
+extension CardDetailViewController: CardDetailContentViewDelegate {
+  
+  func cardDetailContentEditButtonTapped(with content: String) {
+    cardDetailCoordinator?.showContentInput(with: content)
+  }
+}
+
+
+// MARK:- Extension CardDetailDueDateViewDelegate
+
+extension CardDetailViewController: CardDetailDueDateViewDelegate {
+  
+  func cardDetailDueDateEditButtonTapped(with dateString: String) {
+    cardDetailCoordinator?.showCalendar(with: dateString)
   }
 }
