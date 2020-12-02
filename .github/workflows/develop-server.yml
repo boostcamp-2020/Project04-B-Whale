@@ -1,0 +1,51 @@
+name: Server CI/CD
+on:
+  push:
+    branches: [ develop/web ]
+  pull_request:
+    branches: [ develop/web ]
+defaults:
+  run:
+    shell: bash
+    working-directory: ./server
+jobs:
+  test:
+    runs-on: ubuntu-latest 
+    env:
+      MYSQL_DATABASE: areudonedb
+      MYSQL_USER: areudone
+      MYSQL_PASSWORD: 123123
+      MYSQL_ROOT_PASSWORD: 123123
+    services:
+      db:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: ${{ env.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12.x
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: |
+          touch .env
+          touch .env.test
+          echo NODE_ENV=test >> .env
+          echo DATABASE_TYPE=mysql >> .env.test
+          echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@localhost:3306/${MYSQL_DATABASE} >> .env.test
+          echo DATABASE_DROP_SCHEMA=true >> .env.test
+          echo DATABASE_SYNCHRONIZE=true >> .env.test
+          echo JWT_SECRET=sjfklajslfjaslfjals >> .env.test
+          echo OAUTH_NAVER_CLIENT_ID=vdEhOcPIbq3NUryKWnDh >> .env.test
+          echo DATABASE_URL=mysql://${MYSQL_USER}
+          echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}
+          cat .env.test
+      - run: npm run test
