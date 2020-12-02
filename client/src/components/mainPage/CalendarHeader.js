@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { CalendarStatusContext } from '../../context/CalendarContext';
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -22,13 +22,15 @@ const DateButton = styled.button.attrs({ type: 'button' })`
 `;
 
 const CalendarHeader = () => {
+    const { selectedDate } = useContext(CalendarStatusContext);
+
     return (
         <HeaderWrapper>
             {/* TODO: button 클릭시, 이전 이후달로 이동 */}
             <DateButton>
                 <MdChevronLeft size={30} />
             </DateButton>
-            <DateTitle>{moment().format('YYYY.MM')}</DateTitle>
+            <DateTitle>{selectedDate.format('YYYY.MM')}</DateTitle>
             <DateButton>
                 <MdChevronRight size={30} />
             </DateButton>

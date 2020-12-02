@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 import CalendarDate from './CalendarDate';
+import { CalendarStatusContext } from '../../context/CalendarContext';
 
 const BodyWrapper = styled.div`
     padding: 8px;
@@ -45,11 +45,14 @@ const Day = styled.div`
 `;
 
 const CalendarBody = () => {
+    const { today, selectedDate } = useContext(CalendarStatusContext);
+
     const makeCalendar = () => {
-        const today = moment();
-        const startWeek = today.clone().startOf('month').week();
+        const startWeek = selectedDate.clone().startOf('month').week();
         const endWeek =
-            today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
+            selectedDate.clone().endOf('month').week() === 1
+                ? 53
+                : selectedDate.clone().endOf('month').week();
         const calendar = [];
         for (let week = startWeek; week <= endWeek; week += 1) {
             calendar.push(
@@ -57,17 +60,25 @@ const CalendarBody = () => {
                     {Array(7)
                         .fill(0)
                         .map((_, i) => {
-                            const current = today.clone().week(week).startOf('week').add(i, 'day');
+                            const current = selectedDate
+                                .clone()
+                                .week(week)
+                                .startOf('week')
+                                .add(i, 'day');
                             const isToday =
-                                today.format('YYYYMMDD') === current.format('YYYYMMDD')
+                                current.format('YYYYMMDD') === today.format('YYYYMMDD')
                                     ? 'today'
                                     : '';
+                            const isSelected =
+                                current.format('MMDD') === selectedDate.format('MMDD')
+                                    ? 'selected'
+                                    : '';
                             const isGrayed =
-                                current.format('MM') === today.format('MM') ? '' : 'grayed';
+                                current.format('MM') === selectedDate.format('MM') ? '' : 'grayed';
                             return (
                                 <CalendarDate
                                     key={current.format('YYYY-MM-DD')}
-                                    className={`${isToday} ${isGrayed}`}
+                                    className={`${isToday} ${isSelected} ${isGrayed}`}
                                     date={current.format('D')}
                                 />
                             );
