@@ -20,7 +20,7 @@ final class CalendarCoordinator: NavigationCoordinator {
   var navigationController: UINavigationController?
   
   private var calendarPickerCoordinator: NavigationCoordinator!
-  
+  private var cardDetailCoordinator: NavigationCoordinator!
   
   // MARK: - Initializer
   
@@ -34,14 +34,16 @@ final class CalendarCoordinator: NavigationCoordinator {
   func start() -> UIViewController {
     
     guard let calendarViewController = storyboard.instantiateViewController(
-            identifier: CalendarViewController.identifier, creator: { coder in
-      let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
-      let viewModel = CalendarViewModel(cardService: cardService)
-      return CalendarViewController(coder: coder, viewModel: viewModel)
-    }) as? CalendarViewController else { return UIViewController() }
-
+            identifier: CalendarViewController.identifier,
+            creator: { coder in
+              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+              let viewModel = CalendarViewModel(cardService: cardService)
+              return CalendarViewController(coder: coder, viewModel: viewModel)
+            }) as? CalendarViewController
+    else { return UIViewController() }
+    
     calendarViewController.calendarCoordinator = self
-
+    
     return calendarViewController
   }
 }
@@ -51,7 +53,7 @@ final class CalendarCoordinator: NavigationCoordinator {
 
 extension CalendarCoordinator {
   
-  func didTapOnDate(selectedDate: Date, delegate: CalendarViewControllerDelegate) {
+  func didTapOnDate(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
     calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: selectedDate)
     calendarPickerCoordinator.navigationController = navigationController
     
@@ -65,7 +67,9 @@ extension CalendarCoordinator {
   
   func showCardDetail(for id: Int) {
     let router = Router()
-    let cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
+    cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
+    cardDetailCoordinator.navigationController = navigationController
+    
     let cardDetailViewController = cardDetailCoordinator.start()
     cardDetailViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(cardDetailViewController, animated: true)

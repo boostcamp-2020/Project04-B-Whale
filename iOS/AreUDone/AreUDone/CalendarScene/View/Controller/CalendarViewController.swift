@@ -11,11 +11,6 @@ enum Section {
   case main
 }
 
-protocol CalendarViewControllerDelegate: AnyObject {
-  
-  func send(selectedDate: String)
-}
-
 final class CalendarViewController: UIViewController {
   
   typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
@@ -141,19 +136,19 @@ private extension CalendarViewController {
 
 extension CalendarViewController: DateStepperDelegate {
   
-  func arrowDidTapped(direction: Direction, with date: String) {
-    viewModel.changeDate(to: date, direction: direction)
+  func arrowDidTapped(direction: Direction, with dateString: String) {
+    viewModel.changeDate(to: dateString, direction: direction)
   }
   
-  func dateLabelDidTapped(of date: String) {
-    calendarCoordinator?.didTapOnDate(selectedDate: date.toDate(), delegate: self)
+  func dateLabelDidTapped(of dateString: String) {
+    calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(with: .dot), delegate: self)
   }
 }
 
 
 // MARK: Extension CalendarViewControllerDelegate
 
-extension CalendarViewController: CalendarViewControllerDelegate {
+extension CalendarViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
     viewModel.changeDate(to: selectedDate, direction: nil)

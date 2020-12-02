@@ -7,12 +7,19 @@
 
 import UIKit
 
+protocol CardDetailDueDateViewDelegate {
+  
+  func cardDetailDueDateEditButtonTapped(with dateString: String)
+}
+
+
 final class CardDetailDueDateView: UIView {
   
   // MARK:- Property
   
-  private lazy var titleLable: UILabel = {
+  private lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "마감 날짜"
     label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
     
@@ -21,11 +28,23 @@ final class CardDetailDueDateView: UIView {
   
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
-    label.numberOfLines = 0
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont(name: "AmericanTypewriter", size: 15)
     
     return label
   }()
+  
+  private lazy var editButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "calendar")
+    button.setImage(image, for: .normal)
+    
+    return button
+  }()
+  
+  var delegate: CardDetailDueDateViewDelegate?
+  
   
   // MARK:- Initializer
   
@@ -54,31 +73,55 @@ final class CardDetailDueDateView: UIView {
 private extension CardDetailDueDateView {
   
   func configure() {
-    addSubview(titleLable)
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
+    
+    addSubview(titleLabel)
     addSubview(dueDateLabel)
+    addSubview(editButton)
     
     configureTitleLabel()
     configureDueDateLabel()
+    configureEditButton()
+    addingTarget()
   }
   
   func configureTitleLabel() {
-    titleLable.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
-      titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-      titleLable.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+      titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
   }
   
   func configureDueDateLabel() {
-    dueDateLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
-      dueDateLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
+      dueDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+      dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
+  }
+  
+  func configureEditButton() {
+    NSLayoutConstraint.activate([
+      editButton.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+      editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor),
+      editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
+      editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+    ])
+  }
+  
+  func addingTarget() {
+    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+  }
+}
+
+
+private extension CardDetailDueDateView {
+  
+  @objc func editButtonTapped() {
+    guard let dateString = dueDateLabel.text else { return }
+    delegate?.cardDetailDueDateEditButtonTapped(with: dateString)
   }
 }

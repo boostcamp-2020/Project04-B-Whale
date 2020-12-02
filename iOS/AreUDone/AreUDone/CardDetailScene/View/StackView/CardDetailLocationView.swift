@@ -65,6 +65,9 @@ final class CardDetailLocationView: UIView {
 private extension CardDetailLocationView {
   
   func configure() {
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
+    
     addSubview(titleLabel)
     addSubview(listNameLabel)
     addSubview(boardNameLabel)

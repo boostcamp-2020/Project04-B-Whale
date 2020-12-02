@@ -18,11 +18,8 @@ final class CardDetailCoordinator: NavigationCoordinator {
   }
   private let router: Routable
   private let id: Int
-  
-  func setNavigationController(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-  
+  private var contentInputCoordinator: NavigationCoordinator!
+  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
   
   // MARK:- Initializer
   
@@ -37,7 +34,9 @@ final class CardDetailCoordinator: NavigationCoordinator {
   
   func start() -> UIViewController {
     guard let cardDetailViewController = storyboard.instantiateViewController(
-            identifier: CardDetailViewController.identifier, creator: { coder in
+            identifier: CardDetailViewController.identifier,
+            creator: { [weak self] coder in
+              guard let self = self else { return UIViewController() }
               let service = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let viewModel = CardDetailViewModel(id: self.id, cardService: service)
               
@@ -47,6 +46,36 @@ final class CardDetailCoordinator: NavigationCoordinator {
               )}) as? CardDetailViewController
     else { return UIViewController() }
     
+    cardDetailViewController.cardDetailCoordinator = self
+    
     return cardDetailViewController
+  }
+}
+
+
+extension CardDetailCoordinator {
+  
+  func showContentInput(with content: String) {
+    contentInputCoordinator = ContentInputCoordinator(content: content, router: router)
+    contentInputCoordinator.navigationController = navigationController
+    let contentInputViewController = contentInputCoordinator.start()
+
+    navigationController?.pushViewController(
+      contentInputViewController,
+      animated: true
+    )
+  }
+  
+  func showCalendar(with stringToDate: String) {
+    let date = stringToDate.toDateFormat(with: .dash)
+    calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: date)
+    calendarPickerCoordinator.navigationController = navigationController
+    
+    guard let calendarPickerViewController = calendarPickerCoordinator.start()
+            as? CalendarPickerViewController
+    else { return }
+    
+//    calendarPickerViewController.delegate = delegate
+    navigationController?.present(calendarPickerViewController, animated: true)
   }
 }
