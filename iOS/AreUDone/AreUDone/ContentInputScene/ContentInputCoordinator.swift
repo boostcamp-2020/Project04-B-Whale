@@ -28,6 +28,9 @@ final class ContentInputCoordinator: NavigationCoordinator {
     self.content = content
   }
   
+  deinit {
+    print("content input view deinit")
+  }
   
   // MARK:- Method
   

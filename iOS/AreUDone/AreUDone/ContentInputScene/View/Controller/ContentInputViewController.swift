@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ContentInputViewControllerDelegate {
+protocol ContentInputViewControllerDelegate: AnyObject {
   
   func send(with content: String)
 }
@@ -19,7 +19,7 @@ final class ContentInputViewController: UIViewController {
   
   private let viewModel: ContentInputViewModelProtocol
   weak var contentInputCoordinator: ContentInputCoordinator?
-  var delegate: ContentInputViewControllerDelegate?
+  weak var delegate: ContentInputViewControllerDelegate?
   
   private lazy var contentTextView: UITextView = {
     let view = UITextView()
