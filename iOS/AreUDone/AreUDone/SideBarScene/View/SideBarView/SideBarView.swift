@@ -26,13 +26,13 @@ final class SideBarView: UIView {
       collectionView.register(SideBarCollectionViewMembersCell.self)
       collectionView.register(SideBarCollectionViewActivityCell.self)
       collectionView.registerHeaderView(SideBarHeaderView.self)
+      collectionView.registerFooterView(SideBarFooterView.self)
       
       let flowLayout = UICollectionViewFlowLayout()
       flowLayout.estimatedItemSize = CGSize(width: bounds.width, height: 30)
       flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: 40)
-      
-      flowLayout.sectionHeadersPinToVisibleBounds = true
-      
+      flowLayout.footerReferenceSize = CGSize(width: bounds.width, height: 70)
+            
       collectionView.collectionViewLayout = flowLayout
     }
   }
@@ -63,7 +63,7 @@ private extension SideBarView {
   func configure() {
     nibSetup()
     bindUI()
- 
+    
     viewModel.updateMembersInCollectionView()
     viewModel.updateActivitiesInCollectionView()
   }
@@ -114,12 +114,28 @@ extension SideBarView: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let headerView: SideBarHeaderView = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
-    
-    let (imageName, title) = viewModel.fetchSectionHeader(at: indexPath.section)
-    headerView.update(withImageName: imageName, andTitle: title)
-    
-    return headerView
+  
+    switch kind {
+    case UICollectionView.elementKindSectionHeader:
+      let headerView: SideBarHeaderView = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
+      
+      let (imageName, title) = viewModel.fetchSectionHeader(at: indexPath.section)
+      headerView.update(withImageName: imageName, andTitle: title)
+      
+      return headerView
+      
+    case UICollectionView.elementKindSectionFooter:
+      let footerView: SideBarFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
+      footerView.delegate = self
+      
+      if indexPath.section == 0 { footerView.update(with: "초대하기") }
+      else { footerView.update(with: "") }
+      
+      return footerView
+      
+    default:
+      return UICollectionReusableView()
+    }
   }
 }
 
@@ -129,6 +145,24 @@ extension SideBarView: UICollectionViewDataSource {
 extension SideBarView: UICollectionViewDelegate {
   
   
+}
+
+
+// MARK: - Extension obj-c
+
+private extension SideBarView {
+  
+  @objc func footerViewDidTapped() {
+    
+  }
+}
+
+extension SideBarView: SideBarFooterViewDelegate {
+  
+  func baseViewTapped() {
+    //TODO: 초대하기 화면 표시
+    
+  }
 }
 
 
@@ -159,7 +193,7 @@ private extension SideBarView {
     viewModel.bindingUpdateMembersInCollectionView { [weak self] in
       DispatchQueue.main.async {
         self?.collectionView.reloadData()
-//        self?.collectionView.reloadSections(IndexSet(integer: 0))
+        //        self?.collectionView.reloadSections(IndexSet(integer: 0))
       }
     }
     
@@ -167,7 +201,7 @@ private extension SideBarView {
     viewModel.bindingUpdateActivitiesInCollectionView { [weak self] in
       DispatchQueue.main.async {
         self?.collectionView.reloadData()
-//        self?.collectionView.reloadSections(IndexSet(integer: 1))
+        //        self?.collectionView.reloadSections(IndexSet(integer: 1))
       }
     }
   }
