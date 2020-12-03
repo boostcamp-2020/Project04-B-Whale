@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../common/header';
 import TopMenu from './TopMenu';
 import ActivitySidebar from './ActivitySidebar';
 import InvitedDropdown from './InvitedUserDropdown';
-import { getDetailBoard } from '../../utils/boardRequest';
+// import { getDetailBoard } from '../../utils/boardRequest';
 
 const MainContents = styled.div`
     height: 100%;
@@ -16,12 +16,6 @@ const Board = ({ match }) => {
     const { id } = match.params;
     const [sidebarDisplay, setSidebarDisplay] = useState(false);
     const [invitedDropdownDisplay, setInvitedDropdownDisplay] = useState(false);
-
-    useEffect(async () => {
-        const { status, data } = await getDetailBoard(id);
-        console.log(status);
-        console.log(data);
-    }, []);
 
     return (
         <>
