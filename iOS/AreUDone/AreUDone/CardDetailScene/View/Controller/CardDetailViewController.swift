@@ -88,10 +88,17 @@ private extension CardDetailViewController {
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       collectionView: commentCollectionView
-    ) { (collectionView, indexPath, comment) -> UICollectionViewCell? in
+    ) { [weak self] (collectionView, indexPath, comment) -> UICollectionViewCell? in
       let cell: CommentCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.update(with: comment)
+      
+      self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl) { data in
+        let image = UIImage(data: data)
+        DispatchQueue.main.async {
+          cell.update(with: image)
+        }
+      }
       
       return cell
     }
@@ -211,7 +218,7 @@ private extension CardDetailViewController {
   func bindUI() {
     bindingCardDetailContentView()
     bindingCardDetailDueDateView()
-    bindingCardDetailCommentTableView()
+    bindingCardDetailCommentCollectionView()
     bindingCardDetailNavigationBarTitle()
     bindingCardDetailListTitle()
     bindingCardDetailBoardTitle()
@@ -233,8 +240,8 @@ private extension CardDetailViewController {
     }
   }
   
-  func bindingCardDetailCommentTableView() {
-    viewModel.bindingCardDetailCommentTableView { [weak self] comments in
+  func bindingCardDetailCommentCollectionView() {
+    viewModel.bindingCardDetailCommentCollectionView { [weak self] comments in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
       }

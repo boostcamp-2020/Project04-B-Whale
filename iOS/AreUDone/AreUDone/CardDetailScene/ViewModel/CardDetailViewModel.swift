@@ -10,7 +10,7 @@ import Foundation
 protocol CardDetailViewModelProtocol {
   func bindingCardDetailContentView(handler: @escaping ((String?) -> Void))
   func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
-  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]?) -> Void))
+  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetail.Comment]?) -> Void))
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
@@ -19,6 +19,7 @@ protocol CardDetailViewModelProtocol {
   func addComment(with comment: String)
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
+  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
 final class CardDetailViewModel: CardDetailViewModelProtocol {
@@ -102,6 +103,17 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       }
     }
   }
+  
+  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void)) {
+    imageService.fetchImage(with: urlAsString) { result in
+      switch result {
+      case .success(let data):
+        completionHandler(data)
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
 }
 
 
@@ -117,7 +129,7 @@ extension CardDetailViewModel {
     cardDetailDueDateViewHandler = handler
   }
   
-  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]?) -> Void)) {
+  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetail.Comment]?) -> Void)) {
     cardDetailCommentsViewHandler = handler
   }
   
