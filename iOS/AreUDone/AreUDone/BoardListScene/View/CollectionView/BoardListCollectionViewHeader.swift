@@ -11,7 +11,13 @@ final class BoardListCollectionViewHeader: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  let titleLabel = UILabel()
+  private lazy var titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumB(size: 20)
+    
+    return label
+  }()
   
   // MARK: - Initializer
   
@@ -24,32 +30,32 @@ final class BoardListCollectionViewHeader: UICollectionReusableView, Reusable {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    titleLabel.text = "샘플입니다"
     configure()
   }
   
   
   // MARK: - Method
   
-  private func configure() {
+  func update(with title: String) {
+    titleLabel.text = title
+  }
+}
+
+
+// MARK:- Extension 
+
+private extension BoardListCollectionViewHeader {
+  
+  func configure() {
     addSubview(titleLabel)
     
-    configureTitle()
+    configureTitleLabel()
   }
   
-  func configureTitle() {
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+  func configureTitleLabel() {
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
     ])
-    
-    
-    
-    
   }
-  
-  
-  
 }
