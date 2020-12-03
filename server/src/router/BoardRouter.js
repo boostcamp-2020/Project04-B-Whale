@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { BoardService } from '../service/BoardService';
+import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 
 export const BoardRouter = () => {
     const router = Router();
@@ -25,7 +26,7 @@ export const BoardRouter = () => {
         const boardService = BoardService.getInstance();
         const detailBoard = await boardService.getDetailBoard(req.params.id);
         if (!detailBoard) {
-            res.sendStatus(404);
+            throw new EntityNotFoundError();
         }
         res.status(200).json(detailBoard);
     });
