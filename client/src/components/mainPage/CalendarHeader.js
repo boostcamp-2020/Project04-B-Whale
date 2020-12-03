@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { CalendarDispatchContext, CalendarStatusContext } from '../../context/CalendarContext';
+import { getCardCount } from '../../utils/cardRequest';
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -25,10 +26,14 @@ const CalendarHeader = () => {
     const { selectedDate } = useContext(CalendarStatusContext);
     const calendarDispatch = useContext(CalendarDispatchContext);
 
-    const onClickMoveMonth = (next) => {
+    const onClickMoveMonth = async (next) => {
         const changeDate = selectedDate.clone();
         const date = next ? changeDate.add(1, 'month') : changeDate.subtract(1, 'month');
-        calendarDispatch({ type: 'CHANGE_MONTH', date });
+
+        const startDate = date.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
+        const endDate = date.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
+        const { data } = await getCardCount({ startDate, endDate });
+        calendarDispatch({ type: 'CHANGE_MONTH', date, cardCount: data.cardCounts });
     };
 
     return (
