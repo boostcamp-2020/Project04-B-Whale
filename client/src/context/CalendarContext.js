@@ -4,15 +4,24 @@ import moment from 'moment';
 export const initCalendar = {
     today: moment(),
     selectedDate: moment(),
+    cardCount: [],
 };
 
 export const CalendarReducer = (state, action) => {
     switch (action.type) {
+        case 'GET_INIT_CARD_COUNT': {
+            const { cardCount } = action;
+            return {
+                ...state,
+                cardCount,
+            };
+        }
         case 'CHANGE_MONTH': {
-            const { date } = action;
+            const { date, cardCount } = action;
             return {
                 ...state,
                 selectedDate: date.clone(),
+                cardCount,
             };
         }
         case 'CHANGE_SELECTED_DATE': {
