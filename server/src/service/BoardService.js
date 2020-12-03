@@ -1,6 +1,7 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
+import { ForbiddenError } from '../common/error/ForbiddenError';
 
 export class BoardService extends BaseService {
     static instance = null;
@@ -68,7 +69,18 @@ export class BoardService extends BaseService {
     }
 
     @Transactional()
-    async getDetailBoard(boardId) {
+    async getDetailBoard(hostId, boardId) {
+        const invitationOfHost = await this.invitationRepository.find({
+            select: ['id'],
+            where: { user: hostId, board: boardId },
+        });
+        const boardOfCreator = await this.boardRepository.find({
+            select: ['id'],
+            where: { id: boardId, creator: hostId },
+        });
+        if (!invitationOfHost.length && !boardOfCreator.length) {
+            throw new ForbiddenError();
+        }
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
             .innerJoin('board.creator', 'creator')
@@ -98,16 +110,26 @@ export class BoardService extends BaseService {
         if (!boardDetail) {
             throw new EntityNotFoundError();
         }
-        if (boardDetail && boardDetail.invitations.length) {
-            delete Object.assign(boardDetail, { invitedUsers: boardDetail.invitations })
-                .invitations;
-            boardDetail.invitedUsers = boardDetail.invitedUsers.map((v) => v.user);
+        if (Array.isArray(boardDetail?.invitations)) {
+            boardDetail.invitedUsers = boardDetail.invitations.map((v) => v.user);
+            delete boardDetail.invitations;
         }
         return boardDetail;
     }
 
     @Transactional()
-    async inviteUserIntoBoard(boardId, userId) {
+    async inviteUserIntoBoard(hostId, boardId, userId) {
+        const invitationOfHost = await this.invitationRepository.find({
+            select: ['id'],
+            where: { user: hostId, board: boardId },
+        });
+        const boardOfCreator = await this.boardRepository.find({
+            select: ['id'],
+            where: { id: boardId, creator: hostId },
+        });
+        if (!invitationOfHost.length && !boardOfCreator.length) {
+            throw new ForbiddenError();
+        }
         const invitation = {
             board: boardId,
             user: userId,
