@@ -11,6 +11,37 @@ import NetworkFramework
 protocol CardServiceProtocol {
   func fetchDailyCards(dateString: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
   func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void))
+  func updateCard(
+    id: Int,
+    listId: Int?,
+    title: String?,
+    content: String?,
+    position: String?,
+    dueDate: String?,
+    completionHandler: @escaping ((Result<Void, APIError>) -> Void)
+  )
+}
+
+extension CardServiceProtocol {
+  func updateCard(
+    id: Int,
+    listId: Int? = nil,
+    title: String? = nil,
+    content: String? = nil,
+    position: String? = nil,
+    dueDate: String? = nil,
+    completionHandler: @escaping ((Result<Void, APIError>) -> Void)
+  ) {
+    updateCard(
+      id: id,
+      listId: listId,
+      title: title,
+      content: content,
+      position: position,
+      dueDate: dueDate,
+      completionHandler: completionHandler
+    )
+  }
 }
 
 class CardService: CardServiceProtocol {
@@ -51,12 +82,12 @@ class CardService: CardServiceProtocol {
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   ) {
     router.request(route: CardEndPoint.updateCard(
-                    id: id,
-                    listId: listId,
-                    title: title,
-                    content: content,
-                    position: position,
-                    dueDate: dueDate
+      id: id,
+      listId: listId,
+      title: title,
+      content: content,
+      position: position,
+      dueDate: dueDate
     )) { (result: Result<Void, APIError>) in
       completionHandler(result)
     }
