@@ -74,7 +74,7 @@ private extension CardContentView {
       .layerMinXMaxYCorner
     ]
     layer.cornerCurve = .continuous
-    layer.cornerRadius = 10
+    layer.cornerRadius = 5
   }
   
   func configureTitleLabel() {
