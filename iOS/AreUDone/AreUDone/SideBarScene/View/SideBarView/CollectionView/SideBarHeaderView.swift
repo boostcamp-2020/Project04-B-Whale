@@ -25,14 +25,7 @@ final class SideBarHeaderView: UICollectionReusableView, Reusable {
 
     return titleLabel
   }()
-  private lazy var dividerView: UIView = {
-    let dividerView = UIView()
-    dividerView.translatesAutoresizingMaskIntoConstraints = false
-    
-    dividerView.backgroundColor = .lightGray
-    
-    return dividerView
-  }()
+  
   
   
   // MARK: - Initializer
@@ -68,11 +61,11 @@ private extension SideBarHeaderView {
     
     addSubview(imageView)
     addSubview(titleLabel)
-    addSubview(dividerView)
-
+    
     configureImageView()
     configureTitle()
-    configureDividerView()
+    configureTopDividerView()
+    configureBottomDividerView()
   }
   
   func configureImageView() {
@@ -91,11 +84,27 @@ private extension SideBarHeaderView {
     ])
   }
   
-  func configureDividerView() {
+  func configureTopDividerView() {
+    let view = UIView.dividerView()
+    addSubview(view)
+    
     NSLayoutConstraint.activate([
-      dividerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-      dividerView.widthAnchor.constraint(equalTo: widthAnchor),
-      dividerView.heightAnchor.constraint(equalToConstant: 1)
+      view.topAnchor.constraint(equalTo: topAnchor),
+      view.widthAnchor.constraint(equalTo: widthAnchor),
+      view.heightAnchor.constraint(equalToConstant: 1)
+    ])
+  }
+  
+  func configureBottomDividerView() {
+    let view = UIView.dividerView()
+    addSubview(view)
+    
+    NSLayoutConstraint.activate([
+      view.bottomAnchor.constraint(equalTo: bottomAnchor),
+      view.widthAnchor.constraint(equalTo: widthAnchor),
+      view.heightAnchor.constraint(equalToConstant: 1)
     ])
   }
 }
+
+
