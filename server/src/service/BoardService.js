@@ -1,5 +1,6 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
+import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 
 export class BoardService extends BaseService {
     static instance = null;
@@ -80,6 +81,9 @@ export class BoardService extends BaseService {
             .where('board.id = :id', { id: boardId })
             .getOne();
 
+        if (!boardDetail) {
+            throw new EntityNotFoundError();
+        }
         if (boardDetail && boardDetail.invitations.length) {
             delete Object.assign(boardDetail, { invitedUsers: boardDetail.invitations })
                 .invitations;
