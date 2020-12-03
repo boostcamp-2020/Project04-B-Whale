@@ -9,7 +9,7 @@ import Foundation
 import MobileCoreServices
 
 struct Cards: Codable {
-    let cards: [Card]
+    let cards: [Card]?
 }
 
 class Card: NSObject, Codable {

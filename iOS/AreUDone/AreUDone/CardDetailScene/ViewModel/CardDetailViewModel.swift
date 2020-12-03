@@ -8,9 +8,9 @@
 import Foundation
 
 protocol CardDetailViewModelProtocol {
-  func bindingCardDetailContentView(handler: @escaping ((String) -> Void))
+  func bindingCardDetailContentView(handler: @escaping ((String?) -> Void))
   func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
-  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void))
+  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]?) -> Void))
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
@@ -26,9 +26,9 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardService: CardServiceProtocol
   private let id: Int
   
-  private var cardDetailContentViewHandler: ((String) -> Void)?
+  private var cardDetailContentViewHandler: ((String?) -> Void)?
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
-  private var cardDetailCommentsViewHandler: (([CardDetail.Comment]) -> Void)?
+  private var cardDetailCommentsViewHandler: (([CardDetail.Comment]?) -> Void)?
   private var cardDetailNavigationBarTitleHandler: ((String) -> Void)?
   private var cardDetailListTitleHandler: ((String) -> Void)?
   private var cardDetailBoardTitleHandler: ((String) -> Void)?
@@ -71,7 +71,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
 
 extension CardDetailViewModel {
   
-  func bindingCardDetailContentView(handler: @escaping ((String) -> Void)) {
+  func bindingCardDetailContentView(handler: @escaping ((String?) -> Void)) {
     cardDetailContentViewHandler = handler
   }
   
@@ -79,7 +79,7 @@ extension CardDetailViewModel {
     cardDetailDueDateViewHandler = handler
   }
   
-  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]) -> Void)) {
+  func bindingCardDetailCommentTableView(handler: @escaping (([CardDetail.Comment]?) -> Void)) {
     cardDetailCommentsViewHandler = handler
   }
   

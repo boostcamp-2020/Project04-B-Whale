@@ -76,10 +76,11 @@ private extension CalendarViewController {
   }
   
   func updateSnapshot(with item: Cards, animatingDifferences: Bool = true) {
+    guard let cards = item.cards else { return }
     var snapshot = Snapshot()
     
     snapshot.appendSections([""])
-    snapshot.appendItems(item.cards)
+    snapshot.appendItems(cards)
     
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
