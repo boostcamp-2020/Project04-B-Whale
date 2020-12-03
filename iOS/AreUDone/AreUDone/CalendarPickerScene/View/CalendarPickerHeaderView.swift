@@ -13,7 +13,7 @@ final class CalendarPickerHeaderView: UIView {
   
   private lazy var monthLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 26, weight: .bold)
+    label.font = UIFont.nanumB(size: 24)
     label.text = "Month"
     
     return label
