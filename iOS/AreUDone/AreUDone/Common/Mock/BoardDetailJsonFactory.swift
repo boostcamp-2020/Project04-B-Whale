@@ -18,7 +18,8 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
           "id": 0,
           "creator": {
               "id": 0,
-              "name": "심영민"
+              "name": "심영민",
+              "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
           },
           "title": "보드제목",
           "color": "#525252",
@@ -26,7 +27,32 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
               {
                   "id": 1,
                   "name": "서명렬",
-                  "profileImageUrl": "www.naver.com"
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+              },
+              {
+                  "id": 2,
+                  "name": "박수연",
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+              },
+              {
+                  "id": 3,
+                  "name": "이건홍",
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+              },
+              {
+                  "id": 4,
+                  "name": "신동훈",
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+              },
+              {
+                  "id": 5,
+                  "name": "유재석",
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+              },
+              {
+                  "id": 6,
+                  "name": "박명수",
+                  "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
               }
           ],
           "lists": [

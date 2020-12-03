@@ -27,6 +27,102 @@ struct ActivityTrueJsonFactory: JsonFactory {
                   "boardId": 1,
                   "content": "영민님이 명렬님을 초대했습니다.",
                   "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
+              },
+              {
+                  "id": 1,
+                  "boardId": 1,
+                  "content": "영민님이 명렬님을 초대했습니다.",
+                  "createdAt": "2020-12-12"
               }
           ]
       }
