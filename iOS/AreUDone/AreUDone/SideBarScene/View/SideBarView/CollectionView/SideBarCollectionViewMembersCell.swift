@@ -59,6 +59,7 @@ final class SideBarCollectionViewMembersCell: UICollectionViewCell, Reusable {
   override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
     super.preferredLayoutAttributesFitting(layoutAttributes)
     
+    // TODO: 주석 삭제 예정
     // 현재 cell 을 layoutifneeded 하면 하위 view 들도 다시 그려지면서(layoutsubviews) 하위뷰인 collectionview 의 contentsize가 잡히게 됨 -> 그 contentsize 의 height 를 가지고 layoutattribute 를 설정해주면 끝!!
     
     // 이 cell 을 가진 상위 모듈(collectionview 를 가지는 모듈)에서 collectionview.reloaddata를 해주면 호출됨.

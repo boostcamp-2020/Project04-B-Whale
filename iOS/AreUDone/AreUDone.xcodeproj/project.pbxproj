@@ -22,6 +22,13 @@
 		333BA582257791180057ACA4 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA581257791180057ACA4 /* Activity.swift */; };
 		333BA587257792690057ACA4 /* ActivityEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA586257792690057ACA4 /* ActivityEndPoint.swift */; };
 		333BA58C2577987A0057ACA4 /* ActivityJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */; };
+		333BA5912577A5D30057ACA4 /* SideBarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */; };
+		333BA5972577B8640057ACA4 /* SideBarHeaderContentsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5962577B8640057ACA4 /* SideBarHeaderContentsFactory.swift */; };
+		333BA59F2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */; };
+		333BA5A72577C0440057ACA4 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5A62577C0440057ACA4 /* MemberCell.swift */; };
+		333BA5BC2578781C0057ACA4 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA53A2575FFCC0057ACA4 /* SideBarViewController.swift */; };
+		333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5CE25787F290057ACA4 /* ImageService.swift */; };
+		333BA5D825787FC40057ACA4 /* ImageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */; };
 		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
 		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
@@ -263,6 +270,12 @@
 		333BA581257791180057ACA4 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		333BA586257792690057ACA4 /* ActivityEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEndPoint.swift; sourceTree = "<group>"; };
 		333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityJsonFactory.swift; sourceTree = "<group>"; };
+		333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarHeaderView.swift; sourceTree = "<group>"; };
+		333BA5962577B8640057ACA4 /* SideBarHeaderContentsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarHeaderContentsFactory.swift; sourceTree = "<group>"; };
+		333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarCollectionViewMembersCell.swift; sourceTree = "<group>"; };
+		333BA5A62577C0440057ACA4 /* MemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
+		333BA5CE25787F290057ACA4 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEndPoint.swift; sourceTree = "<group>"; };
 		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
@@ -437,12 +450,75 @@
 		333BA53F2575FFDD0057ACA4 /* SideBarView */ = {
 			isa = PBXGroup;
 			children = (
-				333BA53A2575FFCC0057ACA4 /* SideBarViewController.swift */,
-				333BA55F257695CD0057ACA4 /* SideBarViewController.xib */,
 				333BA55225768F3B0057ACA4 /* SideBarView.swift */,
 				333BA55A257692AF0057ACA4 /* SideBarView.xib */,
+				333BA5C9257879310057ACA4 /* CollectionView */,
 			);
 			path = SideBarView;
+			sourceTree = "<group>";
+		};
+		333BA5C4257878740057ACA4 /* SideBarScene */ = {
+			isa = PBXGroup;
+			children = (
+				333BA5C6257878BE0057ACA4 /* Model */,
+				333BA5C7257878E20057ACA4 /* View */,
+				333BA5CA257879480057ACA4 /* ViewModel */,
+			);
+			path = SideBarScene;
+			sourceTree = "<group>";
+		};
+		333BA5C5257878A20057ACA4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				333BA53A2575FFCC0057ACA4 /* SideBarViewController.swift */,
+				333BA55F257695CD0057ACA4 /* SideBarViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		333BA5C6257878BE0057ACA4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				333BA5962577B8640057ACA4 /* SideBarHeaderContentsFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		333BA5C7257878E20057ACA4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				333BA5C5257878A20057ACA4 /* Controller */,
+				333BA53F2575FFDD0057ACA4 /* SideBarView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		333BA5C9257879310057ACA4 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */,
+				333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */,
+				333BA5A62577C0440057ACA4 /* MemberCell.swift */,
+				333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		333BA5CA257879480057ACA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		333BA5D325787F2F0057ACA4 /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				333BA5CE25787F290057ACA4 /* ImageService.swift */,
+				333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */,
+			);
+			path = ImageService;
 			sourceTree = "<group>";
 		};
 		335AC4C3256EA2CF006A5C4A /* CollectionView */ = {
@@ -488,7 +564,6 @@
 				333BA5132574D06C0057ACA4 /* AddOrCancelView.swift */,
 				335AC505256F8BFA006A5C4A /* Controller */,
 				335AC512256FDC91006A5C4A /* CollectionView */,
-				333BA53F2575FFDD0057ACA4 /* SideBarView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -506,7 +581,6 @@
 			children = (
 				335AC50A256F8D28006A5C4A /* BoardDetailViewModel.swift */,
 				335AC54C25727BF2006A5C4A /* ListViewModel.swift */,
-				333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -520,7 +594,6 @@
 				335AC52D256FE7C7006A5C4A /* ListCollectionViewCell.swift */,
 				33638DE52573958A006033CF /* ListHeaderView.swift */,
 				33638DE02573956F006033CF /* ListFooterView.swift */,
-				333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -686,6 +759,7 @@
 				336010FB256B8FAB009580A1 /* ListService */,
 				336010FF256B8FB5009580A1 /* CommentService */,
 				33601103256B8FBC009580A1 /* ActivityService */,
+				333BA5D325787F2F0057ACA4 /* ImageService */,
 				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
 				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
@@ -762,6 +836,7 @@
 				BD2AA79D256DF87D00EA8791 /* CardDetailScene */,
 				33601227256E4FEF009580A1 /* BoardListScene */,
 				335AC4ED256F8ABE006A5C4A /* BoardDetailScene */,
+				333BA5C4257878740057ACA4 /* SideBarScene */,
 			);
 			path = AreUDone;
 			sourceTree = "<group>";
@@ -1239,6 +1314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				333BA5972577B8640057ACA4 /* SideBarHeaderContentsFactory.swift in Sources */,
 				336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */,
 				333BA51F2575E26B0057ACA4 /* PaddingTextField.swift in Sources */,
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
@@ -1253,6 +1329,7 @@
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
+				333BA5A72577C0440057ACA4 /* MemberCell.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
@@ -1304,6 +1381,7 @@
 				33638DFE2573C660006033CF /* UIEdgeInsets+.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
+				333BA59F2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift in Sources */,
 				BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
@@ -1315,6 +1393,7 @@
 				335AC4EF256F8ADF006A5C4A /* BoardDetailCoordinator.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */,
+				333BA5912577A5D30057ACA4 /* SideBarHeaderView.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
@@ -1336,6 +1415,8 @@
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				333BA53B2575FFCC0057ACA4 /* SideBarViewController.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
+				333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */,
+				333BA5D825787FC40057ACA4 /* ImageEndPoint.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
 				335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
@@ -1415,6 +1496,7 @@
 				33EE01EA25690FC8003D3221 /* SigninCoordinator.swift in Sources */,
 				3360110B256B9123009580A1 /* RouterTests.swift in Sources */,
 				33638E802573F8FF006033CF /* CalendarDateCollectionViewCell.swift in Sources */,
+				333BA5BC2578781C0057ACA4 /* SideBarViewController.swift in Sources */,
 				33638EB02573F967006033CF /* UIEdgeInsets+.swift in Sources */,
 				33638E452573F7C4006033CF /* BoardDetailViewController.swift in Sources */,
 				33638E092573F5B1006033CF /* List.swift in Sources */,
