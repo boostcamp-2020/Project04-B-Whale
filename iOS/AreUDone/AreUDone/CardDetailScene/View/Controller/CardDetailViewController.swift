@@ -173,10 +173,10 @@ private extension CardDetailViewController {
     commentView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      commentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      commentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       commentView.heightAnchor.constraint(equalToConstant: 60),
-      commentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      commentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      commentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      commentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
     ])
   }
   
