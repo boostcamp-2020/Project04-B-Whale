@@ -18,7 +18,7 @@ final class ContentInputViewController: UIViewController {
     let view = UITextView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-    view.font = UIFont(name: "AmericanTypewriter", size: 20)
+    view.font = UIFont.nanumR(size: 20)
     
     return view
   }()

@@ -54,5 +54,6 @@ private extension CommentTextField {
     layer.borderWidth = 0.6
     layer.borderColor = UIColor.black.cgColor
     layer.cornerRadius = 3
+    font = UIFont.nanumB(size: 16)
   }
 }
