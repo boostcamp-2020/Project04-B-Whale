@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Comment } from './Comment';
 import { List } from './List';
 import { Member } from './Member';
+import { User } from './User';
 
 @Entity()
 export class Card {
@@ -29,4 +30,8 @@ export class Card {
 
     @OneToMany(() => Member, (member) => member.card)
     members;
+
+    @ManyToOne(() => User, (creator) => creator.cards, { nullable: false })
+    @JoinColumn({ name: 'creator_id' })
+    creator;
 }

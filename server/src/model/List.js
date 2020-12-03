@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Board } from './Board';
 import { Card } from './Card';
+import { User } from './User';
 
 @Entity()
 export class List {
@@ -19,4 +20,8 @@ export class List {
 
     @OneToMany(() => Card, (card) => card.list)
     cards;
+
+    @ManyToOne(() => User, (creator) => creator.lists, { nullable: false })
+    @JoinColumn({ name: 'creator_id' })
+    creator;
 }
