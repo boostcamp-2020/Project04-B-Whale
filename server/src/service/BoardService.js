@@ -96,7 +96,6 @@ export class BoardService extends BaseService {
             .loadRelationCountAndMap('cards.commentCount', 'cards.comments')
             .where('board.id = :id', { id: boardId })
             .getOne();
-        console.log(boardDetail);
         if (!boardDetail) {
             throw new EntityNotFoundError();
         }
