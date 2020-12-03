@@ -642,8 +642,6 @@
 		336010F7256B8FA2009580A1 /* BoardService */ = {
 			isa = PBXGroup;
 			children = (
-				335AC4AE256E9A6B006A5C4A /* Board.swift */,
-				333BA56C25776ABE0057ACA4 /* BoardDetail.swift */,
 				335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */,
 				BDD18B332566403E005DF00A /* BoardService.swift */,
 			);
@@ -653,7 +651,6 @@
 		336010FB256B8FAB009580A1 /* ListService */ = {
 			isa = PBXGroup;
 			children = (
-				335AC520256FDFD8006A5C4A /* List.swift */,
 				BDD18B3925664057005DF00A /* ListService.swift */,
 			);
 			path = ListService;
@@ -670,7 +667,6 @@
 		33601103256B8FBC009580A1 /* ActivityService */ = {
 			isa = PBXGroup;
 			children = (
-				333BA581257791180057ACA4 /* Activity.swift */,
 				BDD18B452566408F005DF00A /* ActivityService.swift */,
 				333BA586257792690057ACA4 /* ActivityEndPoint.swift */,
 			);
@@ -780,10 +776,6 @@
 				336010FF256B8FB5009580A1 /* CommentService */,
 				33601103256B8FBC009580A1 /* ActivityService */,
 				333BA5D325787F2F0057ACA4 /* ImageService */,
-				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
-				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
-				BDD18B0A2566132A005DF00A /* Keychain.swift */,
-				BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -879,12 +871,17 @@
 		33B87E4C25650B2B00354880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */,
+				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
+				BDD18B0A2566132A005DF00A /* Keychain.swift */,
+				BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */,
 				BDE27E30256B9335002308B9 /* Protocol */,
 				336010DC256B8E34009580A1 /* Mock */,
 				BDD18BB22568D636005DF00A /* Constants */,
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
 				333BA4F82574A0B60057ACA4 /* View */,
+				BD59A62E2578D7AA00BF8928 /* Model */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1056,6 +1053,19 @@
 			path = StackView;
 			sourceTree = "<group>";
 		};
+		BD59A62E2578D7AA00BF8928 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				336010C2256B786E009580A1 /* Card.swift */,
+				BD2AA7C2256E3D3600EA8791 /* CardDetail.swift */,
+				335AC4AE256E9A6B006A5C4A /* Board.swift */,
+				333BA56C25776ABE0057ACA4 /* BoardDetail.swift */,
+				335AC520256FDFD8006A5C4A /* List.swift */,
+				333BA581257791180057ACA4 /* Activity.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BDD18AB225653CB8005DF00A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,10 +1109,8 @@
 		BDD18B2225663E5D005DF00A /* CardService */ = {
 			isa = PBXGroup;
 			children = (
-				336010C2256B786E009580A1 /* Card.swift */,
 				336010C7256B78CE009580A1 /* CardEndPoint.swift */,
 				BDD18B2D25663F6D005DF00A /* CardService.swift */,
-				BD2AA7C2256E3D3600EA8791 /* CardDetail.swift */,
 			);
 			path = CardService;
 			sourceTree = "<group>";

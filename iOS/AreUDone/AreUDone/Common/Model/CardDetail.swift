@@ -11,9 +11,9 @@ struct CardDetail: Codable {
   
   let id: Int
   let title: String
-  let content: String
+  let content: String?
   let dueDate: String
-  let comments: [Comment]
+  let comments: [Comment]?
   let board: Board
   let list: List
   
