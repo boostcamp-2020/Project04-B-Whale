@@ -69,6 +69,7 @@ describe('Board Service Test', () => {
                 creator: {
                     id: createUser.id,
                     name: 'user',
+                    profileImageUrl: 'image',
                 },
                 lists: [
                     {
