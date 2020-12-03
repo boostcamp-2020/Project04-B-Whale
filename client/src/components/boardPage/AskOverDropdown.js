@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -22,6 +22,8 @@ const DropdownWrapper = styled.div`
     z-index: 2;
     max-height: 500px;
     overflow: scroll;
+    display: flex;
+    justify-content: center;
 `;
 
 const SearchInput = styled.input.attrs({
@@ -29,28 +31,38 @@ const SearchInput = styled.input.attrs({
     placeholder: '이름으로 검색',
 })`
     height: 35px;
+    margin: 5px 0;
+    border: 3px solid lightgray;
     &:focus {
         outline: 1px solid blue;
     }
 `;
 
-const SearchButton = styled.button``;
-
 // eslint-disable-next-line no-unused-vars
 const AskOverDropdown = (props) => {
     const wrapper = useRef();
+    const input = useRef();
     const { askoverDropdownDisplay } = props;
-
+    const [inputContent, setInputContent] = useState('');
     // eslint-disable-next-line no-unused-vars
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
 
+    const searchPerSecond = setTimeout(() => {
+        console.log(input.current.value);
+        // 검색 api 요청
+    }, 1000);
+
+    const time = (evt) => {
+        setInputContent(evt.target.value);
+        clearTimeout(searchPerSecond);
+    };
+
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
-                <SearchInput />
-                <SearchButton>검색</SearchButton>
+                <SearchInput value={inputContent} onChange={time} ref={input} />
             </DropdownWrapper>
         </Wrapper>
     );
