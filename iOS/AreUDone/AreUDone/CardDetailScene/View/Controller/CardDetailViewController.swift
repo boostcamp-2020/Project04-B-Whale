@@ -334,6 +334,19 @@ extension CardDetailViewController: CardDetailContentViewDelegate {
 extension CardDetailViewController: CardDetailDueDateViewDelegate {
   
   func cardDetailDueDateEditButtonTapped(with dateString: String) {
-    cardDetailCoordinator?.showCalendar(with: dateString)
+    cardDetailCoordinator?.showCalendar(with: dateString, delegate: self)
+  }
+}
+
+
+// MARK:- Extension
+
+extension CardDetailViewController: CalendarPickerViewControllerDelegate {
+  
+  func send(selectedDate: String) {
+    viewModel.updateDueDate(with: selectedDate)
+    DispatchQueue.main.async { [weak self] in
+      self?.stackView.updateDueDateView(with: selectedDate)
+    }
   }
 }

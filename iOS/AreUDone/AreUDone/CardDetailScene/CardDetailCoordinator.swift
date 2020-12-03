@@ -66,7 +66,7 @@ extension CardDetailCoordinator {
     )
   }
   
-  func showCalendar(with stringToDate: String) {
+  func showCalendar(with stringToDate: String, delegate: CalendarPickerViewControllerDelegate) {
     let date = stringToDate.toDateFormat(with: .dash)
     calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
@@ -75,7 +75,7 @@ extension CardDetailCoordinator {
             as? CalendarPickerViewController
     else { return }
     
-//    calendarPickerViewController.delegate = delegate
+    calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
   }
 }
