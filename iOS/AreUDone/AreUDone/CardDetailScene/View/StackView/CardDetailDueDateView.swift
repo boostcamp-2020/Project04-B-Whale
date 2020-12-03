@@ -21,7 +21,7 @@ final class CardDetailDueDateView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "마감 날짜"
-    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+    label.font = UIFont.nanumB(size: 20)
     
     return label
   }()
@@ -29,7 +29,7 @@ final class CardDetailDueDateView: UIView {
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont(name: "AmericanTypewriter", size: 15)
+    label.font = UIFont.nanumR(size: 15)
     
     return label
   }()

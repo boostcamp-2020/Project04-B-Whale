@@ -22,17 +22,30 @@ final class BoardListCollectionView: UICollectionView {
     
     configure()
   }
-  
-  
-  // MARK: - Method
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension BoardListCollectionView {
   
   func configure() {
-    registerHeaderView(BoardListCollectionViewHeader.self)
-    register(BoardListCollectionViewCell.self)
+    configureFlowLayout()
+    registerCell()
+  }
+  
+  func configureFlowLayout() {
     let flowLayout = UICollectionViewFlowLayout()
-    flowLayout.itemSize = CGSize(width: bounds.width, height: bounds.height/10)
+    let width = UIScreen.main.bounds.width * 0.9
+    let height = UIScreen.main.bounds.height * 0.1
+    flowLayout.itemSize = CGSize(width: width, height: height)
     flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: bounds.height/15)
 
     collectionViewLayout = flowLayout
+  }
+  
+  func registerCell() {
+    registerHeaderView(BoardListCollectionViewHeader.self)
+    register(BoardListCollectionViewCell.self)
   }
 }

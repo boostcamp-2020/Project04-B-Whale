@@ -20,7 +20,7 @@ final class CardDetailContentView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "내용"
-    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+    label.font = UIFont.nanumB(size: 20)
     
     return label
   }()
@@ -29,7 +29,7 @@ final class CardDetailContentView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
-    label.font = UIFont(name: "AmericanTypewriter", size: 15)
+    label.font = UIFont.nanumR(size: 15)
     
     return label
   }()

@@ -13,7 +13,7 @@ final class CommentCollectionViewHeader: UICollectionReusableView, Reusable {
   private lazy var headerLabel: UILabel = {
     let label = UILabel()
     label.text = "댓글"
-    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+    label.font = UIFont.nanumB(size: 20)
     label.translatesAutoresizingMaskIntoConstraints = false
     
     return label

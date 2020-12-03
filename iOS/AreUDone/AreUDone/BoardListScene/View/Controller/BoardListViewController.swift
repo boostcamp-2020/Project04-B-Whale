@@ -9,7 +9,7 @@ import UIKit
 
 class BoardListViewController: UIViewController {
   
-  enum Section {
+  enum Section: CaseIterable {
     case my
     case invited
   }
@@ -24,10 +24,11 @@ class BoardListViewController: UIViewController {
   private let sectionFactory: SectionContentsFactoryable
   
   private let searchController: UISearchController = {
-      let searchController = UISearchController(searchResultsController: nil)
-      searchController.obscuresBackgroundDuringPresentation = false
-      searchController.searchBar.placeholder = "보드 검색"
-      return searchController
+    let searchController = UISearchController(searchResultsController: nil)
+    searchController.obscuresBackgroundDuringPresentation = false
+    searchController.searchBar.placeholder = "보드 검색"
+    
+    return searchController
   }()
   
   @IBOutlet weak var collectionView: BoardListCollectionView!
@@ -74,6 +75,20 @@ class BoardListViewController: UIViewController {
 
 private extension BoardListViewController {
   
+  func configure() {
+    navigationItem.title = "보드 목록"
+    navigationItem.searchController = searchController
+    searchController.searchResultsUpdater = self
+    
+    collectionView.delegate = self
+  }
+}
+
+
+// MARK:- Extension bindUI
+
+private extension BoardListViewController {
+  
   func bindUI() {
     viewModel.bindingInitializeBoardListCollectionView { boards in
       self.updateSnapshot(with: boards, animatingDifferences: false)
@@ -83,18 +98,7 @@ private extension BoardListViewController {
       self.updateSnapshot(with: boards)
     }
   }
-  
-  func configure() {
-    navigationController?.navigationBar.prefersLargeTitles = true
-    navigationItem.title = "보드 목록"
-    navigationItem.searchController = searchController
-    searchController.searchResultsUpdater = self
-    
-    collectionView.delegate = self
-    
-  }
 }
-
 
 // MARK: Diffable DataSource
 
@@ -113,7 +117,9 @@ private extension BoardListViewController {
     dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
       let headerView: BoardListCollectionViewHeader = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
       
-      headerView.titleLabel.text = self.sectionFactory.load(index: indexPath.section)
+      let title = self.sectionFactory.load(index: indexPath.section)
+      headerView.update(with: title)
+      
       return headerView
     }
     
@@ -126,7 +132,7 @@ private extension BoardListViewController {
     let myBoards = boards.myBoards
     let invitedBoards = boards.invitedBoards
     
-    snapshot.appendSections([.my, .invited])
+    snapshot.appendSections(Section.allCases)
     snapshot.appendItems(myBoards, toSection: .my)
     snapshot.appendItems(invitedBoards, toSection: .invited)
     

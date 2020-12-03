@@ -21,7 +21,7 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont(name: "AmericanTypewriter-CondensedBold", size: 14)
+    label.font = UIFont.nanumB(size: 15)
     
     return label
   }()
@@ -34,7 +34,7 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var createdAtLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont(name: "AmericanTypewriter", size: 12)
+    label.font = UIFont.nanumR(size: 13)
     
     return label
   }()
