@@ -82,6 +82,7 @@ export class BoardService extends BaseService {
                 'board',
                 'creator.id',
                 'creator.name',
+                'creator.profileImageUrl',
                 'invitations',
                 'user.id',
                 'user.name',
@@ -95,6 +96,7 @@ export class BoardService extends BaseService {
             .loadRelationCountAndMap('cards.commentCount', 'cards.comments')
             .where('board.id = :id', { id: boardId })
             .getOne();
+        console.log(boardDetail);
         if (!boardDetail) {
             throw new EntityNotFoundError();
         }
