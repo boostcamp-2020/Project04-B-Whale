@@ -46,6 +46,7 @@ final class ContentInputCoordinator: NavigationCoordinator {
             }) as? ContentInputViewController
     else { return UIViewController() }
     
+    contentInputViewController.title = navigationController?.navigationBar.topItem?.title
     contentInputViewController.contentInputCoordinator = self
     
     return contentInputViewController
