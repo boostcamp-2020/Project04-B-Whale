@@ -10,6 +10,7 @@ export class CustomCardRepository extends BaseRepository {
         const endDate = moment(dueDate).add(1, 'day').format('YYYY-MM-DD');
 
         const cards = await this.createQueryBuilder('a')
+            .loadRelationCountAndMap('a.commentCount', 'a.comments')
             .where('a.dueDate >= :startDate AND a.dueDate < :endDate', { startDate, endDate })
             .andWhere('a.creator.id = :creatorId', { creatorId })
             .getMany();
@@ -23,6 +24,7 @@ export class CustomCardRepository extends BaseRepository {
 
         const cards = await this.createQueryBuilder('a')
             .innerJoin('a.members', 'b', 'b.user.id = :userId', { userId })
+            .loadRelationCountAndMap('a.commentCount', 'a.comments')
             .where('a.dueDate >= :startDate AND a.dueDate < :endDate', { startDate, endDate })
             .getMany();
 
@@ -37,6 +39,7 @@ export class CustomCardRepository extends BaseRepository {
             .innerJoin('a.list', 'b', 'b.board.id IN(:...boardIds)', {
                 boardIds,
             })
+            .loadRelationCountAndMap('a.commentCount', 'a.comments')
             .where('a.dueDate >= :startDate AND a.dueDate < :endDate', { startDate, endDate })
             .orderBy('a.dueDate', 'ASC')
             .getMany();
