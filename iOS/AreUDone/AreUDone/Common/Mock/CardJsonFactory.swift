@@ -100,17 +100,17 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 0,
                             "name": "서명렬",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
                         "id": 2,
-                        "content": "화이팅!123",
+                        "content": "화이팅!123 가나다라마바사아자차카타파하 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz",
                         "createdAt": "2020-12-02",
                         "user": {
                             "id": 0,
                             "name": "서명렬",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
@@ -120,7 +120,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 1,
                             "name": "심영민",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
@@ -130,7 +130,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 1,
                             "name": "심영민",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
@@ -140,7 +140,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 3,
                             "name": "신동훈",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
@@ -150,7 +150,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 4,
                             "name": "이건홍",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     },
                     {
@@ -160,7 +160,7 @@ struct CardTrueJsonFactory: JsonFactory {
                         "user": {
                             "id": 5,
                             "name": "박수연",
-                            "profileImageUrl": ""
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
                         }
                     }
                 ],
