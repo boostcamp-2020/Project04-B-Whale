@@ -583,7 +583,6 @@
 				333BA5132574D06C0057ACA4 /* AddOrCancelView.swift */,
 				335AC505256F8BFA006A5C4A /* Controller */,
 				335AC512256FDC91006A5C4A /* CollectionView */,
-				333BA53F2575FFDD0057ACA4 /* SideBarView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -771,7 +770,7 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		338364572565573A00F92EE4 /* Model */ = {
+		338364572565573A00F92EE4 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				336010F6256B8F7D009580A1 /* UserService */,
@@ -786,7 +785,7 @@
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
 				BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */,
 			);
-			path = Model;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		3383646525655E4F00F92EE4 /* ViewModel */ = {
@@ -852,6 +851,7 @@
 				33B87E1B2565071C00354880 /* SceneDelegate.swift */,
 				33B87E4E25650CC900354880 /* Supports */,
 				33B87E4C25650B2B00354880 /* Common */,
+				338364572565573A00F92EE4 /* Service */,
 				33B87E4D25650B3200354880 /* SignInScene */,
 				33EE016B2568EC48003D3221 /* CalendarScene */,
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
@@ -884,7 +884,6 @@
 				BDD18BB22568D636005DF00A /* Constants */,
 				BDD18ABB2565448D005DF00A /* Coordinator */,
 				BDD18AB225653CB8005DF00A /* Extension */,
-				338364572565573A00F92EE4 /* Model */,
 				333BA4F82574A0B60057ACA4 /* View */,
 			);
 			path = Common;
