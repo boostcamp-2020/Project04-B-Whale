@@ -7,12 +7,19 @@
 
 import UIKit
 
+protocol ContentInputViewControllerDelegate {
+  
+  func send(with content: String)
+}
+
+
 final class ContentInputViewController: UIViewController {
   
   // MARK:- Property
   
   private let viewModel: ContentInputViewModelProtocol
   weak var contentInputCoordinator: ContentInputCoordinator?
+  var delegate: ContentInputViewControllerDelegate?
   
   private lazy var contentTextView: UITextView = {
     let view = UITextView()
@@ -105,11 +112,12 @@ private extension ContentInputViewController {
 private extension ContentInputViewController {
   
   @objc func cancelButtonTapped() {
+    view.endEditing(true)
     let alert = UIAlertController(
       alertType: .dataLoss,
       alertStyle: .actionSheet
-    ) {
-      self.contentInputCoordinator?.dismiss()
+    ) { [weak self] in
+      self?.contentInputCoordinator?.dismiss()
     }
     cancelAction: { }
     
@@ -118,7 +126,8 @@ private extension ContentInputViewController {
   
   @objc func saveButtonTapped() {
     guard let content = contentTextView.text else { return }
-    viewModel.updateContent(with: content)
+    view.endEditing(true)
+    delegate?.send(with: content)
     contentInputCoordinator?.dismiss()
   }
 }

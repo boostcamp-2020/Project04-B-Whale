@@ -70,11 +70,12 @@ final class CardDetailViewController: UIViewController {
     
     configure()
     bindUI()
+    viewModel.fetchDetailCard()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    viewModel.fetchDetailCard()
+    
     navigationController?.navigationBar.isHidden = false
   }
 }
@@ -324,7 +325,7 @@ extension CardDetailViewController: UIGestureRecognizerDelegate {
 extension CardDetailViewController: CardDetailContentViewDelegate {
   
   func cardDetailContentEditButtonTapped(with content: String) {
-    cardDetailCoordinator?.showContentInput(with: content)
+    cardDetailCoordinator?.showContentInput(with: content, delegate: self)
   }
 }
 
@@ -339,7 +340,7 @@ extension CardDetailViewController: CardDetailDueDateViewDelegate {
 }
 
 
-// MARK:- Extension
+// MARK:- Extension CalendarPickerViewControllerDelegate
 
 extension CardDetailViewController: CalendarPickerViewControllerDelegate {
   
@@ -347,6 +348,17 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
     viewModel.updateDueDate(with: selectedDate)
     DispatchQueue.main.async { [weak self] in
       self?.stackView.updateDueDateView(with: selectedDate)
+    }
+  }
+}
+
+
+extension CardDetailViewController: ContentInputViewControllerDelegate {
+  
+  func send(with content: String) {
+    viewModel.updateContent(with: content)
+    DispatchQueue.main.async { [weak self] in
+      self?.stackView.updateContentView(with: content)
     }
   }
 }

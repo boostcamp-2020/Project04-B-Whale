@@ -55,11 +55,14 @@ final class CardDetailCoordinator: NavigationCoordinator {
 
 extension CardDetailCoordinator {
   
-  func showContentInput(with content: String) {
+  func showContentInput(with content: String, delegate: ContentInputViewControllerDelegate) {
     contentInputCoordinator = ContentInputCoordinator(content: content, router: router)
     contentInputCoordinator.navigationController = navigationController
-    let contentInputViewController = contentInputCoordinator.start()
-
+    guard let contentInputViewController = contentInputCoordinator.start()
+            as? ContentInputViewController
+    else { return }
+    contentInputViewController.delegate = delegate
+    
     navigationController?.pushViewController(
       contentInputViewController,
       animated: true
