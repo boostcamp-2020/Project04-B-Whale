@@ -17,7 +17,7 @@ final class SideBarHeaderContentsFactory: SideBarHeaderContentsFactoryProtocol {
   func load(order: Int) -> (String, String) {
     switch order {
     case 0:
-      return ("person.2", "멤버")
+      return ("person", "멤버")
       
     case 1:
       return ("list.bullet.rectangle", "활동")
