@@ -32,8 +32,17 @@ const CardCountWrapper = styled.div`
     margin-top: 10px;
     padding: 5px 8px;
     border-radius: ${(props) => props.theme.radiusSmall};
-    background-color: #ff0000;
     color: ${(props) => props.theme.whiteColor};
+
+    &.manyCard {
+        background-color: ${(props) => props.theme.manyColor};
+    }
+    &.someCard {
+        background-color: ${(props) => props.theme.someColor};
+    }
+    &.littleCard {
+        background-color: ${(props) => props.theme.littleColor};
+    }
 
     @media ${(props) => props.theme.sideBar} {
         padding: 2px;
@@ -51,11 +60,19 @@ const CardCount = styled.div`
     }
 `;
 
+const getCardBackground = (count) => {
+    if (count > 10) return 'manyCard';
+    if (count > 5) return 'someCard';
+    return 'littleCard';
+};
+
 const Date = ({ className, onClick, date, count }) => {
+    const cardBackground = getCardBackground(count);
+
     return (
         <DateWrapper className={className} onClick={() => onClick(date)}>
             <DateNumber>{date.format('D')}</DateNumber>
-            <CardCountWrapper count={count}>
+            <CardCountWrapper className={cardBackground} count={count}>
                 <BsCardChecklist size={24} />
                 <CardCount>{count || 0}</CardCount>
             </CardCountWrapper>

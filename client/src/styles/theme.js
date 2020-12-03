@@ -17,6 +17,9 @@ const colors = {
     darkgrayColor: '#586069',
     lightGrayColor: '#c7c7c7',
     lightRedColor: '#f76e7c',
+    manyColor: '#e0098b',
+    someColor: '#f73fae',
+    littleColor: '#fa88cd',
 };
 
 // 자주 사용하는 css style
