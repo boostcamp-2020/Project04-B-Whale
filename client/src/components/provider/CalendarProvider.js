@@ -16,7 +16,7 @@ export default ({ children }) => {
         const { data } = await getCardCount({ startDate, endDate });
 
         dispatch({ type: 'GET_INIT_CARD_COUNT', cardCount: data.cardCounts });
-    });
+    }, []);
 
     return (
         <CalendarStatusContext.Provider value={state}>
