@@ -24,7 +24,7 @@ describe('Board Service Test', () => {
 
     test('보드 상세 조회 서비스 정상 호출', async () => {
         await TestTransactionDelegate.transaction(async () => {
-            const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+            const user = { name: 'user', socialId: '1234111', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
             const createUser = userRepository.create(user);
             await userRepository.save([createUser]);
@@ -60,10 +60,8 @@ describe('Board Service Test', () => {
             const cardRepository = getRepository(Card);
             const createCard = cardRepository.create(card);
             await cardRepository.save([createCard]);
-
             const BoardService1 = BoardService.getInstance();
-            const detailBoard = await BoardService1.getDetailBoard(createBoard.id);
-
+            const detailBoard = await BoardService1.getDetailBoard(createUser.id, createBoard.id);
             const compareData = {
                 id: createBoard.id,
                 title: 'board title',
