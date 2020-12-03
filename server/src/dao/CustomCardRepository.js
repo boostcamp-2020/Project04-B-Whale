@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { EntityRepository } from 'typeorm';
-import { BaseRepository, Transactional } from 'typeorm-transactional-cls-hooked';
+import { BaseRepository } from 'typeorm-transactional-cls-hooked';
 import { Card } from '../model/Card';
 
 @EntityRepository(Card)

@@ -1,5 +1,5 @@
 import { EntityRepository } from 'typeorm';
-import { BaseRepository, Transactional } from 'typeorm-transactional-cls-hooked';
+import { BaseRepository } from 'typeorm-transactional-cls-hooked';
 import { Board } from '../model/Board';
 
 @EntityRepository(Board)
