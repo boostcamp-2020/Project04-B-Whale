@@ -11,9 +11,9 @@ protocol ListViewModelProtocol {
   
   func numberOfCards() -> Int
   
-  func append(card: List.Card)
-  func insert(card: List.Card, at index: Int)
-  func fetchCard(at index: Int) -> List.Card
+  func append(card: Card)
+  func insert(card: Card, at index: Int)
+  func fetchCard(at index: Int) -> Card
   func removeCard(at index: Int)
   
   func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
@@ -39,15 +39,15 @@ final class ListViewModel: ListViewModelProtocol {
     list.cards.count
   }
   
-  func append(card: List.Card) {
+  func append(card: Card) {
     list.cards.append(card)
   }
   
-  func insert(card: List.Card, at index: Int) {
+  func insert(card: Card, at index: Int) {
     list.cards.insert(card, at: index)
   }
   
-  func fetchCard(at index: Int) -> List.Card {
+  func fetchCard(at index: Int) -> Card {
     list.cards[index]
   }
   

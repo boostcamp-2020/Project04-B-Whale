@@ -13,8 +13,12 @@ enum BoardEndPoint {
   
   case fetchAllBoards
   case addBoard(title: String)
-  case editBoard(boardId: Int, title: String)
+  case updateBoard(boardId: Int, title: String)
   case deleteBoard(boardId: Int)
+  
+  case inviteUserToBoard(boardId: Int, userId: Int)
+  case exitBoard(boardId: Int, invitationId: Int)
+  case fetchBoardDetail(boardId: Int)
 }
 
 extension BoardEndPoint: EndPointable {
@@ -22,11 +26,23 @@ extension BoardEndPoint: EndPointable {
     switch self {
     case .fetchAllBoards:
       return "\(APICredentials.ip)/api/board"
+      
     case .addBoard:
       return "\(APICredentials.ip)/api/board"
-    case .editBoard(let boardId, _):
+      
+    case .updateBoard(let boardId, _):
       return "\(APICredentials.ip)/api/board/\(boardId)"
+      
     case .deleteBoard(let boardId):
+      return "\(APICredentials.ip)/api/board/\(boardId)"
+      
+    case .inviteUserToBoard(let boardId, _):
+      return "\(APICredentials.ip)/api/board/\(boardId)/invitation"
+      
+    case .exitBoard(let boardId, let invitationId):
+      return "\(APICredentials.ip)/api/board/\(boardId)/invitation/\(invitationId)"
+      
+    case .fetchBoardDetail(let boardId):
       return "\(APICredentials.ip)/api/board/\(boardId)"
     }
   }
@@ -42,11 +58,13 @@ extension BoardEndPoint: EndPointable {
   
   var httpMethod: HTTPMethod? {
     switch self {
-    case .fetchAllBoards:
+    case .fetchAllBoards, .fetchBoardDetail:
       return .get
-    case .addBoard, .editBoard:
+      
+    case .addBoard, .updateBoard, .inviteUserToBoard:
       return .post
-    case .deleteBoard:
+      
+    case .deleteBoard, .exitBoard:
       return .delete
     }
   }
@@ -66,8 +84,13 @@ extension BoardEndPoint: EndPointable {
     switch self {
     case .addBoard(let title):
       return ["title": title]
-    case .editBoard(_, let title):
+      
+    case .updateBoard(_, let title):
       return ["title": title]
+      
+    case .inviteUserToBoard(_, let userId):
+      return ["userId": "\(userId)"]
+      
     default:
       return nil
     }

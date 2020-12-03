@@ -163,8 +163,8 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   private func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
     
     // 드래그한 아이템의 객체를 비동기적으로 로드
-    coordinator.session.loadObjects(ofClass: List.Card.self) { [self] item in
-      guard let card = item.first as? List.Card else { return }
+    coordinator.session.loadObjects(ofClass: Card.self) { [self] item in
+      guard let card = item.first as? Card else { return }
       
       let source = coordinator.items.first?.sourceIndexPath
       let destination = coordinator.destinationIndexPath
@@ -203,7 +203,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   
   private func changeData(
     inSame collectionView: UICollectionView,
-    about card: List.Card,
+    about card: Card,
     by sourceIndexPath: IndexPath,
     and destinationIndexPath: IndexPath
   ) {

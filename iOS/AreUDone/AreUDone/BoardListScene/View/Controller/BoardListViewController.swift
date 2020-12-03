@@ -141,8 +141,8 @@ private extension BoardListViewController {
 extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-    coordinator?.boardItemDidTapped()
+    // TODO: boardId 받아오는 메소드 작성
+    coordinator?.boardItemDidTapped(boardId: 0)
   }
 }
 

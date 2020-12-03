@@ -8,12 +8,13 @@
 import Foundation
 
 struct Boards: Codable {
-    let myBoards, invitedBoards: [Board]
+  let myBoards, invitedBoards: [Board]
 }
 
 struct Board: Codable {
-    let id: Int
-    let title: String
+  let id: Int
+  let title: String
+  let color: String
 }
 
 extension Board: Hashable {
