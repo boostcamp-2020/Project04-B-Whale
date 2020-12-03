@@ -58,7 +58,7 @@ final class CardDetailStackView: UIStackView {
     cardDetailLocationView.updateBoardNameLabel(with: title)
   }
   
-  func updateContentView(with content: String) {
+  func updateContentView(with content: String?) {
     cardDetailContentView.update(content: content)
   }
   

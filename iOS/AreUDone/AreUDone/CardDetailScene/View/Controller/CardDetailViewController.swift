@@ -104,7 +104,9 @@ private extension CardDetailViewController {
     return dataSource
   }
   
-  func updateSnapshot(with item: [CardDetail.Comment], animatingDifferences: Bool = true) {
+  func updateSnapshot(with item: [CardDetail.Comment]?, animatingDifferences: Bool = true) {
+    // TODO:- item이 nil일 경우 처리해줄 화면 만들기
+    guard let item = item else { return }
     var snapshot = Snapshot()
     
     snapshot.appendSections([.main])

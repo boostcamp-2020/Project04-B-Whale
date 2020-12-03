@@ -62,7 +62,8 @@ final class CardDetailContentView: UIView {
   
   // MARK:- Method
   
-  func update(content: String) {
+  func update(content: String?) {
+    guard let content = content else { return }
     contentLabel.text = content
   }
 }
