@@ -49,6 +49,7 @@ private extension BoardListCollectionViewCell {
   
   private func configure() {
     backgroundColor = .gray
+    layer.cornerRadius = 5
     addSubview(titleLabel)
     
     configureTitleLabel()
