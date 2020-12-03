@@ -70,11 +70,31 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   }
   
   func updateDueDate(with dueDate: String) {
-    
+    cardService.updateCard(
+      id: id,
+      dueDate: dueDate
+    ) { result in
+      switch result {
+      case .success(()):
+        break
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   func updateContent(with content: String) {
-    
+    cardService.updateCard(
+      id: id,
+      content: content
+    ) { result in
+      switch result {
+      case .success(()):
+        break
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
 }
 
