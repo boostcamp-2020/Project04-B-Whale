@@ -17,7 +17,9 @@ public enum APIError: Error {
 }
 
 public protocol Routable {
-  func request<T: Decodable>(route: EndPointable, completionHandler: ((Result<T,APIError>) -> Void)?)
+  
+  func request<T: Decodable>(route: EndPointable, completionHandler: @escaping ((Result<T,APIError>) -> Void))
+  func request(route: EndPointable, completionHandler: @escaping ((Result<Void,APIError>) -> Void))
 }
 
 extension Routable {

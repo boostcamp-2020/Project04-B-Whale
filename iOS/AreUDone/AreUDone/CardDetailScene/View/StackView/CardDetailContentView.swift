@@ -7,12 +7,18 @@
 
 import UIKit
 
+protocol CardDetailContentViewDelegate {
+  
+  func cardDetailContentEditButtonTapped(with content: String)
+}
+
 final class CardDetailContentView: UIView {
   
   // MARK:- Property
   
-  private lazy var titleLable: UILabel = {
+  private lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "내용"
     label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
     
@@ -21,11 +27,23 @@ final class CardDetailContentView: UIView {
   
   private lazy var contentLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.font = UIFont(name: "AmericanTypewriter", size: 15)
     
     return label
   }()
+  
+  private lazy var editButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "square.and.pencil")
+    button.setImage(image, for: .normal)
+    
+    return button
+  }()
+  
+  var delegate: CardDetailContentViewDelegate?
   
   // MARK:- Initializer
   
@@ -55,31 +73,57 @@ final class CardDetailContentView: UIView {
 private extension CardDetailContentView {
   
   func configure() {
-    addSubview(titleLable)
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
+    
+    addSubview(titleLabel)
     addSubview(contentLabel)
+    addSubview(editButton)
     
     configureTitleLabel()
     configureContentLabel()
+    configureEditButton()
+    addingTarget()
   }
   
   func configureTitleLabel() {
-    titleLable.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
-      titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-      titleLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-      titleLable.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+      titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
   }
   
   func configureContentLabel() {
-    contentLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
-      contentLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: 4),
+      contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+      contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+      contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
+  }
+  
+  func configureEditButton() {
+    NSLayoutConstraint.activate([
+      editButton.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+      editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor),
+      editButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
+      editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+    ])
+  }
+  
+  func addingTarget() {
+    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CardDetailContentView {
+  
+  @objc func editButtonTapped() {
+    guard let content = contentLabel.text else { return }
+    delegate?.cardDetailContentEditButtonTapped(with: content)
   }
 }

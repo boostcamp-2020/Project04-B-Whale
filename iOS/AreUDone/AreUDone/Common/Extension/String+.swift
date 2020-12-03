@@ -7,12 +7,17 @@
 
 import Foundation
 
+enum DateDeviderFormat: String {
+  case dot = "."
+  case dash = "-"
+}
+
 extension String {
   
-  func toDate() -> Date {
+  func toDateFormat(with deviderFormat: DateDeviderFormat) -> Date {
     let dateFormatter = DateFormatter()
-
-    dateFormatter.dateFormat = "yyyy.MM.dd"
+    let devider = deviderFormat.rawValue
+    dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd"
     
     return dateFormatter.date(from: self) ?? Date()
   }

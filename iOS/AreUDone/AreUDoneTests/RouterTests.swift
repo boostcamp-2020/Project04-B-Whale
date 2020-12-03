@@ -17,7 +17,7 @@ class RouterTests: XCTestCase {
   }
   
   func testMockRouter_유효데이터() {
-    CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory())).fetchDailyCards(date: "") { result in
+    CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory())).fetchDailyCards(dateString: "") { result in
       switch result {
       case .success:
         XCTAssert(true)
@@ -28,7 +28,7 @@ class RouterTests: XCTestCase {
   }
   
   func testMockRouter_비유효데이터() {
-    CardService(router: MockRouter(jsonFactory: CardFalseJsonFactory())).fetchDailyCards(date: "") { result in
+    CardService(router: MockRouter(jsonFactory: CardFalseJsonFactory())).fetchDailyCards(dateString: "") { result in
       switch result {
       case .success:
         XCTAssert(false)

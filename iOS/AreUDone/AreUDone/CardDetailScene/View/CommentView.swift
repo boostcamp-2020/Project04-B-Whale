@@ -33,7 +33,7 @@ final class CommentView: UIView {
     let button = UIButton()
     let image = UIImage(systemName: "paperplane.fill")
     button.setImage(image, for: .normal)
-    //    button.isEnabled = false
+    button.isEnabled = false
     
     return button
   }()

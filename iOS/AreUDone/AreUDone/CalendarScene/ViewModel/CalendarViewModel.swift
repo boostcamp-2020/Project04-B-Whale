@@ -46,7 +46,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   }
   
   func changeDate(to date: String, direction: Direction?) {
-    let date = date.toDate()
+    let date = date.toDateFormat(with: .dot)
     
     if let direction = direction {
       let day = direction == .left ? -1 : 1
@@ -60,7 +60,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   }
   
   private func fetchDailyCards(with handler: ((Cards) -> Void)?) {
-    cardService.fetchDailyCards(date: Date().toString()) { result in
+    cardService.fetchDailyCards(dateString: Date().toString()) { result in
       switch result {
       case .success(let cards):
         //TODO: - self가 순환참조를 일으키는 확인해야 함.

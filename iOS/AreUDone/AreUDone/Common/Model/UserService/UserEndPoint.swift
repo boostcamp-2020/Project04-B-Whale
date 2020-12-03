@@ -1,29 +1,29 @@
 //
-//  CardEndPoint.swift
+//  UserEndPoint.swift
 //  AreUDone
 //
-//  Created by a1111 on 2020/11/23.
+//  Created by 서명렬 on 2020/12/02.
 //
 
 import Foundation
 import NetworkFramework
-import KeychainFramework
 
-enum CardEndPoint {
-  
-  case fetchDailyCards(dateString: String)
-  case fetchDetailCard(id: Int)
+enum LoginFlatform: String {
+  case naver
+  case apple
 }
 
-extension CardEndPoint: EndPointable {
+enum UserEndPoint {
+  
+  case requestLogin(flatform: LoginFlatform)
+}
+
+extension UserEndPoint: EndPointable {
+  
   var environmentBaseURL: String {
     switch self {
-    case .fetchDailyCards:
-      return "\(APICredentials.ip)/api/card"
-      
-    case .fetchDetailCard(let id):
-      return "\(APICredentials.ip)/api/card/\(id)"
-      
+    case .requestLogin(let flatform):
+      return "\(APICredentials.ip)/api/oauth/login/\(flatform.rawValue)"
     }
   }
   
@@ -34,20 +34,14 @@ extension CardEndPoint: EndPointable {
   
   var query: HTTPQuery? {
     switch self {
-    case .fetchDailyCards(let dateString): // ?q=date:2020-01-01
-      return ["q": "date:\(dateString)"]
-      
-    case .fetchDetailCard:
+    case .requestLogin:
       return nil
     }
   }
   
   var httpMethod: HTTPMethod? {
     switch self {
-    case .fetchDailyCards:
-      return .get
-      
-    case .fetchDetailCard:
+    case .requestLogin:
       return .get
     }
   }

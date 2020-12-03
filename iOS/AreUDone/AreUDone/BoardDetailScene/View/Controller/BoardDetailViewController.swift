@@ -22,10 +22,19 @@ final class BoardDetailViewController: UIViewController {
     return pageControl
   }()
   private var scrollOffset: CGFloat!
+<<<<<<< HEAD
   
   private let sideBarViewController: SideBarViewControllerProtocol
+=======
+>>>>>>> 3e4170271ae520b640f04fbf908d290ecfd42c03
   
+  private let sideBarViewController: SideBarViewProtocol = {
+    let controller = SideBarViewController()
+    
+    return controller
+  }()
   
+
   // MARK: - Initializer
   
   required init?(
@@ -53,6 +62,12 @@ final class BoardDetailViewController: UIViewController {
     configure()
     
     viewModel.updateBoardDetailCollectionView()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    configureSideBarView()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -157,9 +172,15 @@ private extension BoardDetailViewController {
     )
     
     scrollOffset = (flowLayout.sectionInset.left
+<<<<<<< HEAD
                       + flowLayout.itemSize.width
                       + flowLayout.minimumLineSpacing
                       + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+=======
+                + flowLayout.itemSize.width
+                + flowLayout.minimumLineSpacing
+                + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+>>>>>>> 3e4170271ae520b640f04fbf908d290ecfd42c03
     
     flowLayout.footerReferenceSize = CGSize(
       width: flowLayout.minimumLineSpacing + flowLayout.itemSize.width + flowLayout.sectionInset.left,
@@ -172,10 +193,17 @@ private extension BoardDetailViewController {
     let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
     let topBarHeight = statusBarHeight + navigationBarHeight
+<<<<<<< HEAD
     
     sideBarViewController.configureTopHeight(to: topBarHeight)
     sideBarViewController.start()
     
+=======
+
+    sideBarViewController.configureTopHeight(to: topBarHeight)
+    sideBarViewController.start()
+
+>>>>>>> 3e4170271ae520b640f04fbf908d290ecfd42c03
     let sideBarView = sideBarViewController.view()
     sideBarView.frame = CGRect(
       x: 0,

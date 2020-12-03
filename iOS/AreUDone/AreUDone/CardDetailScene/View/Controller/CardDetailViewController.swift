@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CommentSection: CaseIterable {
+enum CommentSection {
   case main
 }
 
@@ -19,7 +19,7 @@ final class CardDetailViewController: UIViewController {
   // MARK:- Property
   
   private let viewModel: CardDetailViewModelProtocol
-  private var observer: NSKeyValueObservation?
+  weak var cardDetailCoordinator: CardDetailCoordinator?
   private lazy var dataSource = configureDataSource()
   
   private lazy var scrollView: UIScrollView = {
@@ -67,12 +67,15 @@ final class CardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     configure()
     bindUI()
-    
-    DispatchQueue.main.async {
-      self.viewModel.fetchDetailCard()
-    }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    viewModel.fetchDetailCard()
+    navigationController?.navigationBar.isHidden = false
   }
 }
 
@@ -126,11 +129,11 @@ private extension CardDetailViewController {
     addEndEdittingGesture()
   }
   
-  func configureView(){
-    navigationController?.navigationBar.isHidden = false
-    
+  func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
+    stackView.setupContentViewDelegate(self)
+    stackView.setupDueDateViewDelegate(self)
     
     addKeyboardNotification()
     
@@ -155,7 +158,7 @@ private extension CardDetailViewController {
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+      stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
       stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
       stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -203,36 +206,27 @@ private extension CardDetailViewController {
 private extension CardDetailViewController {
   
   func bindUI() {
-    observationNavigationBar()
     bindingCardDetailContentView()
     bindingCardDetailDueDateView()
     bindingCardDetailCommentTableView()
-  }
-  
-  func observationNavigationBar() {
-    observer = navigationController?.navigationBar.observe(
-      \.bounds,
-      options: [.new, .initial],
-      changeHandler: { (navigationBar, changes) in
-        if let height = changes.newValue?.height {
-          if height > 44.0 {
-            //Large Title
-          } else {
-            //Small Title
-          }
-        }
-      })
+    bindingCardDetailNavigationBarTitle()
+    bindingCardDetailListTitle()
+    bindingCardDetailBoardTitle()
   }
   
   func bindingCardDetailContentView() {
     viewModel.bindingCardDetailContentView { [weak self] content in
-      self?.stackView.updateContentView(with: content)
+      DispatchQueue.main.async {
+        self?.stackView.updateContentView(with: content)
+      }
     }
   }
   
   func bindingCardDetailDueDateView() {
     viewModel.bindingCardDetailDueDateView { [weak self] dueDate in
-      self?.stackView.updateDueDateView(with: dueDate)
+      DispatchQueue.main.async {
+        self?.stackView.updateDueDateView(with: dueDate)
+      }
     }
   }
   
@@ -240,6 +234,30 @@ private extension CardDetailViewController {
     viewModel.bindingCardDetailCommentTableView { [weak self] comments in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: comments, animatingDifferences: true)
+      }
+    }
+  }
+  
+  func bindingCardDetailNavigationBarTitle() {
+    viewModel.bindingCardDetailNavigationBarTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.navigationItem.title = title
+      }
+    }
+  }
+  
+  func bindingCardDetailListTitle() {
+    viewModel.bindingCardDetailListTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.stackView.updateListOfLocationView(with: title)
+      }
+    }
+  }
+  
+  func bindingCardDetailBoardTitle() {
+    viewModel.bindingCardDetailBoardTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.stackView.updateBoardOfLocationView(with: title)
       }
     }
   }
@@ -295,5 +313,25 @@ extension CardDetailViewController: UIScrollViewDelegate {
 extension CardDetailViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view?.isDescendant(of: commentView) == true ? false : true
+  }
+}
+
+
+// MARK:- Extension CardDetailContentViewDelegate
+
+extension CardDetailViewController: CardDetailContentViewDelegate {
+  
+  func cardDetailContentEditButtonTapped(with content: String) {
+    cardDetailCoordinator?.showContentInput(with: content)
+  }
+}
+
+
+// MARK:- Extension CardDetailDueDateViewDelegate
+
+extension CardDetailViewController: CardDetailDueDateViewDelegate {
+  
+  func cardDetailDueDateEditButtonTapped(with dateString: String) {
+    cardDetailCoordinator?.showCalendar(with: dateString)
   }
 }
