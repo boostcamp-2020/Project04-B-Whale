@@ -66,7 +66,6 @@ final class SideBarFooterView: UICollectionReusableView, Reusable {
 private extension SideBarFooterView {
   
   func configure() {
-    
     addSubview(baseView)
     baseView.addSubview(titleLabel)
     
