@@ -11,6 +11,8 @@ import NetworkFramework
 final class BoardDetailCoordinator: NavigationCoordinator {
   var navigationController: UINavigationController?
   
+  // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
+  //  private let router: Routable
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .boardDetail)
   }
@@ -29,13 +31,16 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               
               let boardService = BoardService(router: MockRouter(jsonFactory: BoardDetailTrueJsonFactory()))
               let activityService = ActivityService(router: MockRouter(jsonFactory: ActivityTrueJsonFactory()))
+              let imageService = ImageService(router: Router()) // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
               
               let boardDetailViewModel = BoardDetailViewModel(boardService: boardService, boardId: self.boardId)
               
               let sideBarViewModel = SideBarViewModel(
                 boardService: boardService,
                 activityService: activityService,
-                boardId: self.boardId
+                imageService: imageService,
+                boardId: self.boardId,
+                sideBarHeaderContentsFactory: SideBarHeaderContentsFactory()
               )
               let sideBarViewController = SideBarViewController(
                 nibName: SideBarViewController.identifier,

@@ -29,6 +29,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   private let boardService: BoardServiceProtocol
   private let activityService: ActivityServiceProtocol
+  private let imageService: ImageServiceProtocol
   private let boardId: Int
   private let sideBarHeaderContentsFactory: SideBarHeaderContentsFactoryProtocol
   
@@ -53,11 +54,13 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   init(
     boardService: BoardServiceProtocol,
     activityService: ActivityServiceProtocol,
+    imageService: ImageServiceProtocol,
     boardId: Int,
     sideBarHeaderContentsFactory: SideBarHeaderContentsFactoryProtocol
   ) {
     self.boardService = boardService
     self.activityService = activityService
+    self.imageService = imageService
     self.boardId = boardId
     self.sideBarHeaderContentsFactory = sideBarHeaderContentsFactory
   }
@@ -79,7 +82,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   private func fetchImages() {
     boardMembers?.enumerated().forEach { (index, invitedUser) in
-      ImageService(router: Router()).fetchImage(with: invitedUser.profileImageUrl) { result in
+      imageService.fetchImage(with: invitedUser.profileImageUrl) { result in
         switch result {
         case .success(let data):
           self.boardMembers?[index].data = data
