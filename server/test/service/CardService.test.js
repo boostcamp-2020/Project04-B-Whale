@@ -24,8 +24,32 @@ describe('Card Service Test', () => {
 
     beforeEach(async () => {});
 
+    test('정상적인 사용자가 카드를 조회할 때, 보드가 없으면 빈 배열 반환', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+            const user1 = em.create(User, {
+                name: 'user1',
+                socialId: '1234',
+                profileImageUrl: 'image',
+            });
+            await em.save(user1);
+
+            // when
+            const cardService = CardService.getInstance();
+            const cardCountList = await cardService.getCardCountByPeriod({
+                startDate: '2020-07-01',
+                endDate: '2020-07-31',
+                userId: user1.id,
+            });
+
+            // then
+            const data = cardCountList;
+            expect(data).toEqual([]);
+        });
+    });
+
     test('정상적인 사용자가 startDate, endDate 기간동안의 모든 카드 조회', async () => {
-        const cardRepository = getRepository(Card);
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
