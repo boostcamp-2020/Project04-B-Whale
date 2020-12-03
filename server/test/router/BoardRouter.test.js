@@ -129,7 +129,7 @@ describe('Board API Test', () => {
                 Authorization: token,
                 'Content-Type': 'application/json',
             })
-            .send({ title: 'test title', color: '#000000' });
+            .send({ title: 'test title', color: '#000000', creator: createdUser.id });
 
         // then
         expect(response.status).toEqual(201);

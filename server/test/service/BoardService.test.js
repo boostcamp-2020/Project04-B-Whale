@@ -39,7 +39,12 @@ describe('Board Service Test', () => {
             const createInvitation = invitationRepository.create(invitation);
             await invitationRepository.save([createInvitation]);
 
-            const list = { title: 'test to do', position: 1, board: createBoard.id };
+            const list = {
+                title: 'test to do',
+                position: 1,
+                board: createBoard.id,
+                creator: createUser.id,
+            };
             const listRepository = getRepository(List);
             const createList = listRepository.create(list);
             await listRepository.save([createList]);
@@ -50,6 +55,7 @@ describe('Board Service Test', () => {
                 position: 1,
                 dueDate: '2020-01-01',
                 list: createList.id,
+                creator: createUser.id,
             };
             const cardRepository = getRepository(Card);
             const createCard = cardRepository.create(card);
