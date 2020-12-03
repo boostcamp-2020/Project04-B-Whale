@@ -35,6 +35,9 @@ export class CardService extends BaseService {
         const boardService = BoardService.getInstance();
 
         const boardIds = await boardService.getBoardIdsByUserId(userId);
+
+        if (boardIds.length === 0) return [];
+
         const config = { startDate, endDate, boardIds };
 
         if (member === 'me') {
