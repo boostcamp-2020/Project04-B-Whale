@@ -27,7 +27,7 @@ final class DayLabel: UILabel {
   // MARK:- Method
   
   private func configure() {
-    font = .systemFont(ofSize: 12, weight: .bold)
+    font = UIFont.nanumB(size: 12)
     textColor = .secondaryLabel
     textAlignment = .center
   }

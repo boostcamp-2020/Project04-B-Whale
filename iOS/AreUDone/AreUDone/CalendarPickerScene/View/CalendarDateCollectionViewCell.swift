@@ -24,7 +24,7 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
   private lazy var numberLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
-    label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+    label.font = UIFont.nanumR(size: 18)
     label.textColor = .label
     
     return label

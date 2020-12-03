@@ -67,7 +67,6 @@
 		336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
 		336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011CD256D15F0009580A1 /* CalendarCollectionView.swift */; };
-		336011D3256D1877009580A1 /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayLabel.swift */; };
 		336011EE256D4877009580A1 /* DateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011ED256D4877009580A1 /* DateStepper.swift */; };
 		336011F3256D48FA009580A1 /* DateStepper.xib in Resources */ = {isa = PBXBuildFile; fileRef = 336011F2256D48FA009580A1 /* DateStepper.xib */; };
 		336011FE256D5CFE009580A1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011FD256D5CFE009580A1 /* String+.swift */; };
@@ -110,7 +109,6 @@
 		33638E782573F897006033CF /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		33638E7C2573F8E9006033CF /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E36256B934B002308B9 /* NibLoadable.swift */; };
 		33638E802573F8FF006033CF /* CalendarDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */; };
-		33638E842573F903006033CF /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011D2256D1877009580A1 /* DayLabel.swift */; };
 		33638E882573F90B006033CF /* BoardListJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4E5256F7988006A5C4A /* BoardListJsonFactory.swift */; };
 		33638E8C2573F910006033CF /* BoardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC50A256F8D28006A5C4A /* BoardDetailViewModel.swift */; };
 		33638E902573F922006033CF /* BoardEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4DD256F73D7006A5C4A /* BoardEndPoint.swift */; };
@@ -193,6 +191,9 @@
 		BD2AA8C22574D8AA00EA8791 /* CommentTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8C12574D8AA00EA8791 /* CommentTextField.swift */; };
 		BD2AA8CD2575230B00EA8791 /* CommentCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */; };
 		BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */; };
+		BD59A6072578782100BF8928 /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6062578782100BF8928 /* DayLabel.swift */; };
+		BD59A60F25787C6300BF8928 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A60E25787C6300BF8928 /* Font.swift */; };
+		BD59A61425787D4E00BF8928 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A61325787D4E00BF8928 /* UIFont+.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -314,7 +315,6 @@
 		336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
 		336011B9256CDDA0009580A1 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		336011CD256D15F0009580A1 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
-		336011D2256D1877009580A1 /* DayLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabel.swift; sourceTree = "<group>"; };
 		336011ED256D4877009580A1 /* DateStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStepper.swift; sourceTree = "<group>"; };
 		336011F2256D48FA009580A1 /* DateStepper.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateStepper.xib; sourceTree = "<group>"; };
 		336011FD256D5CFE009580A1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -382,6 +382,9 @@
 		BD2AA8C12574D8AA00EA8791 /* CommentTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextField.swift; sourceTree = "<group>"; };
 		BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewHeader.swift; sourceTree = "<group>"; };
 		BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailLocationView.swift; sourceTree = "<group>"; };
+		BD59A6062578782100BF8928 /* DayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayLabel.swift; sourceTree = "<group>"; };
+		BD59A60E25787C6300BF8928 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		BD59A61325787D4E00BF8928 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -710,7 +713,7 @@
 				3360118B256CBEA1009580A1 /* CalendarPickerHeaderView.swift */,
 				33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */,
 				336011CD256D15F0009580A1 /* CalendarCollectionView.swift */,
-				336011D2256D1877009580A1 /* DayLabel.swift */,
+				BD59A6062578782100BF8928 /* DayLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1065,6 +1068,7 @@
 				336011FD256D5CFE009580A1 /* String+.swift */,
 				33638DFD2573C660006033CF /* UIEdgeInsets+.swift */,
 				BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */,
+				BD59A61325787D4E00BF8928 /* UIFont+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1118,6 +1122,7 @@
 			children = (
 				BDD18BB32568D682005DF00A /* VideoConstant.swift */,
 				336010CC256B7B2B009580A1 /* APICredentials.swift */,
+				BD59A60E25787C6300BF8928 /* Font.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1432,15 +1437,15 @@
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
 				BD2AA7EE256F421E00EA8791 /* CardDetailStackView.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
-				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
-				336011D3256D1877009580A1 /* DayLabel.swift in Sources */,
 				BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */,
 				BD2AA8BD2574D0A200EA8791 /* CommentView.swift in Sources */,
 				33638DEE25739971006033CF /* ListCollectionView.swift in Sources */,
 				BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BD2AA8CD2575230B00EA8791 /* CommentCollectionViewHeader.swift in Sources */,
+				BD59A61425787D4E00BF8928 /* UIFont+.swift in Sources */,
 				BDD18B2E25663F6D005DF00A /* CardService.swift in Sources */,
+				BD59A60F25787C6300BF8928 /* Font.swift in Sources */,
 				33601191256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift in Sources */,
 				BDE27E15256B7FA0002308B9 /* DateLabel.swift in Sources */,
 				BDD18BB42568D682005DF00A /* VideoConstant.swift in Sources */,
@@ -1456,6 +1461,7 @@
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				333BA5002574ABA80057ACA4 /* BoardDetailFooterView.swift in Sources */,
+				BD59A6072578782100BF8928 /* DayLabel.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				335AC4DE256F73D7006A5C4A /* BoardEndPoint.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
@@ -1503,7 +1509,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33EE01DA25690F83003D3221 /* CalendarViewController.swift in Sources */,
-				33638E842573F903006033CF /* DayLabel.swift in Sources */,
 				33638E702573F88A006033CF /* CalendarPickerHeaderView.swift in Sources */,
 				33638E3D2573F7AE006033CF /* String+.swift in Sources */,
 				3383649A256614D200F92EE4 /* Router.swift in Sources */,

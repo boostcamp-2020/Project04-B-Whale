@@ -35,7 +35,7 @@ private extension CardDetailContentLabel {
     layer.cornerRadius = 2
     numberOfLines = 0
     lineBreakMode = .byWordWrapping
-    font = UIFont(name: "AmericanTypewriter-Condensed", size: 15)
+    font = UIFont.nanumR(size: 15)
     backgroundColor = .white
     
     configureShadow()

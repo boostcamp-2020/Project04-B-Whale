@@ -15,7 +15,7 @@ final class CardDetailLocationView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "카드 위치"
-    label.font = UIFont(name: "AmericanTypewriter-Bold", size: 20)
+    label.font = UIFont.nanumB(size: 20)
     
     return label
   }()
@@ -23,7 +23,7 @@ final class CardDetailLocationView: UIView {
   private lazy var listNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont(name: "AmericanTypewriter", size: 14)
+    label.font = UIFont.nanumR(size: 14)
     
     return label
   }()
@@ -31,7 +31,7 @@ final class CardDetailLocationView: UIView {
   private lazy var boardNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont(name: "AmericanTypewriter", size: 14)
+    label.font = UIFont.nanumR(size: 14)
     
     return label
   }()

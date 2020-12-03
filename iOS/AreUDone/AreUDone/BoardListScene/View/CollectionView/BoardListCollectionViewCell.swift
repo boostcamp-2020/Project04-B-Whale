@@ -11,7 +11,13 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK: - Property
   
-  private let titleLabel = UILabel()
+  private lazy var titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumR(size: 18)
+    
+    return label
+  }()
   
   
   // MARK: - Initializer
@@ -24,29 +30,35 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .gray
+    
     configure()
   }
   
   
   // MARK: - Method
   
+  func update(with board: Board) {
+    titleLabel.text = board.title
+  }
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension BoardListCollectionViewCell {
+  
   private func configure() {
+    backgroundColor = .gray
+    layer.cornerRadius = 5
     addSubview(titleLabel)
     
-    configureTitle()
+    configureTitleLabel()
   }
   
-  private func configureTitle() {
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+  private func configureTitleLabel() {
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
-  }
-  
-  func update(with board: Board) {
-    titleLabel.text = board.title
   }
 }

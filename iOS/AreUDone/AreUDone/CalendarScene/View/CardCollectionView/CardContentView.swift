@@ -13,7 +13,7 @@ final class CardContentView: UIView {
 
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont(name: "ChalkboardSE-Bold", size: 18)
+    label.font = UIFont.nanumB(size: 18)
     return label
   }()
 
@@ -27,7 +27,7 @@ final class CardContentView: UIView {
   
   private lazy var commentCountLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont(name: "ChalkboardSE-Bold", size: 14)
+    label.font = UIFont.nanumB(size: 14)
     return label
   }()
   
@@ -74,7 +74,7 @@ private extension CardContentView {
       .layerMinXMaxYCorner
     ]
     layer.cornerCurve = .continuous
-    layer.cornerRadius = 10
+    layer.cornerRadius = 5
   }
   
   func configureTitleLabel() {

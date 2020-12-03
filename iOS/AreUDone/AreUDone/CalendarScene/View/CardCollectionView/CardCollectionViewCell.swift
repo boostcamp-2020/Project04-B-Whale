@@ -23,7 +23,7 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
     view.isPagingEnabled = true
     view.showsVerticalScrollIndicator = false
     view.showsHorizontalScrollIndicator = false
-    view.layer.cornerRadius = 10
+    view.layer.cornerRadius = 6
     view.backgroundColor = .systemRed
     
     return view
