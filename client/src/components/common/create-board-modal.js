@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { GithubPicker } from 'react-color';
 import { createBoard } from '../../utils/boardRequest';
 
 const DimmedModal = styled.div`
-    box-sizing: border-box;
     display: ${(props) => (props.visible ? 'block' : 'none')};
     position: fixed;
     top: 0;
@@ -15,7 +15,6 @@ const DimmedModal = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-    box-sizing: border-box;
     display: ${(props) => (props.visible ? 'block' : 'none')};
     position: fixed;
     top: 0;
@@ -28,40 +27,59 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalInner = styled.div`
-    box-sizing: border-box;
     position: relative;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
     background-color: #fff;
     border-radius: 10px;
-    width: 360px;
-    max-width: 480px;
+    width: 100%;
+    max-width: 350px;
     top: 40%;
     margin: 0 auto;
-    padding: 5px 20px;
+    padding: 10px 20px;
+    background-color: ${(props) => props.color};
 `;
 
 const CloseModalBtn = styled.button`
     width: 30px;
     margin-bottom: 10px;
     margin-left: 95%;
+    background: none;
 `;
 
-const ModalContents = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-`;
+const ModalContents = styled.div``;
 
 const BoardTitleInput = styled.input.attrs({
     placeholder: '보드 타이틀을 입력하세요.',
 })`
-    width: 300px;
+    width: 100%;
     margin-bottom: 10px;
-    border: 1px solid black;
+    padding: 5px;
+    border: ${(props) => props.theme.border};
+    border-radius: ${(props) => props.theme.radiusSmall};
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+const AddButton = styled.button.attrs({
+    type: 'button',
+})`
+    padding: 5px 20px;
+    border: ${(props) => props.theme.border};
+    border-radius: ${(props) => props.theme.radiusSmall};
+    font-size: 18px;
 `;
 
 const Modal = ({ onClose, visible }) => {
     const [title, setTitle] = useState('');
+    const [color, setColor] = useState('#ffffff');
+
+    const onClickChangeColor = ({ hex }) => {
+        setColor(hex);
+    };
+
     const createBoardInputHandler = (event) => {
         setTitle(event.target.value);
     };
@@ -73,7 +91,7 @@ const Modal = ({ onClose, visible }) => {
     };
 
     const addBoard = async () => {
-        const { status, data } = await createBoard(title);
+        const { status, data } = await createBoard({ title, color });
         switch (status) {
             case 201:
                 document.location = `board/${data.id}`;
@@ -91,13 +109,14 @@ const Modal = ({ onClose, visible }) => {
         <>
             <DimmedModal visible={visible} />
             <ModalWrapper onClick={onDimmedClick} visible={visible}>
-                <ModalInner>
+                <ModalInner color={color}>
                     <CloseModalBtn onClick={onClose}>X</CloseModalBtn>
                     <ModalContents>
                         <BoardTitleInput value={title} onChange={createBoardInputHandler} />
-                        <button type="button" onClick={addBoard}>
-                            생성
-                        </button>
+                        <Wrapper>
+                            <GithubPicker width={212} onChangeComplete={onClickChangeColor} />
+                            <AddButton onClick={addBoard}>생성</AddButton>
+                        </Wrapper>
                     </ModalContents>
                 </ModalInner>
             </ModalWrapper>
