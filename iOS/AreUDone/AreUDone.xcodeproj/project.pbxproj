@@ -125,6 +125,8 @@
 		33638EC02573F98C006033CF /* SectionContentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4CE256F6C51006A5C4A /* SectionContentFactory.swift */; };
 		33638EC42573F99D006033CF /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		33638EC82573F9A1006033CF /* BoardListCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4C8256F41F3006A5C4A /* BoardListCollectionViewHeader.swift */; };
+		3373A4952578DC7200D92CC0 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4942578DC7200D92CC0 /* UIView+.swift */; };
+		3373A49A2578DEC300D92CC0 /* SideBarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4992578DEC300D92CC0 /* SideBarFooterView.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -330,6 +332,8 @@
 		33638DED25739971006033CF /* ListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionView.swift; sourceTree = "<group>"; };
 		33638DFD2573C660006033CF /* UIEdgeInsets+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+.swift"; sourceTree = "<group>"; };
 		33638E0D2573F5D6006033CF /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelTests.swift; sourceTree = "<group>"; };
+		3373A4942578DC7200D92CC0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		3373A4992578DEC300D92CC0 /* SideBarFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarFooterView.swift; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -516,6 +520,7 @@
 			isa = PBXGroup;
 			children = (
 				333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */,
+				3373A4992578DEC300D92CC0 /* SideBarFooterView.swift */,
 				333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */,
 				333BA5A62577C0440057ACA4 /* MemberCell.swift */,
 				333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */,
@@ -1068,6 +1073,7 @@
 				33638DFD2573C660006033CF /* UIEdgeInsets+.swift */,
 				BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */,
 				BD59A61325787D4E00BF8928 /* UIFont+.swift */,
+				3373A4942578DC7200D92CC0 /* UIView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1410,6 +1416,7 @@
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
+				3373A49A2578DEC300D92CC0 /* SideBarFooterView.swift in Sources */,
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
@@ -1498,6 +1505,7 @@
 				335AC4C9256F41F3006A5C4A /* BoardListCollectionViewHeader.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
+				3373A4952578DC7200D92CC0 /* UIView+.swift in Sources */,
 				335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */,
 				BDEA7BF025763AB300CF6B11 /* UIAlertController+.swift in Sources */,
 			);
