@@ -63,10 +63,6 @@ final class CardDetailViewController: UIViewController {
   }
   
   
-  deinit {
-    print("card detail VC deinit")
-  }
-  
   // MARK:- Life Cycle
   
   override func viewDidLoad() {
