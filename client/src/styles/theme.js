@@ -11,6 +11,12 @@ const desktop = `(max-width: ${sizes.desktop})`;
 const colors = {
     redColor: '#f73f52',
     whiteColor: '#f5f5f5',
+    blueColor: '#588dff',
+    mainColor: '#52524E',
+    grayColor: '#908e8e',
+    darkgrayColor: '#586069',
+    lightGrayColor: '#c7c7c7',
+    lightRedColor: '#f76e7c',
 };
 
 // 자주 사용하는 css style

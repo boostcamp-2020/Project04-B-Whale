@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
       font-weight: 600;
       outline: none;
       text-decoration: none;
+      user-select: none;
   }
   html {
     height: 100%;
