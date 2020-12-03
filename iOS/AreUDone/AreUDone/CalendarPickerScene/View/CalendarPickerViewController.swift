@@ -39,14 +39,14 @@ final class CalendarPickerViewController: UIViewController {
     let collectionView = CalendarCollectionView(
       frame: .zero,
       collectionViewLayout: layout
-    ) { direction in
+    ) { [weak self] direction in
       
       switch direction {
       case .right:
-        self.viewModel.fetchUpdatedCalendar(to: -1)
+        self?.viewModel.fetchUpdatedCalendar(to: -1)
         
       case .left:
-        self.viewModel.fetchUpdatedCalendar(to: 1)
+        self?.viewModel.fetchUpdatedCalendar(to: 1)
       }
     }
     collectionView.delegate = self

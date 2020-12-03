@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CardDetailDueDateViewDelegate {
+protocol CardDetailDueDateViewDelegate: AnyObject {
   
   func cardDetailDueDateEditButtonTapped(with dateString: String)
 }
@@ -43,7 +43,7 @@ final class CardDetailDueDateView: UIView {
     return button
   }()
   
-  var delegate: CardDetailDueDateViewDelegate?
+  weak var delegate: CardDetailDueDateViewDelegate?
   
   
   // MARK:- Initializer

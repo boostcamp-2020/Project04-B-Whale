@@ -17,6 +17,8 @@ protocol CardDetailViewModelProtocol {
   
   func fetchDetailCard()
   func addComment(with comment: String)
+  func updateDueDate(with dueDate: String)
+  func updateContent(with content: String)
 }
 
 final class CardDetailViewModel: CardDetailViewModelProtocol {
@@ -32,6 +34,8 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardDetailNavigationBarTitleHandler: ((String) -> Void)?
   private var cardDetailListTitleHandler: ((String) -> Void)?
   private var cardDetailBoardTitleHandler: ((String) -> Void)?
+  private var updateDueDateHandler: ((String) -> Void)?
+  private var updateContentHandler: ((String) -> Void)?
   
   
   // MARK:- Initializer
@@ -63,6 +67,34 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   func addComment(with comment: String) {
     // TODO:- CommentService
+  }
+  
+  func updateDueDate(with dueDate: String) {
+    cardService.updateCard(
+      id: id,
+      dueDate: dueDate
+    ) { result in
+      switch result {
+      case .success(()):
+        break
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func updateContent(with content: String) {
+    cardService.updateCard(
+      id: id,
+      content: content
+    ) { result in
+      switch result {
+      case .success(()):
+        break
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
 }
 

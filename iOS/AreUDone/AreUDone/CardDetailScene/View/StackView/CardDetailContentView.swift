@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CardDetailContentViewDelegate {
+protocol CardDetailContentViewDelegate: AnyObject {
   
   func cardDetailContentEditButtonTapped(with content: String)
 }
@@ -43,7 +43,7 @@ final class CardDetailContentView: UIView {
     return button
   }()
   
-  var delegate: CardDetailContentViewDelegate?
+  weak var delegate: CardDetailContentViewDelegate?
   
   // MARK:- Initializer
   

@@ -70,11 +70,12 @@ final class CardDetailViewController: UIViewController {
     
     configure()
     bindUI()
+    viewModel.fetchDetailCard()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    viewModel.fetchDetailCard()
+    
     navigationController?.navigationBar.isHidden = false
   }
 }
@@ -172,10 +173,10 @@ private extension CardDetailViewController {
     commentView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      commentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      commentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       commentView.heightAnchor.constraint(equalToConstant: 60),
-      commentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      commentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      commentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      commentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
     ])
   }
   
@@ -324,7 +325,7 @@ extension CardDetailViewController: UIGestureRecognizerDelegate {
 extension CardDetailViewController: CardDetailContentViewDelegate {
   
   func cardDetailContentEditButtonTapped(with content: String) {
-    cardDetailCoordinator?.showContentInput(with: content)
+    cardDetailCoordinator?.showContentInput(with: content, delegate: self)
   }
 }
 
@@ -334,6 +335,30 @@ extension CardDetailViewController: CardDetailContentViewDelegate {
 extension CardDetailViewController: CardDetailDueDateViewDelegate {
   
   func cardDetailDueDateEditButtonTapped(with dateString: String) {
-    cardDetailCoordinator?.showCalendar(with: dateString)
+    cardDetailCoordinator?.showCalendar(with: dateString, delegate: self)
+  }
+}
+
+
+// MARK:- Extension CalendarPickerViewControllerDelegate
+
+extension CardDetailViewController: CalendarPickerViewControllerDelegate {
+  
+  func send(selectedDate: String) {
+    viewModel.updateDueDate(with: selectedDate)
+    DispatchQueue.main.async { [weak self] in
+      self?.stackView.updateDueDateView(with: selectedDate)
+    }
+  }
+}
+
+
+extension CardDetailViewController: ContentInputViewControllerDelegate {
+  
+  func send(with content: String) {
+    viewModel.updateContent(with: content)
+    DispatchQueue.main.async { [weak self] in
+      self?.stackView.updateContentView(with: content)
+    }
   }
 }

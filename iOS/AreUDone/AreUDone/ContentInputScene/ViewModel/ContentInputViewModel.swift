@@ -11,7 +11,6 @@ protocol ContentInputViewModelProtocol {
   func bindingInitializeContent(handler: @escaping ((String) -> Void))
   
   func initailizeContent()
-  func updateContent(with content: String)
 }
 
 final class ContentInputViewModel: ContentInputViewModelProtocol {
@@ -36,10 +35,6 @@ final class ContentInputViewModel: ContentInputViewModelProtocol {
   
   func initailizeContent() {
     initializeContentHandler?(content)
-  }
-  
-  func updateContent(with content: String) {
-    // TODO:- Service를 통해 Card Content 업데이트
   }
 }
 

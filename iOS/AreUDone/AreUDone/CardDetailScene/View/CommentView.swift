@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CommentViewDelegate {
+protocol CommentViewDelegate: AnyObject {
   func commentSaveButtonTapped(with comment: String)
 }
 
@@ -38,7 +38,7 @@ final class CommentView: UIView {
     return button
   }()
   
-  var delegate: CommentViewDelegate?
+  weak var delegate: CommentViewDelegate?
   
   // MARK:- Initializer
   
