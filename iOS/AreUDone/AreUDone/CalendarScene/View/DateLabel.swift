@@ -38,6 +38,6 @@ extension DateLabel {
   
   private func configure(){
     textAlignment = .center
-    font = UIFont(name: "ChalkboardSE-Bold", size: 30)
+    font = UIFont.nanumB(size: 30)
   }
 }
