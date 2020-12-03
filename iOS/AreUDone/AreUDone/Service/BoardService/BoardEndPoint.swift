@@ -86,6 +86,7 @@ extension BoardEndPoint: EndPointable {
       return ["title": title]
       
     case .updateBoard(_, let title):
+      
       return ["title": title]
       
     case .inviteUserToBoard(_, let userId):

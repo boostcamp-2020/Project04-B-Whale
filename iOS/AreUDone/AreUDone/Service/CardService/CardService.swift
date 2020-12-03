@@ -41,7 +41,24 @@ class CardService: CardServiceProtocol {
     }
   }
   
-  func updateCard() {
-    
+  func updateCard(
+    id: Int,
+    listId: Int? = nil,
+    title: String? = nil,
+    content: String? = nil,
+    position: String? = nil,
+    dueDate: String? = nil,
+    completionHandler: @escaping ((Result<Void, APIError>) -> Void)
+  ) {
+    router.request(route: CardEndPoint.updateCard(
+                    id: id,
+                    listId: listId,
+                    title: title,
+                    content: content,
+                    position: position,
+                    dueDate: dueDate
+    )) { (result: Result<Void, APIError>) in
+      completionHandler(result)
+    }
   }
 }

@@ -13,6 +13,14 @@ enum CardEndPoint {
   
   case fetchDailyCards(dateString: String)
   case fetchDetailCard(id: Int)
+  case updateCard(
+        id: Int,
+        listId: Int?,
+        title: String?,
+        content: String?,
+        position: String?,
+        dueDate: String?
+       )
 }
 
 extension CardEndPoint: EndPointable {
@@ -24,6 +32,8 @@ extension CardEndPoint: EndPointable {
     case .fetchDetailCard(let id):
       return "\(APICredentials.ip)/api/card/\(id)"
       
+    case .updateCard(let id, _, _, _, _, _):
+      return "\(APICredentials.ip)/api/card/\(id)"
     }
   }
   
@@ -39,6 +49,9 @@ extension CardEndPoint: EndPointable {
       
     case .fetchDetailCard:
       return nil
+      
+    case .updateCard:
+      return nil
     }
   }
   
@@ -49,6 +62,9 @@ extension CardEndPoint: EndPointable {
       
     case .fetchDetailCard:
       return .get
+      
+    case .updateCard:
+      return .patch
     }
   }
   
@@ -64,6 +80,40 @@ extension CardEndPoint: EndPointable {
   }
   
   var bodies: HTTPBody? {
-    return nil
+    switch self {
+    case .updateCard(
+          _,
+          let listId,
+          let title,
+          let content,
+          let position,
+          let dueDate
+    ):
+      var body = [String: String]()
+      if let listId = listId {
+        body["listId"] = "\(listId)"
+      }
+      
+      if let title = title {
+        body["title"] = title
+      }
+      
+      if let content = content {
+        body["content"] = content
+      }
+      
+      if let position = position {
+        body["position"] = position
+      }
+      
+      if let dueDate = dueDate {
+        body["dueDate"] = dueDate
+      }
+      
+      return body
+      
+    default:
+      return nil
+    }
   }
 }

@@ -20,7 +20,8 @@ public enum HTTPMethod: String {
   case post,
        get,
        put,
-       delete
+       delete,
+       patch
 }
 public typealias HTTPHeader = [String: String]
 public typealias HTTPBody = [String: String]
