@@ -4,9 +4,12 @@ import queryString from 'query-string';
 import BoardsProvider from '../provider/BoardsProvider';
 import SideBar from './SideBar';
 import Header from '../common/header';
+import MainWrapper from './MainWrapper';
 
 const Wrapper = styled.div`
-    width: 1100px;
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
     margin: 0 auto;
 `;
 const Main = ({ location }) => {
@@ -20,6 +23,7 @@ const Main = ({ location }) => {
             <Header />
             <Wrapper>
                 <SideBar />
+                <MainWrapper />
             </Wrapper>
         </BoardsProvider>
     );
