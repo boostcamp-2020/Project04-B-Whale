@@ -18,6 +18,7 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
     return titleLabel
   }()
   
+  
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {
