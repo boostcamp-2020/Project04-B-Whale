@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
 import { BoardService } from './BoardService';
@@ -76,7 +76,7 @@ export class CardService extends BaseService {
             .map((card) => ({
                 id: card.id,
                 title: card.title,
-                dueDate: card.dueDate,
+                dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
                 commentCount: card.commentCount,
             }));
     }
@@ -105,7 +105,7 @@ export class CardService extends BaseService {
         return cards.map((card) => ({
             id: card.id,
             title: card.title,
-            dueDate: card.dueDate,
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
             commentCount: card.commentCount,
         }));
     }
