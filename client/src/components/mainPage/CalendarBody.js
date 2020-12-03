@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CalendarDate from './CalendarDate';
 import { CalendarDispatchContext, CalendarStatusContext } from '../../context/CalendarContext';
+import { getCardCount } from '../../utils/cardRequest';
 
 const BodyWrapper = styled.div`
     padding: 8px;
@@ -45,12 +46,17 @@ const Day = styled.div`
 `;
 
 const CalendarBody = () => {
-    const { today, selectedDate } = useContext(CalendarStatusContext);
+    const { today, selectedDate, cardCount } = useContext(CalendarStatusContext);
     const calendarDispatch = useContext(CalendarDispatchContext);
 
-    const onClickChangeSelectedDate = (clickedDate) => {
-        // TODO: count data를 가져와서 count 값 세팅해줄 것
-        calendarDispatch({ type: 'CHANGE_SELECTED_DATE', selectedDate: clickedDate });
+    const onClickChangeSelectedDate = async (date) => {
+        if (selectedDate.format('MM') !== date.format('MM')) {
+            const startDate = date.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
+            const endDate = date.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
+            const { data } = await getCardCount({ startDate, endDate });
+            calendarDispatch({ type: 'CHANGE_MONTH', date, data, cardCount: data.cardCounts });
+        }
+        calendarDispatch({ type: 'CHANGE_SELECTED_DATE', selectedDate: date });
     };
 
     const makeCalendar = () => {
@@ -82,12 +88,16 @@ const CalendarBody = () => {
                                     : '';
                             const isGrayed =
                                 current.format('MM') === selectedDate.format('MM') ? '' : 'grayed';
+                            const existCard = cardCount.find(
+                                (ele) => ele.dueDate === current.format('YYYY-MM-DD'),
+                            );
                             return (
                                 <CalendarDate
                                     key={current.format('YYYY-MM-DD')}
                                     className={`${isToday} ${isSelected} ${isGrayed}`}
                                     onClick={onClickChangeSelectedDate}
                                     date={current}
+                                    count={existCard && existCard.count}
                                 />
                             );
                         })}
