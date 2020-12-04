@@ -49,10 +49,6 @@ final class SigninViewController: UIViewController {
   
   // MARK: - Method
   
-  @IBAction func appleSigninButtonTapped(_ sender: Any) {
-    // TODO Apple 로그인 진행
-  }
-  
   @IBAction func naverSigninButtonTapped(_ sender: Any) {
     signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .naver))
   }
@@ -67,7 +63,7 @@ final class SigninViewController: UIViewController {
 }
 
 
-// MARK: - Extension
+// MARK: - Extension bindUI
 
 private extension SigninViewController {
   
