@@ -71,8 +71,7 @@ private extension ImageTitleView {
     NSLayoutConstraint.activate([
       imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
       imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-      imageView.widthAnchor.constraint(equalToConstant: 20),
-//      imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+      imageView.widthAnchor.constraint(equalToConstant: 20)
     ])
   }
   
