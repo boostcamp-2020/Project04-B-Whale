@@ -1,6 +1,5 @@
 import request from './api';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getBoards = async () => {
     const config = {
         url: '/api/board',
@@ -11,11 +10,11 @@ export const getBoards = async () => {
     return response;
 };
 
-export const createBoard = async (title) => {
+export const createBoard = async ({ title, color }) => {
     const config = {
         url: '/api/board',
         method: 'POST',
-        data: { title },
+        data: { title, color },
     };
     const response = await request(config);
 

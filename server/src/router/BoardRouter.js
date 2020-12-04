@@ -13,14 +13,25 @@ export const BoardRouter = () => {
 
     router.post('/', async (req, res) => {
         const boardService = BoardService.getInstance();
-        const createdBoardId = await boardService.createBoard(req.user.id, req.body.title);
+        const createdBoardId = await boardService.createBoard({
+            userId: req.user.id,
+            title: req.body.title,
+            color: req.body.color,
+        });
         res.status(201).json({ id: createdBoardId });
     });
 
     router.get('/:id', async (req, res) => {
         const boardService = BoardService.getInstance();
-        const detailBoard = await boardService.getDetailBoard(req.user.id, req.body.title);
-        res.status(204).json({ data: detailBoard });
+        const detailBoard = await boardService.getDetailBoard(req.user.id, req.params.id);
+        res.status(200).json(detailBoard);
     });
+
+    router.post('/:id/invitation', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.inviteUserIntoBoard(req.user.id, req.params.id, req.body.userId);
+        res.status(201);
+    });
+
     return router;
 };

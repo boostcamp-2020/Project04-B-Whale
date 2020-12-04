@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { validateOrReject } from 'class-validator';
-import { createConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import {
     initializeTransactionalContext,
     patchTypeORMRepositoryWithBaseRepository,
@@ -33,15 +33,10 @@ export class Application {
     }
 
     async initialize() {
-        try {
-            await this.initEnvironment();
-            this.initPassport();
-            this.registerMiddleware();
-            await this.initDatabase();
-        } catch (error) {
-            console.error(error);
-            process.exit();
-        }
+        await this.initEnvironment();
+        this.initPassport();
+        this.registerMiddleware();
+        await this.initDatabase();
     }
 
     async initEnvironment() {
@@ -77,5 +72,9 @@ export class Application {
     initPassport() {
         passport.use(new NaverStrategy());
         passport.use(new JwtStrategy());
+    }
+
+    async close() {
+        await getConnection().close();
     }
 }

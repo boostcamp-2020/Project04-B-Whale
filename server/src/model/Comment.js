@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Card } from './Card';
 import { User } from './User';
 
@@ -6,6 +6,9 @@ import { User } from './User';
 export class Comment {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
+
+    @Column({ name: 'content', type: 'varchar' })
+    content;
 
     @ManyToOne(() => User, (user) => user.comments, { nullable: false })
     @JoinColumn({ name: 'user_id' })
