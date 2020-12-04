@@ -21,6 +21,7 @@ protocol SideBarViewModelProtocol {
   func fetchMember(at index: Int) -> InvitedUser?
   func fetchActivity(at index: Int) -> Activity?
   func fetchSectionHeader(at index: Int) -> (image: String, title: String)
+  func fetchProfileImage(with url: String, handler: @escaping (Data) -> Void)
 }
 
 final class SideBarViewModel: SideBarViewModelProtocol {
@@ -41,7 +42,6 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       updateMembersInCollectionViewHandler?()
     }
   }
-  
   private var boardActivities: [Activity]? {
     didSet {
       updateActivitiesInCollectionViewHandler?()
@@ -73,27 +73,12 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       switch result {
       case .success(let boardDetail):
         self.boardMembers = boardDetail.invitedUsers
-        self.fetchImages()
       case .failure(let error):
         print(error)
       }
     }
   }
-  
-  private func fetchImages() {
-    boardMembers?.enumerated().forEach { (index, invitedUser) in
-      imageService.fetchImage(with: invitedUser.profileImageUrl) { result in
-        switch result {
-        case .success(let data):
-          self.boardMembers?[index].data = data
-          
-        case .failure(let error):
-          print(error)
-        }
-      }
-    }
-  }
-  
+
   func updateActivitiesInCollectionView() {
     activityService.fetchActivities(withBoardId: boardId) { result in
       switch result {
@@ -124,6 +109,17 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   func fetchSectionHeader(at index: Int) -> (image: String, title: String) {
     return sideBarHeaderContentsFactory.load(order: index)
+  }
+  
+  func fetchProfileImage(with url: String, handler: @escaping ((Data) -> Void)) {
+    imageService.fetchImage(with: url) { result in
+      switch result {
+      case .success(let data):
+        handler(data)
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
 }
 

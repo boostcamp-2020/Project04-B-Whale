@@ -24,6 +24,4 @@ struct Creator: Codable {
 struct InvitedUser: Codable {
   let id: Int
   let name, profileImageUrl: String
-  
-  var data: Data?
 }
