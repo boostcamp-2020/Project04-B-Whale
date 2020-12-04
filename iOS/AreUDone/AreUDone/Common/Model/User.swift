@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct User: Codable {
+  
+  let name: String
+  let profileImageUrl: String
+}
