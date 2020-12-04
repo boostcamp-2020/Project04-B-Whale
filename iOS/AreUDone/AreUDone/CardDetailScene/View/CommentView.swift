@@ -53,6 +53,10 @@ final class CommentView: UIView {
     
     configure()
   }
+  
+  func update(with profileImage: UIImage) {
+    profileImageView.image = profileImage
+  }
 }
 
 
