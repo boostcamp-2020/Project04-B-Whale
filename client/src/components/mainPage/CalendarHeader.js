@@ -23,7 +23,7 @@ const DateButton = styled.button.attrs({ type: 'button' })`
 `;
 
 const CalendarHeader = () => {
-    const { selectedDate } = useContext(CalendarStatusContext);
+    const { selectedDate, member } = useContext(CalendarStatusContext);
     const calendarDispatch = useContext(CalendarDispatchContext);
 
     const onClickMoveMonth = async (next) => {
@@ -32,7 +32,7 @@ const CalendarHeader = () => {
 
         const startDate = date.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
         const endDate = date.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
-        const { data } = await getCardCount({ startDate, endDate });
+        const { data } = await getCardCount({ startDate, endDate, member });
         calendarDispatch({ type: 'CHANGE_MONTH', date, cardCount: data.cardCounts });
     };
 

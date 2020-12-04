@@ -13,7 +13,8 @@ export default ({ children }) => {
     useEffect(async () => {
         const startDate = state.today.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
         const endDate = state.today.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
-        const { data } = await getCardCount({ startDate, endDate });
+        const { member } = state;
+        const { data } = await getCardCount({ startDate, endDate, member });
 
         dispatch({ type: 'GET_INIT_CARD_COUNT', cardCount: data.cardCounts });
     }, []);
