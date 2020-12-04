@@ -178,13 +178,11 @@ describe('Board API Test', () => {
             });
 
             const board1 = em.create(Board, {
-                id: 1,
                 title: 'board1',
                 creator: user1,
                 color: '#000000',
             });
             const board2 = em.create(Board, {
-                id: 2,
                 title: 'board2',
                 creator: user2,
                 color: '#000000',
