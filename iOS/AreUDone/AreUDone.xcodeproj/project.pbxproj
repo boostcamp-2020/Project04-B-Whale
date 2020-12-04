@@ -171,11 +171,11 @@
 		33EE01F22569101A003D3221 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18BB32568D682005DF00A /* VideoConstant.swift */; };
 		33EE01FA25691044003D3221 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
-		33F2D48C257A232A008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D48B257A232A008F1E06 /* SideBarCollectionViewDataSource.swift */; };
 		33F2D494257A2338008F1E06 /* SideBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */; };
 		33F2D49C257A31DF008F1E06 /* ImageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */; };
 		33F2D4A8257A3F6C008F1E06 /* MemberCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */; };
 		33F2D4B9257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */; };
+		33F2D4C7257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
@@ -370,11 +370,11 @@
 		33EE017F2568EE7E003D3221 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
 		33EE01892568F47D003D3221 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactoryTests.swift; sourceTree = "<group>"; };
-		33F2D48B257A232A008F1E06 /* SideBarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarCollectionView.swift; sourceTree = "<group>"; };
 		33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleView.swift; sourceTree = "<group>"; };
 		33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionView.swift; sourceTree = "<group>"; };
 		33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -486,7 +486,6 @@
 			isa = PBXGroup;
 			children = (
 				333BA55225768F3B0057ACA4 /* SideBarView.swift */,
-				33F2D48B257A232A008F1E06 /* SideBarCollectionViewDataSource.swift */,
 				333BA5C9257879310057ACA4 /* CollectionView */,
 			);
 			path = SideBarView;
@@ -533,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */,
+				33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */,
 				333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */,
 				333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */,
 				333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */,
@@ -1433,7 +1433,6 @@
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
 				333BA5A72577C0440057ACA4 /* MemberCell.swift in Sources */,
-				33F2D48C257A232A008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
@@ -1504,6 +1503,7 @@
 				333BA55325768F3B0057ACA4 /* SideBarView.swift in Sources */,
 				335AC4EF256F8ADF006A5C4A /* BoardDetailCoordinator.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
+				33F2D4C7257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */,
 				333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */,
 				333BA5912577A5D30057ACA4 /* SideBarHeaderView.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
