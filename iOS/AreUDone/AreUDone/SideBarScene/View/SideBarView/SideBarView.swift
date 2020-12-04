@@ -73,7 +73,7 @@ private extension SideBarView {
       titleView.topAnchor.constraint(equalTo: topAnchor),
       titleView.leadingAnchor.constraint(equalTo: leadingAnchor),
       titleView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      titleView.heightAnchor.constraint(equalToConstant: 50),
+      titleView.heightAnchor.constraint(equalToConstant: 40)
     ])
   }
   
