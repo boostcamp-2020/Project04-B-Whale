@@ -28,6 +28,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
+  private let userService: UserServiceProtocol
   private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
@@ -45,11 +46,13 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   init(
     id: Int,
     cardService: CardServiceProtocol,
-    imageService: ImageServiceProtocol
+    imageService: ImageServiceProtocol,
+    userService: UserServiceProtocol
   ) {
     self.id = id
     self.cardService = cardService
     self.imageService = imageService
+    self.userService = userService
   }
 
   
