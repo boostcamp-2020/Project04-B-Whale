@@ -222,6 +222,7 @@ private extension CardDetailViewController {
     bindingCardDetailNavigationBarTitle()
     bindingCardDetailListTitle()
     bindingCardDetailBoardTitle()
+    bindingCommentViewProfileImage()
   }
   
   func bindingCardDetailContentView() {
@@ -268,6 +269,15 @@ private extension CardDetailViewController {
     viewModel.bindingCardDetailBoardTitle { [weak self] title in
       DispatchQueue.main.async {
         self?.stackView.updateBoardOfLocationView(with: title)
+      }
+    }
+  }
+  
+  func bindingCommentViewProfileImage() {
+    viewModel.bindingCommentViewProfileImage { [weak self] data in
+      DispatchQueue.main.async {
+        let image = UIImage(data: data)
+        self?.commentView.update(with: image)
       }
     }
   }

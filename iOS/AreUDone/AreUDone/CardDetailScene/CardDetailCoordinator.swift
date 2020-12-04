@@ -43,7 +43,8 @@ final class CardDetailCoordinator: NavigationCoordinator {
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
-                imageService: imageService
+                imageService: imageService,
+                userService: userService
               )
               
               return CardDetailViewController(

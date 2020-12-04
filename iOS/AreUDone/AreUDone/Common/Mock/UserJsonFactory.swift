@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkFramework
 
 struct UserJsonFactory: JsonFactory {
   
@@ -20,6 +21,8 @@ struct UserJsonFactory: JsonFactory {
         }
         """.data(using: .utf8)
       
+    default:
+      return nil
     }
   }
 }
