@@ -10,6 +10,7 @@ import NetworkFramework
 
 protocol UserServiceProtocol {
   
+  func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void))
 }
 
 class UserService: UserServiceProtocol {
@@ -28,4 +29,9 @@ class UserService: UserServiceProtocol {
   
   // MARK: - Method
   
+  func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void)) {
+    router.request(route: UserEndPoint.requestMe) { (result: Result<User, APIError>) in
+      completionHandler(result)
+    }
+  }
 }
