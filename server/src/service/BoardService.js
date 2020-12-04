@@ -84,6 +84,12 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async getDetailBoard(hostId, boardId) {
+        const board = await this.boardRepository.findOne({
+            select: ['id'],
+            where: { id: boardId },
+        });
+        if (!board) throw new EntityNotFoundError();
+        this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
             .innerJoin('board.creator', 'creator')
@@ -110,10 +116,6 @@ export class BoardService extends BaseService {
             .loadRelationCountAndMap('cards.commentCount', 'cards.comments')
             .where('board.id = :id', { id: boardId })
             .getOne();
-        if (!boardDetail) {
-            throw new EntityNotFoundError();
-        }
-        this.checkForbidden(hostId, boardId);
         if (Array.isArray(boardDetail?.invitations)) {
             boardDetail.invitedUsers = boardDetail.invitations.map((v) => v.user);
             delete boardDetail.invitations;
