@@ -1,10 +1,11 @@
 import request from 'supertest';
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { Application } from '../../src/Application';
 import { JwtUtil } from '../../src/common/util/JwtUtil';
 import { Board } from '../../src/model/Board';
 import { Invitation } from '../../src/model/Invitation';
 import { User } from '../../src/model/User';
+import { TestTransactionDelegate } from '../TestTransactionDelegate';
 
 describe('Board API Test', () => {
     let app = null;
@@ -87,50 +88,113 @@ describe('Board API Test', () => {
     });
 
     test('POST /api/board를 호출할 때, 요청 바디가 올바르지 않으면 400을 리턴한다.', async () => {
-        // given
-        // when
-        const response = await request(app.httpServer).post('/api/board').send({ title: null });
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            // when
+            const response = await request(app.httpServer).post('/api/board').send({ title: null });
 
-        // then
-        expect(response.status).toEqual(400);
+            // then
+            expect(response.status).toEqual(400);
+        });
     });
 
     test('POST /api/board를 호출할 때, 권한이 없으면 401을 리턴한다.', async () => {
-        // given
-        const token = 'Bearer fakeToken';
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const token = 'Bearer fakeToken';
 
-        // when
-        const response = await request(app.httpServer).post('/api/board').set({
-            Authorization: token,
-            'Content-Type': 'application/json',
+            // when
+            const response = await request(app.httpServer).post('/api/board').set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+
+            // then
+            expect(response.status).toEqual(401);
         });
-
-        // then
-        expect(response.status).toEqual(401);
     });
 
     test('POST /api/board가 정상적으로 호출되었을 때, 201을 리턴한다.', async () => {
-        // given
-        const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
-        const userRepository = getRepository(User);
-        const createUser = userRepository.create(user);
-        const createdUser = await userRepository.save(createUser);
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+            const userRepository = getRepository(User);
+            const createUser = userRepository.create(user);
+            const createdUser = await userRepository.save(createUser);
 
-        const token = await jwtUtil.generateAccessToken({
-            userId: createdUser.id,
-            username: createdUser.name,
+            const token = await jwtUtil.generateAccessToken({
+                userId: createdUser.id,
+                username: createdUser.name,
+            });
+
+            // when
+            const response = await request(app.httpServer)
+                .post('/api/board')
+                .set({
+                    Authorization: token,
+                    'Content-Type': 'application/json',
+                })
+                .send({ title: 'test title', color: '#000000', creator: createdUser.id });
+
+            // then
+            expect(response.status).toEqual(201);
         });
+    });
 
-        // when
-        const response = await request(app.httpServer)
-            .post('/api/board')
-            .set({
+    test('GET /api/board/{boardId} 호출 시, 권한이 없으면 401을 리턴한다', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            const token = 'Bearer fakeToken';
+            const boardId = 1;
+            const response = await request(app.httpServer).get(`/api/board/${boardId}`).set({
                 Authorization: token,
                 'Content-Type': 'application/json',
-            })
-            .send({ title: 'test title', color: '#000000' });
+            });
+            expect(response.status).toEqual(401);
+        });
+    });
 
-        // then
-        expect(response.status).toEqual(201);
+    test('GET /api/board/{boardId} 호출 시, 보드 미존재 시 404 리턴.', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+            const userRepository = getRepository(User);
+            const createUser = userRepository.create(user);
+            const createdUser = await userRepository.save(createUser);
+            const token = await jwtUtil.generateAccessToken({
+                userId: createdUser.id,
+                username: createdUser.name,
+            });
+            const boardId = 0;
+            const response = await request(app.httpServer).get(`/api/board/${boardId}`).set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+
+            expect(response.status).toEqual(404);
+        });
+    });
+
+    test('GET /api/board/{boardId}가 정상적으로 호출되었을 때, 200을 리턴한다.', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
+            const userRepository = getRepository(User);
+            const createUser = userRepository.create(user);
+            const createdUser = await userRepository.save(createUser);
+
+            const boardRepository = getRepository(Board);
+            const board = { title: 'board', creator: createdUser.id, color: '#000000' };
+            const createBoard = boardRepository.create(board);
+            const createdBoard = await boardRepository.save(createBoard);
+            const token = await jwtUtil.generateAccessToken({
+                userId: createdUser.id,
+                username: createdUser.name,
+            });
+
+            const boardId = createdBoard.id;
+            const response = await request(app.httpServer).get(`/api/board/${boardId}`).set({
+                Authorization: token,
+                'Content-Type': 'application/json',
+            });
+            expect(response.status).toEqual(200);
+        });
     });
 });
