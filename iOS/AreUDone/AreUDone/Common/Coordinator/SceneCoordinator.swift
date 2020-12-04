@@ -36,8 +36,8 @@ final class SceneCoordinator: Coordinator {
   // MARK: - Method
   
   func start() -> UIViewController {
-    var signinCheckResult = signinChecker.check()
-    signinCheckResult = .isSigned
+    let signinCheckResult = signinChecker.check()
+    
     initCoordinator = initCoordinatorFactory.coordinator(
       by: signinCheckResult,
       with: router
