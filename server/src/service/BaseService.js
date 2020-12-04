@@ -1,4 +1,6 @@
-import { getRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
+import { CustomBoardRepository } from '../dao/CustomBoardRepository';
+import { CustomCardRepository } from '../dao/CustomCardRepository';
 import { Activity } from '../model/Activity';
 import { Board } from '../model/Board';
 import { Card } from '../model/Card';
@@ -16,5 +18,7 @@ export class BaseService {
         this.invitationRepository = getRepository(Invitation);
         this.listRepository = getRepository(List);
         this.userRepository = getRepository(User);
+        this.customBoardRepository = getCustomRepository(CustomBoardRepository);
+        this.customCardRepository = getCustomRepository(CustomCardRepository);
     }
 }
