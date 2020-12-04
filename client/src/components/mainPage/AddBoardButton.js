@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from '../common/create-board-modal';
+import Modal from '../common/CreateBoardModal';
 
 const Button = styled.button`
     width: 100%;

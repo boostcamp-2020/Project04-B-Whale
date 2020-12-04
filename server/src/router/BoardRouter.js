@@ -21,5 +21,17 @@ export const BoardRouter = () => {
         res.status(201).json({ id: createdBoardId });
     });
 
+    router.get('/:id', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        const detailBoard = await boardService.getDetailBoard(req.user.id, req.params.id);
+        res.status(200).json(detailBoard);
+    });
+
+    router.post('/:id/invitation', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.inviteUserIntoBoard(req.user.id, req.params.id, req.body.userId);
+        res.status(201);
+    });
+
     return router;
 };
