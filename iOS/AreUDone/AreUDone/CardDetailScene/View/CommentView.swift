@@ -8,6 +8,7 @@
 import UIKit
 
 protocol CommentViewDelegate: AnyObject {
+  
   func commentSaveButtonTapped(with comment: String)
 }
 
@@ -17,20 +18,24 @@ final class CommentView: UIView {
   
   private lazy var profileImageView: UIImageView = {
     let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     let image = UIImage(systemName: "circle")
     view.image = image
+    view.layer.masksToBounds = true
     
     return view
   }()
   
   private lazy var commentTextField: CommentTextField = {
     let textField = CommentTextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
     
     return textField
   }()
   
   private lazy var commentSaveButton: UIButton = {
     let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
     let image = UIImage(systemName: "paperplane.fill")
     button.setImage(image, for: .normal)
     button.isEnabled = false
@@ -97,19 +102,18 @@ private extension CommentView {
   }
   
   func configureProfileImageView() {
-    profileImageView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       profileImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
       profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-      profileImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1),
+      profileImageView.widthAnchor.constraint(equalToConstant: 50),
       profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor)
     ])
+    
+    profileImageView.layoutIfNeeded()
+    profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
   }
   
   func configureCommentTextField() {
-    commentTextField.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       commentTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
       commentTextField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
@@ -118,8 +122,6 @@ private extension CommentView {
   }
   
   func configureCommentSaveButton() {
-    commentSaveButton.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       commentSaveButton.centerYAnchor.constraint(equalTo: centerYAnchor),
       commentSaveButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
