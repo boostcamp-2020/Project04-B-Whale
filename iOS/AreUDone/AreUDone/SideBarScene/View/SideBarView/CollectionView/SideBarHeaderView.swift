@@ -11,21 +11,12 @@ final class SideBarHeaderView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  private lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.translatesAutoresizingMaskIntoConstraints = false
+  private lazy var imageTitleView: ImageTitleView = {
+    let view = ImageTitleView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     
-    imageView.tintColor = .black
-    
-    return imageView
+    return view
   }()
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-
-    return titleLabel
-  }()
-  
   
   
   // MARK: - Initializer
@@ -46,8 +37,7 @@ final class SideBarHeaderView: UICollectionReusableView, Reusable {
   // MARK: - Method
   
   func update(withImageName imageName: String, andTitle title: String) {
-    imageView.image = UIImage(systemName: imageName)
-    titleLabel.text = title
+    imageTitleView.update(withImageName: imageName, andTitle: title)
   }
 }
 
@@ -57,53 +47,19 @@ final class SideBarHeaderView: UICollectionReusableView, Reusable {
 private extension SideBarHeaderView {
   
   func configure() {
-    backgroundColor = .white
+    addSubview(imageTitleView)
     
-    addSubview(imageView)
-    addSubview(titleLabel)
-    
-    configureImageView()
-    configureTitle()
-    configureTopDividerView()
-    configureBottomDividerView()
+   configureImageTitleView()
   }
   
-  func configureImageView() {
+  func configureImageTitleView() {
     NSLayoutConstraint.activate([
-      imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-      imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-      imageView.widthAnchor.constraint(equalToConstant: 30),
-      imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+      imageTitleView.topAnchor.constraint(equalTo: topAnchor),
+      imageTitleView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      imageTitleView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      imageTitleView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
-  }
-  
-  func configureTitle() {
-    NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
-      titleLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
-    ])
-  }
-  
-  func configureTopDividerView() {
-    let view = UIView.dividerView()
-    addSubview(view)
     
-    NSLayoutConstraint.activate([
-      view.topAnchor.constraint(equalTo: topAnchor),
-      view.widthAnchor.constraint(equalTo: widthAnchor),
-      view.heightAnchor.constraint(equalToConstant: 1)
-    ])
-  }
-  
-  func configureBottomDividerView() {
-    let view = UIView.dividerView()
-    addSubview(view)
-    
-    NSLayoutConstraint.activate([
-      view.bottomAnchor.constraint(equalTo: bottomAnchor),
-      view.widthAnchor.constraint(equalTo: widthAnchor),
-      view.heightAnchor.constraint(equalToConstant: 1)
-    ])
   }
 }
 
