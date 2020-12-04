@@ -14,6 +14,7 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
+  func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
@@ -28,6 +29,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
+  private let userService: UserServiceProtocol
   private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
@@ -38,6 +40,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardDetailBoardTitleHandler: ((String) -> Void)?
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
+  private var commentViewProfileImageHandler: ((Data) -> Void)?
   
   
   // MARK:- Initializer
@@ -45,26 +48,29 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   init(
     id: Int,
     cardService: CardServiceProtocol,
-    imageService: ImageServiceProtocol
+    imageService: ImageServiceProtocol,
+    userService: UserServiceProtocol
   ) {
     self.id = id
     self.cardService = cardService
     self.imageService = imageService
+    self.userService = userService
   }
 
   
   // MARK:- Method
   
   func fetchDetailCard() {
-    cardService.fetchDetailCard(id: id) { result in
+    cardService.fetchDetailCard(id: id) { [weak self] result in
       switch result {
       case .success(let detailCard):
-        self.cardDetailContentViewHandler?(detailCard.content)
-        self.cardDetailDueDateViewHandler?(detailCard.dueDate)
-        self.cardDetailCommentsViewHandler?(detailCard.comments)
-        self.cardDetailNavigationBarTitleHandler?(detailCard.title)
-        self.cardDetailListTitleHandler?(detailCard.list.title)
-        self.cardDetailBoardTitleHandler?(detailCard.board.title)
+        self?.cardDetailContentViewHandler?(detailCard.content)
+        self?.cardDetailDueDateViewHandler?(detailCard.dueDate)
+        self?.cardDetailCommentsViewHandler?(detailCard.comments)
+        self?.cardDetailNavigationBarTitleHandler?(detailCard.title)
+        self?.cardDetailListTitleHandler?(detailCard.list.title)
+        self?.cardDetailBoardTitleHandler?(detailCard.board.title)
+        self?.fetchUserData()
         
       case .failure(let error):
         print(error)
@@ -109,6 +115,21 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success(let data):
         completionHandler(data)
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  private func fetchUserData() {
+    userService.requestMe { [weak self] result in
+      switch result {
+      case .success(let user):
+        self?.fetchProfileImage(with: user.profileImageUrl) { data in
+          self?.commentViewProfileImageHandler?(data)
+        }
+        
       case .failure(let error):
         print(error)
       }
@@ -143,5 +164,9 @@ extension CardDetailViewModel {
   
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void)) {
     cardDetailBoardTitleHandler = handler
+  }
+  
+  func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void)) {
+    commentViewProfileImageHandler = handler
   }
 }

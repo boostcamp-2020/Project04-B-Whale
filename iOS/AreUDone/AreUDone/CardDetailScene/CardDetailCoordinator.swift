@@ -39,10 +39,12 @@ final class CardDetailCoordinator: NavigationCoordinator {
               guard let self = self else { return UIViewController() }
               let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let imageService = ImageService(router: self.router)
+              let userService = UserService(router: MockRouter(jsonFactory: UserJsonFactory()))
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
-                imageService: imageService
+                imageService: imageService,
+                userService: userService
               )
               
               return CardDetailViewController(

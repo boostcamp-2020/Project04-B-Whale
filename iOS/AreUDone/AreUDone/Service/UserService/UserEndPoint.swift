@@ -10,12 +10,12 @@ import NetworkFramework
 
 enum LoginFlatform: String {
   case naver
-  case apple
 }
 
 enum UserEndPoint {
   
   case requestLogin(flatform: LoginFlatform)
+  case requestMe
 }
 
 extension UserEndPoint: EndPointable {
@@ -24,6 +24,9 @@ extension UserEndPoint: EndPointable {
     switch self {
     case .requestLogin(let flatform):
       return "\(APICredentials.ip)/api/oauth/login/\(flatform.rawValue)"
+      
+    case .requestMe:
+      return "\(APICredentials.ip)/api/user/me"
     }
   }
   
@@ -36,12 +39,18 @@ extension UserEndPoint: EndPointable {
     switch self {
     case .requestLogin:
       return nil
+      
+    case .requestMe:
+      return nil
     }
   }
   
   var httpMethod: HTTPMethod? {
     switch self {
     case .requestLogin:
+      return .get
+      
+    case .requestMe:
       return .get
     }
   }
