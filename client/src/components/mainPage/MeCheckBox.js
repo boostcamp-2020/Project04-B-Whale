@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { CalendarDispatchContext, CalendarStatusContext } from '../../context/CalendarContext';
+import { getCardCount } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: flex;
@@ -15,26 +17,42 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const Label = styled.label.attrs({
-    for: 'me-checkbox',
+    htmlFor: 'me-checkbox',
 })`
     margin-left: 5px;
     font-size: 18px;
+    cursor: pointer;
 `;
 
 const CheckBox = styled.input.attrs({
     id: 'me-checkbox',
     type: 'checkbox',
-    checked: true,
 })`
     width: 15px;
     height: 15px;
+    cursor: pointer;
 `;
 
 const MeCheckBox = () => {
+    const { member, selectedDate: date } = useContext(CalendarStatusContext);
+    const calendarDispatch = useContext(CalendarDispatchContext);
+
+    const onChangeMeCheckBox = async () => {
+        const isMember = member ? undefined : 'me';
+        const startDate = date.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
+        const endDate = date.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
+        const { data } = await getCardCount({
+            startDate,
+            endDate,
+            member: isMember,
+        });
+        calendarDispatch({ type: 'CHANGE_MEMBER', isMember, cardCount: data.cardCounts });
+    };
+
     return (
         <Wrapper>
             <CheckBoxWrapper>
-                <CheckBox />
+                <CheckBox defaultChecked={member} onChange={onChangeMeCheckBox} />
                 <Label>Me</Label>
             </CheckBoxWrapper>
         </Wrapper>
