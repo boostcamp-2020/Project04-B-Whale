@@ -13,14 +13,15 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
-    let image = UIImage(systemName: "circle")
-    imageView.image = image
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.layer.masksToBounds = true
     
     return imageView
   }()
   
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 15)
     
     return label
@@ -28,12 +29,14 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var contentLabel: CardDetailContentLabel = {
     let label = CardDetailContentLabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     
     return label
   }()
   
   private lazy var createdAtLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumR(size: 13)
     
     return label
@@ -77,6 +80,10 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     contentLabel.text = comment.content
     createdAtLabel.text = comment.createdAt
   }
+  
+  func update(with image: UIImage?) {
+    profileImageView.image = image
+  }
 }
 
 
@@ -102,19 +109,18 @@ private extension CommentCollectionViewCell {
   }
   
   func configureProfileImageView() {
-    profileImageView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       profileImageView.widthAnchor.constraint(equalToConstant: 40),
       profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor)
     ])
+    
+    profileImageView.layoutIfNeeded()
+    profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
   }
   
   func configureNameLabel() {
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3),
       nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 10),
@@ -124,8 +130,6 @@ private extension CommentCollectionViewCell {
   }
   
   func configureContentLabel() {
-    contentLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       contentLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
       contentLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
@@ -135,8 +139,6 @@ private extension CommentCollectionViewCell {
   }
   
   func configureCreatedAtLabel() {
-    createdAtLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       createdAtLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 10),
       createdAtLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: 5),
