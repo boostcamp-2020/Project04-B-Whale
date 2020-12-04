@@ -48,6 +48,8 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     }
   }
   
+  private let cache: NSCache<NSString, NSData> = NSCache()
+
   
   // MARK: - Initializer
   
@@ -78,7 +80,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       }
     }
   }
-
+  
   func updateActivitiesInCollectionView() {
     activityService.fetchActivities(withBoardId: boardId) { result in
       switch result {
@@ -111,13 +113,20 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     return sideBarHeaderContentsFactory.load(order: index)
   }
   
-  func fetchProfileImage(with url: String, handler: @escaping ((Data) -> Void)) {
-    imageService.fetchImage(with: url) { result in
-      switch result {
-      case .success(let data):
-        handler(data)
-      case .failure(let error):
-        print(error)
+  func fetchProfileImage(with urlAsString: String, handler: @escaping ((Data) -> Void)) {
+    if let cachedData = cache.object(forKey: urlAsString as NSString) {
+      handler(cachedData as Data)
+      
+    } else {
+      imageService.fetchImage(with: urlAsString) { result in
+        switch result {
+        case .success(let data):
+          self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+          handler(data)
+          
+        case .failure(let error):
+          print(error)
+        }
       }
     }
   }
