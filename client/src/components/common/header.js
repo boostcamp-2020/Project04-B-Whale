@@ -9,7 +9,7 @@ const HeaderDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 10%;
+    height: 80px;
     min-height: 50px;
     background-color: lightskyblue;
 `;
@@ -17,7 +17,7 @@ const HeaderDiv = styled.div`
 const LogoImg = styled.img`
     width: 250px;
     position: absolute;
-    top: 5%;
+    top: 40px;
     left: 50%;
     cursor: pointer;
     transform: translate(-50%, -50%);
