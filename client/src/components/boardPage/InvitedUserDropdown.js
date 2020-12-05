@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
-import InvitedUserDetail from './InvitedUserDetail';
+import UserDetailForDropdown from './UserDetailForDropdown';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 14%;
+    top: 13%;
     left: ${(props) => props.offsetY}px;
     width: 200px;
     height: auto;
@@ -39,7 +39,7 @@ const InvitedUserDropdown = (props) => {
             <DropdownWrapper offsetY={invitedDropdownDisplay.offsetY}>
                 {boardDetail.invitedUsers.length === 0 && <span>초대된 유저가 없습니다🥺</span>}
                 {boardDetail.invitedUsers.map(({ profileImageUrl, name, id }) => (
-                    <InvitedUserDetail profileImageUrl={profileImageUrl} name={name} key={id} />
+                    <UserDetailForDropdown profileImageUrl={profileImageUrl} name={name} key={id} />
                 ))}
             </DropdownWrapper>
         </Wrapper>
