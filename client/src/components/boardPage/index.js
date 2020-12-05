@@ -43,7 +43,10 @@ const Board = ({ match }) => {
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
-                <ActivitySidebar sidebarDisplay={sidebarDisplay} />
+                <ActivitySidebar
+                    sidebarDisplay={sidebarDisplay}
+                    setSidebarDisplay={setSidebarDisplay}
+                />
                 {invitedDropdownDisplay?.visible && (
                     <InvitedDropdown
                         invitedDropdownDisplay={invitedDropdownDisplay}
