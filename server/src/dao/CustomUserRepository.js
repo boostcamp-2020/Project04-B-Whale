@@ -4,7 +4,7 @@ import { User } from '../model/User';
 
 @EntityRepository(User)
 export class CustomUserRepository extends BaseRepository {
-    async finduserNameById(userId) {
+    async findUserNameById(userId) {
         const boards = await this.findOne(userId);
         return boards.name;
     }

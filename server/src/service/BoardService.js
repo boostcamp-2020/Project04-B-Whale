@@ -65,6 +65,15 @@ export class BoardService extends BaseService {
         };
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
+
+        const userName = await this.customUserRepository.finduserNameById(userId);
+        const activityContent = `${userName}님이 현재 보드를 생성하였습니다.`;
+        const activity = {
+            board: createBoard.id,
+            content: activityContent,
+        };
+        const createActivity = this.activityRepository.create(activity);
+        await this.activityRepository.save(createActivity);
         return createBoard.id;
     }
 
