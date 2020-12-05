@@ -16,4 +16,9 @@ export class CustomBoardRepository extends BaseRepository {
             .getMany();
         return boards;
     }
+
+    async findBoardById(boardId) {
+        const board = await this.findOne(boardId);
+        return board;
+    }
 }
