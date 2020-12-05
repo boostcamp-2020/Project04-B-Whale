@@ -21,4 +21,13 @@ export class UserService extends BaseService {
 
         return user;
     }
+
+    async getUserStartsWithName(userName) {
+        const user = await this.userRepository
+            .createQueryBuilder('user')
+            .select(['user.id', 'user.name', 'user.profileImageUrl'])
+            .where('user.name like :name', { name: `${userName}%` })
+            .getMany();
+        return user;
+    }
 }
