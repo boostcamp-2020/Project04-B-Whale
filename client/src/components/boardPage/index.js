@@ -30,40 +30,7 @@ const Board = ({ match }) => {
     useEffect(async () => {
         const { status, data } = await getDetailBoard(id);
         console.log(status, data);
-        if (status === 404) document.location = '/error';
-        const compareData = {
-            id: 1,
-            title: 'board',
-            color: '#009FFF',
-            creator: {
-                id: 1,
-                name: 'user',
-            },
-            lists: [
-                {
-                    id: 1,
-                    title: 'test to do',
-                    position: 1,
-                    cards: [
-                        {
-                            id: 1,
-                            title: 'test card',
-                            position: 1,
-                            dueDate: '2020-01-01T00:00:00.000Z',
-                            commentCount: 0,
-                        },
-                    ],
-                },
-            ],
-            invitedUsers: [
-                {
-                    id: 1,
-                    name: 'user',
-                    profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-                },
-            ],
-        };
-        setBoardDetail(compareData);
+        setBoardDetail(data);
     }, []);
 
     return (
