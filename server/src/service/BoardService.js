@@ -82,13 +82,17 @@ export class BoardService extends BaseService {
         }
     }
 
-    @Transactional()
-    async getDetailBoard(hostId, boardId) {
+    async isExistBoard(boardId) {
         const board = await this.boardRepository.findOne({
             select: ['id'],
             where: { id: boardId },
         });
         if (!board) throw new EntityNotFoundError();
+    }
+
+    @Transactional()
+    async getDetailBoard(hostId, boardId) {
+        this.isExistBoard(boardId);
         this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
@@ -132,5 +136,14 @@ export class BoardService extends BaseService {
         };
         const createInvitation = this.invitationRepository.create(invitation);
         await this.invitationRepository.save(createInvitation);
+    }
+
+    @Transactional()
+    async updateBoard(hostId, boardId, title) {
+        this.isExistBoard(boardId);
+        this.checkForbidden(hostId, boardId);
+        const boardToUpdate = await this.boardRepository.findOne(boardId);
+        boardToUpdate.title = title;
+        await this.boardRepository.save(boardToUpdate);
     }
 }
