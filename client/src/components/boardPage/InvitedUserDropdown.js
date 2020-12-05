@@ -24,6 +24,7 @@ const DropdownWrapper = styled.div`
     z-index: 2;
     max-height: 500px;
     overflow: scroll;
+    padding: 5px;
 `;
 
 const InvitedUserDropdown = (props) => {
@@ -36,6 +37,7 @@ const InvitedUserDropdown = (props) => {
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={invitedDropdownDisplay.offsetY}>
+                {boardDetail.invitedUsers.length === 0 && <span>초대된 유저가 없습니다🥺</span>}
                 {boardDetail.invitedUsers.map(({ profileImageUrl, name, id }) => (
                     <InvitedUserDetail profileImageUrl={profileImageUrl} name={name} key={id} />
                 ))}
