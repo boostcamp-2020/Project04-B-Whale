@@ -30,6 +30,7 @@ final class SideBarViewController: UIViewController {
   private let viewModel: SideBarViewModelProtocol
   private let sideBarDataSource: UICollectionViewDataSource
   private let membersDataSource: UICollectionViewDataSource
+  weak var coordinator: BoardDetailCoordinator?
 
   private lazy var sideBarMinimumX: CGFloat = view.bounds.width * 0.25
   private lazy var sideBarMaximumX: CGFloat = view.bounds.width
@@ -60,12 +61,13 @@ final class SideBarViewController: UIViewController {
   init(
     nibName: String,
     bundle: Bundle?,
-    viewModel: SideBarViewModelProtocol
+    viewModel: SideBarViewModelProtocol,
+    coordinator: BoardDetailCoordinator
   ) {
     self.viewModel = viewModel
     
     membersDataSource = MembersCollectionViewDataSource(viewModel: viewModel) {
-      // TODO: coordinator 프레젠테이션 로직
+      coordinator.pushToInvitation()
     }
     sideBarDataSource = SideBarCollectionViewDataSource(
       viewModel: viewModel,
