@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './CreateBoardModal';
 import BoardsButton from './BoardsButton';
+import logo from '../../image/app_logo.png';
 
 const HeaderDiv = styled.div`
     display: flex;
@@ -10,7 +11,16 @@ const HeaderDiv = styled.div`
     width: 100%;
     height: 10%;
     min-height: 50px;
-    background-color: #f73f52;
+    background-color: lightskyblue;
+`;
+
+const LogoImg = styled.img`
+    width: 250px;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
 `;
 
 const HeaderTitle = styled.div`
@@ -34,12 +44,19 @@ const Header = () => {
         localStorage.removeItem('jwt');
         document.location = '/';
     };
-
     return (
         <>
             <HeaderDiv>
                 <BoardsButton />
-                <HeaderTitle>TODO LIST</HeaderTitle>
+                <HeaderTitle>
+                    <LogoImg
+                        src={logo}
+                        alt="naver login"
+                        onClick={() => {
+                            document.location = '/';
+                        }}
+                    />
+                </HeaderTitle>
 
                 <div>
                     <AddBoardBtn onClick={() => setCreateBoardModalVisible(true)}>+</AddBoardBtn>
