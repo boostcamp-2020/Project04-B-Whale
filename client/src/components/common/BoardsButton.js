@@ -16,7 +16,7 @@ const BoardsButton = () => {
 
     return (
         <div>
-            <Button onClick={onClickDisplayDropdown}>Boards</Button>
+            <Button onClick={onClickDisplayDropdown}>Boards ∇</Button>
             {isDropdownDisplay ? (
                 <BoardsDropdown onClose={() => setIsDropdownDisplay(false)} />
             ) : null}
