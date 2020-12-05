@@ -9,7 +9,6 @@ const MenuDiv = styled.div`
     line-height: 40px;
     width: 100%;
     min-height: 30px;
-    padding-left: 200px;
 `;
 
 const BoardTitle = styled.span`
@@ -17,6 +16,7 @@ const BoardTitle = styled.span`
     border-radius: 4px;
     padding: 5px 5px;
     resize: none;
+    margin-left: 5%;
     ${(props) =>
         props.state === 'span' &&
         `&:hover {
@@ -46,6 +46,7 @@ const InviteButton = styled.button`
 `;
 
 const MenuButton = styled.button`
+    margin-right: 5%;
     opacity: 0.3;
     border-radius: 4px;
     padding: 5px 10px;
@@ -102,7 +103,14 @@ const TopMenu = (props) => {
                     초대하기
                 </InviteButton>
             </div>
-            <div style={{ width: '5%' }}>
+            <div
+                style={{
+                    width: '50%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '5px 0',
+                }}
+            >
                 <MenuButton onClick={() => props.setSidebarDisplay(!props.sidebarDisplay)}>
                     메뉴
                 </MenuButton>

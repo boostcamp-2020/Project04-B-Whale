@@ -50,7 +50,7 @@ const AskOverDropdown = (props) => {
     };
 
     const searchPerSecond = setTimeout(() => {
-        console.log(input.current.value);
+        console.log(input.current?.value);
         // 검색 api 요청
     }, 1000);
 
