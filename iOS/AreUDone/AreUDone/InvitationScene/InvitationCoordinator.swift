@@ -22,7 +22,8 @@ final class InvitationCoordinator: NavigationCoordinator {
             creator: { coder in
               
               let userService = UserService(router: Router())
-              let viewModel = InvitationViewModel(userService: userService)
+              let boardService = BoardService(router: Router())
+              let viewModel = InvitationViewModel(userService: userService, boardService: boardService)
               
               
               return InvitationViewController(coder: coder, viewModel: viewModel)

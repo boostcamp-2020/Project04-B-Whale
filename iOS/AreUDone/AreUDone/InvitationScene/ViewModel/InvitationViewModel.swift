@@ -13,10 +13,16 @@ protocol InvitationViewModelProtocol {
 
 final class InvitationViewModel: InvitationViewModelProtocol {
   
+  // MARK: - Property
+  
   private let userService: UserServiceProtocol
+  private let boardService: BoardServiceProtocol
+
   
-  init(userService: UserServiceProtocol) {
+  // MARK: - Initializer
+  
+  init(userService: UserServiceProtocol, boardService: BoardServiceProtocol) {
     self.userService = userService
+    self.boardService = boardService
   }
-  
 }

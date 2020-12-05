@@ -8,14 +8,15 @@
 import Foundation
 import NetworkFramework
 
-enum LoginFlatform: String {
+enum LoginPlatform: String {
   case naver
 }
 
 enum UserEndPoint {
   
-  case requestLogin(flatform: LoginFlatform)
+  case requestLogin(flatform: LoginPlatform)
   case requestMe
+  case searchUser(userName: String)
 }
 
 extension UserEndPoint: EndPointable {
@@ -27,6 +28,9 @@ extension UserEndPoint: EndPointable {
       
     case .requestMe:
       return "\(APICredentials.ip)/api/user/me"
+      
+    case .searchUser:
+      return "\(APICredentials.ip)/api/user"
     }
   }
   
@@ -37,20 +41,20 @@ extension UserEndPoint: EndPointable {
   
   var query: HTTPQuery? {
     switch self {
-    case .requestLogin:
-      return nil
-      
-    case .requestMe:
+    
+    case .searchUser(let userName):
+      return ["username": userName]
+    
+    default:
       return nil
     }
   }
   
   var httpMethod: HTTPMethod? {
     switch self {
-    case .requestLogin:
-      return .get
-      
-    case .requestMe:
+    case .requestLogin,
+         .requestMe,
+         .searchUser:
       return .get
     }
   }
