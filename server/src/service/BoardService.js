@@ -1,5 +1,6 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
+import { ActivityService } from './ActivityService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
 
@@ -66,14 +67,10 @@ export class BoardService extends BaseService {
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
 
-        const userName = await this.customUserRepository.finduserNameById(userId);
+        const userName = await this.customUserRepository.findUserNameById(userId);
         const activityContent = `${userName}님이 현재 보드를 생성하였습니다.`;
-        const activity = {
-            board: createBoard.id,
-            content: activityContent,
-        };
-        const createActivity = this.activityRepository.create(activity);
-        await this.activityRepository.save(createActivity);
+        const activityService = ActivityService.getInstance();
+        await activityService.createActivity(createBoard.id, activityContent);
         return createBoard.id;
     }
 
