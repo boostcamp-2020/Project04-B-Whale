@@ -10,6 +10,7 @@ import NetworkFramework
 
 final class BoardDetailCoordinator: NavigationCoordinator {
   var navigationController: UINavigationController?
+  private var invitationCoordinator: NavigationCoordinator!
   
   // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
   //  private let router: Routable
@@ -24,7 +25,6 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   
   
   func start() -> UIViewController {
-    
     guard let boardDetailViewController = storyboard.instantiateViewController(
             identifier: BoardDetailViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController()}
@@ -45,7 +45,8 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               let sideBarViewController = SideBarViewController(
                 nibName: SideBarViewController.identifier,
                 bundle: nil,
-                viewModel: sideBarViewModel
+                viewModel: sideBarViewModel,
+                coordinator: self
               )
               
               return BoardDetailViewController(
@@ -65,6 +66,15 @@ extension BoardDetailCoordinator {
   
   func pop() {
     navigationController?.popViewController(animated: true)
+  }
+  
+  func pushToInvitation() {
+    invitationCoordinator = InvitationCoordinator()
+    invitationCoordinator.navigationController = navigationController
+    
+    let viewController = invitationCoordinator.start()
+    
+    navigationController?.present(viewController, animated: true)
   }
 }
 
