@@ -180,6 +180,8 @@
 		33F2D4E6257B4079008F1E06 /* Invitation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33F2D4E5257B4079008F1E06 /* Invitation.storyboard */; };
 		33F2D4EB257B40A1008F1E06 /* InvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4EA257B40A1008F1E06 /* InvitationViewController.swift */; };
 		33F2D4F0257B41CE008F1E06 /* InvitationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4EF257B41CE008F1E06 /* InvitationViewModel.swift */; };
+		33F2D4F8257B582C008F1E06 /* InvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */; };
+		33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
@@ -383,6 +385,8 @@
 		33F2D4E5257B4079008F1E06 /* Invitation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Invitation.storyboard; sourceTree = "<group>"; };
 		33F2D4EA257B40A1008F1E06 /* InvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationViewController.swift; sourceTree = "<group>"; };
 		33F2D4EF257B41CE008F1E06 /* InvitationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationViewModel.swift; sourceTree = "<group>"; };
+		33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
+		33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewDataSource.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1019,6 +1023,8 @@
 			isa = PBXGroup;
 			children = (
 				33F2D4EA257B40A1008F1E06 /* InvitationViewController.swift */,
+				33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */,
+				33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1492,6 +1498,7 @@
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				33F2D4B9257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift in Sources */,
+				33F2D4F8257B582C008F1E06 /* InvitationTableViewCell.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
 				33F2D4EB257B40A1008F1E06 /* InvitationViewController.swift in Sources */,
 				BDEA7BEB2576385000CF6B11 /* AlertFactory.swift in Sources */,
@@ -1578,6 +1585,7 @@
 				333BA53B2575FFCC0057ACA4 /* SideBarViewController.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */,
+				33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */,
 				333BA5D825787FC40057ACA4 /* ImageEndPoint.swift in Sources */,
 				BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */,
 				BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */,

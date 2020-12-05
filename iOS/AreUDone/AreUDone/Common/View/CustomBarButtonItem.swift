@@ -38,6 +38,13 @@ final class CustomBarButtonItem: UIBarButtonItem {
   required init?(coder: NSCoder) {
     fatalError("This class should be initialized with code")
   }
+  
+  
+  // MARK: - Method
+  
+  func setColor(to color: UIColor) {
+    button.tintColor = color
+  }
 }
 
 // MARK: - Extension Configure Method
