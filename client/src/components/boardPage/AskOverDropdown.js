@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import UserDetailForDropdown from './UserDetailForDropdown';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 14%;
+    top: 13%;
     left: ${(props) => props.offsetY}px;
     width: 200px;
     height: 300px; //auto
@@ -23,7 +24,8 @@ const DropdownWrapper = styled.div`
     max-height: 500px;
     overflow: scroll;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: end;
 `;
 
 const SearchInput = styled.input.attrs({
@@ -44,10 +46,32 @@ const AskOverDropdown = (props) => {
     const input = useRef();
     const { askoverDropdownDisplay } = props;
     const [inputContent, setInputContent] = useState('');
+    const [searchedUsers, setSearchedUsers] = useState([]);
+
     // eslint-disable-next-line no-unused-vars
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
+
+    console.log(setSearchedUsers);
+
+    // const searchedUsers = [
+    //     {
+    //         id: 1,
+    //         name: 'dhoon',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'youngxpepp',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'sooyeon',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    // ];
 
     const searchPerSecond = setTimeout(() => {
         console.log(input.current?.value);
@@ -63,6 +87,9 @@ const AskOverDropdown = (props) => {
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
                 <SearchInput value={inputContent} onChange={time} ref={input} />
+                {searchedUsers.map(({ profileImageUrl, name, id }) => (
+                    <UserDetailForDropdown profileImageUrl={profileImageUrl} name={name} key={id} />
+                ))}
             </DropdownWrapper>
         </Wrapper>
     );
