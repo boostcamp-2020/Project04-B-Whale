@@ -82,17 +82,10 @@ export class BoardService extends BaseService {
         }
     }
 
-    async isExistBoard(boardId) {
-        const board = await this.boardRepository.findOne({
-            select: ['id'],
-            where: { id: boardId },
-        });
-        if (!board) throw new EntityNotFoundError();
-    }
-
     @Transactional()
     async getDetailBoard(hostId, boardId) {
-        this.isExistBoard(boardId);
+        const board = await this.customBoardRepository.findBoardById(boardId);
+        if (!board) throw new EntityNotFoundError();
         this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
@@ -140,7 +133,8 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async updateBoard(hostId, boardId, title) {
-        this.isExistBoard(boardId);
+        const board = await this.customBoardRepository.findBoardById(boardId);
+        if (!board) throw new EntityNotFoundError();
         this.checkForbidden(hostId, boardId);
         const boardToUpdate = await this.boardRepository.findOne(boardId);
         boardToUpdate.title = title;
