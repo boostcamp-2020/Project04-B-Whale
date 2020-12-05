@@ -73,8 +73,10 @@ extension BoardDetailCoordinator {
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()
+    let subNavigationController = UINavigationController()
+    subNavigationController.pushViewController(viewController, animated: true)
     
-    navigationController?.present(viewController, animated: true)
+    navigationController?.present(subNavigationController, animated: true)
   }
 }
 

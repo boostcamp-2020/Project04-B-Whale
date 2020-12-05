@@ -14,6 +14,28 @@ final class InvitationViewController: UIViewController {
   private let viewModel: InvitationViewModelProtocol
   weak var coordinator: InvitationCoordinator?
   
+  private let searchController: UISearchController = {
+    let searchController = UISearchController(searchResultsController: nil)
+    searchController.obscuresBackgroundDuringPresentation = false
+    searchController.hidesNavigationBarDuringPresentation = false
+    searchController.searchBar.placeholder = "유저 검색"
+    
+    return searchController
+  }()
+  @IBOutlet weak var tableView: UITableView! {
+    didSet {
+      tableView.dataSource = dataSource
+      tableView.delegate = self
+      tableView.register(InvitationTableViewCell.self)
+    }
+  }
+  @IBOutlet weak var searchBarView: UIView! {
+    didSet {
+      searchBarView.addSubview(searchController.searchBar)
+    }
+  }
+  private lazy var dataSource = InvitationTableViewDataSource(viewModel: viewModel)
+
   
   // MARK: - Initializer
   
@@ -33,6 +55,7 @@ final class InvitationViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    configure()
   }
 }
 
@@ -40,5 +63,43 @@ final class InvitationViewController: UIViewController {
 // MARK: - Extension Configure Method
 
 private extension InvitationViewController {
+  
+  func configure() {
+    view.addSubview(tableView)
+    
+    configureView()
+    configureSearchController()
+  }
+  
+  func configureView() {
+    navigationItem.title = "초대하기"
+
+    let barButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
+      self?.coordinator?.dismiss()
+    }
+    barButtonItem.setColor(to: .black)
+    navigationItem.leftBarButtonItem = barButtonItem
+  }
+  
+  func configureSearchController() {
+    searchController.searchResultsUpdater = self
+  }
+}
+
+
+// MARK: - Extension UISearchBarDelegate
+
+extension InvitationViewController: UISearchResultsUpdating {
+  
+  func updateSearchResults(for searchController: UISearchController) {
+    guard let searchKeyword = searchController.searchBar.text else { return }
+    print(searchKeyword)
+  }
+}
+
+
+// MARK: - Extension UITableViewDelegate
+
+extension InvitationViewController: UITableViewDelegate {
   
 }
