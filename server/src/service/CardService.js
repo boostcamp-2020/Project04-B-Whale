@@ -14,49 +14,27 @@ export class CardService extends BaseService {
         return CardService.instance;
     }
 
-    async findMyCardsCountsByUserId({ startDate, endDate, userId }) {
-        const cardCountList = this.cardRepository
-            .createQueryBuilder('card')
-            .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
-            .addSelect('count(1)', 'count')
-            .leftJoin('card.members', 'member')
-            .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
-            .andWhere('card.creator_id=:userId', { userId })
-            .orWhere('member.user_id=:userId', { userId })
-            .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
-            .getRawMany();
-
-        return cardCountList;
-    }
-
-    async findAllCardCountsByBoardIds({ startDate, endDate, boardIds }) {
-        const cardCountList = this.cardRepository
-            .createQueryBuilder('card')
-            .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
-            .addSelect('count(1)', 'count')
-            .innerJoin('card.list', 'list', 'list.board_id IN(:...boardIds)', { boardIds })
-            .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
-            .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
-            .getRawMany();
-
-        return cardCountList;
-    }
-
     @Transactional()
     async getMyCardCountByPeriod({ startDate, endDate, userId }) {
-        const cardCounts = this.findMyCardsCountsByUserId({ startDate, endDate, userId });
+        const cardCounts = this.customCardRepository.findMyCardsCountsByUserId({
+            startDate,
+            endDate,
+            userId,
+        });
         return cardCounts;
     }
 
     @Transactional()
     async getAllCardCountByPeriod({ startDate, endDate, userId }) {
-        const boardService = BoardService.getInstance();
-
-        const boardIds = await boardService.getBoardIdsByUserId(userId);
+        const boardIds = await this.customBoardRepository.findBoardIdsByUserId(userId);
 
         if (boardIds.length === 0) return [];
 
-        const cardCounts = await this.findAllCardCountsByBoardIds({ startDate, endDate, boardIds });
+        const cardCounts = await this.customCardRepository.findAllCardCountsByBoardIds({
+            startDate,
+            endDate,
+            boardIds,
+        });
         return cardCounts;
     }
 
