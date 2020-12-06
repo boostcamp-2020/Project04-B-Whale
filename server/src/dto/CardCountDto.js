@@ -1,14 +1,14 @@
-import { IsOptional, IsString, Matches } from 'class-validator';
+import { IsISO8601, IsOptional, IsString, Matches } from 'class-validator';
 
 export class CardCountDto {
     @IsString({ groups: ['isQuery'] })
     q;
 
-    @IsString({ groups: ['queryValue'] })
+    @IsISO8601({ strict: true }, { groups: ['queryValue'] })
     @Matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, { groups: ['queryValue'] })
     startDate;
 
-    @IsString({ groups: ['queryValue'] })
+    @IsISO8601({ strict: true }, { groups: ['queryValue'] })
     @Matches(/[0-9]{4}-[0-9]{2}-[0-9]{2}$/, { groups: ['queryValue'] })
     endDate;
 
