@@ -1,7 +1,8 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import UserDetailForDropdown from './UserDetailForDropdown';
 import BoardDetailContext from '../../context/BoardDetailContext';
+// eslint-disable-next-line no-unused-vars
 import { searchUsersByName } from '../../utils/userRequest';
 
 const Wrapper = styled.div`
@@ -55,42 +56,50 @@ const AskOverDropdown = (props) => {
     const input = useRef();
     const { askoverDropdownDisplay } = props;
     const [inputContent, setInputContent] = useState('');
-    // const [searchedUsers, setSearchedUsers] = useState([]);
+    // eslint-disable-next-line no-unused-vars
+    const [searchedUsers, setSearchedUsers] = useState([]);
     const [checkUsers, setCheckUsers] = useState([]);
     const { boardDetail } = useContext(BoardDetailContext);
+
     // eslint-disable-next-line no-unused-vars
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
 
-    const searchedUsers = [
-        {
-            id: 1,
-            name: 'dhoon',
-            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-        },
-        {
-            id: 2,
-            name: 'youngxpepp',
-            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-        },
-        {
-            id: 3,
-            name: 'sooyeon',
-            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-        },
-    ];
+    // const searchedUsers = [
+    //     {
+    //         id: 1,
+    //         name: 'dhoon',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'youngxpepp',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'sooyeon',
+    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+    //     },
+    // ];
+    let time;
+    useEffect(() => {
+        time = setTimeout(async () => {
+            if (!input.current?.value) {
+                setSearchedUsers([]);
+                return;
+            }
+            // 검색 api 요청
+            const { data } = await searchUsersByName(input.current?.value);
+            setSearchedUsers([...data]);
+        }, 1000);
+    }, [inputContent]);
 
-    const searchPerSecond = setTimeout(async () => {
-        console.log(input.current?.value);
-        // 검색 api 요청
-        const { status, data } = await searchUsersByName(input.current?.value);
-        console.log(status, data);
-    }, 1000);
-
-    const time = (evt) => {
+    const handleChange = async (evt) => {
         setInputContent(evt.target.value);
-        clearTimeout(searchPerSecond);
+        // eslint-disable-next-line no-use-before-define
+        clearTimeout(time);
     };
 
     const askoverOnClick = () => {
@@ -101,7 +110,7 @@ const AskOverDropdown = (props) => {
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
-                <SearchInput value={inputContent} onChange={time} ref={input} />
+                <SearchInput value={inputContent} onChange={handleChange} ref={input} />
                 <div style={{ maxHeight: '400px', overflow: 'scroll' }}>
                     {searchedUsers.map(({ profileImageUrl, name, id }) => (
                         <UserDetailForDropdown
