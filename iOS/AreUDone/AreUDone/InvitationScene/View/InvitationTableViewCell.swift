@@ -30,7 +30,6 @@ final class InvitationTableViewCell: UITableViewCell, Reusable {
 private extension InvitationTableViewCell {
   
   func configure() {
-    imageView?.image = UIImage(systemName: "person")
     accessoryView = UIImageView(image: UIImage(systemName: "plus.circle"))
   }
 }
