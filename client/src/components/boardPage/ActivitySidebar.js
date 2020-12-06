@@ -21,7 +21,7 @@ const Sidebar = styled.div`
     flex-direction: column;
     top: 80px;
     width: 20%;
-    height: 80%;
+    height: 92%;
     margin-left: 100%;
     animation: ${(props) => (props.sidebarDisplay ? boxOpen : boxClose)} ease;
     animation-fill-mode: forwards;

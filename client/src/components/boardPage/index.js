@@ -9,7 +9,7 @@ import BoardDetailContext from '../../context/BoardDetailContext';
 import AskOverDropdown from './AskOverDropdown';
 
 const MainContents = styled.div`
-    height: 100%;
+    height: 92%;
     width: 100%;
     background-color: ${(props) => props.backgroundColor};
 `;

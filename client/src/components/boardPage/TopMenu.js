@@ -24,7 +24,7 @@ const BoardTitle = styled.span`
             cursor: pointer;
             opacity: 0.3;
             background-color: gray;
-    }`};
+        }`};
 `;
 
 const BoardInput = styled.input`
