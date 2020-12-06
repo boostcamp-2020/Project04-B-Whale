@@ -11,6 +11,8 @@ final class InvitationViewController: UIViewController {
   
   // MARK: property
   
+  private var timer = Timer()
+  
   private let viewModel: InvitationViewModelProtocol
   weak var coordinator: InvitationCoordinator?
   
@@ -56,6 +58,7 @@ final class InvitationViewController: UIViewController {
     super.viewDidLoad()
 
     configure()
+    bindUI()
   }
 }
 
@@ -87,13 +90,36 @@ private extension InvitationViewController {
 }
 
 
+// MARK: - Extension BindUI
+
+private extension InvitationViewController {
+  
+  func bindUI() {
+    viewModel.bindingUpdateInvitationTableView {
+      self.tableView.reloadData()
+    }
+  }
+}
+
+
 // MARK: - Extension UISearchBarDelegate
 
 extension InvitationViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchKeyword = searchController.searchBar.text else { return }
-    print(searchKeyword)
+    
+    debounce(time: 0.5) {
+      print(searchKeyword)
+      // TODO: viewmodel 의 searchUser 호출
+    }
+  }
+  
+  func debounce(time: TimeInterval, handler: @escaping () -> Void) {
+    timer.invalidate()
+    timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { timer in
+      handler()
+    })
   }
 }
 
@@ -102,4 +128,7 @@ extension InvitationViewController: UISearchResultsUpdating {
 
 extension InvitationViewController: UITableViewDelegate {
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    viewModel.addUserToBoard(of: indexPath.row)
+  }
 }
