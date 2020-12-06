@@ -26,7 +26,7 @@ describe('Card Service Test', () => {
 
     beforeEach(async () => {});
 
-    test('정상적인 사용자가 카드를 조회할 때, 보드가 없으면 빈 배열 반환', async () => {
+    test('getAllCardCountByPeriod() : 정상적인 사용자가 카드를 조회할 때, 보드가 없으면 빈 배열 반환', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -39,7 +39,7 @@ describe('Card Service Test', () => {
 
             // when
             const cardService = CardService.getInstance();
-            const cardCountList = await cardService.getCardCountByPeriod({
+            const cardCountList = await cardService.getAllCardCountByPeriod({
                 startDate: '2020-07-01',
                 endDate: '2020-07-31',
                 userId: user1.id,
@@ -51,7 +51,7 @@ describe('Card Service Test', () => {
         });
     });
 
-    test('정상적인 사용자가 startDate, endDate 기간동안의 모든 카드 조회', async () => {
+    test('getAllCardCountByPeriod() : 정상적인 사용자가 startDate, endDate 기간동안의 모든 카드 조회', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -123,7 +123,7 @@ describe('Card Service Test', () => {
 
             // when
             const cardService = CardService.getInstance();
-            const cardCountList = await cardService.getCardCountByPeriod({
+            const cardCountList = await cardService.getAllCardCountByPeriod({
                 startDate: '2020-07-01',
                 endDate: '2020-07-31',
                 userId: user1.id,
@@ -137,7 +137,7 @@ describe('Card Service Test', () => {
         });
     });
 
-    test('로그인 중인 정상적인 사용자가 startDate, endDate 기간동안의 member에 속한 카드 조회', async () => {
+    test('getMyCardCountByPeriod() : 로그인 중인 정상적인 사용자가 startDate, endDate 기간동안의 member에 속하거나 생성한 카드 조회', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -185,7 +185,7 @@ describe('Card Service Test', () => {
 
             // when
             const cardService = CardService.getInstance();
-            const cardCountList = await cardService.getCardCountByPeriod({
+            const cardCountList = await cardService.getMyCardCountByPeriod({
                 startDate: '2020-07-01',
                 endDate: '2020-07-31',
                 userId: user1.id,
@@ -194,7 +194,7 @@ describe('Card Service Test', () => {
 
             // then
             const [data1] = cardCountList;
-            expect(data1).toEqual({ ...cardData1, count: 1 });
+            expect(data1).toEqual(cardData1);
         });
     });
 

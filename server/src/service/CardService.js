@@ -1,7 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
-import { BoardService } from './BoardService';
 
 export class CardService extends BaseService {
     static instance = null;

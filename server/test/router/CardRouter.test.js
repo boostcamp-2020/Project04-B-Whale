@@ -351,7 +351,7 @@ describe('Board API Test', () => {
             // then
             expect(response.status).toEqual(200);
             const { cardCounts } = response.body;
-            expect(cardCounts).toHaveLength(1);
+            expect(cardCounts).toHaveLength(2);
         });
     });
 
