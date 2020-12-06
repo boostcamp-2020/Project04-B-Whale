@@ -9,20 +9,28 @@ import UIKit
 import NetworkFramework
 
 final class BoardDetailCoordinator: NavigationCoordinator {
+  
+  // MARK: - Property
+  
   var navigationController: UINavigationController?
   private var invitationCoordinator: NavigationCoordinator!
-  
+  private let boardId: Int
+
   // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
   //  private let router: Routable
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .boardDetail)
   }
-  private let boardId: Int
+  
+  
+  // MARK: - Initializer
   
   init(boardId: Int) {
     self.boardId = boardId
   }
   
+  
+  // MARK: - Method
   
   func start() -> UIViewController {
     guard let boardDetailViewController = storyboard.instantiateViewController(
@@ -62,6 +70,9 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   }
 }
 
+
+// MARK: - Extension
+
 extension BoardDetailCoordinator {
   
   func pop() {
@@ -69,7 +80,7 @@ extension BoardDetailCoordinator {
   }
   
   func pushToInvitation() {
-    invitationCoordinator = InvitationCoordinator()
+    invitationCoordinator = InvitationCoordinator(boardId: boardId)
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()

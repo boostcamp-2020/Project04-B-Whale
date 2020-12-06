@@ -21,15 +21,20 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   
   private let userService: UserServiceProtocol
   private let boardService: BoardServiceProtocol
+  private let boardId: Int
   
   private var updateInvitationTableViewHandler: (() -> Void)?
 
   
   // MARK: - Initializer
   
-  init(userService: UserServiceProtocol, boardService: BoardServiceProtocol) {
+  init(
+    userService: UserServiceProtocol,
+    boardService: BoardServiceProtocol,
+    boardId: Int) {
     self.userService = userService
     self.boardService = boardService
+    self.boardId = boardId
   }
   
   func searchUser(of userName: String) {
