@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import UserDetailForDropdown from './UserDetailForDropdown';
+import BoardDetailContext from '../../context/BoardDetailContext';
+import { searchUsersByName } from '../../utils/userRequest';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -14,8 +16,8 @@ const DropdownWrapper = styled.div`
     position: relative;
     top: 13%;
     left: ${(props) => props.offsetY}px;
-    width: 200px;
-    height: 300px; //auto
+    width: 300px;
+    height: auto;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
@@ -25,7 +27,7 @@ const DropdownWrapper = styled.div`
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: space-between;
 `;
 
 const SearchInput = styled.input.attrs({
@@ -33,11 +35,18 @@ const SearchInput = styled.input.attrs({
     placeholder: '이름으로 검색',
 })`
     height: 35px;
-    margin: 5px 0;
+    margin: 5px 5px;
     border: 3px solid lightgray;
     &:focus {
         outline: 1px solid blue;
     }
+`;
+
+const AskoverBtn = styled.button`
+    padding: 10px 0;
+    margin-top: 10px;
+    background-color: lightgray;
+    cursor: ${(props) => (props.disabled ? 'default' : 'cursor')};
 `;
 
 // eslint-disable-next-line no-unused-vars
@@ -46,36 +55,37 @@ const AskOverDropdown = (props) => {
     const input = useRef();
     const { askoverDropdownDisplay } = props;
     const [inputContent, setInputContent] = useState('');
-    const [searchedUsers, setSearchedUsers] = useState([]);
-
+    // const [searchedUsers, setSearchedUsers] = useState([]);
+    const [checkUsers, setCheckUsers] = useState([]);
+    const { boardDetail } = useContext(BoardDetailContext);
     // eslint-disable-next-line no-unused-vars
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
 
-    console.log(setSearchedUsers);
+    const searchedUsers = [
+        {
+            id: 1,
+            name: 'dhoon',
+            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+        },
+        {
+            id: 2,
+            name: 'youngxpepp',
+            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+        },
+        {
+            id: 3,
+            name: 'sooyeon',
+            profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+        },
+    ];
 
-    // const searchedUsers = [
-    //     {
-    //         id: 1,
-    //         name: 'dhoon',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    //     {
-    //         id: 2,
-    //         name: 'youngxpepp',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    //     {
-    //         id: 3,
-    //         name: 'sooyeon',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    // ];
-
-    const searchPerSecond = setTimeout(() => {
+    const searchPerSecond = setTimeout(async () => {
         console.log(input.current?.value);
         // 검색 api 요청
+        const { status, data } = await searchUsersByName(input.current?.value);
+        console.log(status, data);
     }, 1000);
 
     const time = (evt) => {
@@ -83,13 +93,34 @@ const AskOverDropdown = (props) => {
         clearTimeout(searchPerSecond);
     };
 
+    const askoverOnClick = () => {
+        // 초대 api
+        console.log(checkUsers);
+    };
+
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
                 <SearchInput value={inputContent} onChange={time} ref={input} />
-                {searchedUsers.map(({ profileImageUrl, name, id }) => (
-                    <UserDetailForDropdown profileImageUrl={profileImageUrl} name={name} key={id} />
-                ))}
+                <div style={{ maxHeight: '400px', overflow: 'scroll' }}>
+                    {searchedUsers.map(({ profileImageUrl, name, id }) => (
+                        <UserDetailForDropdown
+                            profileImageUrl={profileImageUrl}
+                            id={id}
+                            key={id}
+                            name={name}
+                            parent="invite"
+                            checkUsers={checkUsers}
+                            setCheckUsers={setCheckUsers}
+                            already={boardDetail.invitedUsers.some((v) => {
+                                return v.id === id;
+                            })}
+                        />
+                    ))}
+                </div>
+                <AskoverBtn onClick={askoverOnClick} disabled={checkUsers.length === 0}>
+                    초대장 보내기
+                </AskoverBtn>
             </DropdownWrapper>
         </Wrapper>
     );
