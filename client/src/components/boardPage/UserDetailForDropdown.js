@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import checkImg from '../../image/check.svg';
+import BoardDetailContext from '../../context/BoardDetailContext';
+// eslint-disable-next-line no-unused-vars
+import { inviteUserIntoBoard } from '../../utils/boardRequest';
 
 const UserDiv = styled.div`
     margin: 5px 0;
     display: flex;
     flex-direction: row;
-    ${(props) =>
+    justify-content: space-between;
+    /* ${(props) =>
         props.parent === 'invite' &&
         `&:hover {
             background-color: ${props.already ? 'none' : 'lightgray'};
             cursor: ${props.already ? 'default' : 'pointer'};
-        }`};
+        }`}; */
 `;
 
 const ProfileImageDiv = styled.div`
@@ -20,10 +23,6 @@ const ProfileImageDiv = styled.div`
     margin-left: 5px;
     border-radius: 70%;
     overflow: hidden;
-`;
-
-const CheckImg = styled.img`
-    width: 15px;
 `;
 
 const NameDiv = styled.div`
@@ -35,38 +34,46 @@ const ProfileImage = styled.img`
     height: 100%;
 `;
 
+const InviteBtn = styled.button`
+    margin: auto 10px;
+    float: right;
+    border-radius: 8px;
+`;
+
 const InvitedUserDetail = ({
     profileImageUrl,
     id,
     name,
     parent,
-    checkUsers,
-    setCheckUsers,
     already,
+    setAskoverDropdownDisplay,
 }) => {
-    const [isChecked, setIsChecked] = useState(false);
-    const detailUserOnClick = () => {
-        if (already || !parent) return;
-        const idx = checkUsers.indexOf(id);
-        if (idx > -1) {
-            checkUsers.splice(idx, 1);
-            setCheckUsers([...checkUsers]);
-        } else setCheckUsers([...checkUsers, id]);
-        setIsChecked(!isChecked);
+    // eslint-disable-next-line no-unused-vars
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
+
+    const inviteHandler = async () => {
+        const { status } = await inviteUserIntoBoard(boardDetail.id, id);
+        if (status === 201) {
+            setAskoverDropdownDisplay(false);
+            boardDetail.invitedUsers = [...boardDetail.invitedUsers, { id, name, profileImageUrl }];
+            setBoardDetail({ ...boardDetail });
+        }
     };
 
     return (
-        <UserDiv onClick={detailUserOnClick} already={already} parent={parent}>
-            {parent === 'invite' && (
-                <div style={{ width: '15px', margin: 'auto 5px', textAlign: 'center' }}>
-                    {isChecked && <CheckImg src={checkImg} alt="check" />}
-                </div>
+        <UserDiv already={already} parent={parent}>
+            <div style={{ display: 'flex' }}>
+                <ProfileImageDiv>
+                    <ProfileImage src={profileImageUrl} alt="My Image" align="center" />
+                </ProfileImageDiv>
+                <NameDiv>{name}</NameDiv>
+            </div>
+            {already && parent === 'invite' && (
+                <div style={{ color: 'red', margin: 'auto 10px' }}>초대된 유저</div>
             )}
-            <ProfileImageDiv>
-                <ProfileImage src={profileImageUrl} alt="My Image" align="center" />
-            </ProfileImageDiv>
-            <NameDiv>{name}</NameDiv>
-            {already && <div style={{ color: 'red', margin: 'auto 10px' }}>초대된 유저</div>}
+            {!already && parent === 'invite' && (
+                <InviteBtn onClick={inviteHandler}>초대하기</InviteBtn>
+            )}
         </UserDiv>
     );
 };

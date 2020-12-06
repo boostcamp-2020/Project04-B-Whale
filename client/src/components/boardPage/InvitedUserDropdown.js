@@ -15,7 +15,7 @@ const DropdownWrapper = styled.div`
     position: relative;
     top: 13%;
     left: ${(props) => props.offsetY}px;
-    width: 200px;
+    width: 250px;
     height: auto;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};

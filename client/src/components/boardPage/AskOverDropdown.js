@@ -43,13 +43,6 @@ const SearchInput = styled.input.attrs({
     }
 `;
 
-const AskoverBtn = styled.button`
-    padding: 10px 0;
-    margin-top: 10px;
-    background-color: lightgray;
-    cursor: ${(props) => (props.disabled ? 'default' : 'cursor')};
-`;
-
 // eslint-disable-next-line no-unused-vars
 const AskOverDropdown = (props) => {
     const wrapper = useRef();
@@ -66,23 +59,6 @@ const AskOverDropdown = (props) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
 
-    // const searchedUsers = [
-    //     {
-    //         id: 1,
-    //         name: 'dhoon',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    //     {
-    //         id: 2,
-    //         name: 'youngxpepp',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    //     {
-    //         id: 3,
-    //         name: 'sooyeon',
-    //         profileImageUrl: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-    //     },
-    // ];
     let time;
     useEffect(() => {
         time = setTimeout(async () => {
@@ -102,11 +78,6 @@ const AskOverDropdown = (props) => {
         clearTimeout(time);
     };
 
-    const askoverOnClick = () => {
-        // 초대 api
-        console.log(checkUsers);
-    };
-
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
@@ -124,12 +95,10 @@ const AskOverDropdown = (props) => {
                             already={boardDetail.invitedUsers.some((v) => {
                                 return v.id === id;
                             })}
+                            setAskoverDropdownDisplay={props.setAskoverDropdownDisplay}
                         />
                     ))}
                 </div>
-                <AskoverBtn onClick={askoverOnClick} disabled={checkUsers.length === 0}>
-                    초대장 보내기
-                </AskoverBtn>
             </DropdownWrapper>
         </Wrapper>
     );
