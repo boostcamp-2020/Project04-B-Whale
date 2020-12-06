@@ -33,6 +33,7 @@ const SidebarTopMenu = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    border-bottom: 1px solid gray;
 `;
 
 const SidebarTitle = styled.div`
@@ -67,6 +68,7 @@ const ActivitySidebar = (props) => {
             <SidebarTopMenu>
                 <div />
                 <SidebarTitle>활동기록</SidebarTitle>
+                {/* <hr /> */}
                 <CloseBtn src={closeBtn} alt="close" onClick={onClose} />
             </SidebarTopMenu>
             <ActivitiesWrapper>
