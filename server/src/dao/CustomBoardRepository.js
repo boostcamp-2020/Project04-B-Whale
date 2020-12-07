@@ -28,4 +28,15 @@ export class CustomBoardRepository extends BaseRepository {
 
         return boardIds;
     }
+
+    async checkAccess({ boardId, userId }) {
+        const isAuth = await this.createQueryBuilder('board')
+            .leftJoin('board.invitations', 'invitation')
+            .where('board.id=:boardId', { boardId })
+            .andWhere('board.creator_id=:userId', { userId })
+            .orWhere('invitation.user_id=:userId', { userId })
+            .getMany();
+
+        return isAuth.length !== 0;
+    }
 }

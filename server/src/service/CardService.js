@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
-import { EntityNotFoundError } from '../../dist/common/error/EntityNotFoundError';
+import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
+import { ForbiddenError } from '../common/error/ForbiddenError';
 import { BaseService } from './BaseService';
 
 export class CardService extends BaseService {
@@ -104,10 +105,19 @@ export class CardService extends BaseService {
     }
 
     @Transactional()
-    async modifyCardById({ cardId, listId, title, content, position, dueDate }) {
+    async modifyCardById({ userId, cardId, listId, title, content, position, dueDate }) {
         const card = await this.cardRepository.findOne(cardId);
 
         if (!card) throw new EntityNotFoundError('card is not exist');
+
+        const { list } = await this.cardRepository.findOne(cardId, { relations: ['list'] });
+        const { board } = await this.listRepository.findOne(list.id, { relations: ['board'] });
+        const isAccess = await this.customBoardRepository.checkAccess({
+            boardId: board.id,
+            userId,
+        });
+
+        if (!isAccess) throw new ForbiddenError('no access to this card');
 
         card.list = listId;
         card.title = title;

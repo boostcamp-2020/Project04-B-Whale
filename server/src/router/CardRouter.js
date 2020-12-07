@@ -50,11 +50,13 @@ export const CardRouter = () => {
 
     router.patch('/:cardId', async (req, res) => {
         const cardService = CardService.getInstance();
+        const { id: userId } = req.user;
         const { cardId } = req.params;
         const { listId, title, content, position, dueDate } = req.body;
         await validator(CardDto, { listId, title, content, position, dueDate });
 
         await cardService.modifyCardById({
+            userId,
             cardId,
             listId,
             title,
