@@ -63,9 +63,10 @@ final class TabbarCoordinator: Coordinator {
 
     navigationController.pushViewController(viewController, animated: false)
     navigationController.tabBarItem = UITabBarItem(title: itemContents.name, image: UIImage(systemName: itemContents.image), tag: 0)
-    if let font = UIFont.nanumB(size: 16) {
-      navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font]
-    }
+    
+    let font = UIFont.nanumB(size: 16)
+    navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font]
+    
     
     
     controllers.append(navigationController)
