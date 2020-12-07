@@ -5,7 +5,7 @@
 //  Created by a1111 on 2020/11/25.
 //
 
-import Foundation
+import UIKit
 
 enum DateDeviderFormat: String {
   case dot = "."
@@ -20,5 +20,19 @@ extension String {
     dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd"
     
     return dateFormatter.date(from: self) ?? Date()
+  }
+  
+  func hexStringToUIColor() -> UIColor {
+      var rgbValue: UInt64 = 0
+      let droppedString = self.dropFirst()
+
+      Scanner(string: String(droppedString)).scanHexInt64(&rgbValue)
+      
+      return UIColor(
+          red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+          green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+          blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+          alpha: CGFloat(1.0)
+      )
   }
 }
