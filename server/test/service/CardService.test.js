@@ -687,6 +687,7 @@ describe('Card Service Test', () => {
 
             // when
             await cardService.modifyCardById({
+                userId: user1.id,
                 cardId: card1.id,
                 listId: updateData.listId,
                 title: updateData.title,
@@ -762,6 +763,7 @@ describe('Card Service Test', () => {
 
             // when
             await cardService.modifyCardById({
+                userId: user1.id,
                 cardId: card1.id,
                 listId: updateData.listId,
                 title: updateData.title,
