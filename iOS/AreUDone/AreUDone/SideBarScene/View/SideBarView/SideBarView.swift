@@ -66,6 +66,10 @@ private extension SideBarView {
   
   func configureView() {
     backgroundColor = .white
+
+    layer.cornerRadius = 10
+    layer.masksToBounds = true
+    layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
   }
   
   func configureTitleView() {

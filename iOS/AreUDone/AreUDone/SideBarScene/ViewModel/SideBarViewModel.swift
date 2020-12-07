@@ -71,7 +71,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   // MARK: - Method
   
   func updateMembersInCollectionView() {
-    boardService.fetchBoardDetail(withBoardId: boardId) { result in
+    boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
         self.boardMembers = boardDetail.invitedUsers

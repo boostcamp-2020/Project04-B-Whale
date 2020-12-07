@@ -11,6 +11,7 @@ import NetworkFramework
 protocol UserServiceProtocol {
   
   func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void))
+  func fetchUserInfo(userName: String, completionHandler: @escaping ((Result<InvitedUser, APIError>) -> Void))
 }
 
 class UserService: UserServiceProtocol {
@@ -31,6 +32,12 @@ class UserService: UserServiceProtocol {
   
   func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void)) {
     router.request(route: UserEndPoint.requestMe) { (result: Result<User, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func fetchUserInfo(userName: String, completionHandler: @escaping ((Result<InvitedUser, APIError>) -> Void)) {
+    router.request(route: UserEndPoint.searchUser(userName: userName)) { result in
       completionHandler(result)
     }
   }

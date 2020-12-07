@@ -68,7 +68,7 @@ private extension SideBarCollectionViewMembersCell {
   
   func configureCollectionView() {
     NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+      collectionView.topAnchor.constraint(equalTo: topAnchor),
       collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)

@@ -56,7 +56,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   
   func updateBoardDetailCollectionView() {
-    boardService.fetchBoardDetail(withBoardId: boardId) { result in
+    boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
         self.boardDetail = boardDetail

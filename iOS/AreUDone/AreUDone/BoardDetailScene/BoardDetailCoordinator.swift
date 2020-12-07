@@ -9,22 +9,30 @@ import UIKit
 import NetworkFramework
 
 final class BoardDetailCoordinator: NavigationCoordinator {
-  var navigationController: UINavigationController?
   
+  // MARK: - Property
+  
+  var navigationController: UINavigationController?
+  private var invitationCoordinator: NavigationCoordinator!
+  private let boardId: Int
+
   // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
   //  private let router: Routable
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .boardDetail)
   }
-  private let boardId: Int
+  
+  
+  // MARK: - Initializer
   
   init(boardId: Int) {
     self.boardId = boardId
   }
   
   
+  // MARK: - Method
+  
   func start() -> UIViewController {
-    
     guard let boardDetailViewController = storyboard.instantiateViewController(
             identifier: BoardDetailViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController()}
@@ -45,7 +53,8 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               let sideBarViewController = SideBarViewController(
                 nibName: SideBarViewController.identifier,
                 bundle: nil,
-                viewModel: sideBarViewModel
+                viewModel: sideBarViewModel,
+                coordinator: self
               )
               
               return BoardDetailViewController(
@@ -61,10 +70,24 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   }
 }
 
+
+// MARK: - Extension
+
 extension BoardDetailCoordinator {
   
   func pop() {
     navigationController?.popViewController(animated: true)
+  }
+  
+  func pushToInvitation() {
+    invitationCoordinator = InvitationCoordinator(boardId: boardId)
+    invitationCoordinator.navigationController = navigationController
+    
+    let viewController = invitationCoordinator.start()
+    let subNavigationController = UINavigationController()
+    subNavigationController.pushViewController(viewController, animated: true)
+    
+    navigationController?.present(subNavigationController, animated: true)
   }
 }
 

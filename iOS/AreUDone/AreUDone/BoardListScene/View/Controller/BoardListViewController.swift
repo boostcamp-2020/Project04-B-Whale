@@ -31,7 +31,11 @@ class BoardListViewController: UIViewController {
     return searchController
   }()
   
-  @IBOutlet weak var collectionView: BoardListCollectionView!
+  @IBOutlet weak var collectionView: BoardListCollectionView! {
+    didSet {
+      collectionView.delegate = self
+    }
+  }
   lazy var dataSource = configureDataSource()
   
   
@@ -76,11 +80,13 @@ class BoardListViewController: UIViewController {
 private extension BoardListViewController {
   
   func configure() {
+    configureView()
+  }
+  
+  func configureView() {
     navigationItem.title = "보드 목록"
     navigationItem.searchController = searchController
     searchController.searchResultsUpdater = self
-    
-    collectionView.delegate = self
   }
 }
 
