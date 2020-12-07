@@ -149,6 +149,7 @@ private extension CardDetailViewController {
   func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
+    cardDetailMemberView.delegate = self
     stackView.setupContentViewDelegate(self)
     stackView.setupDueDateViewDelegate(self)
     
@@ -395,5 +396,13 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
     DispatchQueue.main.async { [weak self] in
       self?.stackView.updateContentView(with: content)
     }
+  }
+}
+
+
+extension CardDetailViewController: CardDetailMemberViewDelegate {
+  
+  func cardDetailMemberEditButtonTapped() {
+    
   }
 }

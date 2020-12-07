@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CardDetailMemberViewDelegate: NSObject {
+  func cardDetailMemberEditButtonTapped()
+}
+
 final class CardDetailMemberView: UIView {
   
   // TODO:- 위치변경, Item 변경
@@ -46,7 +50,7 @@ final class CardDetailMemberView: UIView {
   
   private lazy var dataSource = configureDataSource()
   private let viewModel: CardDetailViewModelProtocol
-  
+  weak var delegate: CardDetailMemberViewDelegate?
   
   // MARK:- Initializer
   
@@ -83,6 +87,8 @@ private extension CardDetailMemberView {
     configureTitleLabel()
     configureMemberCollectionView()
     configureEditButton()
+    
+    addingTarget()
   }
   
   func configureTitleLabel() {
@@ -135,5 +141,17 @@ private extension CardDetailMemberView {
     snapshot.appendItems(members)
     
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+  }
+  
+  func addingTarget() {
+    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+  }
+}
+
+
+private extension CardDetailMemberView {
+  
+  @objc private func editButtonTapped() {
+    delegate?.cardDetailMemberEditButtonTapped()
   }
 }

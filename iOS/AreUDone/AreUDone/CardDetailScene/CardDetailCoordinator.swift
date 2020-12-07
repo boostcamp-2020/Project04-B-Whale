@@ -88,4 +88,8 @@ extension CardDetailCoordinator {
     calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
   }
+  
+  func showMemberUpdate() {
+    
+  }
 }
