@@ -1,9 +1,9 @@
-name: Server CI/CD on Branch 'develop/web'
+name: Server CI/CD on Branch 'develop/server'
 on:
   push:
-    branches: [ develop/web ]
+    branches: [ develop/server ]
   pull_request:
-    branches: [ develop/web ]
+    branches: [ develop/server ]
 defaults:
   run:
     shell: bash
