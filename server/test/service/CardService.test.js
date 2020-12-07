@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { getRepository } from 'typeorm';
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
 import { Application } from '../../src/Application';
 import { Board } from '../../src/model/Board';

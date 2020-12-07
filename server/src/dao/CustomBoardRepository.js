@@ -28,5 +28,4 @@ export class CustomBoardRepository extends BaseRepository {
 
         return boardIds;
     }
-
 }
