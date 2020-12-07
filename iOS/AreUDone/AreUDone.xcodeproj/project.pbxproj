@@ -210,6 +210,10 @@
 		BD59A65A257DCE9C00BF8928 /* CardDetailMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A659257DCE9C00BF8928 /* CardDetailMemberView.swift */; };
 		BD59A666257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A665257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift */; };
 		BD59A66E257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A66D257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift */; };
+		BD59A67B257E151500BF8928 /* MemberUpdate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */; };
+		BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
+		BD59A689257E163100BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
+		BD59A697257E184E00BF8928 /* MemberUpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -418,6 +422,10 @@
 		BD59A659257DCE9C00BF8928 /* CardDetailMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberView.swift; sourceTree = "<group>"; };
 		BD59A665257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberCollectionView.swift; sourceTree = "<group>"; };
 		BD59A66D257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MemberUpdate.storyboard; sourceTree = "<group>"; };
+		BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateViewController.swift; sourceTree = "<group>"; };
+		BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateViewModel.swift; sourceTree = "<group>"; };
+		BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -888,7 +896,7 @@
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 				BD2AA79D256DF87D00EA8791 /* CardDetailScene */,
 				BDEA7BCE257623EA00CF6B11 /* ContentInputScene */,
-				BD59A664257DF9BB00BF8928 /* CardDetailMemberScene */,
+				BD59A664257DF9BB00BF8928 /* MemberUpdateScene */,
 				33601227256E4FEF009580A1 /* BoardListScene */,
 				335AC4ED256F8ABE006A5C4A /* BoardDetailScene */,
 				333BA5C4257878740057ACA4 /* SideBarScene */,
@@ -1148,11 +1156,47 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		BD59A664257DF9BB00BF8928 /* CardDetailMemberScene */ = {
+		BD59A664257DF9BB00BF8928 /* MemberUpdateScene */ = {
 			isa = PBXGroup;
 			children = (
+				BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */,
+				BD59A67F257E151B00BF8928 /* Resources */,
+				BD59A680257E154C00BF8928 /* View */,
+				BD59A687257E161B00BF8928 /* ViewModel */,
 			);
-			path = CardDetailMemberScene;
+			path = MemberUpdateScene;
+			sourceTree = "<group>";
+		};
+		BD59A67F257E151B00BF8928 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BD59A680257E154C00BF8928 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A681257E155800BF8928 /* Controller */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BD59A681257E155800BF8928 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BD59A687257E161B00BF8928 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		BDD18AB225653CB8005DF00A /* Extension */ = {
@@ -1446,6 +1490,7 @@
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
+				BD59A67B257E151500BF8928 /* MemberUpdate.storyboard in Resources */,
 				333BA560257695CD0057ACA4 /* SideBarViewController.xib in Resources */,
 				33601236256E50FC009580A1 /* BoardList.storyboard in Resources */,
 			);
@@ -1509,6 +1554,7 @@
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
+				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
 				3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */,
@@ -1541,6 +1587,7 @@
 				BD2AA7A7256DF93800EA8791 /* CardDetailViewModel.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
+				BD59A689257E163100BF8928 /* MemberUpdateViewModel.swift in Sources */,
 				BD2AA7EE256F421E00EA8791 /* CardDetailStackView.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */,
@@ -1559,6 +1606,7 @@
 				33638DE12573956F006033CF /* ListFooterView.swift in Sources */,
 				BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */,
 				BD59A6522579D2D600BF8928 /* User.swift in Sources */,
+				BD59A697257E184E00BF8928 /* MemberUpdateCoordinator.swift in Sources */,
 				BD59A66E257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift in Sources */,
 				335AC50B256F8D28006A5C4A /* BoardDetailViewModel.swift in Sources */,
 				33638DFE2573C660006033CF /* UIEdgeInsets+.swift in Sources */,

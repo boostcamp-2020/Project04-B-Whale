@@ -403,6 +403,6 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
 extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
-    
+    cardDetailCoordinator?.showMemberUpdate()
   }
 }
