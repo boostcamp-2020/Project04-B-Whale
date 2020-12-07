@@ -50,4 +50,16 @@ export class ListService extends BaseService {
         };
         await this.listRepository.update({ id: list.list_id }, updatedList);
     }
+
+    @Transactional()
+    async deleteList(userId, listId) {
+        const list = await this.listRepository
+            .createQueryBuilder('list')
+            .where('list.id = :listId', { listId })
+            .getRawOne();
+        if (!list) throw new EntityNotFoundError();
+        const boardService = BoardService.getInstance();
+        await boardService.checkForbidden(userId, list.list_board_id);
+        await this.listRepository.delete(listId);
+    }
 }
