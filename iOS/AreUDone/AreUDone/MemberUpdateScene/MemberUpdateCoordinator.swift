@@ -41,6 +41,15 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
             }) as? MemberUpdateViewController
     else { return UIViewController() }
     
+    memberUpdateViewController.coordinator = self
+    
     return memberUpdateViewController
+  }
+}
+
+extension MemberUpdateCoordinator {
+  
+  func dismiss() {
+    navigationController?.dismiss(animated: true)
   }
 }

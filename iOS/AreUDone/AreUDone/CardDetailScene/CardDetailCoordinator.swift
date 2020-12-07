@@ -98,6 +98,9 @@ extension CardDetailCoordinator {
             as? MemberUpdateViewController
     else { return }
     
-    navigationController?.present(memberUpdateViewController, animated: true)
+    let subNavigationViewController = UINavigationController()
+    
+    subNavigationViewController.pushViewController(memberUpdateViewController, animated: true)
+    navigationController?.present(subNavigationViewController, animated: true)
   }
 }

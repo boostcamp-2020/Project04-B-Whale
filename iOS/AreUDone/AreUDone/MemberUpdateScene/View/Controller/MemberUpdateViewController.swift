@@ -12,7 +12,7 @@ final class MemberUpdateViewController: UIViewController {
   // MARK:- Property
   
   private let viewModel: MemberUpdateViewModelProtocol
-  
+  weak var coordinator: MemberUpdateCoordinator?
   
   // MARK:- Initializer
   
@@ -32,5 +32,25 @@ final class MemberUpdateViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    configure()
+  }
+}
+
+
+
+private extension MemberUpdateViewController {
+  
+  func configure() {
+    configureView()
+  }
+  
+  func configureView(){
+    navigationItem.title = "멤버"
+
+    let barButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
+      self?.coordinator?.dismiss()
+    }
+    barButtonItem.setColor(to: .black)
+    navigationItem.leftBarButtonItem = barButtonItem
   }
 }
