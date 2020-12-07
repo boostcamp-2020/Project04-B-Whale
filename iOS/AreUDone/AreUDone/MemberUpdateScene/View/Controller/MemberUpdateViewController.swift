@@ -105,10 +105,15 @@ private extension MemberUpdateViewController {
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       tableView: memberTableView
-    ) { (tableView, indexPath, member) -> UITableViewCell? in
+    ) { [weak self] (tableView, indexPath, member) -> UITableViewCell? in
       let cell: MemberTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.update(with: member.name)
+      
+      self?.viewModel.fetchProfileImage(with: member.profileImageUrl, completionHandler: { data in
+        let image = UIImage(data: data)
+        cell.update(with: image)
+      })
       
       return cell
     }

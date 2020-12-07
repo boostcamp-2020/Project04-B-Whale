@@ -15,7 +15,6 @@ class MemberTableViewCell: UITableViewCell, Reusable {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.layer.masksToBounds = true
-    imageView.image = UIImage(systemName: "circle")
     
     return imageView
   }()
@@ -69,13 +68,14 @@ private extension MemberTableViewCell {
   
   func configureProfileImageView() {
     NSLayoutConstraint.activate([
-//      profileImageView.topAnchor.constraint(equalTo: topAnchor,constant: 10),
-//      profileImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
       profileImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
       profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       profileImageView.widthAnchor.constraint(equalToConstant: 20),
       profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor)
     ])
+    
+    profileImageView.layoutIfNeeded()
+    profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
   }
   
   func configureNameLabel() {

@@ -10,6 +10,7 @@ import Foundation
 protocol MemberUpdateViewModelProtocol {
   
   func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void))
+  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
 final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
@@ -19,13 +20,15 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   private let boardId: Int
   private let cardMember: [InvitedUser]?
   private let boardService: BoardServiceProtocol
+  private let imageService: ImageServiceProtocol
   
   // MARK:- Initializer
   
-  init(boardId: Int, cardMember: [InvitedUser]?, boardService: BoardServiceProtocol) {
+  init(boardId: Int, cardMember: [InvitedUser]?, boardService: BoardServiceProtocol, imageService: ImageServiceProtocol) {
     self.boardId = boardId
     self.cardMember = cardMember
     self.boardService = boardService
+    self.imageService = imageService
   }
   
   func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void)) {
@@ -40,6 +43,18 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
 
         let notCardMember = Set(boardMember).subtracting(cardMember).sorted { $0.id < $1.id }
         completionHandler(notCardMember, cardMember)
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void)) {
+    imageService.fetchImage(with: urlAsString) { result in
+      switch result {
+      case .success(let data):
+        completionHandler(data)
+        
       case .failure(let error):
         print(error)
       }
