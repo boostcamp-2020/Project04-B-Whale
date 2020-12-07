@@ -19,7 +19,7 @@ final class BoardListCoordinator: NavigationCoordinator {
   
   var navigationController: UINavigationController?
   private var boardDetailCoordinator: NavigationCoordinator!
-  
+  private var boardAddCoordinator: NavigationCoordinator!
   
   // MARK: - Initializer
   
@@ -45,9 +45,12 @@ final class BoardListCoordinator: NavigationCoordinator {
   }
 }
 
+
+// MARK: - Extension
+
 extension BoardListCoordinator {
   
-  func boardItemDidTapped(boardId: Int) {
+  func pushToBoardDetail(boardId: Int) {
     boardDetailCoordinator = BoardDetailCoordinator(boardId: boardId)
     boardDetailCoordinator.navigationController = navigationController
     
@@ -55,5 +58,16 @@ extension BoardListCoordinator {
     
     viewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(viewController, animated: true)
+  }
+  
+  func pushToBoardAdd() {
+    boardAddCoordinator = BoardAddCoordinator(router: router)
+    boardAddCoordinator.navigationController = navigationController
+    
+    let viewController = boardAddCoordinator.start()
+    let subNavigationController = UINavigationController()
+    subNavigationController.pushViewController(viewController, animated: true)
+    
+    navigationController?.present(subNavigationController, animated: true)
   }
 }
