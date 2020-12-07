@@ -21,6 +21,7 @@ enum CardEndPoint {
         position: String?,
         dueDate: String?
        )
+  case updateCardMember(id: Int, userIds: [Int])
 }
 
 extension CardEndPoint: EndPointable {
@@ -34,6 +35,9 @@ extension CardEndPoint: EndPointable {
       
     case .updateCard(let id, _, _, _, _, _):
       return "\(APICredentials.ip)/api/card/\(id)"
+      
+    case .updateCardMember(let id, _):
+      return "\(APICredentials.ip)/api/card/\(id)/member"
     }
   }
   
@@ -52,6 +56,9 @@ extension CardEndPoint: EndPointable {
       
     case .updateCard:
       return nil
+      
+    case .updateCardMember(_, let userIds):
+      return nil
     }
   }
   
@@ -65,6 +72,9 @@ extension CardEndPoint: EndPointable {
       
     case .updateCard:
       return .patch
+      
+    case .updateCardMember:
+      return .put
     }
   }
   
@@ -111,6 +121,11 @@ extension CardEndPoint: EndPointable {
       }
       
       return body
+      
+    case .updateCardMember(_, let userIds):
+      // TODO: - Back과 얘기해봐야함
+      let userIdsAsString = userIds.map { String($0) }
+      return ["": ""]
       
     default:
       return nil
