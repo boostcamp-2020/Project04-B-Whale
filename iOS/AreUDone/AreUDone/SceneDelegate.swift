@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
     
-    Keychain.shared.removeValue(forKey: "token") // TODO:- 테스트용 코드
+//    Keychain.shared.removeValue(forKey: "token") // TODO:- 테스트용 코드
     
     sceneCoordinator = SceneCoordinator(
       window: window, router: Router(),
