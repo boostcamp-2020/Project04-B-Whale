@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { EntityNotFoundError } from '../../dist/common/error/EntityNotFoundError';
 import { BaseService } from './BaseService';
 
 export class CardService extends BaseService {
@@ -100,5 +101,20 @@ export class CardService extends BaseService {
             dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
             commentCount: card.commentCount,
         }));
+    }
+
+    @Transactional()
+    async modifyCardById({ cardId, listId, title, content, position, dueDate }) {
+        const card = await this.cardRepository.findOne(cardId);
+
+        if (!card) throw new EntityNotFoundError('card is not exist');
+
+        card.list = listId;
+        card.title = title;
+        card.content = content;
+        card.position = position;
+        card.dueDate = dueDate;
+
+        await this.cardRepository.save(card);
     }
 }
