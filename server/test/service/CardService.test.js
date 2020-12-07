@@ -704,7 +704,7 @@ describe('Card Service Test', () => {
             expect(updatedCard.content).toEqual(card1.content);
             expect(updatedCard.position).toEqual(card1.position);
             expect(moment(updatedCard.dueDate).tz('Asia/Seoul').format()).toEqual(
-                updateData.dueDate,
+                moment(updateData.dueDate).tz('Asia/Seoul').format(),
             );
         });
     });
@@ -780,7 +780,7 @@ describe('Card Service Test', () => {
             expect(updatedCard.content).toEqual(updateData.content);
             expect(updatedCard.position).toEqual(updateData.position);
             expect(moment(updatedCard.dueDate).tz('Asia/Seoul').format()).toEqual(
-                updateData.dueDate,
+                moment(updateData.dueDate).tz('Asia/Seoul').format(),
             );
         });
     });
