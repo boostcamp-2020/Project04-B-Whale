@@ -12,3 +12,15 @@ export const getCardCount = async ({ startDate, endDate, member }) => {
 
     return response;
 };
+
+export const getCardsByDueDate = async ({ dueDate, member }) => {
+    const response = await request({
+        url:
+            member !== undefined
+                ? `/api/card?q=date:${dueDate} member:${member}`
+                : `/api/card?q=date:${dueDate}`,
+        method: 'GET',
+    });
+
+    return response;
+};
