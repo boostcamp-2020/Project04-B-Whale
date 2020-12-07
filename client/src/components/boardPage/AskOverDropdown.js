@@ -2,7 +2,6 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import UserDetailForDropdown from './UserDetailForDropdown';
 import BoardDetailContext from '../../context/BoardDetailContext';
-// eslint-disable-next-line no-unused-vars
 import { searchUsersByName } from '../../utils/userRequest';
 
 const Wrapper = styled.div`
@@ -43,18 +42,15 @@ const SearchInput = styled.input.attrs({
     }
 `;
 
-// eslint-disable-next-line no-unused-vars
 const AskOverDropdown = (props) => {
     const wrapper = useRef();
     const input = useRef();
     const { askoverDropdownDisplay } = props;
     const [inputContent, setInputContent] = useState('');
-    // eslint-disable-next-line no-unused-vars
     const [searchedUsers, setSearchedUsers] = useState([]);
     const [checkUsers, setCheckUsers] = useState([]);
     const { boardDetail } = useContext(BoardDetailContext);
 
-    // eslint-disable-next-line no-unused-vars
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
     };
@@ -66,7 +62,6 @@ const AskOverDropdown = (props) => {
                 setSearchedUsers([]);
                 return;
             }
-            // 검색 api 요청
             const { data } = await searchUsersByName(input.current?.value);
             setSearchedUsers([...data]);
         }, 1000);
@@ -74,7 +69,6 @@ const AskOverDropdown = (props) => {
 
     const handleChange = async (evt) => {
         setInputContent(evt.target.value);
-        // eslint-disable-next-line no-use-before-define
         clearTimeout(time);
     };
 

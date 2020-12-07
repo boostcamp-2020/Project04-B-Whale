@@ -28,8 +28,7 @@ const Board = ({ match }) => {
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
 
     useEffect(async () => {
-        const { status, data } = await getDetailBoard(id);
-        console.log(status, data);
+        const { data } = await getDetailBoard(id);
         setBoardDetail(data);
     }, []);
 

@@ -70,7 +70,12 @@ const DimmedForInput = styled.div`
     z-index: 2;
 `;
 
-const TopMenu = (props) => {
+const TopMenu = ({
+    sidebarDisplay,
+    setInvitedDropdownDisplay,
+    setAskoverDropdownDisplay,
+    setSidebarDisplay,
+}) => {
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [inputState, setInputState] = useState('span');
     const [inputContent, setInputContent] = useState('');
@@ -135,7 +140,7 @@ const TopMenu = (props) => {
                     )}
                     <ButtonForGettingInvitedUser
                         onClick={(evt) =>
-                            props.setInvitedDropdownDisplay({
+                            setInvitedDropdownDisplay({
                                 visible: true,
                                 offsetY: evt.target.getBoundingClientRect().left,
                             })
@@ -145,7 +150,7 @@ const TopMenu = (props) => {
                     </ButtonForGettingInvitedUser>
                     <InviteButton
                         onClick={(evt) =>
-                            props.setAskoverDropdownDisplay({
+                            setAskoverDropdownDisplay({
                                 visible: true,
                                 offsetY: evt.target.getBoundingClientRect().left,
                             })
@@ -163,9 +168,8 @@ const TopMenu = (props) => {
                     }}
                 >
                     <MenuButton
-                        // eslint-disable-next-line react/destructuring-assignment
-                        sidebarDisplay={props.sidebarDisplay}
-                        onClick={() => props.setSidebarDisplay(true)}
+                        sidebarDisplay={sidebarDisplay}
+                        onClick={() => setSidebarDisplay(true)}
                     >
                         메뉴
                     </MenuButton>

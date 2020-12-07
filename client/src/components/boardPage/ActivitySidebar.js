@@ -50,9 +50,9 @@ const ActivitiesWrapper = styled.div`
     padding: 10px;
 `;
 
-const ActivitySidebar = (props) => {
+const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
     const onClose = () => {
-        props.setSidebarDisplay(false);
+        setSidebarDisplay(false);
     };
 
     const activities = [
@@ -61,14 +61,11 @@ const ActivitySidebar = (props) => {
         { id: 3, boardId: 1, content: '박수연님이 현재 보드를 생성하였습니다.' },
     ];
 
-    // eslint-disable-next-line react/destructuring-assignment
     return (
-        // eslint-disable-next-line react/destructuring-assignment
-        <Sidebar sidebarDisplay={props.sidebarDisplay}>
+        <Sidebar sidebarDisplay={sidebarDisplay}>
             <SidebarTopMenu>
                 <div />
                 <SidebarTitle>활동기록</SidebarTitle>
-                {/* <hr /> */}
                 <CloseBtn src={closeBtn} alt="close" onClick={onClose} />
             </SidebarTopMenu>
             <ActivitiesWrapper>

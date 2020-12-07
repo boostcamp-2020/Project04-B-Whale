@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
-// eslint-disable-next-line no-unused-vars
 import { inviteUserIntoBoard } from '../../utils/boardRequest';
 
 const UserDiv = styled.div`
@@ -9,12 +8,6 @@ const UserDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* ${(props) =>
-        props.parent === 'invite' &&
-        `&:hover {
-            background-color: ${props.already ? 'none' : 'lightgray'};
-            cursor: ${props.already ? 'default' : 'pointer'};
-        }`}; */
 `;
 
 const ProfileImageDiv = styled.div`
@@ -48,7 +41,6 @@ const InvitedUserDetail = ({
     already,
     setAskoverDropdownDisplay,
 }) => {
-    // eslint-disable-next-line no-unused-vars
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
 
     const inviteHandler = async () => {
