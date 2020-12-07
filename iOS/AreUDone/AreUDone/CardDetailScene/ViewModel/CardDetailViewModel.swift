@@ -15,6 +15,7 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
+  func bindingCardDetailMemberView(handler: @escaping (([CardDetail.Member]?) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
@@ -41,6 +42,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
+  private var cardDetailMemberViewHandler: (([CardDetail.Member]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
@@ -72,6 +74,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         self?.cardDetailNavigationBarTitleHandler?(detailCard.title)
         self?.cardDetailListTitleHandler?(detailCard.list.title)
         self?.cardDetailBoardTitleHandler?(detailCard.board.title)
+        self?.cardDetailMemberViewHandler?(detailCard.members)
         self?.fetchUserData()
         
       case .failure(let error):
@@ -175,5 +178,9 @@ extension CardDetailViewModel {
   
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void)) {
     commentViewProfileImageHandler = handler
+  }
+  
+  func bindingCardDetailMemberView(handler: @escaping (([CardDetail.Member]?) -> Void)) {
+    cardDetailMemberViewHandler = handler
   }
 }
