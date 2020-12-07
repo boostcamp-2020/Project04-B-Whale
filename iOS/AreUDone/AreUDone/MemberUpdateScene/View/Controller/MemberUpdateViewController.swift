@@ -141,6 +141,24 @@ private extension MemberUpdateViewController {
 
 extension MemberUpdateViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+    var snapshot = dataSource.snapshot()
+    guard let member = dataSource.itemIdentifier(for: indexPath) else { return }
+    switch indexPath.section {
+    case 0:
+      viewModel.updateCardMember(with: member) {
+        snapshot.deleteItems([member])
+        snapshot.appendItems([member], toSection: .notInvited)
+      }
+    case 1:
+      viewModel.updateCardMember(with: member) {
+        snapshot.deleteItems([member])
+        snapshot.appendItems([member], toSection: .invited)
+      }
+    default:
+      break
+    }
+    DispatchQueue.main.async { [weak self] in
+      self?.dataSource.apply(snapshot, animatingDifferences: true)
+    }
   }
 }
