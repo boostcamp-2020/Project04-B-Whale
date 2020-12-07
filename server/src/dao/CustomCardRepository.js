@@ -72,4 +72,5 @@ export class CustomCardRepository extends BaseRepository {
 
         return cardCountList;
     }
+
 }

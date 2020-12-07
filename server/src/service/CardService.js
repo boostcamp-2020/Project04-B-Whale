@@ -101,4 +101,68 @@ export class CardService extends BaseService {
             commentCount: card.commentCount,
         }));
     }
+
+    @Transactional()
+    async getMyCardsByDueDate({ userId, dueDate }) {
+        const [myCards, assignedCards] = await Promise.all([
+            await this.customCardRepository.findByDueDateAndCreatorId({
+                dueDate,
+                creatorId: userId,
+            }),
+            await this.customCardRepository.findByDueDateAndMemberUserId({ dueDate, userId }),
+        ]);
+
+        if (myCards?.length === 0 && assignedCards?.length === 0) {
+            return [];
+        }
+
+        const cardMap = new Map();
+
+        myCards.forEach((card) => {
+            cardMap.set(card.id, card);
+        });
+        assignedCards.forEach((card) => {
+            cardMap.set(card.id, card);
+        });
+
+        return Array.from(cardMap.values())
+            .sort((a, b) => {
+                return moment(a.dueDate).unix() - moment(b.dueDate).unix();
+            })
+            .map((card) => ({
+                id: card.id,
+                title: card.title,
+                dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+                commentCount: card.commentCount,
+            }));
+    }
+
+    @Transactional()
+    async getAllCardsByDueDate({ userId, dueDate }) {
+        const [myBoards, invitedBoards] = await Promise.all([
+            this.customBoardRepository.findByCreatorId(userId),
+            this.customBoardRepository.findInvitedBoardsByUserId(userId),
+        ]);
+
+        const boardIds = [
+            ...myBoards.map((board) => board.id),
+            ...invitedBoards.map((board) => board.id),
+        ];
+
+        if (boardIds?.length === 0) {
+            return [];
+        }
+
+        const cards = await this.customCardRepository.findByDueDateAndBoardIds({
+            dueDate,
+            boardIds,
+        });
+
+        return cards.map((card) => ({
+            id: card.id,
+            title: card.title,
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+            commentCount: card.commentCount,
+        }));
+    }
 }
