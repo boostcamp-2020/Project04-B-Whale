@@ -39,6 +39,7 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   
   func update(with board: Board) {
     titleLabel.text = board.title
+    backgroundColor = board.color.hexStringToUIColor().withAlphaComponent(0.5)
   }
 }
 
@@ -47,15 +48,18 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
 
 private extension BoardListCollectionViewCell {
   
-  private func configure() {
-    backgroundColor = .gray
-    layer.cornerRadius = 5
+  func configure() {
     addSubview(titleLabel)
     
+    configureView()
     configureTitleLabel()
   }
   
-  private func configureTitleLabel() {
+  func configureView() {
+    layer.cornerRadius = 10
+  }
+  
+  func configureTitleLabel() {
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)

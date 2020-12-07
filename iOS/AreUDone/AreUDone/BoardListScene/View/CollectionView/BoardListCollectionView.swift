@@ -22,30 +22,42 @@ final class BoardListCollectionView: UICollectionView {
     
     configure()
   }
+  
+  
+  // MARK: - Method
+  
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    
+    configureFlowLayout()
+  }
 }
 
 
-// MARK:- Extension Configure Method
+// MARK: - Extension Configure Method
 
 private extension BoardListCollectionView {
   
   func configure() {
-    configureFlowLayout()
-    registerCell()
+    configureView()
+  }
+  
+  func configureView() {
+    showsVerticalScrollIndicator = false
+    contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+    layer.cornerRadius = 10
+    layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    
+    register(BoardListCollectionViewCell.self)
   }
   
   func configureFlowLayout() {
     let flowLayout = UICollectionViewFlowLayout()
-    let width = UIScreen.main.bounds.width * 0.9
-    let height = UIScreen.main.bounds.height * 0.1
+    let width = bounds.width * 0.9
+    let height = bounds.height * 0.12
+    flowLayout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
     flowLayout.itemSize = CGSize(width: width, height: height)
-    flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: bounds.height/15)
 
     collectionViewLayout = flowLayout
-  }
-  
-  func registerCell() {
-    registerHeaderView(BoardListCollectionViewHeader.self)
-    register(BoardListCollectionViewCell.self)
   }
 }

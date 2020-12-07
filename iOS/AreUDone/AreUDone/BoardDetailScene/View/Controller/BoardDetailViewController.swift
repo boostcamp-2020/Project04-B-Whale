@@ -48,7 +48,7 @@ final class BoardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     bindUI()
     configure()
     
@@ -61,23 +61,11 @@ final class BoardDetailViewController: UIViewController {
     configureSideBarView()
   }
   
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    
-    resetNavigationAppearance()
-  }
-  
   
   // MARK: - Method
   
   private func updatePageControlNumber(to numbers: Int) {
     pageControl.numberOfPages = numbers
-  }
-  
-  private func resetNavigationAppearance() {
-    let appearance = UINavigationBarAppearance()
-    appearance.configureWithDefaultBackground()
-    navigationController?.navigationBar.standardAppearance = appearance
   }
 }
 

@@ -8,21 +8,22 @@
 import Foundation
 
 protocol BoardListViewModelProtocol {
-  func bindingInitializeBoardListCollectionView(handler: @escaping (Boards) -> Void)
-  func bindingUpdateBoardListCollectionView(handler: @escaping (Boards) -> Void)
   
-  func initializeBoardListCollectionView()
-  func updateBoardListCollectionView()
+  func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
+  func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
+  
+  func fetchMyBoard()
+  func fetchInvitedBoard()
 }
 
-class BoardListViewModel: BoardListViewModelProtocol {
+final class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Property
   
   private let boardService: BoardServiceProtocol
   
-  private var initializeBoardListCollectionViewHandler: ((Boards) -> Void)?
-  private var updateBoardListCollectionViewHandler: ((Boards) -> Void)?
+  private var initializeBoardListCollectionViewHandler: (([Board]) -> Void)?
+  private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
   
   
   // MARK: - Initializer
@@ -34,19 +35,22 @@ class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Method
   
-  func initializeBoardListCollectionView() {
-    fetchAllBoards(with: initializeBoardListCollectionViewHandler)
-  }
-  
-  func updateBoardListCollectionView() {
-    fetchAllBoards(with: updateBoardListCollectionViewHandler)
-  }
-  
-  func fetchAllBoards(with handler: ((Boards) -> Void)?) {
+  func fetchMyBoard() {
     boardService.fetchAllBoards() { result in
       switch result {
       case .success(let boards):
-        handler?(boards)
+        self.updateBoardListCollectionViewHandler?(boards.myBoards)
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func fetchInvitedBoard() {
+    boardService.fetchAllBoards() { result in
+      switch result {
+      case .success(let boards):
+        self.updateBoardListCollectionViewHandler?(boards.invitedBoards)
       case .failure(let error):
         print(error)
       }
@@ -55,18 +59,15 @@ class BoardListViewModel: BoardListViewModelProtocol {
 }
 
 
-// MARK: - Extension
-
-
-// MARK: Binding Handler
+// MARK: - Extension bindUI
 
 extension BoardListViewModel {
   
-  func bindingInitializeBoardListCollectionView(handler: @escaping (Boards) -> Void) {
+  func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void) {
     initializeBoardListCollectionViewHandler = handler
   }
   
-  func bindingUpdateBoardListCollectionView(handler: @escaping (Boards) -> Void) {
+  func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void) {
     updateBoardListCollectionViewHandler = handler
   }
 }

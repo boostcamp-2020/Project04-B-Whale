@@ -7,15 +7,24 @@
 
 import UIKit
 
-class BoardListViewController: UIViewController {
+final class BoardListViewController: UIViewController {
   
-  enum Section: CaseIterable {
-    case my
-    case invited
-  }
+  // MARK: Type Alias
   
   typealias DataSource = UICollectionViewDiffableDataSource<Section, Board>
   typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Board>
+  
+  
+  // MARK: - Enum
+  enum Section: CaseIterable {
+    case main
+  }
+  
+  enum BoardSegment: String, CaseIterable {
+    case myBoard = "나의 보드"
+    case invitedBoard = "공유 보드"
+  }
+  
   
   // MARK: - Property
   
@@ -23,20 +32,40 @@ class BoardListViewController: UIViewController {
   private let viewModel: BoardListViewModelProtocol
   private let sectionFactory: SectionContentsFactoryable
   
-  private let searchController: UISearchController = {
-    let searchController = UISearchController(searchResultsController: nil)
-    searchController.obscuresBackgroundDuringPresentation = false
-    searchController.searchBar.placeholder = "보드 검색"
-    
-    return searchController
-  }()
+  lazy var dataSource = configureDataSource()
   
+  @IBOutlet weak var titleView: UILabel!
+  @IBOutlet weak var addBoardButton: UIImageView!
+  @IBOutlet weak var baseView: UIView! {
+    didSet {
+      baseView.backgroundColor = .clear
+      baseView.addShadow(
+        offset: .zero,
+        radius: 3,
+        opacity: 0.5
+      )
+    }
+  }
   @IBOutlet weak var collectionView: BoardListCollectionView! {
     didSet {
       collectionView.delegate = self
     }
   }
-  lazy var dataSource = configureDataSource()
+  @IBOutlet weak var segmentControl: CustomSegmentedControl! {
+    didSet {
+      let boardTitles = BoardSegment.allCases.map { $0.rawValue }
+      segmentControl.setButtonTitles(buttonTitles: boardTitles)
+      segmentControl.delegate = self
+      
+      segmentControl.layer.cornerRadius = 10
+      segmentControl.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+      segmentControl.addShadow(
+        offset: CGSize(width: 0, height: -1),
+        radius: 2,
+        opacity: 0.5
+      )
+    }
+  }
   
   
   // MARK: - Initializer
@@ -46,7 +75,6 @@ class BoardListViewController: UIViewController {
     viewModel: BoardListViewModelProtocol,
     sectionFactory: SectionContentsFactoryable
   ) {
-    
     self.viewModel = viewModel
     self.sectionFactory = sectionFactory
     
@@ -54,7 +82,7 @@ class BoardListViewController: UIViewController {
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This class should be initialized with code")
   }
   
   
@@ -65,28 +93,43 @@ class BoardListViewController: UIViewController {
     
     bindUI()
     configure()
-    
-    viewModel.initializeBoardListCollectionView()
+    viewModel.fetchMyBoard()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.isNavigationBarHidden = true
+  }
   
-  // MARK: - Method
-  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.isNavigationBarHidden = false
+  }
 }
 
 
-// MARK: - Extension
+// MARK: - Extension Configure Method
 
 private extension BoardListViewController {
   
   func configure() {
     configureView()
+    configureAddBoardButton()
   }
   
   func configureView() {
+    navigationController?.navigationBar.prefersLargeTitles = true
+    
     navigationItem.title = "보드 목록"
-    navigationItem.searchController = searchController
-    searchController.searchResultsUpdater = self
+  }
+  
+  func configureAddBoardButton() {
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addBoardButtonTapped))
+    addBoardButton.addGestureRecognizer(gestureRecognizer)
+  }
+  
+  @objc func addBoardButtonTapped() {
+    // TODO: 보드 추가 화면 프레젠테이션 로직
   }
 }
 
@@ -96,17 +139,13 @@ private extension BoardListViewController {
 private extension BoardListViewController {
   
   func bindUI() {
-    viewModel.bindingInitializeBoardListCollectionView { boards in
-      self.updateSnapshot(with: boards, animatingDifferences: false)
-    }
-    
     viewModel.bindingUpdateBoardListCollectionView { boards in
       self.updateSnapshot(with: boards)
     }
   }
 }
 
-// MARK: Diffable DataSource
+// MARK: - Extension Diffable DataSource
 
 private extension BoardListViewController {
   
@@ -120,27 +159,14 @@ private extension BoardListViewController {
       return cell
     }
     
-    dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-      let headerView: BoardListCollectionViewHeader = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
-      
-      let title = self.sectionFactory.load(index: indexPath.section)
-      headerView.update(with: title)
-      
-      return headerView
-    }
-    
     return dataSource
   }
   
-  func updateSnapshot(with boards: Boards, animatingDifferences: Bool = true) {
+  func updateSnapshot(with boards: [Board], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
-  
-    let myBoards = boards.myBoards
-    let invitedBoards = boards.invitedBoards
     
-    snapshot.appendSections(Section.allCases)
-    snapshot.appendItems(myBoards, toSection: .my)
-    snapshot.appendItems(invitedBoards, toSection: .invited)
+    snapshot.appendSections([.main])
+    snapshot.appendItems(boards, toSection: .main)
     
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -148,7 +174,7 @@ private extension BoardListViewController {
   }
 }
 
-// MARK: UICollectionViewDelegate
+// MARK: - Extension UICollectionViewDelegate
 
 extension BoardListViewController: UICollectionViewDelegate {
   
@@ -159,11 +185,26 @@ extension BoardListViewController: UICollectionViewDelegate {
 }
 
 
-// MARK: UISearchResultsUpdating
+// MARK: - Extension SegmentControl
 
-extension BoardListViewController: UISearchResultsUpdating {
+extension BoardListViewController: CustomSegmentedControlDelegate {
   
-  func updateSearchResults(for searchController: UISearchController) {
-//    guard let searchKeyword = searchController.searchBar.text else { return }
+  func change(to title: String) {
+    self.titleView.text = title
+    UIView.transition(
+      with: titleView,
+      duration: 0.3,
+      options: .transitionFlipFromLeft,
+      animations: nil,
+      completion: nil)
+    
+    switch title {
+    case BoardSegment.myBoard.rawValue:
+      viewModel.fetchMyBoard()
+    case BoardSegment.invitedBoard.rawValue:
+      viewModel.fetchInvitedBoard()
+    default:
+      break
+    }
   }
 }

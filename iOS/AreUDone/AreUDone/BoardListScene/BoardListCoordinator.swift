@@ -8,7 +8,7 @@
 import UIKit
 import NetworkFramework
 
-class BoardListCoordinator: NavigationCoordinator {
+final class BoardListCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
@@ -19,6 +19,7 @@ class BoardListCoordinator: NavigationCoordinator {
   
   var navigationController: UINavigationController?
   private var boardDetailCoordinator: NavigationCoordinator!
+  
   
   // MARK: - Initializer
   
