@@ -1,6 +1,7 @@
 import { getCustomRepository, getRepository } from 'typeorm';
 import { CustomBoardRepository } from '../dao/CustomBoardRepository';
 import { CustomCardRepository } from '../dao/CustomCardRepository';
+import { CustomListRepository } from '../dao/CustomListRepository';
 import { CustomUserRepository } from '../dao/CustomUserRepository';
 import { Activity } from '../model/Activity';
 import { Board } from '../model/Board';
@@ -22,5 +23,6 @@ export class BaseService {
         this.customBoardRepository = getCustomRepository(CustomBoardRepository);
         this.customCardRepository = getCustomRepository(CustomCardRepository);
         this.customUserRepository = getCustomRepository(CustomUserRepository);
+        this.customListRepository = getCustomRepository(CustomListRepository);
     }
 }

@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { BadRequestError } from '../common/error/BadRequestError';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
 import { BaseService } from './BaseService';
@@ -112,12 +113,14 @@ export class CardService extends BaseService {
 
         const { list } = await this.cardRepository.findOne(cardId, { relations: ['list'] });
         const { board } = await this.listRepository.findOne(list.id, { relations: ['board'] });
-        const isAccess = await this.customBoardRepository.checkAccess({
-            boardId: board.id,
-            userId,
-        });
+        const { id: boardId } = board;
+        const isAccess = await this.customBoardRepository.checkAccess({ boardId, userId });
 
         if (!isAccess) throw new ForbiddenError('no access to this card');
+
+        if (listId && !(await this.customListRepository.isListOfBoard({ boardId, listId }))) {
+            throw new BadRequestError(`can't not move this card to list`);
+        }
 
         card.list = listId;
         card.title = title;
