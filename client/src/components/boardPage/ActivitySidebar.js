@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import closeBtn from '../../image/close.svg';
+import { IoIosClose } from 'react-icons/io';
 import ActivityDetail from './ActivityDetail';
 
 const boxOpen = keyframes`
@@ -37,13 +37,9 @@ const SidebarTopMenu = styled.div`
 `;
 
 const SidebarTitle = styled.div`
+    margin: auto;
     display: flex;
     justify-content: center;
-`;
-
-const CloseBtn = styled.img`
-    width: 15px;
-    cursor: pointer;
 `;
 
 const ActivitiesWrapper = styled.div`
@@ -66,7 +62,7 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
             <SidebarTopMenu>
                 <div />
                 <SidebarTitle>활동기록</SidebarTitle>
-                <CloseBtn src={closeBtn} alt="close" onClick={onClose} />
+                <IoIosClose size="30" onClick={onClose} style={{ cursor: 'pointer' }} />
             </SidebarTopMenu>
             <ActivitiesWrapper>
                 {activities.map((v) => {

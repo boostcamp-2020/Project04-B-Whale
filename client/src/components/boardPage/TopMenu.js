@@ -69,6 +69,13 @@ const DimmedForInput = styled.div`
     z-index: 2;
 `;
 
+const MenuWrapper = styled.div`
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 0;
+`;
+
 const TopMenu = ({
     sidebarDisplay,
     setInvitedDropdownDisplay,
@@ -157,18 +164,11 @@ const TopMenu = ({
                     초대하기
                 </InviteButton>
             </div>
-            <div
-                style={{
-                    width: '50%',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '5px 0',
-                }}
-            >
+            <MenuWrapper>
                 <MenuButton sidebarDisplay={sidebarDisplay} onClick={() => setSidebarDisplay(true)}>
                     메뉴
                 </MenuButton>
-            </div>
+            </MenuWrapper>
         </MenuDiv>
     );
 };

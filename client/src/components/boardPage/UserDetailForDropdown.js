@@ -56,7 +56,7 @@ const InvitedUserDetail = ({
         <UserDiv already={already} parent={parent}>
             <div style={{ display: 'flex' }}>
                 <ProfileImageDiv>
-                    <ProfileImage src={profileImageUrl} alt="My Image" align="center" />
+                    <ProfileImage src={profileImageUrl} alt={`${name} image`} align="center" />
                 </ProfileImageDiv>
                 <NameDiv>{name}</NameDiv>
             </div>
