@@ -43,20 +43,6 @@ export class BoardService extends BaseService {
     }
 
     @Transactional()
-    async getBoardIdsByUserId(userId) {
-        const boards = await this.boardRepository
-            .createQueryBuilder('board')
-            .select('board.id', 'id')
-            .leftJoin('board.invitations', 'invitation')
-            .where(`board.creator_id=:userId or invitation.user_id=:userId`, { userId })
-            .getRawMany();
-
-        const boardIds = boards.map((ele) => ele.id);
-
-        return boardIds;
-    }
-
-    @Transactional()
     async createBoard({ userId, title, color }) {
         const board = {
             creator: userId,
@@ -65,6 +51,7 @@ export class BoardService extends BaseService {
         };
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
+
         return createBoard.id;
     }
 
@@ -132,5 +119,14 @@ export class BoardService extends BaseService {
         };
         const createInvitation = this.invitationRepository.create(invitation);
         await this.invitationRepository.save(createInvitation);
+    }
+
+    @Transactional()
+    async updateBoard(hostId, boardId, title) {
+        const board = await this.boardRepository.findOne(boardId);
+        if (!board) throw new EntityNotFoundError();
+        this.checkForbidden(hostId, boardId);
+        board.title = title;
+        await this.boardRepository.save(board);
     }
 }

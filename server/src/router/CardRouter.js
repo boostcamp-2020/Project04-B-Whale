@@ -3,6 +3,7 @@ import { CardService } from '../service/CardService';
 import { queryParser } from '../common/util/queryParser';
 import { validator } from '../common/util/validator';
 import { CardCountDto } from '../dto/CardCountDto';
+import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 
 export const CardRouter = () => {
     const router = Router();
@@ -18,8 +19,32 @@ export const CardRouter = () => {
 
         await validator(CardCountDto, config, ['queryValue']);
 
-        const cardCounts = await cardService.getCardCountByPeriod(config);
+        let cardCounts = null;
+
+        if (member === undefined) {
+            cardCounts = await cardService.getAllCardCountByPeriod(config);
+        } else if (member === 'me') {
+            cardCounts = await cardService.getMyCardCountByPeriod(config);
+        }
+
         res.status(200).json({ cardCounts });
+    });
+
+    router.get('/', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const userId = req.user.id;
+        const { date, member } = queryParser(req.query?.q);
+        await validator(GetCardsByDateQueryDto, { date, member }, []);
+
+        let cards = null;
+
+        if (member === undefined) {
+            cards = await cardService.getAllCardsByDueDate({ userId, dueDate: date });
+        } else if (member === 'me') {
+            cards = await cardService.getMyCardsByDueDate({ userId, dueDate: date });
+        }
+
+        res.status(200).json({ cards });
     });
 
     return router;

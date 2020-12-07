@@ -18,9 +18,6 @@ const GlobalStyle = createGlobalStyle`
   html {
     height: 100%;
   }
-  html {
-    height: 100%;
-  }
   body {
     height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
