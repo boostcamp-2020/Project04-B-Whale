@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemberTableViewDiffableDataSource: UITableViewDiffableDataSource<MemberSection, CardDetail.Member> {
+class MemberTableViewDiffableDataSource: UITableViewDiffableDataSource<MemberSection, InvitedUser> {
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     switch section {
     case 0:
