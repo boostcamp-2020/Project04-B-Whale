@@ -117,7 +117,7 @@ extension InvitationViewController: UISearchResultsUpdating {
   
   func debounce(time: TimeInterval, handler: @escaping () -> Void) {
     timer.invalidate()
-    timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { timer in
+    timer = Timer.scheduledTimer(withTimeInterval: time, repeats: false, block: { timer in
       handler()
     })
   }
