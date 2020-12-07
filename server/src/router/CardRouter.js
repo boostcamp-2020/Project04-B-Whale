@@ -4,6 +4,7 @@ import { queryParser } from '../common/util/queryParser';
 import { validator } from '../common/util/validator';
 import { CardCountDto } from '../dto/CardCountDto';
 import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
+import { CardDto } from '../dto/CardDto';
 
 export const CardRouter = () => {
     const router = Router();
@@ -45,6 +46,23 @@ export const CardRouter = () => {
         }
 
         res.status(200).json({ cards });
+    });
+
+    router.patch('/:cardId', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const { cardId } = req.params;
+        const { listId, title, content, position, dueDate } = req.body;
+        await validator(CardDto, { listId, title, content, position, dueDate });
+
+        await cardService.modifyCardById({
+            cardId,
+            listId,
+            title,
+            content,
+            position,
+            dueDate,
+        });
+        res.status(204).end();
     });
 
     return router;
