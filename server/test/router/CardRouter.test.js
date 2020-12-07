@@ -815,7 +815,7 @@ describe('Board API Test', () => {
         });
     });
 
-    test('PATCH /api/card/{cardId} 호출할 때, 보드에 속한 리스트가 아닌 리스트로 옮기려하면 400 반환', async () => {
+    test('PATCH /api/card/{cardId} 호출할 때, 보드에 속한 리스트가 아닌 리스트로 옮기려하면 409 반환', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -880,7 +880,7 @@ describe('Board API Test', () => {
                 .send(updateData);
 
             // then
-            expect(response.status).toEqual(400);
+            expect(response.status).toEqual(409);
         });
     });
 
