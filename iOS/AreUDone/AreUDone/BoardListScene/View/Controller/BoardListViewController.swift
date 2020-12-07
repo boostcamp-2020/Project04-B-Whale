@@ -75,7 +75,6 @@ final class BoardListViewController: UIViewController {
     viewModel: BoardListViewModelProtocol,
     sectionFactory: SectionContentsFactoryable
   ) {
-    
     self.viewModel = viewModel
     self.sectionFactory = sectionFactory
     

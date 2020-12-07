@@ -8,6 +8,7 @@
 import Foundation
 
 protocol BoardListViewModelProtocol {
+  
   func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   
@@ -15,7 +16,7 @@ protocol BoardListViewModelProtocol {
   func fetchInvitedBoard()
 }
 
-class BoardListViewModel: BoardListViewModelProtocol {
+final class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Property
   

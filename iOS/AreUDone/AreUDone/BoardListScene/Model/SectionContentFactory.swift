@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SectionContentsFactoryable {
+  
   func load(index: Int) -> String
 }
 
