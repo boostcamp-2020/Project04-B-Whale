@@ -181,6 +181,14 @@
 		33F2D4F8257B582C008F1E06 /* InvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */; };
 		33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */; };
 		33F2D514257CB39A008F1E06 /* CustomSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */; };
+		33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D529257DDC70008F1E06 /* BoardAddCoordinator.swift */; };
+		33F2D532257DDCA9008F1E06 /* BoardAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */; };
+		33F2D538257DDCC4008F1E06 /* BoardAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33F2D537257DDCC4008F1E06 /* BoardAdd.storyboard */; };
+		33F2D53D257DDD42008F1E06 /* BoardAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D53C257DDD42008F1E06 /* BoardAddViewModel.swift */; };
+		33F2D549257DE682008F1E06 /* BoardTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D548257DE682008F1E06 /* BoardTitleTableViewCell.swift */; };
+		33F2D551257DE9C7008F1E06 /* BoardAddTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */; };
+		33F2D55F257DF349008F1E06 /* BoardColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */; };
+		33F2D567257E2389008F1E06 /* BoardAddTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
@@ -386,6 +394,14 @@
 		33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewCell.swift; sourceTree = "<group>"; };
 		33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationTableViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentControl.swift; sourceTree = "<group>"; };
+		33F2D529257DDC70008F1E06 /* BoardAddCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddCoordinator.swift; sourceTree = "<group>"; };
+		33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddViewController.swift; sourceTree = "<group>"; };
+		33F2D537257DDCC4008F1E06 /* BoardAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BoardAdd.storyboard; sourceTree = "<group>"; };
+		33F2D53C257DDD42008F1E06 /* BoardAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddViewModel.swift; sourceTree = "<group>"; };
+		33F2D548257DE682008F1E06 /* BoardTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTitleTableViewCell.swift; sourceTree = "<group>"; };
+		33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddTableView.swift; sourceTree = "<group>"; };
+		33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColorTableViewCell.swift; sourceTree = "<group>"; };
+		33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddTableViewDataSource.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -883,6 +899,7 @@
 				BD2AA79D256DF87D00EA8791 /* CardDetailScene */,
 				BDEA7BCE257623EA00CF6B11 /* ContentInputScene */,
 				33601227256E4FEF009580A1 /* BoardListScene */,
+				33F2D527257DDC45008F1E06 /* BoardAddScene */,
 				335AC4ED256F8ABE006A5C4A /* BoardDetailScene */,
 				333BA5C4257878740057ACA4 /* SideBarScene */,
 				33F2D4D9257B3EFB008F1E06 /* InvitationScene */,
@@ -1042,6 +1059,46 @@
 				33F2D4E5257B4079008F1E06 /* Invitation.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		33F2D527257DDC45008F1E06 /* BoardAddScene */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D529257DDC70008F1E06 /* BoardAddCoordinator.swift */,
+				33F2D536257DDCB1008F1E06 /* Resources */,
+				33F2D528257DDC45008F1E06 /* View */,
+				33F2D541257DDD45008F1E06 /* ViewModel */,
+			);
+			name = BoardAddScene;
+			path = AreUDone/BoardAddScene;
+			sourceTree = SOURCE_ROOT;
+		};
+		33F2D528257DDC45008F1E06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */,
+				33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */,
+				33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */,
+				33F2D548257DE682008F1E06 /* BoardTitleTableViewCell.swift */,
+				33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		33F2D536257DDCB1008F1E06 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D537257DDCC4008F1E06 /* BoardAdd.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		33F2D541257DDD45008F1E06 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D53C257DDD42008F1E06 /* BoardAddViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		BD2AA745256CEC1600EA8791 /* CardCollectionView */ = {
@@ -1419,6 +1476,7 @@
 				33601216256E40F1009580A1 /* NanumBarunpenB.ttf in Resources */,
 				336011F3256D48FA009580A1 /* DateStepper.xib in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
+				33F2D538257DDCC4008F1E06 /* BoardAdd.storyboard in Resources */,
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
@@ -1485,6 +1543,7 @@
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
 				333BA5A72577C0440057ACA4 /* MemberCell.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
+				33F2D567257E2389008F1E06 /* BoardAddTableViewDataSource.swift in Sources */,
 				BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
@@ -1508,6 +1567,7 @@
 				335AC52E256FE7C7006A5C4A /* ListCollectionViewCell.swift in Sources */,
 				33EE01762568ED2B003D3221 /* CalendarViewModel.swift in Sources */,
 				3360123D256E512F009580A1 /* BoardListViewController.swift in Sources */,
+				33F2D532257DDCA9008F1E06 /* BoardAddViewController.swift in Sources */,
 				33601182256CBE51009580A1 /* CalendarPickerViewController.swift in Sources */,
 				333BA582257791180057ACA4 /* Activity.swift in Sources */,
 				BD2AA7F3256F424800EA8791 /* CardDetailContentView.swift in Sources */,
@@ -1530,6 +1590,7 @@
 				BD2AA8BD2574D0A200EA8791 /* CommentView.swift in Sources */,
 				33638DEE25739971006033CF /* ListCollectionView.swift in Sources */,
 				BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */,
+				33F2D549257DE682008F1E06 /* BoardTitleTableViewCell.swift in Sources */,
 				BDD18B2425663E74005DF00A /* UserService.swift in Sources */,
 				BD2AA8CD2575230B00EA8791 /* CommentCollectionViewHeader.swift in Sources */,
 				BD59A61425787D4E00BF8928 /* UIFont+.swift in Sources */,
@@ -1543,17 +1604,21 @@
 				BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */,
 				BD59A6522579D2D600BF8928 /* User.swift in Sources */,
 				335AC50B256F8D28006A5C4A /* BoardDetailViewModel.swift in Sources */,
+				33F2D53D257DDD42008F1E06 /* BoardAddViewModel.swift in Sources */,
 				33638DFE2573C660006033CF /* UIEdgeInsets+.swift in Sources */,
+				33F2D55F257DF349008F1E06 /* BoardColorTableViewCell.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				333BA59F2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift in Sources */,
 				BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
+				33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				333BA5002574ABA80057ACA4 /* BoardDetailFooterView.swift in Sources */,
 				BD59A6072578782100BF8928 /* DayLabel.swift in Sources */,
 				33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */,
 				335AC4DE256F73D7006A5C4A /* BoardEndPoint.swift in Sources */,
+				33F2D551257DE9C7008F1E06 /* BoardAddTableView.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				333BA55325768F3B0057ACA4 /* SideBarView.swift in Sources */,
 				335AC4EF256F8ADF006A5C4A /* BoardDetailCoordinator.swift in Sources */,
