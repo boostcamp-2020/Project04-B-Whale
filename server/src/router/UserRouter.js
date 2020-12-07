@@ -17,6 +17,9 @@ export const UserRouter = () => {
     router.get('/', async (req, res) => {
         const userService = UserService.getInstance();
         const userName = req.query?.username;
+        if (userName === undefined) {
+            return res.sendStatus(400);
+        }
         const user = await userService.getUserStartsWithName(userName);
         res.status(200).json(user);
     });
