@@ -21,6 +21,7 @@ protocol SideBarViewModelProtocol {
   func fetchMember(at index: Int) -> InvitedUser?
   func fetchActivity(at index: Int) -> Activity?
   func fetchSectionHeader(at index: Int) -> (image: String, title: String)
+  func fetchProfileImage(with url: String, handler: @escaping (Data) -> Void)
 }
 
 final class SideBarViewModel: SideBarViewModelProtocol {
@@ -41,13 +42,14 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       updateMembersInCollectionViewHandler?()
     }
   }
-  
   private var boardActivities: [Activity]? {
     didSet {
       updateActivitiesInCollectionViewHandler?()
     }
   }
   
+  private let cache: NSCache<NSString, NSData> = NSCache()
+
   
   // MARK: - Initializer
   
@@ -73,23 +75,8 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       switch result {
       case .success(let boardDetail):
         self.boardMembers = boardDetail.invitedUsers
-        self.fetchImages()
       case .failure(let error):
         print(error)
-      }
-    }
-  }
-  
-  private func fetchImages() {
-    boardMembers?.enumerated().forEach { (index, invitedUser) in
-      imageService.fetchImage(with: invitedUser.profileImageUrl) { result in
-        switch result {
-        case .success(let data):
-          self.boardMembers?[index].data = data
-          
-        case .failure(let error):
-          print(error)
-        }
       }
     }
   }
@@ -124,6 +111,24 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   func fetchSectionHeader(at index: Int) -> (image: String, title: String) {
     return sideBarHeaderContentsFactory.load(order: index)
+  }
+  
+  func fetchProfileImage(with urlAsString: String, handler: @escaping ((Data) -> Void)) {
+    if let cachedData = cache.object(forKey: urlAsString as NSString) {
+      handler(cachedData as Data)
+      
+    } else {
+      imageService.fetchImage(with: urlAsString) { result in
+        switch result {
+        case .success(let data):
+          self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+          handler(data)
+          
+        case .failure(let error):
+          print(error)
+        }
+      }
+    }
   }
 }
 

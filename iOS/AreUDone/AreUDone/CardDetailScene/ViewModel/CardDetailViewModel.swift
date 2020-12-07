@@ -42,6 +42,8 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
   
+  private let cache: NSCache<NSString, NSData> = NSCache()
+  
   
   // MARK:- Initializer
   
@@ -111,13 +113,18 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   }
   
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void)) {
-    imageService.fetchImage(with: urlAsString) { result in
-      switch result {
-      case .success(let data):
-        completionHandler(data)
-        
-      case .failure(let error):
-        print(error)
+    if let cachedData = cache.object(forKey: urlAsString as NSString) {
+      completionHandler(cachedData as Data)
+      
+    } else {
+      imageService.fetchImage(with: urlAsString) { result in
+        switch result {
+        case .success(let data):
+          completionHandler(data)
+          self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+        case .failure(let error):
+          print(error)
+        }
       }
     }
   }

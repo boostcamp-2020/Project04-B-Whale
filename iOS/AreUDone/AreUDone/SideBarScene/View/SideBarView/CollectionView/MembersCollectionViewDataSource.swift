@@ -35,7 +35,11 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
     let cell: MemberCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
     if let member = viewModel.fetchMember(at: indexPath.item) {
-      cell.update(with: member)
+      viewModel.fetchProfileImage(with: member.profileImageUrl) { data in
+        DispatchQueue.main.async {
+          cell.update(with: data, and: member)
+        }
+      }
     }
     
     return cell

@@ -36,11 +36,6 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  func update(with activity: Activity?) {
-    guard let activity = activity else { return }
-    titleLabel.text = activity.content
-  }
-  
   override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
     super.preferredLayoutAttributesFitting(layoutAttributes)
     
@@ -49,6 +44,11 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
     layoutAttributes.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 30)
    
     return layoutAttributes
+  }
+  
+  func update(with activity: Activity?) {
+    guard let activity = activity else { return }
+    titleLabel.text = activity.content
   }
 }
 
