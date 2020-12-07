@@ -46,14 +46,14 @@ const Day = styled.div`
 `;
 
 const CalendarBody = () => {
-    const { today, selectedDate, cardCount } = useContext(CalendarStatusContext);
+    const { today, selectedDate, cardCount, member } = useContext(CalendarStatusContext);
     const calendarDispatch = useContext(CalendarDispatchContext);
 
     const onClickChangeSelectedDate = async (date) => {
         if (selectedDate.format('MM') !== date.format('MM')) {
             const startDate = date.clone().startOf('month').startOf('week').format('YYYY-MM-DD');
             const endDate = date.clone().endOf('month').endOf('week').format('YYYY-MM-DD');
-            const { data } = await getCardCount({ startDate, endDate });
+            const { data } = await getCardCount({ startDate, endDate, member });
             calendarDispatch({ type: 'CHANGE_MONTH', date, data, cardCount: data.cardCounts });
         }
         calendarDispatch({ type: 'CHANGE_SELECTED_DATE', selectedDate: date });

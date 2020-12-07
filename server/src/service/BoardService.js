@@ -1,6 +1,5 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
-import { ActivityService } from './ActivityService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
 
@@ -86,7 +85,10 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async getDetailBoard(hostId, boardId) {
-        const board = await this.boardRepository.findOne(boardId);
+        const board = await this.boardRepository.findOne({
+            select: ['id'],
+            where: { id: boardId },
+        });
         if (!board) throw new EntityNotFoundError();
         this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
