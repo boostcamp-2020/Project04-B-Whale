@@ -15,12 +15,13 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
-  func bindingCardDetailMemberView(handler: @escaping (([CardDetail.Member]?) -> Void))
+  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
+  func prepareUpdateMember(handler: (Int, [InvitedUser]?) -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -42,10 +43,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
-  private var cardDetailMemberViewHandler: (([CardDetail.Member]?) -> Void)?
+  private var cardDetailMemberViewHandler: (([InvitedUser]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
+  private var boardId: Int?
+  private var cardMembers: [InvitedUser]?
   
   // MARK:- Initializer
   
@@ -68,6 +71,9 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardService.fetchDetailCard(id: id) { [weak self] result in
       switch result {
       case .success(let detailCard):
+        self?.boardId = detailCard.board.id
+        self?.cardMembers = detailCard.members
+        
         self?.cardDetailContentViewHandler?(detailCard.content)
         self?.cardDetailDueDateViewHandler?(detailCard.dueDate)
         self?.cardDetailCommentsViewHandler?(detailCard.comments)
@@ -132,6 +138,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
+  func prepareUpdateMember(handler: (Int, [InvitedUser]?) -> Void) {
+    guard let boardId = boardId else { return }
+    handler(boardId, cardMembers)
+  }
+  
   private func fetchUserData() {
     userService.requestMe { [weak self] result in
       switch result {
@@ -180,7 +191,7 @@ extension CardDetailViewModel {
     commentViewProfileImageHandler = handler
   }
   
-  func bindingCardDetailMemberView(handler: @escaping (([CardDetail.Member]?) -> Void)) {
+  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void)) {
     cardDetailMemberViewHandler = handler
   }
 }

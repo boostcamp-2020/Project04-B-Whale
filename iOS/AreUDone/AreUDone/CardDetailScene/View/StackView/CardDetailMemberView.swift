@@ -14,8 +14,8 @@ protocol CardDetailMemberViewDelegate: NSObject {
 final class CardDetailMemberView: UIView {
   
   // TODO:- 위치변경, Item 변경
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, CardDetail.Member>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, CardDetail.Member>
+  typealias DataSource = UICollectionViewDiffableDataSource<Section, InvitedUser>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, InvitedUser>
   
   // MARK:- Property
   
@@ -66,7 +66,7 @@ final class CardDetailMemberView: UIView {
     fatalError("This view should be initialized with code")
   }
   
-  func update(with members: [CardDetail.Member]) {
+  func update(with members: [InvitedUser]) {
     applySnapshot(with: members, animatingDifferences: false)
   }
 }
@@ -134,7 +134,7 @@ private extension CardDetailMemberView {
     return dataSource
   }
   
-  func applySnapshot(with members: [CardDetail.Member], animatingDifferences: Bool = true) {
+  func applySnapshot(with members: [InvitedUser], animatingDifferences: Bool = true) {
     var snapshot = Snapshot()
     
     snapshot.appendSections([.main])

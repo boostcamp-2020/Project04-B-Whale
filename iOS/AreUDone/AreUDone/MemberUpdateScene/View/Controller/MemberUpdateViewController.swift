@@ -24,7 +24,7 @@ enum MemberSection: CaseIterable {
 final class MemberUpdateViewController: UIViewController {
   
   typealias DataSource = MemberTableViewDiffableDataSource
-  typealias Snapshot = NSDiffableDataSourceSnapshot<MemberSection, CardDetail.Member>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<MemberSection, InvitedUser>
   
   // MARK:- Property
   
@@ -42,6 +42,7 @@ final class MemberUpdateViewController: UIViewController {
     
     return tableView
   }()
+  
   
   // MARK:- Initializer
   
@@ -62,7 +63,7 @@ final class MemberUpdateViewController: UIViewController {
     super.viewDidLoad()
     
     configure()
-    applySnapshot(with: nil, animatingDifferences: false)
+    applySnapshot(animatingDifferences: false)
   }
 }
 
@@ -71,6 +72,7 @@ final class MemberUpdateViewController: UIViewController {
 private extension MemberUpdateViewController {
   
   func configure() {
+    memberTableView.delegate = self
     view.addSubview(memberTableView)
     
     configureView()
@@ -79,7 +81,7 @@ private extension MemberUpdateViewController {
   
   func configureView(){
     navigationItem.title = "멤버"
-
+    
     let barButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
       self?.coordinator?.dismiss()
     }
@@ -114,15 +116,26 @@ private extension MemberUpdateViewController {
     return dataSource
   }
   
-  func applySnapshot(with members: [CardDetail.Member]?, animatingDifferences: Bool) {
+  func applySnapshot(animatingDifferences: Bool) {
     var snapshot = Snapshot()
-    
     snapshot.appendSections(MemberSection.allCases)
-    let mem1 = CardDetail.Member(id: 0, name: "서명렬", profileImageUrl: "")
-    let mem2 = CardDetail.Member(id: 1, name: "심영민", profileImageUrl: "")
-    snapshot.appendItems([mem1], toSection: .invited)
-    snapshot.appendItems([mem2], toSection: .notInvited)
+
+    viewModel.fetchMemberData { [weak self] (boardMember, cardMember) in
+      if let cardMember = cardMember {
+        snapshot.appendItems(cardMember, toSection: .invited)
+      }
+      snapshot.appendItems(boardMember, toSection: .notInvited)
+      
+      DispatchQueue.main.async {
+        self?.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+      }
+    }
+  }
+}
+
+
+extension MemberUpdateViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-    dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
 }

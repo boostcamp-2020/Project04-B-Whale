@@ -403,6 +403,8 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
 extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
-    cardDetailCoordinator?.showMemberUpdate()
+    viewModel.prepareUpdateMember { (boardId, cardMembers) in
+      cardDetailCoordinator?.showMemberUpdate(with: boardId, cardMember: cardMembers)
+    }
   }
 }

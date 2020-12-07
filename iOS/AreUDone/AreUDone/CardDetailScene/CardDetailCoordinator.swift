@@ -90,8 +90,8 @@ extension CardDetailCoordinator {
     navigationController?.present(calendarPickerViewController, animated: true)
   }
   
-  func showMemberUpdate() {
-    memberUpdateCoordinator = MemberUpdateCoordinator(router: router)
+  func showMemberUpdate(with boardId: Int, cardMember: [InvitedUser]?) {
+    memberUpdateCoordinator = MemberUpdateCoordinator(router: router, boardId: boardId, cardMember: cardMember)
     memberUpdateCoordinator.navigationController = navigationController
     
     guard let memberUpdateViewController = memberUpdateCoordinator.start()
