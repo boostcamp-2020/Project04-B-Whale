@@ -18,13 +18,15 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
   }
   private let router: Routable
   
+  private let cardId: Int
   private let boardId: Int
   private let cardMember: [InvitedUser]?
   
   // MARK:- Initializer
   
-  init(router: Routable, boardId: Int, cardMember: [InvitedUser]?) {
+  init(router: Routable, cardId: Int, boardId: Int, cardMember: [InvitedUser]?) {
     self.router = router
+    self.cardId = cardId
     self.boardId = boardId
     self.cardMember = cardMember
   }
@@ -37,13 +39,16 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
             identifier: MemberUpdateViewController.identifier,
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
+              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let boardService = BoardService(router: MockRouter(jsonFactory: BoardDetailTrueJsonFactory()))
               let imageService = ImageService(router: self.router)
               let viewModel = MemberUpdateViewModel(
+                cardId: self.cardId,
                 boardId: self.boardId,
                 cardMember: self.cardMember,
                 boardService: boardService,
-                imageService: imageService
+                imageService: imageService,
+                cardService: cardService
               )
               
               return MemberUpdateViewController(

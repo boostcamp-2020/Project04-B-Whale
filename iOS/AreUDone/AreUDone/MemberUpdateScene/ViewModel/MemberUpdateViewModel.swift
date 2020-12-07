@@ -11,24 +11,36 @@ protocol MemberUpdateViewModelProtocol {
   
   func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void))
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
+  func updateCardMember(with member: InvitedUser, completionHandler: @escaping () -> Void)
 }
 
 final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   
   // MARK:- Property
   
+  private let cardId: Int
   private let boardId: Int
   private let cardMember: [InvitedUser]?
   private let boardService: BoardServiceProtocol
   private let imageService: ImageServiceProtocol
+  private let cardService: CardServiceProtocol
   
   // MARK:- Initializer
   
-  init(boardId: Int, cardMember: [InvitedUser]?, boardService: BoardServiceProtocol, imageService: ImageServiceProtocol) {
+  init(
+    cardId: Int,
+    boardId: Int,
+    cardMember: [InvitedUser]?,
+    boardService: BoardServiceProtocol,
+    imageService: ImageServiceProtocol,
+    cardService: CardServiceProtocol
+  ) {
+    self.cardId = cardId
     self.boardId = boardId
     self.cardMember = cardMember
     self.boardService = boardService
     self.imageService = imageService
+    self.cardService = cardService
   }
   
   func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void)) {
@@ -55,6 +67,18 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
       case .success(let data):
         completionHandler(data)
         
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func updateCardMember(with member: InvitedUser, completionHandler: @escaping () -> Void) {
+    let userId = member.id
+    cardService.updateCardMember(id: cardId, userIds: [userId]) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
       case .failure(let error):
         print(error)
       }
