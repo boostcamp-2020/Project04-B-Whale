@@ -92,6 +92,23 @@ struct CardTrueJsonFactory: JsonFactory {
                 "title": "재밌게 끝내기",
                 "content": "2주밖에 남지 않았습니다. 열심히 하겠습니다ㅠㅠ",
                 "dueDate": "2020-12-02",
+                "members": [
+                        {
+                            "id": 0,
+                            "name": "서명렬",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                        {
+                            "id": 1,
+                            "name": "심영민",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                        {
+                            "id": 2,
+                            "name": "신동훈",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                    ],
                 "comments" : [
                     {
                         "id": 1,
