@@ -43,3 +43,15 @@ export const inviteUserIntoBoard = async (boardId, userId) => {
 
     return response;
 };
+
+export const updateBoardTitle = async (boardId, title) => {
+    const config = {
+        url: `/api/board/${boardId}`,
+        method: 'PUT',
+        data: { title },
+    };
+
+    const response = await request(config);
+
+    return response;
+};
