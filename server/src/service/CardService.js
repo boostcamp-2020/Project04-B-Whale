@@ -15,11 +15,12 @@ export class CardService extends BaseService {
 
     @Transactional()
     async getMyCardCountByPeriod({ startDate, endDate, userId }) {
-        const cardCounts = this.customCardRepository.findMyCardsCountsByUserId({
+        const cardCounts = await this.customCardRepository.findMyCardsCountsByUserId({
             startDate,
             endDate,
             userId,
         });
+
         return cardCounts;
     }
 

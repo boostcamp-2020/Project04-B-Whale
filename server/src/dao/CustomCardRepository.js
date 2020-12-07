@@ -48,7 +48,7 @@ export class CustomCardRepository extends BaseRepository {
     }
 
     async findMyCardsCountsByUserId({ startDate, endDate, userId }) {
-        const cardCountList = this.createQueryBuilder('card')
+        const cardCountList = await this.createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
             .addSelect('count(1)', 'count')
             .leftJoin('card.members', 'member')
@@ -62,7 +62,7 @@ export class CustomCardRepository extends BaseRepository {
     }
 
     async findAllCardCountsByBoardIds({ startDate, endDate, boardIds }) {
-        const cardCountList = this.createQueryBuilder('card')
+        const cardCountList = await this.createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
             .addSelect('count(1)', 'count')
             .innerJoin('card.list', 'list', 'list.board_id IN(:...boardIds)', { boardIds })
