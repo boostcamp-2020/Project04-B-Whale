@@ -20,6 +20,7 @@ enum AlertType {
 }
 
 class AlertFactory {
+  
   static func alert(forType type: AlertType, style: UIAlertController.Style) -> AlertProtocol {
     var alert: AlertProtocol
     switch type {
