@@ -19,7 +19,14 @@ export const CardRouter = () => {
 
         await validator(CardCountDto, config, ['queryValue']);
 
-        const cardCounts = await cardService.getCardCountByPeriod(config);
+        let cardCounts = null;
+
+        if (member === undefined) {
+            cardCounts = await cardService.getAllCardCountByPeriod(config);
+        } else if (member === 'me') {
+            cardCounts = await cardService.getMyCardCountByPeriod(config);
+        }
+
         res.status(200).json({ cardCounts });
     });
 
