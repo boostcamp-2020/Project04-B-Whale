@@ -19,10 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard
       let url = URLContexts.first?.url,
       url.absoluteString.starts(with: "areudoneios://"),
-      let token = url.absoluteString.split(separator: "=").last.map({ String($0) })
+      let token = url.absoluteString.split(separator: "=").last.map({ String($0) }),
+      let decodedToken = token.removingPercentEncoding
     else { return }
-    
-    Keychain.shared.save(value: token, forKey: "token")
+
+    Keychain.shared.save(value: decodedToken, forKey: "token")
     
     sceneCoordinator.start()
   }
@@ -32,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
     
-    Keychain.shared.removeValue(forKey: "token") // TODO:- 테스트용 코드
+//    Keychain.shared.removeValue(forKey: "token") // TODO:- 테스트용 코드
     
     sceneCoordinator = SceneCoordinator(
       window: window, router: Router(),
