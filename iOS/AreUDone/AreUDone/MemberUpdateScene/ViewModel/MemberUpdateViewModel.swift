@@ -25,6 +25,9 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   private let imageService: ImageServiceProtocol
   private let cardService: CardServiceProtocol
   
+  private let cache: NSCache<NSString, NSData> = NSCache()
+  
+  
   // MARK:- Initializer
   
   init(
@@ -52,7 +55,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
           completionHandler(boardMember, nil)
           return
         }
-
+        
         let notCardMember = Set(boardMember).subtracting(cardMember).sorted { $0.id < $1.id }
         completionHandler(notCardMember, cardMember)
       case .failure(let error):
@@ -62,13 +65,17 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   }
   
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void)) {
-    imageService.fetchImage(with: urlAsString) { result in
-      switch result {
-      case .success(let data):
-        completionHandler(data)
-        
-      case .failure(let error):
-        print(error)
+    if let cachedData = cache.object(forKey: urlAsString as NSString) {
+      completionHandler(cachedData as Data)
+    } else {
+      imageService.fetchImage(with: urlAsString) { result in
+        switch result {
+        case .success(let data):
+          completionHandler(data)
+          
+        case .failure(let error):
+          print(error)
+        }
       }
     }
   }
