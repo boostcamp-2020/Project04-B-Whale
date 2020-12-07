@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { updateBoardTitle } from '../../utils/boardRequest';
 
 const MenuDiv = styled.div`
     display: flex;
@@ -28,7 +29,7 @@ const BoardTitle = styled.span`
 `;
 
 const BoardInput = styled.input`
-    width: ${(props) => (props.width <= 0 ? 20 : props.width * 10)}px;
+    width: ${(props) => (props.width <= 0 ? 30 : props.width * 15)}px;
     height: 30px;
     position: relative;
     border-radius: 4px;
@@ -72,24 +73,41 @@ const DimmedForInput = styled.div`
 const TopMenu = (props) => {
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [inputState, setInputState] = useState('span');
+    const [inputContent, setInputContent] = useState('');
+
+    useEffect(() => {
+        setInputContent(boardDetail.title);
+    }, [boardDetail]);
+
     const inputTag = useRef();
 
     const boardTitleClickHandler = () => {
         setInputState('input');
     };
 
-    const changeBoardTitle = (evt) => {
+    const changeBoardTitle = async (evt) => {
         if (evt.keyCode === 13) {
-            // 이름 변경api, boardDetailcontext 이름 변경
-            console.log(boardDetail.title);
-
+            if (!inputContent) {
+                return;
+            }
+            await updateBoardTitle(boardDetail.id, inputContent);
+            setBoardDetail({
+                ...boardDetail,
+                title: inputContent,
+            });
             setInputState('span');
         }
     };
 
-    const dimmedClickHandler = () => {
-        console.log(boardDetail.title);
-
+    const dimmedClickHandler = async () => {
+        if (!inputContent) {
+            return;
+        }
+        await updateBoardTitle(boardDetail.id, inputContent);
+        setBoardDetail({
+            ...boardDetail,
+            title: inputContent,
+        });
         setInputState('span');
     };
 
@@ -105,14 +123,9 @@ const TopMenu = (props) => {
                     {inputState === 'input' && (
                         <>
                             <BoardInput
-                                width={boardDetail.title.length}
-                                value={boardDetail.title}
-                                onChange={(evt) =>
-                                    setBoardDetail({
-                                        ...boardDetail,
-                                        title: evt.target.value,
-                                    })
-                                }
+                                width={inputContent.length}
+                                value={inputContent}
+                                onChange={(evt) => setInputContent(evt.target.value)}
                                 autoFocus="autoFocus"
                                 onKeyDown={changeBoardTitle}
                                 ref={inputTag}
