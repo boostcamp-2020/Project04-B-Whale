@@ -43,6 +43,6 @@ final class MockRouter: Routable {
   }
   
   func request(route: EndPointable, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
-    
+    completionHandler(Result.success(()))
   }
 }
