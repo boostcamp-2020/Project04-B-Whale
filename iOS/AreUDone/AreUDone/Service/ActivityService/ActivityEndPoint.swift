@@ -43,8 +43,8 @@ extension ActivityEndPoint: EndPointable {
     else { return nil }
     
     return [
-      "Authorization": "Bearer \(accessToken))",
-      "Cotent-Type": "application/json",
+      "Authorization": "\(accessToken)",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }
