@@ -9,6 +9,10 @@ import UIKit
 
 final class CardDetailMemberView: UIView {
   
+  // TODO:- 위치변경, Item 변경
+  typealias DataSource = UICollectionViewDiffableDataSource<Section, CardDetail.Member>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, CardDetail.Member>
+  
   // MARK:- Property
   
   private lazy var titleLabel: UILabel = {
@@ -16,14 +20,6 @@ final class CardDetailMemberView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "멤버"
     label.font = UIFont.nanumB(size: 20)
-    
-    return label
-  }()
-  
-  private lazy var dueDateLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont.nanumR(size: 15)
     
     return label
   }()
@@ -37,13 +33,18 @@ final class CardDetailMemberView: UIView {
     return button
   }()
   
-  private lazy var memberCollectionView: UICollectionView = {
-    let collectionView = UICollectionView()
+  private lazy var memberCollectionView: CardDetailMemberCollectionView = {
+    let flowLayout = UICollectionViewFlowLayout()
+    let collectionView = CardDetailMemberCollectionView(
+      frame: CGRect.zero,
+      collectionViewLayout: flowLayout
+    )
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     
     return collectionView
   }()
   
-  
+  private lazy var dataSource = configureDataSource()
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
@@ -57,6 +58,10 @@ final class CardDetailMemberView: UIView {
     
     configure()
   }
+  
+  func update(with members: [CardDetail.Member]) {
+    applySnapshot(with: members)
+  }
 }
 
 
@@ -69,11 +74,11 @@ private extension CardDetailMemberView {
     layer.borderColor = UIColor.lightGray.cgColor
     
     addSubview(titleLabel)
-    addSubview(dueDateLabel)
+    addSubview(memberCollectionView)
     addSubview(editButton)
     
     configureTitleLabel()
-    configureDueDateLabel()
+    configureMemberCollectionView()
     configureEditButton()
   }
   
@@ -85,12 +90,12 @@ private extension CardDetailMemberView {
     ])
   }
   
-  func configureDueDateLabel() {
+  func configureMemberCollectionView() {
     NSLayoutConstraint.activate([
-      dueDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-      dueDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      dueDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-      dueDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
+      memberCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+      memberCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
+      memberCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+      memberCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
   }
   
@@ -101,5 +106,28 @@ private extension CardDetailMemberView {
       editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
       editButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
     ])
+  }
+  
+  func configureDataSource() -> DataSource {
+    let dataSource = DataSource(
+      collectionView: memberCollectionView
+    ) { collectionView, indexPath, member -> UICollectionViewCell? in
+      let cell: CardDetailMemberCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+      
+      cell.update(with: UIImage(systemName: "circle")!)
+      
+      return cell
+    }
+    
+    return dataSource
+  }
+  
+  func applySnapshot(with members: [CardDetail.Member], animatingDifferences: Bool = true) {
+    var snapshot = Snapshot()
+    
+    snapshot.appendSections([.main])
+    snapshot.appendItems(members)
+    
+    dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
 }
