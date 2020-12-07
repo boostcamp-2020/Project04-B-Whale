@@ -41,7 +41,7 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
         }
       }
     }
-       
+
     return cell
   }
   
