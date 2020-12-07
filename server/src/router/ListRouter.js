@@ -10,5 +10,11 @@ export const ListRouter = () => {
         res.sendStatus(204);
     });
 
+    router.delete('/:id', async (req, res) => {
+        const listService = ListService.getInstance();
+        await listService.deleteList(req.user.id, req.params.id);
+        res.sendStatus(204);
+    });
+
     return router;
 };
