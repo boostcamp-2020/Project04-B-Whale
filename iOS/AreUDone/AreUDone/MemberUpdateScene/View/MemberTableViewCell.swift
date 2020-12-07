@@ -59,6 +59,8 @@ class MemberTableViewCell: UITableViewCell, Reusable {
 private extension MemberTableViewCell {
   
   func configure() {
+    selectionStyle = .none
+    
     addSubview(profileImageView)
     addSubview(nameLabel)
     
