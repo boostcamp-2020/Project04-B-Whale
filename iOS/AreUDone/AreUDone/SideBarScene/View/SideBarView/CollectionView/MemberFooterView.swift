@@ -7,16 +7,12 @@
 
 import UIKit
 
-protocol SideBarFooterViewDelegate: AnyObject {
-  
-  func baseViewTapped()
-}
 
-final class SideBarFooterView: UICollectionReusableView, Reusable {
+final class MemberFooterView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  weak var delegate: SideBarFooterViewDelegate?
+  var handler: (() -> Void)?
   
   private lazy var baseView: UIView = {
     let view = UIView()
@@ -25,10 +21,10 @@ final class SideBarFooterView: UICollectionReusableView, Reusable {
     view.backgroundColor = .white
     view.layer.cornerRadius = 10
     view.layer.borderColor = UIColor.black.cgColor
+    view.layer.borderWidth = 0.3
     
     return view
   }()
-  
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -55,15 +51,13 @@ final class SideBarFooterView: UICollectionReusableView, Reusable {
   
   func update(with title: String) {
     titleLabel.text = title
-    if title.isEmpty { baseView.layer.borderWidth = 0 }
-    else { baseView.layer.borderWidth = 1 }
   }
 }
 
 
 // MARK: - Extension Configure Method
 
-private extension SideBarFooterView {
+private extension MemberFooterView {
   
   func configure() {
     addSubview(baseView)
@@ -76,9 +70,9 @@ private extension SideBarFooterView {
   func configureBaseView() {
     NSLayoutConstraint.activate([
       baseView.centerXAnchor.constraint(equalTo: centerXAnchor),
-      baseView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-      baseView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.95),
-      baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+      baseView.topAnchor.constraint(equalTo: topAnchor),
+      baseView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
+      baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
     ])
     
     let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
@@ -96,9 +90,9 @@ private extension SideBarFooterView {
 
 // MARK: - Extension objc
 
-private extension SideBarFooterView {
+private extension MemberFooterView {
   
   @objc func baseViewTapped() {
-    delegate?.baseViewTapped()
+    handler?()
   }
 }

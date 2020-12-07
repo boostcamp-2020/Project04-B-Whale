@@ -27,6 +27,10 @@ final class SideBarViewController: UIViewController {
   
   // MARK: - Property
   
+  private let viewModel: SideBarViewModelProtocol
+  private let sideBarDataSource: UICollectionViewDataSource
+  private let membersDataSource: UICollectionViewDataSource
+
   private lazy var sideBarMinimumX: CGFloat = view.bounds.width * 0.25
   private lazy var sideBarMaximumX: CGFloat = view.bounds.width
   private lazy var sideBarLatestX: CGFloat = sideBarMaximumX // 제스쳐 start 시 갱신되는 가장 최신의 X 좌표
@@ -39,18 +43,19 @@ final class SideBarViewController: UIViewController {
       height: view.bounds.height - topHeight
     )
     
-    let view = SideBarView(frame: frame, viewModel: viewModel)
-    view.backgroundColor = .white
-    
-    return view
+    return SideBarView(
+      frame: frame,
+      viewModel: viewModel,
+      dataSource: sideBarDataSource
+    )
   }()
   
   private let animationTime: TimeInterval = 0.2
   private let maximumAlpha: CGFloat = 0.3
   private var topHeight: CGFloat = 0
   
-  private let viewModel: SideBarViewModelProtocol
   
+  // MARK: - Initializer
   
   init(
     nibName: String,
@@ -59,11 +64,19 @@ final class SideBarViewController: UIViewController {
   ) {
     self.viewModel = viewModel
     
+    membersDataSource = MembersCollectionViewDataSource(viewModel: viewModel) {
+      // TODO: coordinator 프레젠테이션 로직
+    }
+    sideBarDataSource = SideBarCollectionViewDataSource(
+      viewModel: viewModel,
+      memberDataSource: membersDataSource
+    )
+    
     super.init(nibName: nibName, bundle: bundle)
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This code should be initialized with code")
   }
   
   
@@ -88,7 +101,7 @@ private extension SideBarViewController {
   
   func configureView() {
     configureBackground(toAlpha: 0)
-    
+
     view.isUserInteractionEnabled = false
     
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewTapped))
