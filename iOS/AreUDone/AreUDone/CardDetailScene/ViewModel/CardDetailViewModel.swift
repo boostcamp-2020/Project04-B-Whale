@@ -21,7 +21,7 @@ protocol CardDetailViewModelProtocol {
   func addComment(with comment: String)
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
-  func prepareUpdateMember(handler: (Int, [InvitedUser]?) -> Void)
+  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -138,9 +138,9 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func prepareUpdateMember(handler: (Int, [InvitedUser]?) -> Void) {
+  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void) {
     guard let boardId = boardId else { return }
-    handler(boardId, cardMembers)
+    handler(id, boardId, cardMembers)
   }
   
   private func fetchUserData() {
