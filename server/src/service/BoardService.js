@@ -86,7 +86,10 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async getDetailBoard(hostId, boardId) {
-        const board = await this.boardRepository.findOne(boardId);
+        const board = await this.boardRepository.findOne({
+            select: ['id'],
+            where: { id: boardId },
+        });
         if (!board) throw new EntityNotFoundError();
         this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
@@ -132,7 +135,6 @@ export class BoardService extends BaseService {
         const createInvitation = this.invitationRepository.create(invitation);
         await this.invitationRepository.save(createInvitation);
     }
-
     @Transactional()
     async updateBoard(hostId, boardId, title) {
         const board = await this.boardRepository.findOne(boardId);
