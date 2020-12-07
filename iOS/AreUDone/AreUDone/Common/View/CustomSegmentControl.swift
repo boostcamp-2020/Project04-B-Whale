@@ -66,7 +66,7 @@ private extension CustomSegmentedControl {
   
   func configure() {
     configureView()
-    createButton()
+    configureButton()
     configureSelectorView()
     configStackView()
   }
@@ -75,7 +75,7 @@ private extension CustomSegmentedControl {
     backgroundColor = UIColor.white
   }
   
-  private func createButton() {
+  private func configureButton() {
     buttons = [UIButton]()
     
     buttonTitles.forEach { buttonTitle in
