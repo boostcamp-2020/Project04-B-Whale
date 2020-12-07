@@ -814,4 +814,120 @@ describe('Board API Test', () => {
             );
         });
     });
+
+    test('PATCH /api/card/{cardId} 호출할 때, 카드가 존재하지 않으면 404 반환', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+
+            const user1 = em.create(User, {
+                socialId: '1',
+                name: 'user1',
+                profileImageUrl: 'image1',
+            });
+            await em.save(user1);
+
+            const board1 = em.create(Board, {
+                title: 'board title 1',
+                color: '#FF0000',
+                creator: user1,
+            });
+            await em.save(board1);
+
+            const list1 = em.create(List, {
+                title: 'list title 1',
+                position: 1,
+                board: board1,
+                creator: user1,
+            });
+            await em.save(list1);
+
+            const card1 = em.create(Card, {
+                title: 'card title 1',
+                content: 'card content 1',
+                position: 1,
+                dueDate: moment('2020-12-03T13:40:00').format(),
+                list: list1,
+                creator: user1,
+            });
+            await em.save(card1);
+
+            const token = await jwtUtil.generateAccessToken({ userId: user1.id });
+            const cardId = 0;
+            const updateData = {
+                listId: undefined,
+                title: 'card update title',
+                content: 'card update content',
+                position: 2,
+                dueDate: moment('2020-12-30T13:40:00').format(),
+            };
+
+            // when
+            const response = await agent(app.httpServer)
+                .patch(`/api/card/${cardId}`)
+                .set('Authorization', token)
+                .send(updateData);
+
+            // then
+            expect(response.status).toEqual(404);
+        });
+    });
+
+    test('PATCH /api/card/{cardId} 호출이 성공하면 204 반환', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+
+            const user1 = em.create(User, {
+                socialId: '1',
+                name: 'user1',
+                profileImageUrl: 'image1',
+            });
+            await em.save(user1);
+
+            const board1 = em.create(Board, {
+                title: 'board title 1',
+                color: '#FF0000',
+                creator: user1,
+            });
+            await em.save(board1);
+
+            const list1 = em.create(List, {
+                title: 'list title 1',
+                position: 1,
+                board: board1,
+                creator: user1,
+            });
+            await em.save(list1);
+
+            const card1 = em.create(Card, {
+                title: 'card title 1',
+                content: 'card content 1',
+                position: 1,
+                dueDate: moment('2020-12-03T13:40:00').format(),
+                list: list1,
+                creator: user1,
+            });
+            await em.save(card1);
+
+            const token = await jwtUtil.generateAccessToken({ userId: user1.id });
+            const cardId = card1.id;
+            const updateData = {
+                listId: undefined,
+                title: 'card update title',
+                content: 'card update content',
+                position: 2,
+                dueDate: moment('2020-12-30T13:40:00').format(),
+            };
+
+            // when
+            const response = await agent(app.httpServer)
+                .patch(`/api/card/${cardId}`)
+                .set('Authorization', token)
+                .send(updateData);
+
+            // then
+            expect(response.status).toEqual(204);
+        });
+    });
 });
