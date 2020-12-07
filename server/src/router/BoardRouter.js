@@ -30,7 +30,13 @@ export const BoardRouter = () => {
     router.post('/:id/invitation', async (req, res) => {
         const boardService = BoardService.getInstance();
         await boardService.inviteUserIntoBoard(req.user.id, req.params.id, req.body.userId);
-        res.status(201);
+        res.sendStatus(201);
+    });
+
+    router.put('/:id', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.updateBoard(req.user.id, req.params.id, req.body.title);
+        res.sendStatus(204);
     });
 
     return router;

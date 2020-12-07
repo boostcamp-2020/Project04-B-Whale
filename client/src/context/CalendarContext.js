@@ -5,6 +5,7 @@ export const initCalendar = {
     today: moment(),
     selectedDate: moment(),
     cardCount: [],
+    member: 'me',
 };
 
 export const CalendarReducer = (state, action) => {
@@ -29,6 +30,14 @@ export const CalendarReducer = (state, action) => {
             return {
                 ...state,
                 selectedDate,
+            };
+        }
+        case 'CHANGE_MEMBER': {
+            const { isMember, cardCount } = action;
+            return {
+                ...state,
+                member: isMember,
+                cardCount,
             };
         }
         default:

@@ -65,6 +65,7 @@ export class BoardService extends BaseService {
         };
         const createBoard = this.boardRepository.create(board);
         await this.boardRepository.save(createBoard);
+
         return createBoard.id;
     }
 
@@ -132,5 +133,14 @@ export class BoardService extends BaseService {
         };
         const createInvitation = this.invitationRepository.create(invitation);
         await this.invitationRepository.save(createInvitation);
+    }
+
+    @Transactional()
+    async updateBoard(hostId, boardId, title) {
+        const board = await this.boardRepository.findOne(boardId);
+        if (!board) throw new EntityNotFoundError();
+        this.checkForbidden(hostId, boardId);
+        board.title = title;
+        await this.boardRepository.save(board);
     }
 }
