@@ -14,6 +14,7 @@ final class CardDetailMemberCollectionViewCell: UICollectionViewCell, Reusable {
   private lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.layer.masksToBounds = true
     
     return imageView
   }()
@@ -33,8 +34,10 @@ final class CardDetailMemberCollectionViewCell: UICollectionViewCell, Reusable {
     configure()
   }
   
-  func update(with image: UIImage) {
-    profileImageView.image = image
+  func update(with image: UIImage?) {
+    DispatchQueue.main.async { [weak self] in
+      self?.profileImageView.image = image
+    }
   }
 }
 
@@ -59,5 +62,8 @@ private extension CardDetailMemberCollectionViewCell {
       profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
       profileImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
     ])
+    
+    profileImageView.layoutIfNeeded()
+    profileImageView.layer.cornerRadius =  profileImageView.frame.width / 2
   }
 }

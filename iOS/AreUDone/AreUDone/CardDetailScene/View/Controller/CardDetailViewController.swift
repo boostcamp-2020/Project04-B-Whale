@@ -37,7 +37,7 @@ final class CardDetailViewController: UIViewController {
   }()
   
   private lazy var cardDetailMemberView: CardDetailMemberView = {
-    let view = CardDetailMemberView()
+    let view = CardDetailMemberView(viewModel: viewModel)
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view

@@ -45,22 +45,25 @@ final class CardDetailMemberView: UIView {
   }()
   
   private lazy var dataSource = configureDataSource()
+  private let viewModel: CardDetailViewModelProtocol
+  
+  
   // MARK:- Initializer
   
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
+  init(viewModel: CardDetailViewModelProtocol) {
+    self.viewModel = viewModel
+    
+    super.init(frame: CGRect.zero)
     
     configure()
   }
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    
-    configure()
+  required init?(coder: NSCoder) {
+    fatalError("This view should be initialized with code")
   }
   
   func update(with members: [CardDetail.Member]) {
-    applySnapshot(with: members)
+    applySnapshot(with: members, animatingDifferences: false)
   }
 }
 
@@ -111,10 +114,13 @@ private extension CardDetailMemberView {
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       collectionView: memberCollectionView
-    ) { collectionView, indexPath, member -> UICollectionViewCell? in
+    ) { [weak self] collectionView, indexPath, member -> UICollectionViewCell? in
       let cell: CardDetailMemberCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
-      cell.update(with: UIImage(systemName: "circle")!)
+      self?.viewModel.fetchProfileImage(with: member.profileImageUrl) { data in
+        let image = UIImage(data: data)
+        cell.update(with: image)
+      }
       
       return cell
     }
