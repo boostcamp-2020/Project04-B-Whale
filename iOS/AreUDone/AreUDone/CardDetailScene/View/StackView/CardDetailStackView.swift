@@ -25,13 +25,6 @@ final class CardDetailStackView: UIStackView {
     return view
   }()
   
-  private lazy var cardDetailMemberView: CardDetailMemberView = {
-    let view = CardDetailMemberView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
-    return view
-  }()
-  
   private lazy var cardDetailDueDateView: CardDetailDueDateView = {
     let view = CardDetailDueDateView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -94,7 +87,6 @@ private extension CardDetailStackView {
     
     addArrangedSubview(cardDetailLocationView)
     addArrangedSubview(cardDetailContentView)
-    addArrangedSubview(cardDetailMemberView)
     addArrangedSubview(cardDetailDueDateView)
     
     configureCardDetailLocationView()
@@ -111,12 +103,6 @@ private extension CardDetailStackView {
   func configureCardDetailContentView() {
     NSLayoutConstraint.activate([
       cardDetailContentView.widthAnchor.constraint(equalTo: widthAnchor)
-    ])
-  }
-  
-  func configureCardDetailMemberView() {
-    NSLayoutConstraint.activate([
-      cardDetailMemberView.widthAnchor.constraint(equalTo: widthAnchor)
     ])
   }
   

@@ -36,6 +36,13 @@ final class CardDetailViewController: UIViewController {
     return stackView
   }()
   
+  private lazy var cardDetailMemberView: CardDetailMemberView = {
+    let view = CardDetailMemberView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   private lazy var commentCollectionView: CommentCollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -150,6 +157,7 @@ private extension CardDetailViewController {
     view.addSubview(scrollView)
     view.addSubview(commentView)
     scrollView.addSubview(stackView)
+    stackView.addArrangedSubview(cardDetailMemberView)
     stackView.addArrangedSubview(commentCollectionView)
   }
   
@@ -222,6 +230,7 @@ private extension CardDetailViewController {
     bindingCardDetailNavigationBarTitle()
     bindingCardDetailListTitle()
     bindingCardDetailBoardTitle()
+    bindingCardDetailMemberView()
     bindingCommentViewProfileImage()
   }
   
@@ -278,6 +287,15 @@ private extension CardDetailViewController {
       DispatchQueue.main.async {
         let image = UIImage(data: data)
         self?.commentView.update(with: image)
+      }
+    }
+  }
+  
+  func bindingCardDetailMemberView() {
+    viewModel.bindingCardDetailMemberView { [weak self] members in
+      guard let members = members else { return }
+      DispatchQueue.main.async {
+        self?.cardDetailMemberView.update(with: members)
       }
     }
   }
