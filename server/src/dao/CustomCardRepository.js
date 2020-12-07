@@ -46,4 +46,30 @@ export class CustomCardRepository extends BaseRepository {
 
         return cards;
     }
+
+    async findMyCardsCountsByUserId({ startDate, endDate, userId }) {
+        const cardCountList = await this.createQueryBuilder('card')
+            .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
+            .addSelect('count(1)', 'count')
+            .leftJoin('card.members', 'member')
+            .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
+            .andWhere('card.creator_id=:userId', { userId })
+            .orWhere('member.user_id=:userId', { userId })
+            .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
+            .getRawMany();
+
+        return cardCountList;
+    }
+
+    async findAllCardCountsByBoardIds({ startDate, endDate, boardIds }) {
+        const cardCountList = await this.createQueryBuilder('card')
+            .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
+            .addSelect('count(1)', 'count')
+            .innerJoin('card.list', 'list', 'list.board_id IN(:...boardIds)', { boardIds })
+            .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
+            .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
+            .getRawMany();
+
+        return cardCountList;
+    }
 }

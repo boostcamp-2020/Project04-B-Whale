@@ -5,7 +5,6 @@ import { Board } from '../../src/model/Board';
 import { Card } from '../../src/model/Card';
 import { Invitation } from '../../src/model/Invitation';
 import { List } from '../../src/model/List';
-import { Member } from '../../src/model/Member';
 import { User } from '../../src/model/User';
 import { BoardService } from '../../src/service/BoardService';
 
