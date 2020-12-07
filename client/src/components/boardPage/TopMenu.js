@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
@@ -86,13 +85,11 @@ const TopMenu = ({
 
     const inputTag = useRef();
 
-    const boardTitleClickHandler = () => {
-        setInputState('input');
-    };
-
     const changeBoardTitle = async (evt) => {
         if (evt.keyCode === 13) {
-            if (!inputContent) {
+            if (!inputContent || inputContent === boardDetail.title) {
+                setInputContent(boardDetail.title);
+                setInputState('span');
                 return;
             }
             await updateBoardTitle(boardDetail.id, inputContent);
@@ -105,7 +102,9 @@ const TopMenu = ({
     };
 
     const dimmedClickHandler = async () => {
-        if (!inputContent) {
+        if (!inputContent || inputContent === boardDetail.title) {
+            setInputContent(boardDetail.title);
+            setInputState('span');
             return;
         }
         await updateBoardTitle(boardDetail.id, inputContent);
@@ -117,65 +116,60 @@ const TopMenu = ({
     };
 
     return (
-        <>
-            <MenuDiv>
-                <div style={{ width: '50%' }}>
-                    {inputState === 'span' && (
-                        <BoardTitle state={inputState} onClick={boardTitleClickHandler}>
-                            {boardDetail.title}
-                        </BoardTitle>
-                    )}
-                    {inputState === 'input' && (
-                        <>
-                            <BoardInput
-                                width={inputContent.length}
-                                value={inputContent}
-                                onChange={(evt) => setInputContent(evt.target.value)}
-                                autoFocus="autoFocus"
-                                onKeyDown={changeBoardTitle}
-                                ref={inputTag}
-                            />
-                            <DimmedForInput inputState={inputState} onClick={dimmedClickHandler} />
-                        </>
-                    )}
-                    <ButtonForGettingInvitedUser
-                        onClick={(evt) =>
-                            setInvitedDropdownDisplay({
-                                visible: true,
-                                offsetY: evt.target.getBoundingClientRect().left,
-                            })
-                        }
-                    >
-                        참여자 목록
-                    </ButtonForGettingInvitedUser>
-                    <InviteButton
-                        onClick={(evt) =>
-                            setAskoverDropdownDisplay({
-                                visible: true,
-                                offsetY: evt.target.getBoundingClientRect().left,
-                            })
-                        }
-                    >
-                        초대하기
-                    </InviteButton>
-                </div>
-                <div
-                    style={{
-                        width: '50%',
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        padding: '5px 0',
-                    }}
+        <MenuDiv>
+            <div style={{ width: '50%' }}>
+                {inputState === 'span' && (
+                    <BoardTitle state={inputState} onClick={() => setInputState('input')}>
+                        {boardDetail.title}
+                    </BoardTitle>
+                )}
+                {inputState === 'input' && (
+                    <>
+                        <BoardInput
+                            width={inputContent.length}
+                            value={inputContent}
+                            onChange={(evt) => setInputContent(evt.target.value)}
+                            autoFocus="autoFocus"
+                            onKeyDown={changeBoardTitle}
+                            ref={inputTag}
+                        />
+                        <DimmedForInput inputState={inputState} onClick={dimmedClickHandler} />
+                    </>
+                )}
+                <ButtonForGettingInvitedUser
+                    onClick={(evt) =>
+                        setInvitedDropdownDisplay({
+                            visible: true,
+                            offsetY: evt.target.getBoundingClientRect().left,
+                        })
+                    }
                 >
-                    <MenuButton
-                        sidebarDisplay={sidebarDisplay}
-                        onClick={() => setSidebarDisplay(true)}
-                    >
-                        메뉴
-                    </MenuButton>
-                </div>
-            </MenuDiv>
-        </>
+                    참여자 목록
+                </ButtonForGettingInvitedUser>
+                <InviteButton
+                    onClick={(evt) =>
+                        setAskoverDropdownDisplay({
+                            visible: true,
+                            offsetY: evt.target.getBoundingClientRect().left,
+                        })
+                    }
+                >
+                    초대하기
+                </InviteButton>
+            </div>
+            <div
+                style={{
+                    width: '50%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '5px 0',
+                }}
+            >
+                <MenuButton sidebarDisplay={sidebarDisplay} onClick={() => setSidebarDisplay(true)}>
+                    메뉴
+                </MenuButton>
+            </div>
+        </MenuDiv>
     );
 };
 
