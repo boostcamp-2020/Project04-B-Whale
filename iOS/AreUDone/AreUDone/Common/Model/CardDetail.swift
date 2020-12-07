@@ -13,17 +13,10 @@ struct CardDetail: Codable {
   let title: String
   let content: String?
   let dueDate: String
-  let members: [Member]?
+  let members: [InvitedUser]?
   let comments: [Comment]?
   let board: Board
   let list: List
-  
-  struct Member: Codable, Hashable {
-    
-    let id: Int
-    let name: String
-    let profileImageUrl: String
-  }
   
   struct Comment: Codable {
     
