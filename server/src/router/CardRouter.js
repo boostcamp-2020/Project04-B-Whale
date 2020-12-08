@@ -5,6 +5,7 @@ import { validator } from '../common/util/validator';
 import { CardCountDto } from '../dto/CardCountDto';
 import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 import { CardDto } from '../dto/CardDto';
+import { MemberDto } from '../dto/MemberDto';
 
 export const CardRouter = () => {
     const router = Router();
@@ -64,6 +65,17 @@ export const CardRouter = () => {
             position,
             dueDate,
         });
+        res.status(204).end();
+    });
+
+    router.put('/:cardId/member', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const { id: userId } = req.user;
+        const { cardId } = req.params;
+        const { userIds } = req.body;
+        await validator(MemberDto, { user: true, userIds });
+
+        await cardService.addMemberToCardByUserIds({ cardId, userId, userIds });
         res.status(204).end();
     });
 
