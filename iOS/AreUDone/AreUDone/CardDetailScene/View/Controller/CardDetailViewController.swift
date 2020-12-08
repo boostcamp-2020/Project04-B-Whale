@@ -99,12 +99,12 @@ private extension CardDetailViewController {
       let cell: CommentCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.update(with: comment)
-      self?.viewModel.prepareUpdateCell(handler: { userId in
-        if comment.user.id == userId {
-          cell.confirmEditOption()
-          cell.delegate = self
-        }
-      })
+      
+      self?.viewModel.prepareUpdateCell  { userId in
+        guard comment.user.id == userId else { return }
+        cell.confirmEditOption()
+        cell.delegate = self
+      }
       
       self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl) { data in
         let image = UIImage(data: data)
