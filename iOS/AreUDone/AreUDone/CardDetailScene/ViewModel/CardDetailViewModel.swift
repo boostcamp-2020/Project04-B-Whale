@@ -15,13 +15,15 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
-  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void))
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
-  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void)
+  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
+  func prepareUpdateCell(handler: (Int) -> Void)
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -32,6 +34,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let userService: UserServiceProtocol
+  private let commentService: CommentServiceProtocol
   private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
@@ -43,12 +46,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
-  private var cardDetailMemberViewHandler: (([InvitedUser]?) -> Void)?
+  private var cardDetailMemberViewHandler: (([User]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
   private var boardId: Int?
-  private var cardMembers: [InvitedUser]?
+  private var cardMembers: [User]?
   
   // MARK:- Initializer
   
@@ -56,12 +59,14 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     id: Int,
     cardService: CardServiceProtocol,
     imageService: ImageServiceProtocol,
-    userService: UserServiceProtocol
+    userService: UserServiceProtocol,
+    commentService: CommentServiceProtocol
   ) {
     self.id = id
     self.cardService = cardService
     self.imageService = imageService
     self.userService = userService
+    self.commentService = commentService
   }
 
   
@@ -101,6 +106,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success(()):
         break
+        
       case .failure(let error):
         print(error)
       }
@@ -115,6 +121,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success(()):
         break
+        
       case .failure(let error):
         print(error)
       }
@@ -131,6 +138,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         case .success(let data):
           completionHandler(data)
           self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+          
         case .failure(let error):
           print(error)
         }
@@ -138,9 +146,26 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void) {
+  func prepareUpdateCell(handler: (Int) -> Void) {
+    guard let userId = Int(UserInfo.shared.userId) else { return }
+    handler(userId)
+  }
+  
+  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void) {
     guard let boardId = boardId else { return }
     handler(id, boardId, cardMembers)
+  }
+  
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void) {
+    commentService.deleteComment(with: commentId) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   private func fetchUserData() {
@@ -191,7 +216,7 @@ extension CardDetailViewModel {
     commentViewProfileImageHandler = handler
   }
   
-  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void)) {
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void)) {
     cardDetailMemberViewHandler = handler
   }
 }

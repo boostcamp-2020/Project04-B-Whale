@@ -52,7 +52,7 @@ final class MemberCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  func update(with imageData: Data, and member: InvitedUser) {
+  func update(with imageData: Data, and member: User) {
     if let image = UIImage(data: imageData) {
       profileImageView.image = image
     }

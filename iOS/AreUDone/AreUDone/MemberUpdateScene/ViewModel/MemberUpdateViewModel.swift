@@ -9,9 +9,9 @@ import Foundation
 
 protocol MemberUpdateViewModelProtocol {
   
-  func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void))
+  func fetchMemberData(completionHandler: @escaping (([User], [User]?) -> Void))
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
-  func updateCardMember(with member: InvitedUser, completionHandler: @escaping () -> Void)
+  func updateCardMember(with member: User, completionHandler: @escaping () -> Void)
 }
 
 final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
@@ -20,7 +20,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   
   private let cardId: Int
   private let boardId: Int
-  private let cardMember: [InvitedUser]?
+  private let cardMember: [User]?
   private let boardService: BoardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let cardService: CardServiceProtocol
@@ -33,7 +33,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   init(
     cardId: Int,
     boardId: Int,
-    cardMember: [InvitedUser]?,
+    cardMember: [User]?,
     boardService: BoardServiceProtocol,
     imageService: ImageServiceProtocol,
     cardService: CardServiceProtocol
@@ -46,7 +46,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     self.cardService = cardService
   }
   
-  func fetchMemberData(completionHandler: @escaping (([InvitedUser], [InvitedUser]?) -> Void)) {
+  func fetchMemberData(completionHandler: @escaping (([User], [User]?) -> Void)) {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
@@ -80,7 +80,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     }
   }
   
-  func updateCardMember(with member: InvitedUser, completionHandler: @escaping () -> Void) {
+  func updateCardMember(with member: User, completionHandler: @escaping () -> Void) {
     let userId = member.id
     cardService.updateCardMember(id: cardId, userIds: [userId]) { result in
       switch result {

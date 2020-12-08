@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol CommentCollectionViewCellDelegate: NSObject {
+  
+  func CommentCollectionViewCellEditButtonTapped(with cell: CommentCollectionViewCell)
+}
+
 final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK:- Property
+  
+  weak var delegate: CommentCollectionViewCellDelegate?
   
   private lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
@@ -40,6 +47,16 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     label.font = UIFont.nanumR(size: 13)
     
     return label
+  }()
+  
+  private lazy var editButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "ellipsis")
+    button.setImage(image, for: .normal)
+    button.isHidden = true
+    
+    return button
   }()
   
   private lazy var width: NSLayoutConstraint = {
@@ -84,6 +101,10 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   func update(with image: UIImage?) {
     profileImageView.image = image
   }
+  
+  func confirmEditOption() {
+    editButton.isHidden = false
+  }
 }
 
 
@@ -96,12 +117,16 @@ private extension CommentCollectionViewCell {
     contentView.addSubview(nameLabel)
     contentView.addSubview(contentLabel)
     contentView.addSubview(createdAtLabel)
+    contentView.addSubview(editButton)
     
     configureContentView()
     configureProfileImageView()
     configureNameLabel()
     configureContentLabel()
     configureCreatedAtLabel()
+    configureEditButton()
+    
+    addingTarget()
   }
   
   func configureContentView(){
@@ -146,5 +171,29 @@ private extension CommentCollectionViewCell {
       createdAtLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
       createdAtLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
     ])
+  }
+  
+  func configureEditButton() {
+    NSLayoutConstraint.activate([
+      editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      editButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+      editButton.heightAnchor.constraint(equalToConstant: 15)
+    ])
+  }
+  
+  func addingTarget() {
+    editButton.addTarget(
+      self,
+      action: #selector(editButtonTapped),
+      for: .touchUpInside
+    )
+  }
+}
+
+
+private extension CommentCollectionViewCell {
+  
+  @objc func editButtonTapped() {
+    delegate?.CommentCollectionViewCellEditButtonTapped(with: self)
   }
 }

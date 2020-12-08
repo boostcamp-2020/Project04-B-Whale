@@ -24,7 +24,7 @@ enum MemberSection: CaseIterable {
 final class MemberUpdateViewController: UIViewController {
   
   typealias DataSource = MemberTableViewDiffableDataSource
-  typealias Snapshot = NSDiffableDataSourceSnapshot<MemberSection, InvitedUser>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<MemberSection, User>
   
   // MARK:- Property
   

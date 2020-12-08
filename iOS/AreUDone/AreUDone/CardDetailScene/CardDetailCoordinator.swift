@@ -41,11 +41,13 @@ final class CardDetailCoordinator: NavigationCoordinator {
               let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let imageService = ImageService(router: self.router)
               let userService = UserService(router: MockRouter(jsonFactory: UserJsonFactory()))
+              let commentService = CommentService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
                 imageService: imageService,
-                userService: userService
+                userService: userService,
+                commentService: commentService
               )
               
               return CardDetailViewController(
@@ -90,7 +92,7 @@ extension CardDetailCoordinator {
     navigationController?.present(calendarPickerViewController, animated: true)
   }
   
-  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [InvitedUser]?) {
+  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [User]?) {
     memberUpdateCoordinator = MemberUpdateCoordinator(
       router: router,
       cardId: cardId,
