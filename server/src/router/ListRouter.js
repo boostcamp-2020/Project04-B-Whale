@@ -6,13 +6,23 @@ export const ListRouter = () => {
 
     router.patch('/:id', async (req, res) => {
         const listService = ListService.getInstance();
-        await listService.updateList(req.user.id, req.params.id, req.body.position, req.body.title);
+        const config = {
+            userId: req.user.id,
+            listId: req.params.id,
+            position: req.body.position,
+            title: req.body.title,
+        };
+        await listService.updateList(config);
         res.sendStatus(204);
     });
 
     router.delete('/:id', async (req, res) => {
         const listService = ListService.getInstance();
-        await listService.deleteList(req.user.id, req.params.id);
+        const config = {
+            userId: req.user.id,
+            listId: req.params.id,
+        };
+        await listService.deleteList(config);
         res.sendStatus(204);
     });
 

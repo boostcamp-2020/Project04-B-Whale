@@ -44,7 +44,13 @@ describe('Board Service Test', () => {
 
             // when
             const listService = ListService.getInstance();
-            await listService.updateList(createUser.id, createList.id, 2, 'list2');
+            const config = {
+                userId: createUser.id,
+                listId: createList.id,
+                position: 2,
+                title: 'list2',
+            };
+            await listService.updateList(config);
             const updatedList = await listRepository.findOne(createList.id);
 
             // then
@@ -78,7 +84,7 @@ describe('Board Service Test', () => {
 
             // when
             const listService = ListService.getInstance();
-            await listService.deleteList(createUser.id, createList.id);
+            await listService.deleteList({ userId: createUser.id, listId: createList.id });
             const deleteList = await listRepository.findOne(createList.id);
 
             // then

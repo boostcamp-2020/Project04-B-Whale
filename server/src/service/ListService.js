@@ -40,7 +40,7 @@ export class ListService extends BaseService {
     }
 
     @Transactional()
-    async updateList(userId, listId, position, title) {
+    async updateList({ userId, listId, position, title }) {
         const list = await this.listRepository
             .createQueryBuilder('list')
             .where('list.id = :listId', { listId })
@@ -54,11 +54,11 @@ export class ListService extends BaseService {
             board: list.list_board_id,
             creator: list.list_creator_id,
         };
-        await this.listRepository.update({ id: list.list_id }, updatedList);
+        await this.listRepository.update({ id: listId }, updatedList);
     }
 
     @Transactional()
-    async deleteList(userId, listId) {
+    async deleteList({ userId, listId }) {
         const list = await this.listRepository
             .createQueryBuilder('list')
             .select(['list.board'])
