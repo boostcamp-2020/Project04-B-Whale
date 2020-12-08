@@ -7,7 +7,9 @@
 
 import Foundation
 
-class TokenParser {
+final class TokenParser {
+  
+  // MARK:- Method
   
   func decode(jwtToken jwt: String) -> [String: Any] {
        let segments = jwt.components(separatedBy: ".")
@@ -15,6 +17,8 @@ class TokenParser {
   }
 }
 
+
+// MARK:- Extension
 
 private extension TokenParser {
 

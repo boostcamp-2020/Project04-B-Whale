@@ -7,7 +7,9 @@
 
 import Foundation
 
-class UserIdStore {
+final class UserIdStore {
+  
+  // MARK:- Method
   
   static func saveUserId(with items: [String: Any]) {
     if let userId = items["userId"] {
