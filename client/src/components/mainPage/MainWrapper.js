@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import CalendarProvider from '../provider/CalendarProvider';
+import CardScrollProvider from '../provider/CardScrollProvider';
 import Calendar from './Calendar';
+import CardScroll from './CardScroll';
 import MeCheckBox from './MeCheckBox';
 
 const Wrapper = styled.div`
@@ -14,7 +16,9 @@ const MainWrapper = () => {
             <CalendarProvider>
                 <Calendar />
                 <MeCheckBox />
-                카드 영역
+                <CardScrollProvider>
+                    <CardScroll />
+                </CardScrollProvider>
             </CalendarProvider>
         </Wrapper>
     );
