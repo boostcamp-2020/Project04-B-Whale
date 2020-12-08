@@ -1,5 +1,8 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { ConflictError } from '../common/error/ConflictError';
+import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
+import { ForbiddenError } from '../common/error/ForbiddenError';
 import { BaseService } from './BaseService';
 
 export class CardService extends BaseService {
@@ -100,5 +103,32 @@ export class CardService extends BaseService {
             dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
             commentCount: card.commentCount,
         }));
+    }
+
+    @Transactional()
+    async modifyCardById({ userId, cardId, listId, title, content, position, dueDate }) {
+        const card = await this.cardRepository.findOne(cardId);
+
+        if (!card) throw new EntityNotFoundError('card is not exist');
+
+        const { id: boardId } = await this.customBoardRepository.findBoardByCardId(cardId);
+        const isExistUser = await this.customBoardRepository.existUserByBoardId({
+            boardId,
+            userId,
+        });
+
+        if (!isExistUser) throw new ForbiddenError('no access to this card');
+
+        if (listId && !(await this.customBoardRepository.existListByBoardId({ boardId, listId }))) {
+            throw new ConflictError(`can't move this card to list`);
+        }
+
+        card.list = listId;
+        card.title = title;
+        card.content = content;
+        card.position = position;
+        card.dueDate = dueDate;
+
+        await this.cardRepository.save(card);
     }
 }
