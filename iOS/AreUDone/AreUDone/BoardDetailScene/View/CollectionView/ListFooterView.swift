@@ -16,6 +16,7 @@ final class ListFooterView: UICollectionReusableView, Reusable {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     titleLabel.text = "카드 추가"
+    titleLabel.font = UIFont.nanumB(size: 18)
     
     return titleLabel
   }()
