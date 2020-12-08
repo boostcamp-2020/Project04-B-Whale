@@ -42,6 +42,16 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     return label
   }()
   
+  private lazy var editButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "ellipsis")
+    button.setImage(image, for: .normal)
+    button.isHidden = true
+    
+    return button
+  }()
+  
   private lazy var width: NSLayoutConstraint = {
       let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
       width.isActive = true
@@ -96,12 +106,14 @@ private extension CommentCollectionViewCell {
     contentView.addSubview(nameLabel)
     contentView.addSubview(contentLabel)
     contentView.addSubview(createdAtLabel)
+    contentView.addSubview(editButton)
     
     configureContentView()
     configureProfileImageView()
     configureNameLabel()
     configureContentLabel()
     configureCreatedAtLabel()
+    configureEditButton()
   }
   
   func configureContentView(){
@@ -145,6 +157,15 @@ private extension CommentCollectionViewCell {
       createdAtLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
       createdAtLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
       createdAtLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    ])
+  }
+  
+  func configureEditButton() {
+    NSLayoutConstraint.activate([
+      editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+//      editButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
+      editButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+      editButton.heightAnchor.constraint(equalToConstant: 15)
     ])
   }
 }
