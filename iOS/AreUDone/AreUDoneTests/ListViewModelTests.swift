@@ -29,7 +29,7 @@ class ListViewModelTests: XCTestCase {
     let repeatNumber = 5
     
     (0..<repeatNumber).forEach {
-      let card = List.Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
+      let card = Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
       viewModel.append(card: card)
     }
     
@@ -44,7 +44,7 @@ class ListViewModelTests: XCTestCase {
     let repeatNumber = 5
 
     (0..<repeatNumber).forEach {
-      let card = List.Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
+      let card = Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
       viewModel.insert(card: card, at: $0)
     }
 
@@ -59,7 +59,7 @@ class ListViewModelTests: XCTestCase {
     let repeatNumber = 5
 
     (0..<repeatNumber).forEach {
-      let card = List.Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
+      let card = Card(id: $0, title: "", dueDate: "", position: 0, commentCount: 0)
       viewModel.append(card: card)
     }
     
