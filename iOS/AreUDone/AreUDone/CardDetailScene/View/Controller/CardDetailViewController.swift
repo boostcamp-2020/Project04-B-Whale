@@ -389,9 +389,10 @@ extension CardDetailViewController: CardDetailDueDateViewDelegate {
 extension CardDetailViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
-    viewModel.updateDueDate(with: selectedDate)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateDueDateView(with: selectedDate)
+    viewModel.updateDueDate(with: selectedDate) {
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateDueDateView(with: selectedDate)
+      }
     }
   }
 }
@@ -402,9 +403,10 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
 extension CardDetailViewController: ContentInputViewControllerDelegate {
   
   func send(with content: String) {
-    viewModel.updateContent(with: content)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateContentView(with: content)
+    viewModel.updateContent(with: content) {
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateContentView(with: content)
+      }
     }
   }
 }

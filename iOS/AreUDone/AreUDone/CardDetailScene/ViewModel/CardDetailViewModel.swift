@@ -19,8 +19,8 @@ protocol CardDetailViewModelProtocol {
   
   func fetchDetailCard()
   func addComment(with comment: String, completionHandler: @escaping (() -> Void))
-  func updateDueDate(with dueDate: String)
-  func updateContent(with content: String)
+  func updateDueDate(with dueDate: String, completionHandler: @escaping (() -> Void))
+  func updateContent(with content: String, completionHandler: @escaping (() -> Void))
   func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
   func prepareUpdateCell(handler: (Int) -> Void)
   func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
@@ -106,14 +106,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func updateDueDate(with dueDate: String) {
-    cardService.updateCard(
-      id: id,
-      dueDate: dueDate
-    ) { result in
+  func updateDueDate(with dueDate: String, completionHandler: @escaping (() -> Void)) {
+    cardService.updateCard(id: id, dueDate: dueDate) { result in
       switch result {
       case .success(()):
-        break
+        completionHandler()
         
       case .failure(let error):
         print(error)
@@ -121,14 +118,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func updateContent(with content: String) {
-    cardService.updateCard(
-      id: id,
-      content: content
-    ) { result in
+  func updateContent(with content: String, completionHandler: @escaping (() -> Void)) {
+    cardService.updateCard(id: id, content: content) { result in
       switch result {
       case .success(()):
-        break
+        completionHandler()
         
       case .failure(let error):
         print(error)
