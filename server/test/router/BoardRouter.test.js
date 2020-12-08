@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { Application } from '../../src/Application';
 import { JwtUtil } from '../../src/common/util/JwtUtil';
 import { Board } from '../../src/model/Board';

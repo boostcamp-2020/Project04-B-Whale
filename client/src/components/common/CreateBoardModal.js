@@ -94,7 +94,7 @@ const Modal = ({ onClose, visible }) => {
         const { status, data } = await createBoard({ title, color });
         switch (status) {
             case 201:
-                document.location = `board/${data.id}`;
+                document.location = `/board/${data.id}`;
                 break;
             case 400:
             case 401:

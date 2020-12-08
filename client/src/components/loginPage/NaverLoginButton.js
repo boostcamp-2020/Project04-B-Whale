@@ -5,8 +5,9 @@ import image from '../../image/naverLoginBtn.PNG';
 const NaverLoginButtonImg = styled.img`
     width: 20%;
     position: absolute;
-    top: 70%;
-    left: 40%;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     cursor: pointer;
 `;
 
