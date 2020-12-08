@@ -21,6 +21,12 @@ protocol CardServiceProtocol {
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   )
   func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void))
+  func fetchCardsCount(
+    startDate: String,
+    endDate: String,
+    member: String?,
+    completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
+  )
 }
 
 extension CardServiceProtocol {
@@ -96,6 +102,21 @@ class CardService: CardServiceProtocol {
   
   func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
     router.request(route: CardEndPoint.updateCardMember(id: id, userIds: userIds)) { (result: Result<Void, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func fetchCardsCount(
+    startDate: String,
+    endDate: String,
+    member: String?,
+    completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
+  ) {
+    router.request(route: CardEndPoint.fetchCardsCount(
+      startDate: startDate,
+      endDate: endDate,
+      member: member
+    )) { (result: Result<MonthCardCount, APIError>) in
       completionHandler(result)
     }
   }
