@@ -6,6 +6,7 @@ import { CardCountDto } from '../dto/CardCountDto';
 import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 import { CardDto } from '../dto/CardDto';
 import { MemberDto } from '../dto/MemberDto';
+import { BadRequestError } from '../common/error/BadRequestError';
 
 export const CardRouter = () => {
     const router = Router();
@@ -66,6 +67,20 @@ export const CardRouter = () => {
             dueDate,
         });
         res.status(204).end();
+    });
+
+    router.get('/:cardId', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const userId = req.user.id;
+        const { cardId } = req.params;
+
+        if (cardId === undefined) {
+            throw new BadRequestError('No params');
+        }
+
+        const card = await cardService.getCard({ userId, cardId });
+
+        res.status(200).json(card);
     });
 
     router.put('/:cardId/member', async (req, res) => {
