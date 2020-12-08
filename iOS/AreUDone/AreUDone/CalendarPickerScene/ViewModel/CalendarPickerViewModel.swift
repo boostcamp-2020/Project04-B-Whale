@@ -29,6 +29,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   var selectedDate: Date!
   private lazy var basedate: Date! = selectedDate
+  private let cardService: CardServiceProtocol
   
   private let calendar = Calendar(identifier: .gregorian)
   
@@ -38,6 +39,12 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return dateFormatter
   }()
   
+  
+  // MARK:- Initializer
+  
+  init(cardService: CardServiceProtocol) {
+    self.cardService = cardService
+  }
   
   // MARK: - Method
   
