@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Card } from './Card';
 import { User } from './User';
 
@@ -9,6 +16,9 @@ export class Comment {
 
     @Column({ name: 'content', type: 'varchar' })
     content;
+
+    @CreateDateColumn({ name: 'created_at', type: 'datetime' })
+    createdAt;
 
     @ManyToOne(() => User, (user) => user.comments, { nullable: false })
     @JoinColumn({ name: 'user_id' })

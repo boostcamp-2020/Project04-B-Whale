@@ -131,4 +131,58 @@ export class CardService extends BaseService {
 
         await this.cardRepository.save(card);
     }
+
+    async getCard({ userId, cardId }) {
+        const card = await this.customCardRepository.findWithListAndBoardById(cardId);
+
+        if (card === undefined) {
+            throw new EntityNotFoundError('Not found card');
+        }
+
+        const { list } = card;
+        const { board } = list;
+
+        const boardExisted = await this.customBoardRepository.existUserByBoardId({
+            boardId: board.id,
+            userId,
+        });
+
+        if (!boardExisted) {
+            throw new ForbiddenError(`You're not invited`);
+        }
+
+        const cardWithCommentsAndMembers = await this.customCardRepository.findWithCommentsAndMembers(
+            cardId,
+        );
+
+        return {
+            id: card.id,
+            title: card.title,
+            content: card.content,
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+            list: {
+                id: list.id,
+                title: list.title,
+            },
+            board: {
+                id: board.id,
+                title: board.title,
+            },
+            members: cardWithCommentsAndMembers.members.map((member) => ({
+                id: member.user.id,
+                name: member.user.name,
+                profileImageUrl: member.user.profileImageUrl,
+            })),
+            comments: cardWithCommentsAndMembers.comments.map((comment) => ({
+                id: comment.id,
+                content: comment.content,
+                createdAt: moment(comment.createdAt).tz('Asia/Seoul').format(),
+                user: {
+                    id: comment.user.id,
+                    name: comment.user.name,
+                    profileImageUrl: comment.user.profileImageUrl,
+                },
+            })),
+        };
+    }
 }
