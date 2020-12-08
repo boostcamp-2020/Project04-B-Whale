@@ -20,6 +20,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
   private let id: Int
   private var contentInputCoordinator: NavigationCoordinator!
   private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
+  private var memberUpdateCoordinator: MemberUpdateCoordinator!
   
   // MARK:- Initializer
   
@@ -87,5 +88,24 @@ extension CardDetailCoordinator {
     
     calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
+  }
+  
+  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [InvitedUser]?) {
+    memberUpdateCoordinator = MemberUpdateCoordinator(
+      router: router,
+      cardId: cardId,
+      boardId: boardId,
+      cardMember: cardMember
+    )
+    memberUpdateCoordinator.navigationController = navigationController
+    
+    guard let memberUpdateViewController = memberUpdateCoordinator.start()
+            as? MemberUpdateViewController
+    else { return }
+    
+    let subNavigationViewController = UINavigationController()
+    
+    subNavigationViewController.pushViewController(memberUpdateViewController, animated: true)
+    navigationController?.present(subNavigationViewController, animated: true)
   }
 }

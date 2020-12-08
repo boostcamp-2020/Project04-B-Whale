@@ -21,7 +21,11 @@ struct Creator: Codable {
   let name, profileImageUrl: String
 }
 
-struct InvitedUser: Codable {
+struct InvitedUser: Codable, Hashable {
+  static func == (lhs: InvitedUser, rhs: InvitedUser) -> Bool {
+    return lhs.id == rhs.id
+  }
+  
   let id: Int
   let name, profileImageUrl: String
 }
