@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ListService } from '../service/ListService';
+import { CardService } from '../service/CardService';
 
 export const ListRouter = () => {
     const router = Router();
@@ -24,6 +25,19 @@ export const ListRouter = () => {
         };
         await listService.deleteList(config);
         res.sendStatus(204);
+    });
+
+    router.post('/:id/card', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const config = {
+            userId: req.user.id,
+            listId: req.params.id,
+            title: req.body.title,
+            dueDate: req.body.dueDate,
+            content: req.body.content,
+        };
+        await cardService.createCard(config);
+        res.sendStatus(201);
     });
 
     return router;
