@@ -191,6 +191,38 @@ struct CardTrueJsonFactory: JsonFactory {
                 }
             }
             """.data(using: .utf8)
+      
+    case CardEndPoint.fetchCardsCount:
+      return """
+            {
+                "cardCounts" : [
+                      {
+                          "dueDate": "2020-01-01",
+                          "count": 1
+                      },
+                      {
+                          "dueDate": "2020-01-02",
+                          "count": 3
+                      },
+                      {
+                          "dueDate": "2020-01-15",
+                          "count": 2
+                      },
+                      {
+                          "dueDate": "2020-01-21",
+                          "count": 5
+                      },
+                      {
+                          "dueDate": "2020-01-23",
+                          "count": 7
+                      },
+                      {
+                          "dueDate": "2020-01-26",
+                          "count": 11
+                      }
+                ]
+            }
+            """.data(using: .utf8)
     default:
       return nil
     }
@@ -209,17 +241,3 @@ struct CardFalseJsonFactory: JsonFactory {
     }
   }
 }
-
-/*
- 
- {
-     "id": 0,
-     "content": "화이팅!123",
-     "createdAt": "2020-12-02",
-     "user": {
-         "id": 0,
-         "name": "서명렬",
-         "profileImageUrl": ""
-     }
- },
- */
