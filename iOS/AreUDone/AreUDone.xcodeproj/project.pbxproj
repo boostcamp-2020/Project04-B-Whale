@@ -295,6 +295,7 @@
 		BD59A6F1257F3D5A00BF8928 /* CommentEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */; };
 		BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
 		BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
+		BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -523,6 +524,7 @@
 		BD59A6CB257F180100BF8928 /* TokenParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenParser.swift; sourceTree = "<group>"; };
 		BD59A6D0257F192300BF8928 /* UserIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdStore.swift; sourceTree = "<group>"; };
 		BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEndPoint.swift; sourceTree = "<group>"; };
+		BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCardCount.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -1295,6 +1297,7 @@
 				BD59A6C6257F13E100BF8928 /* UserInfo.swift */,
 				BD59A6CB257F180100BF8928 /* TokenParser.swift */,
 				BD59A6D0257F192300BF8928 /* UserIdStore.swift */,
+				BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1820,6 +1823,7 @@
 				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				333BA53B2575FFCC0057ACA4 /* SideBarViewController.swift in Sources */,
+				BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */,
 				33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */,
