@@ -87,7 +87,7 @@ describe('CardService.getCard() Test', () => {
                 title: 'card title 0',
                 content: 'card content 0',
                 position: 0,
-                dueDate: moment('2020-12-03T09:37:00').format(),
+                dueDate: moment.tz('2020-12-03T09:37:00', 'Asia/Seoul').format(),
                 list: list0,
                 creator: user0,
             });
@@ -141,7 +141,7 @@ describe('CardService.getCard() Test', () => {
                 title: 'card title 0',
                 content: 'card content 0',
                 position: 0,
-                dueDate: moment('2020-12-03T09:37:00').format(),
+                dueDate: moment.tz('2020-12-03T09:37:00', 'Asia/Seoul').format(),
                 list: list0,
                 creator: user0,
             });
