@@ -16,7 +16,7 @@ export class BoardService extends BaseService {
 
     async getMyBoards(id) {
         const boards = await this.boardRepository.find({
-            select: ['id', 'title'],
+            select: ['id', 'title', 'color'],
             where: { creator: id },
         });
         return boards;
@@ -25,8 +25,7 @@ export class BoardService extends BaseService {
     async getInvitedBoards(id) {
         const boards = await this.boardRepository
             .createQueryBuilder('board')
-            .select('board.id')
-            .addSelect('board.title')
+            .select(['board.id', 'board.title', 'board.color'])
             .innerJoin('board.invitations', 'invitation', 'invitation.user_id=:userId', {
                 userId: id,
             })
