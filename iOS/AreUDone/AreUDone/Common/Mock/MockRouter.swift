@@ -12,12 +12,13 @@ final class MockRouter: Routable {
   
   // MARK: - Property
   
-  private let jsonFactory: JsonFactory
+  private let jsonFactory: JsonFactory?
   
+  private(set) var urlRequest: URLRequest?
   
   // MARK: - Initializer
   
-  init(jsonFactory: JsonFactory) {
+  init(jsonFactory: JsonFactory? = nil) {
     self.jsonFactory = jsonFactory
   }
   
@@ -26,8 +27,9 @@ final class MockRouter: Routable {
   
   func request<T: Decodable>(route: EndPointable, completionHandler: @escaping ((Result<T, APIError>) -> Void)) {
     
+    urlRequest = configureRequest(from: route)
     DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-      guard let data = self.jsonFactory.loadJson(endPoint: route) else {
+      guard let data = self.jsonFactory?.loadJson(endPoint: route) else {
         completionHandler(.failure(.data))
         return
       }
@@ -43,6 +45,9 @@ final class MockRouter: Routable {
   }
   
   func request(route: EndPointable, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
-    
+    urlRequest = configureRequest(from: route)
+    DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+      completionHandler(.success(()))
+    }
   }
 }

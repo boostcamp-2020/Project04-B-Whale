@@ -20,6 +20,7 @@ protocol CardServiceProtocol {
     dueDate: String?,
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   )
+  func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void))
 }
 
 extension CardServiceProtocol {
@@ -89,6 +90,12 @@ class CardService: CardServiceProtocol {
       position: position,
       dueDate: dueDate
     )) { (result: Result<Void, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+    router.request(route: CardEndPoint.updateCardMember(id: id, userIds: userIds)) { (result: Result<Void, APIError>) in
       completionHandler(result)
     }
   }
