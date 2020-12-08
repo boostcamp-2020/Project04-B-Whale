@@ -43,17 +43,16 @@ export class ListService extends BaseService {
     async updateList(userId, listId, position, title) {
         const list = await this.listRepository
             .createQueryBuilder('list')
-            .select(['list.id', 'list.board', 'list.creator'])
             .where('list.id = :listId', { listId })
             .getRawOne();
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
-        await boardService.checkForbidden(userId, list.board_id);
+        await boardService.checkForbidden(userId, list.list_board_id);
         const updatedList = {
-            title,
-            position,
-            board: list.board_id,
-            creator: list.creator_id,
+            title: title || list.list_title,
+            position: position || list.list_position,
+            board: list.list_board_id,
+            creator: list.list_creator_id,
         };
         await this.listRepository.update({ id: list.list_id }, updatedList);
     }
