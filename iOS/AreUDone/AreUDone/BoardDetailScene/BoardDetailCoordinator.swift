@@ -15,7 +15,7 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   var navigationController: UINavigationController?
   private var invitationCoordinator: NavigationCoordinator!
   private let boardId: Int
-
+  
   // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
   //  private let router: Routable
   private var storyboard: UIStoryboard {
@@ -38,10 +38,17 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               guard let self = self else { return UIViewController()}
               
               let boardService = BoardService(router: MockRouter(jsonFactory: BoardDetailTrueJsonFactory()))
+              let listService = ListService(router: Router())
+              let cardService = CardService(router: Router())
               let activityService = ActivityService(router: MockRouter(jsonFactory: ActivityTrueJsonFactory()))
               let imageService = ImageService(router: Router()) // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
               
-              let boardDetailViewModel = BoardDetailViewModel(boardService: boardService, boardId: self.boardId)
+              let boardDetailViewModel = BoardDetailViewModel(
+                boardService: boardService,
+                listService: listService,
+                cardService: cardService,
+                boardId: self.boardId
+              )
               
               let sideBarViewModel = SideBarViewModel(
                 boardService: boardService,

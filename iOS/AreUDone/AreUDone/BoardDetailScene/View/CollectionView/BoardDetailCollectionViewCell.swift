@@ -112,6 +112,9 @@ extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
     switch kind {
     case UICollectionView.elementKindSectionHeader:
       let headerView: ListHeaderView = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
+      
+      headerView.update(with: viewModel)
+      
       return headerView
       
     case UICollectionView.elementKindSectionFooter:

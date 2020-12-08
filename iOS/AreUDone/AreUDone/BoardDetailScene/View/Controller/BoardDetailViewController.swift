@@ -198,12 +198,10 @@ extension BoardDetailViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
-    guard let list = viewModel.fetchList(at: indexPath.item)
-    else { return UICollectionViewCell() }
-    
-    let viewModel = ListViewModel(list: list)
-    
-    cell.update(with: viewModel)
+    viewModel.fetchList(at: indexPath.item) { viewModel in
+      cell.update(with: viewModel)
+    }
+  
     return cell
   }
 }
