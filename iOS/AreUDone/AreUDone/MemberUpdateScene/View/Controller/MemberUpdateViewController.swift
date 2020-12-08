@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol MemberUpdateViewControllerDelegate: NSObject {
+  
+  func memberUpdateViewControllerWillDisappear()
+}
+
 enum MemberSection: CaseIterable {
   case invited
   case notInvited
@@ -30,6 +35,7 @@ final class MemberUpdateViewController: UIViewController {
   
   private let viewModel: MemberUpdateViewModelProtocol
   weak var coordinator: MemberUpdateCoordinator?
+  weak var delegate: MemberUpdateViewControllerDelegate?
   
   private lazy var dataSource = configureDataSource()
   
@@ -64,6 +70,12 @@ final class MemberUpdateViewController: UIViewController {
     
     configure()
     applySnapshot(animatingDifferences: false)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    delegate?.memberUpdateViewControllerWillDisappear()
   }
 }
 

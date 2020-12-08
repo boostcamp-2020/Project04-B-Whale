@@ -100,7 +100,7 @@ private extension CardDetailViewController {
       
       cell.update(with: comment)
       
-      self?.viewModel.prepareUpdateCell  { userId in
+      self?.viewModel.prepareUpdateCell { userId in
         guard comment.user.id == userId else { return }
         cell.confirmEditOption()
         cell.delegate = self
@@ -418,7 +418,7 @@ extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
     viewModel.prepareUpdateMember { (cardId, boardId, cardMembers) in
-      cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers)
+      cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
     }
   }
 }
@@ -452,3 +452,10 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
   }
 }
 
+
+extension CardDetailViewController: MemberUpdateViewControllerDelegate {
+  
+  func memberUpdateViewControllerWillDisappear() {
+    viewModel.fetchDetailCard()
+  }
+}
