@@ -131,4 +131,36 @@ export class CardService extends BaseService {
 
         await this.cardRepository.save(card);
     }
+
+    @Transactional()
+    async addMemberToCardByUserIds({ cardId, userId, userIds }) {
+        const card = await this.cardRepository.findOne(cardId);
+
+        if (!card) throw new EntityNotFoundError('card is not exist');
+
+        const { id: boardId } = await this.customBoardRepository.findBoardByCardId(cardId);
+        const isExistUser = await this.customBoardRepository.existUserByBoardId({
+            boardId,
+            userId,
+        });
+
+        if (userIds.length === 0) {
+            await this.memberRepository.delete({ card: cardId });
+            return;
+        }
+
+        if (!isExistUser) throw new ForbiddenError('no access to this card');
+
+        const isExistUsers = await this.customBoardRepository.existUsersByBoardId({
+            boardId,
+            userIds,
+        });
+
+        if (!isExistUsers) throw new ConflictError('no members added to this card');
+
+        await this.memberRepository.delete({ card: cardId });
+
+        const memberData = userIds.map((item) => ({ card: cardId, user: item }));
+        await this.memberRepository.save(memberData);
+    }
 }
