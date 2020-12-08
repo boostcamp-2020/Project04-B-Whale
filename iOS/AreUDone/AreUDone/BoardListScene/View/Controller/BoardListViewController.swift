@@ -16,7 +16,7 @@ final class BoardListViewController: UIViewController {
   
   
   // MARK: - Enum
-  enum Section: CaseIterable {
+  enum Section {
     case main
   }
   
@@ -35,7 +35,11 @@ final class BoardListViewController: UIViewController {
   lazy var dataSource = configureDataSource()
   
   @IBOutlet weak var titleView: UILabel!
-  @IBOutlet weak var addBoardButton: UIImageView!
+  @IBOutlet weak var addBoardButton: UIImageView! {
+    didSet {
+      addBoardButton.isUserInteractionEnabled = true
+    }
+  }
   @IBOutlet weak var baseView: UIView! {
     didSet {
       baseView.backgroundColor = .clear
@@ -58,7 +62,10 @@ final class BoardListViewController: UIViewController {
       segmentControl.delegate = self
       
       segmentControl.layer.cornerRadius = 10
-      segmentControl.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+      segmentControl.layer.maskedCorners = [
+        .layerMinXMaxYCorner,
+        .layerMaxXMaxYCorner
+      ]
       segmentControl.addShadow(
         offset: CGSize(width: 0, height: -1),
         radius: 2,
@@ -127,10 +134,6 @@ private extension BoardListViewController {
     let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addBoardButtonTapped))
     addBoardButton.addGestureRecognizer(gestureRecognizer)
   }
-  
-  @objc func addBoardButtonTapped() {
-    // TODO: 보드 추가 화면 프레젠테이션 로직
-  }
 }
 
 
@@ -180,7 +183,7 @@ extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // TODO: boardId 받아오는 메소드 작성
-    coordinator?.boardItemDidTapped(boardId: 0)
+    coordinator?.pushToBoardDetail(boardId: 0)
   }
 }
 
@@ -206,5 +209,15 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
     default:
       break
     }
+  }
+}
+
+
+// MARK: - Extension objc
+
+private extension BoardListViewController {
+  
+  @objc func addBoardButtonTapped() {
+    coordinator?.pushToBoardAdd()
   }
 }

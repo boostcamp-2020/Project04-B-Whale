@@ -12,7 +12,7 @@ import KeychainFramework
 enum BoardEndPoint {
   
   case fetchAllBoards
-  case addBoard(title: String)
+  case createBoard(title: String, color: String)
   case updateBoard(boardId: Int, title: String)
   case deleteBoard(boardId: Int)
   
@@ -27,7 +27,7 @@ extension BoardEndPoint: EndPointable {
     case .fetchAllBoards:
       return "\(APICredentials.ip)/api/board"
       
-    case .addBoard:
+    case .createBoard:
       return "\(APICredentials.ip)/api/board"
       
     case .updateBoard(let boardId, _):
@@ -61,7 +61,7 @@ extension BoardEndPoint: EndPointable {
     case .fetchAllBoards, .fetchBoardDetail:
       return .get
       
-    case .addBoard, .updateBoard, .inviteUserToBoard:
+    case .createBoard, .updateBoard, .inviteUserToBoard:
       return .post
       
     case .deleteBoard, .exitBoard:
@@ -74,16 +74,16 @@ extension BoardEndPoint: EndPointable {
     else { return nil }
     
     return [
-      "Authorization": "Bearer \(accessToken))",
-      "Cotent-Type": "application/json",
+      "Authorization": "\(accessToken)",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }
   
   var bodies: HTTPBody? {
     switch self {
-    case .addBoard(let title):
-      return ["title": title]
+    case .createBoard(let title, let color):
+      return ["title": title, "color": color]
       
     case .updateBoard(_, let title):
       

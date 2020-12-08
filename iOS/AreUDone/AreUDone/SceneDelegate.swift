@@ -19,10 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard
       let url = URLContexts.first?.url,
       url.absoluteString.starts(with: "areudoneios://"),
-      let token = url.absoluteString.split(separator: "=").last.map({ String($0) })
+      let token = url.absoluteString.split(separator: "=").last.map({ String($0) }),
+      let decodedToken = token.removingPercentEncoding
     else { return }
-    
-    Keychain.shared.save(value: token, forKey: "token")
+
+    Keychain.shared.save(value: decodedToken, forKey: "token")
     
     sceneCoordinator.start()
   }

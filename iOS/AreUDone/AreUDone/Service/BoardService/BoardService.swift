@@ -11,15 +11,16 @@ import NetworkFramework
 protocol BoardServiceProtocol: class {
   
   func fetchAllBoards(completionHandler: @escaping (Result<Boards, APIError>) -> Void)
-  func addBoard(with title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func createBoard(withTitle title: String, color: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func updateBoard(with boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
   func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
   
   func fetchBoardDetail(with boardId: Int, completionHandler: @escaping (Result<BoardDetail, APIError>) -> Void)
-  func requestInvitation(with boardId: Int, and userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  func requestInvitation(withBoardId boardId: Int, andUserId userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  
 }
 
-class BoardService: BoardServiceProtocol {
+final class BoardService: BoardServiceProtocol {
   
   // MARK: - Property
   
@@ -41,8 +42,8 @@ class BoardService: BoardServiceProtocol {
     }
   }
   
-  func addBoard(with title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
-    router.request(route: BoardEndPoint.addBoard(title: title)) { result in
+  func createBoard(withTitle title: String, color: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    router.request(route: BoardEndPoint.createBoard(title: title, color: color)) { result in
       completionHandler(result)
     }
   }
@@ -65,7 +66,7 @@ class BoardService: BoardServiceProtocol {
     }
   }
   
-  func requestInvitation(with boardId: Int, and userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+  func requestInvitation(withBoardId boardId: Int, andUserId userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: BoardEndPoint.inviteUserToBoard(boardId: boardId, userId: userId)) { result in
       completionHandler(result)
     }

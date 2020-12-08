@@ -14,6 +14,7 @@ extension UIStoryboard {
     case calendar
     case cardDetail
     case boardList
+    case boardAdd
     case boardDetail
     case contentInput
     case invitation

@@ -17,29 +17,44 @@ class RouterTests: XCTestCase {
   }
   
   func testMockRouter_유효데이터() {
+    let expectation = XCTestExpectation(description: "ValidDataExpectation")
+    var cards: Cards?
+      
     CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory())).fetchDailyCards(dateString: "") { result in
       switch result {
-      case .success:
-        XCTAssert(true)
+      case .success(let data):
+        cards = data
       case .failure:
-        XCTAssert(false)
+        break
       }
+      expectation.fulfill()
     }
+    
+    wait(for: [expectation], timeout: 3.0)
+    XCTAssertNotNil(cards)
+    
   }
   
   func testMockRouter_비유효데이터() {
+    let expectation = XCTestExpectation(description: "InValidDataExpectation")
+    var cards: Cards?
+    var expectedError: APIError?
+    
     CardService(router: MockRouter(jsonFactory: CardFalseJsonFactory())).fetchDailyCards(dateString: "") { result in
       switch result {
-      case .success:
-        XCTAssert(false)
-      case .failure(let error):
-        if error == .data {
-          XCTAssert(true)
-        } else {
-          XCTAssert(false)
-        }
+      case .success(let data):
+        cards = data
         
+      case .failure(let error):
+        expectedError = error
       }
+      expectation.fulfill()
     }
+    
+    wait(for: [expectation], timeout: 3.0)
+    
+    XCTAssertNil(cards)
+    XCTAssertEqual(expectedError, APIError.decodingJSON)
+    
   }
 }
