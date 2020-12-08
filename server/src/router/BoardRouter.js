@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { BoardService } from '../service/BoardService';
+import { ListService } from '../service/ListService';
 
 export const BoardRouter = () => {
     const router = Router();
@@ -37,6 +38,12 @@ export const BoardRouter = () => {
         const boardService = BoardService.getInstance();
         await boardService.updateBoard(req.user.id, req.params.id, req.body.title);
         res.sendStatus(204);
+    });
+
+    router.post('/:id/list', async (req, res) => {
+        const listService = ListService.getInstance();
+        await listService.createList(req.user.id, req.params.id, req.body.title);
+        res.sendStatus(201);
     });
 
     return router;
