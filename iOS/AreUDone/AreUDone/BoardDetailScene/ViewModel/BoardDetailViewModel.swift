@@ -14,7 +14,7 @@ protocol BoardDetailViewModelProtocol {
   func bindingUpdateBoardTitle(handler: @escaping (String) -> Void)
     
   func numberOfLists() -> Int
-  func fetchList(at index: Int) -> List?
+  func fetchList(at index: Int, handler: ((ListViewModelProtocol) -> Void))
   func insertList(list: List)
   
   func updateBoardDetailCollectionView()
@@ -26,6 +26,8 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   // MARK: - Property
   
   private let boardService: BoardServiceProtocol
+  private let listService: ListServiceProtocol
+  private let cardService: CardServiceProtocol
   private let boardId: Int
   
   private var updateBoardDetailCollectionViewHandler: (() -> Void)?
@@ -37,21 +39,19 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       updateBoardDetailCollectionViewHandler?()
     }
   }
-  private var backgroundColor: String = "" {
-    didSet {
-      updateBackgroundColorHandler?(backgroundColor)
-    }
-  }
-  private var boardTitle: String = "" {
-    didSet {
-      updateBoardTitleHandler?(boardTitle)
-    }
-  }
+  private var boardTitle: String = ""
   
   // MARK: - Initializer
   
-  init(boardService: BoardServiceProtocol, boardId: Int) {
+  init(
+    boardService: BoardServiceProtocol,
+    listService: ListServiceProtocol,
+    cardService: CardServiceProtocol,
+    boardId: Int
+  ) {
     self.boardService = boardService
+    self.listService = listService
+    self.cardService = cardService
     self.boardId = boardId
   }
   
@@ -62,8 +62,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardDetail?.lists.count ?? 0
   }
   
-  func fetchList(at index: Int) -> List? {
-    boardDetail?.lists[index]
+  func fetchList(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
+    guard let list = boardDetail?.lists[index] else { return }
+    
+    let viewModel = ListViewModel(listService: listService, list: list)
+    handler(viewModel)
   }
   
   func insertList(list: List) {
@@ -76,8 +79,9 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       case .success(let boardDetail):
         self.boardDetail = boardDetail
         
-        self.backgroundColor = boardDetail.color
         self.boardTitle = boardDetail.title
+        self.updateBoardTitleHandler?(boardDetail.title)
+        self.updateBackgroundColorHandler?(boardDetail.color)
         
       case .failure(let error):
         print(error)
@@ -86,16 +90,23 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   
   func updateBoardTitle(to title: String) {
-    boardService.updateBoard(withBoardId: boardId, title: boardTitle) { result in
+    boardService.updateBoard(withBoardId: boardId, title: title) { result in
       switch result {
       case .success(()):
+        self.updateBoardTitle(to: title)
         self.boardTitle = title
         
       case .failure(let error):
+        self.updateBoardTitleHandler?(self.boardTitle)
         print(error)
       }
     }
   }
+  
+  
+  
+//  func updateListViewModel()
+  
 }
 
 
