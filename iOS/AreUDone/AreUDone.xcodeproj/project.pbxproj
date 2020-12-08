@@ -293,6 +293,8 @@
 		BD59A6CC257F180100BF8928 /* TokenParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6CB257F180100BF8928 /* TokenParser.swift */; };
 		BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6D0257F192300BF8928 /* UserIdStore.swift */; };
 		BD59A6F1257F3D5A00BF8928 /* CommentEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */; };
+		BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
+		BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -1939,6 +1941,7 @@
 				33638E9C2573F93F006033CF /* ListCollectionViewCell.swift in Sources */,
 				33F2D5E9257E6A85008F1E06 /* MemberCell.swift in Sources */,
 				33F2D601257E6ABD008F1E06 /* CommentView.swift in Sources */,
+				BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */,
 				33EE01EE2569100F003D3221 /* SigninViewController.swift in Sources */,
 				33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */,
 				33EE01E625690FBB003D3221 /* TabbarCoordinator.swift in Sources */,
@@ -1956,6 +1959,7 @@
 				33F2D5BD257E6A68008F1E06 /* SideBarViewModel.swift in Sources */,
 				33638EBC2573F987006033CF /* BoardListCollectionView.swift in Sources */,
 				33F2D5B1257E6A5D008F1E06 /* InvitationViewModel.swift in Sources */,
+				BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */,
 				33F2D5F5257E6AAC008F1E06 /* UserEndPoint.swift in Sources */,
 				33638E192573F73E006033CF /* DateStepper.swift in Sources */,
 				33638E982573F932006033CF /* ListCollectionView.swift in Sources */,

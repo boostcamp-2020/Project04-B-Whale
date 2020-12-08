@@ -68,6 +68,7 @@ final class MemberUpdateViewController: UIViewController {
 }
 
 
+// MARK:- Extension Configure Method
 
 private extension MemberUpdateViewController {
   
@@ -99,6 +100,8 @@ private extension MemberUpdateViewController {
   }
 }
 
+
+// MARK:- Extension Configure DataSource
 
 private extension MemberUpdateViewController {
   
@@ -139,24 +142,21 @@ private extension MemberUpdateViewController {
 }
 
 
+// MARK:- Extension UITableViewDelegate
+
 extension MemberUpdateViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     var snapshot = dataSource.snapshot()
     guard let member = dataSource.itemIdentifier(for: indexPath) else { return }
-    switch indexPath.section {
-    case 0:
-      viewModel.updateCardMember(with: member) {
-        snapshot.deleteItems([member])
-        snapshot.appendItems([member], toSection: .notInvited)
+    
+    let section: MemberSection = indexPath.section == 0 ? .notInvited : .invited
+    
+    viewModel.updateCardMember(with: member) {
+      snapshot.deleteItems([member])
+      snapshot.appendItems([member], toSection: section)
+      DispatchQueue.main.async { [weak self] in
+        self?.dataSource.apply(snapshot, animatingDifferences: true)
       }
-    case 1:
-      viewModel.updateCardMember(with: member) {
-        snapshot.deleteItems([member])
-        snapshot.appendItems([member], toSection: .invited)
-      }
-    default:
-      break
     }
-    dataSource.apply(snapshot, animatingDifferences: true)
   }
 }

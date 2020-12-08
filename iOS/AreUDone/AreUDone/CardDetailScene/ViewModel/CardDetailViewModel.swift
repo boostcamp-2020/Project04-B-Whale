@@ -68,7 +68,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     self.userService = userService
     self.commentService = commentService
   }
-
+  
   
   // MARK:- Method
   
@@ -172,8 +172,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     userService.requestMe { [weak self] result in
       switch result {
       case .success(let user):
-        self?.fetchProfileImage(with: user.profileImageUrl) { data in
-          self?.commentViewProfileImageHandler?(data)
+        if let cachedData = self?.cache.object(forKey: user.profileImageUrl as NSString) {
+          self?.commentViewProfileImageHandler?(cachedData as Data)
+        } else {
+          self?.fetchProfileImage(with: user.profileImageUrl) { data in
+            self?.commentViewProfileImageHandler?(data)
+          }
         }
         
       case .failure(let error):

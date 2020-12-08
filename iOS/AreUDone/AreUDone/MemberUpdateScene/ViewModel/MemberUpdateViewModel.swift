@@ -86,6 +86,7 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
       switch result {
       case .success(()):
         completionHandler()
+        
       case .failure(let error):
         print(error)
       }
