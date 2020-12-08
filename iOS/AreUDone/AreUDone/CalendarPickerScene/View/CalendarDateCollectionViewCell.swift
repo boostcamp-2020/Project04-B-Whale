@@ -33,8 +33,7 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
   private lazy var cardCountView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = .blue
-//    view.isHidden = true
+    view.backgroundColor = .clear
     
     return view
   }()
@@ -59,6 +58,16 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
     super.init(frame: frame)
 
     configure()
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    cardCountView.backgroundColor = .clear
+  }
+  
+  func updateCountView(with count: Int) {
+    cardCountView.backgroundColor = cardCountColor(for: count)
   }
 }
 
@@ -127,5 +136,22 @@ private extension CalendarDateCollectionViewCell {
   func applyDefaultStyle(isWithinDisplayedMonth: Bool) {
     numberLabel.textColor = isWithinDisplayedMonth ? .label : .secondaryLabel
     selectionBackgroundView.isHidden = true
+  }
+  
+  func cardCountColor(for count: Int) -> UIColor? {
+    switch count {
+    case 0:
+      break
+    case 1...2:
+      return UIColor(red: 140/255, green: 241/255, blue: 152/255, alpha: 1.0)
+    case 3...5:
+      return UIColor(red: 57/255, green: 187/255, blue: 81/255, alpha: 1.0)
+    case 6...10:
+      return UIColor(red: 42/255, green: 147/255, blue: 62/255, alpha: 1.0)
+    default:
+      return UIColor(red: 28/255, green: 92/255, blue: 43/255, alpha: 1.0)
+    }
+    
+    return nil
   }
 }
