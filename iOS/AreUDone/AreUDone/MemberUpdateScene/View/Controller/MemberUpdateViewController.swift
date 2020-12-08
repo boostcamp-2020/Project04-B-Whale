@@ -124,7 +124,7 @@ private extension MemberUpdateViewController {
   func applySnapshot(animatingDifferences: Bool) {
     var snapshot = Snapshot()
     snapshot.appendSections(MemberSection.allCases)
-
+    
     viewModel.fetchMemberData { [weak self] (boardMember, cardMember) in
       if let cardMember = cardMember {
         snapshot.appendItems(cardMember, toSection: .invited)
@@ -157,8 +157,6 @@ extension MemberUpdateViewController: UITableViewDelegate {
     default:
       break
     }
-    DispatchQueue.main.async { [weak self] in
-      self?.dataSource.apply(snapshot, animatingDifferences: true)
-    }
+    dataSource.apply(snapshot, animatingDifferences: true)
   }
 }
