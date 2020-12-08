@@ -15,7 +15,7 @@ export class ListService extends BaseService {
     }
 
     @Transactional()
-    async createList(userId, boardId, position, title) {
+    async createList(userId, boardId, title) {
         const boardService = BoardService.getInstance();
         const board = await this.boardRepository.findOne({
             select: ['id'],
@@ -23,10 +23,16 @@ export class ListService extends BaseService {
         });
         if (!board) throw new EntityNotFoundError();
         await boardService.checkForbidden(userId, boardId);
+        const listWithMaxPosition = await this.listRepository
+            .createQueryBuilder('list')
+            .select('MAX(list.position)', 'max_position')
+            .where('list.board = :boardId', { boardId })
+            .getRawOne();
+        const maxPosition = listWithMaxPosition.max_position;
         const list = {
             creator: userId,
             board: boardId,
-            position,
+            position: maxPosition + 1,
             title,
         };
         const createList = this.listRepository.create(list);
