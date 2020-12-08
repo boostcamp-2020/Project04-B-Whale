@@ -14,28 +14,12 @@ export class BoardService extends BaseService {
         return BoardService.instance;
     }
 
-    async getMyBoards(id) {
-        const boards = await this.boardRepository.find({
-            select: ['id', 'title', 'color'],
-            where: { creator: id },
-        });
-        return boards;
-    }
-
-    async getInvitedBoards(id) {
-        const boards = await this.boardRepository
-            .createQueryBuilder('board')
-            .select(['board.id', 'board.title', 'board.color'])
-            .innerJoin('board.invitations', 'invitation', 'invitation.user_id=:userId', {
-                userId: id,
-            })
-            .getMany();
-        return boards;
-    }
-
     @Transactional()
     async getBoardsByUserId(userId) {
-        const promises = [this.getMyBoards(userId), this.getInvitedBoards(userId)];
+        const promises = [
+            this.customBoardRepository.findByCreatorId(userId),
+            this.customBoardRepository.findInvitedBoardsByUserId(userId),
+        ];
         const [myBoards, invitedBoards] = await Promise.all(promises);
 
         return { myBoards, invitedBoards };
