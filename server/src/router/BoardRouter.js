@@ -42,7 +42,7 @@ export const BoardRouter = () => {
 
     router.post('/:id/list', async (req, res) => {
         const listService = ListService.getInstance();
-        await listService.createList(req.user.id, req.params.id, req.body.position, req.body.title);
+        await listService.createList(req.user.id, req.params.id, req.body.title);
         res.sendStatus(201);
     });
 
