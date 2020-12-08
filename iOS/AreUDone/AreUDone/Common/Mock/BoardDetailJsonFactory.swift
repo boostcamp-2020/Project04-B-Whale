@@ -22,7 +22,7 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
               "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
           },
           "title": "보드제목",
-          "color": "#525252",
+          "color": "#b1cf99",
           "invitedUsers": [
               {
                   "id": 1,

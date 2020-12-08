@@ -33,14 +33,16 @@ final class BoardListCoordinator: NavigationCoordinator {
   func start() -> UIViewController {
     
     guard let boardListViewController = storyboard.instantiateViewController(
-            identifier: BoardListViewController.identifier, creator: { coder in
+            identifier: BoardListViewController.identifier, creator: { [weak self] coder in
+              guard let self = self else { return UIViewController() }
+              
               let boardService = BoardService(router: MockRouter(jsonFactory: BoardListTrueJsonFactory()))
-      let viewModel = BoardListViewModel(boardService: boardService)
-      return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
-    }) as? BoardListViewController else { return UIViewController() }
-
+              let viewModel = BoardListViewModel(boardService: boardService)
+              return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
+            }) as? BoardListViewController else { return UIViewController() }
+    
     boardListViewController.coordinator = self
-
+    
     return boardListViewController
   }
 }

@@ -14,7 +14,21 @@ final class BoardDetailViewController: UIViewController {
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
   
-  @IBOutlet private weak var collectionView: UICollectionView!
+  private lazy var titleTextField: UITextField = {
+    let textField = UITextField()
+    
+    textField.returnKeyType = .done
+    textField.delegate = self
+    textField.textColor = .white
+    
+    return textField
+  }()
+  @IBOutlet private weak var collectionView: BoardDetailCollectionView! {
+    didSet {
+      collectionView.dataSource = self
+      collectionView.delegate = self
+    }
+  }
   private let pageControl: UIPageControl = {
     let pageControl = UIPageControl()
     pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -74,18 +88,7 @@ final class BoardDetailViewController: UIViewController {
 
 private extension BoardDetailViewController {
   
-  func bindUI() {
-    viewModel.bindingUpdateBoardDetailCollectionView { [weak self] in
-      DispatchQueue.main.async {
-        self?.collectionView.reloadData()
-      }
-    }
-  }
-  
   func configure() {
-    // TODO: 추후 수정 (서버로부터 받아오도록)
-    view.backgroundColor = #colorLiteral(red: 0.3077110052, green: 0.5931787491, blue: 0.2305498123, alpha: 1)
-    
     view.addSubview(pageControl)
     
     configurePageControl()
@@ -103,12 +106,32 @@ private extension BoardDetailViewController {
   
   func configureNavigationBar() {
     navigationItem.largeTitleDisplayMode = .never
+    guard let navigationBar = navigationController?.navigationBar else { return }
     
+    configureNavigationBarAppearance(of: navigationBar)
+    configureNavigationBarTitleView(of: navigationBar)
+    configureBarButtonItem()
+  }
+  
+  func configureNavigationBarAppearance(of navigationBar: UINavigationBar) {
     let navigationAppearance = UINavigationBarAppearance()
     navigationAppearance.configureWithTransparentBackground()
     navigationAppearance.backgroundEffect = UIBlurEffect(style: .systemChromeMaterialDark)
-    navigationController?.navigationBar.standardAppearance = navigationAppearance
-    
+    navigationBar.standardAppearance = navigationAppearance
+  }
+  
+  func configureNavigationBarTitleView(of navigationBar: UINavigationBar) {
+    let frame = CGRect(
+      x: 0,
+      y: 0,
+      width: navigationBar.frame.size.width,
+      height: navigationBar.frame.size.height
+    )
+    titleTextField.frame = frame
+    navigationItem.titleView = titleTextField
+  }
+  
+  func configureBarButtonItem() {
     navigationItem.leftBarButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
       self?.coordinator?.pop()
     }
@@ -118,21 +141,6 @@ private extension BoardDetailViewController {
   }
   
   func configureCollectionView() {
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    
-    collectionView.backgroundColor = .clear
-    
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-    
-    configureCollectionViewFlowLayout()
-    
-    collectionView.register(BoardDetailCollectionViewCell.self)
-    collectionView.registerFooterView(BoardDetailFooterView.self)
-  }
-  
-  func configureCollectionViewFlowLayout() {
     let flowLayout = UICollectionViewFlowLayout()
     
     let sectionSpacing: CGFloat = 25
@@ -235,5 +243,44 @@ extension BoardDetailViewController {
     
     targetContentOffset.pointee = CGPoint(x: renewedIndex * scrollOffset, y: 0)
     pageControl.currentPage = Int(renewedIndex)
+  }
+}
+
+
+// MARK: - Extension UITextField Delegate
+
+extension BoardDetailViewController: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let title = textField.text {
+      viewModel.updateBoardTitle(to: title)
+    }
+    textField.resignFirstResponder()
+    return false
+  }
+}
+
+
+// MARK: - Extension bindUI
+
+private extension BoardDetailViewController {
+  
+  func bindUI() {
+    viewModel.bindingUpdateBoardDetailCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadData()
+      }
+    }
+    
+    viewModel.bindingUpdateBackgroundColor { [weak self] colorString in
+      DispatchQueue.main.async {
+        self?.view.backgroundColor = colorString.toUIColor()
+      }
+    }
+    
+    viewModel.bindingUpdateBoardTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.titleTextField.text = title
+      }
+    }
   }
 }

@@ -10,12 +10,15 @@ import Foundation
 protocol BoardDetailViewModelProtocol {
   
   func bindingUpdateBoardDetailCollectionView(handler: @escaping () -> Void)
-  
-  func updateBoardDetailCollectionView()
-  
+  func bindingUpdateBackgroundColor(handler: @escaping (String) -> Void)
+  func bindingUpdateBoardTitle(handler: @escaping (String) -> Void)
+    
   func numberOfLists() -> Int
   func fetchList(at index: Int) -> List?
   func insertList(list: List)
+  
+  func updateBoardDetailCollectionView()
+  func updateBoardTitle(to title: String)
 }
 
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
@@ -26,13 +29,25 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   private let boardId: Int
   
   private var updateBoardDetailCollectionViewHandler: (() -> Void)?
+  private var updateBackgroundColorHandler: ((String) -> Void)?
+  private var updateBoardTitleHandler: ((String) -> Void)?
   
   private var boardDetail: BoardDetail? {
     didSet {
       updateBoardDetailCollectionViewHandler?()
     }
   }
-
+  private var backgroundColor: String = "" {
+    didSet {
+      updateBackgroundColorHandler?(backgroundColor)
+    }
+  }
+  private var boardTitle: String = "" {
+    didSet {
+      updateBoardTitleHandler?(boardTitle)
+    }
+  }
+  
   // MARK: - Initializer
   
   init(boardService: BoardServiceProtocol, boardId: Int) {
@@ -60,6 +75,22 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       switch result {
       case .success(let boardDetail):
         self.boardDetail = boardDetail
+        
+        self.backgroundColor = boardDetail.color
+        self.boardTitle = boardDetail.title
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func updateBoardTitle(to title: String) {
+    boardService.updateBoard(withBoardId: boardId, title: boardTitle) { result in
+      switch result {
+      case .success(()):
+        self.boardTitle = title
+        
       case .failure(let error):
         print(error)
       }
@@ -74,5 +105,13 @@ extension BoardDetailViewModel {
   
   func bindingUpdateBoardDetailCollectionView(handler: @escaping () -> Void) {
     updateBoardDetailCollectionViewHandler = handler
+  }
+  
+  func bindingUpdateBackgroundColor(handler: @escaping (String) -> Void) {
+    updateBackgroundColorHandler = handler
+  }
+  
+  func bindingUpdateBoardTitle(handler: @escaping (String) -> Void) {
+    updateBoardTitleHandler = handler
   }
 }

@@ -100,12 +100,13 @@ final class BoardListViewController: UIViewController {
     
     bindUI()
     configure()
-    viewModel.fetchMyBoard()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.isNavigationBarHidden = true
+    
+    viewModel.fetchMyBoard()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
