@@ -57,7 +57,7 @@ extension CardEndPoint: EndPointable {
     case .updateCard:
       return nil
       
-    case .updateCardMember(_, let userIds):
+    case .updateCardMember:
       return nil
     }
   }
