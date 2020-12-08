@@ -75,7 +75,7 @@ final class BoardColorTableViewCell: UITableViewCell, Reusable {
   
   func update(with colorAsString: String) {
     colorInfoLabel.text = colorAsString
-    colorImageView.backgroundColor = colorAsString.hexStringToUIColor()
+    colorImageView.backgroundColor = colorAsString.toUIColor()
   }
 }
 

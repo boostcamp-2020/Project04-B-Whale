@@ -39,7 +39,7 @@ final class BoardListCollectionViewCell: UICollectionViewCell, Reusable {
   
   func update(with board: Board) {
     titleLabel.text = board.title
-    backgroundColor = board.color.hexStringToUIColor().withAlphaComponent(0.5)
+    backgroundColor = board.color.toUIColor().withAlphaComponent(0.5)
   }
 }
 

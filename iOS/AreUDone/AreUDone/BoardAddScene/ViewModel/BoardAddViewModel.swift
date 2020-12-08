@@ -73,6 +73,7 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
       switch result {
       case .success:
         self.dismissHandler?()
+        
       case .failure(let error):
         print(error)
       }

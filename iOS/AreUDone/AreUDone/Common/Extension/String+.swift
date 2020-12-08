@@ -22,7 +22,7 @@ extension String {
     return dateFormatter.date(from: self) ?? Date()
   }
   
-  func hexStringToUIColor() -> UIColor {
+  func toUIColor() -> UIColor {
       var rgbValue: UInt64 = 0
       let droppedString = self.dropFirst()
 
