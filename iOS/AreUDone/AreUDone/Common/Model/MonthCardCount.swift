@@ -8,7 +8,7 @@
 import Foundation
 
 struct MonthCardCount: Codable {
-  let cardCount: [DailyCardCount]
+  let cardCounts: [DailyCardCount]
   
   struct DailyCardCount: Codable {
     let dueDate: String
