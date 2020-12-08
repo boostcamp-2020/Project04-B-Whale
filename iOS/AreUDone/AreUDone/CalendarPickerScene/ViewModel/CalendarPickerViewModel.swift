@@ -80,11 +80,14 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     let date = selectedDate.toString()
     sendSelectedDateHandler?(date)
   }
+}
+
+
+// MARK: Calendar 계산
+
+private extension CalendarPickerViewModel {
   
-  
-  // MARK: Calendar 계산
-  
-  private func daysInMonth(for baseDate: Date) -> [Day] {
+  func daysInMonth(for baseDate: Date) -> [Day] {
     guard let monthMetadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
@@ -95,7 +98,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
     
-  private func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
+  func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
     guard let numberOfDaysInMonth = calendar.range(
       of: .day,
       in: .month,
@@ -115,7 +118,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
       firstDayIndex: firstDayWeekday)
   }
   
-  private func makeDay(
+  func makeDay(
     offsetBy dayOffset: Int,
     for baseDate: Date,
     isWithinDisplayedMonth: Bool
@@ -133,7 +136,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     )
   }
   
-  private func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
+  func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
     let numberOfDaysInMonth = monthMetadata.numberOfDays        // 한 달의 일 수
     let firstDayOfMonth = monthMetadata.firstDay                // 해당 달의 첫 번째 날
     let firstDayOfMonthIndex = monthMetadata.firstDayIndex      // 해당 달의 첫 번째 날의 인덱스
@@ -157,7 +160,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  private func makeDaysOfNextMonth(
+  func makeDaysOfNextMonth(
     using counts: Int, _ firstDayOfDisplayedMonth: Date
   ) -> [Day] {
     guard let lastDayInMonth = calendar.date(
@@ -177,7 +180,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  private enum CalendarDataError: Error {
+  enum CalendarDataError: Error {
     case metadataGeneration
   }
 }
