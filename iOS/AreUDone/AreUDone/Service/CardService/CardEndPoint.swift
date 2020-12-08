@@ -123,9 +123,7 @@ extension CardEndPoint: EndPointable {
       return body
       
     case .updateCardMember(_, let userIds):
-      // TODO: - Back과 얘기해봐야함
-      let userIdsAsString = userIds.map { String($0) }
-      return ["": ""]
+      return ["userIds": userIds]
       
     default:
       return nil
