@@ -214,4 +214,22 @@ export class CardService extends BaseService {
         const createCard = this.cardRepository.create(card);
         await this.cardRepository.save(createCard);
     }
+
+    @Transactional()
+    async deleteCard({ userId, cardId }) {
+        const card = await this.cardRepository
+            .createQueryBuilder('card')
+            .select(['card.id', 'card.list'])
+            .where('card.id = :cardId', { cardId })
+            .getRawOne();
+        if (!card) throw new EntityNotFoundError();
+        const list = await this.listRepository
+            .createQueryBuilder('list')
+            .select('list.board')
+            .where('list.id = :listId', { listId: card.list_id })
+            .getRawOne();
+        const boardService = BoardService.getInstance();
+        await boardService.checkForbidden(userId, list.board_id);
+        await this.cardRepository.delete(cardId);
+    }
 }
