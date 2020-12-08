@@ -72,4 +72,27 @@ export class CustomCardRepository extends BaseRepository {
 
         return cardCountList;
     }
+
+    async findWithListAndBoardById(cardId) {
+        const card = await this.createQueryBuilder('a')
+            .innerJoinAndSelect('a.list', 'b')
+            .innerJoinAndSelect('b.board', 'b_0')
+            .innerJoinAndSelect('a.creator', 'c')
+            .where('a.id = :cardId', { cardId })
+            .getOne();
+
+        return card;
+    }
+
+    async findWithCommentsAndMembers(cardId) {
+        const card = await this.createQueryBuilder('a')
+            .leftJoinAndSelect('a.comments', 'b')
+            .leftJoinAndSelect('b.user', 'b_0')
+            .leftJoinAndSelect('a.members', 'c')
+            .leftJoinAndSelect('c.user', 'c_0')
+            .where('a.id = :cardId', { cardId })
+            .getOne();
+
+        return card;
+    }
 }

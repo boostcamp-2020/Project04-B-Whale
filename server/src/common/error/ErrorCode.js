@@ -6,6 +6,7 @@ const ErrorCode = {
     BAD_REQUEST: { code: 1004, httpStatusCode: 400, message: 'Bad Request' },
     VALIDATION_ERROR: { code: 1005, httpStatusCode: 400, message: 'Validation error occurs' },
     CONFLICT: { code: 1006, httpStatusCode: 409, message: 'conflict' },
+    INTERNAL_SERVER_ERROR: { code: 5000, httpStatusCode: 500, message: 'Internal Server Error' },
 };
 
 export { ErrorCode };
