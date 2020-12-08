@@ -144,12 +144,12 @@ export class CardService extends BaseService {
             userId,
         });
 
+        if (!isExistUser) throw new ForbiddenError('no access to this card');
+
         if (userIds.length === 0) {
             await this.memberRepository.delete({ card: cardId });
             return;
         }
-
-        if (!isExistUser) throw new ForbiddenError('no access to this card');
 
         const isExistUsers = await this.customBoardRepository.existUsersByBoardId({
             boardId,
