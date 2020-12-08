@@ -5,6 +5,7 @@ const ErrorCode = {
     FORBIDDEN: { code: 1003, httpStatusCode: 403, message: 'Forbidden' },
     BAD_REQUEST: { code: 1004, httpStatusCode: 400, message: 'Bad Request' },
     VALIDATION_ERROR: { code: 1005, httpStatusCode: 400, message: 'Validation error occurs' },
+    CONFLICT: { code: 1006, httpStatusCode: 409, message: 'conflict' },
 };
 
 export { ErrorCode };
