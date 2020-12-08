@@ -13,6 +13,7 @@ protocol CalendarPickerViewModelProtocol {
   func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void)
   func bindingSendSelectedDate(handler: @escaping (String) -> Void)
   
+  func prepareForCardCount(with day: Int, completionHandler: ((Int) -> Void))
   func fetchInitialCalendar()
   func fetchUpdatedCalendar(to months: Int)
   func updateSelectedDate(to date: Date)
@@ -30,6 +31,9 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   var selectedDate: Date!
   private lazy var basedate: Date! = selectedDate
   private let cardService: CardServiceProtocol
+  private var type = "me"
+  private var currentMonthMetaData: MonthMetadata?
+  private var countDictionary = [String: Int]()
   
   private let calendar = Calendar(identifier: .gregorian)
   
@@ -46,34 +50,27 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     self.cardService = cardService
   }
   
+  
   // MARK: - Method
-  
-  func bindingInitializeDate(handler: @escaping ([Day], Date) -> Void) {
-    initializeCalendarHandler = handler
-  }
-  
-  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void) {
-    updateCalendarHandler = handler
-  }
-  
-  func bindingSendSelectedDate(handler: @escaping (String) -> Void) {
-    sendSelectedDateHandler = handler
-  }
   
   func fetchInitialCalendar() {
     let days = daysInMonth(for: selectedDate)
-    initializeCalendarHandler?(days, selectedDate)
+    fetchCardCount { [unowned self] in
+      initializeCalendarHandler?(days, selectedDate)
+    }
   }
   
   func fetchUpdatedCalendar(to months: Int) {
-    basedate = (self.calendar.date(
+    basedate = (calendar.date(
       byAdding: .month,
       value: months,
       to: basedate
     )) ?? basedate
     
     let days = daysInMonth(for: basedate)
-    updateCalendarHandler?(days, basedate)
+    fetchCardCount { [unowned self] in
+      updateCalendarHandler?(days, basedate)
+    }
   }
   
   func updateSelectedDate(to date: Date) {
@@ -87,8 +84,59 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     let date = selectedDate.toString()
     sendSelectedDateHandler?(date)
   }
+  
+  func prepareForCardCount(with day: Int, completionHandler: ((Int) -> Void)) {
+    let count = countDictionary["\(day)"] ?? 0
+    completionHandler(count)
+  }
+  
+  private func fetchCardCount(completionHandler: @escaping (() -> Void)) {
+    guard
+      let startDateAsString = basedate.startOfMonth()?.toString(withDividerFormat: "-"),
+      let endDateAsString = basedate.endOfMonth()?.toString(withDividerFormat: "-")
+    else { return }
+    
+    cardService.fetchCardsCount(
+      startDate: startDateAsString,
+      endDate: endDateAsString,
+      member: type
+    ) { [weak self] result in
+      switch result {
+      case .success(let monthCardCount):
+        monthCardCount.cardCounts.forEach { dailyCard in
+          guard
+            let day = self?.dateFormatter.string(from: dailyCard.dueDate.toDateFormat(with: .dash))
+          else { return }
+          
+          self?.countDictionary[day] = dailyCard.count
+        }
+        
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
 }
 
+
+// MARK:- Extension bindUI
+
+extension CalendarPickerViewModel {
+  
+  func bindingInitializeDate(handler: @escaping ([Day], Date) -> Void) {
+    initializeCalendarHandler = handler
+  }
+  
+  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void) {
+    updateCalendarHandler = handler
+  }
+  
+  func bindingSendSelectedDate(handler: @escaping (String) -> Void) {
+    sendSelectedDateHandler = handler
+  }
+}
 
 // MARK: Calendar 계산
 
@@ -98,7 +146,7 @@ private extension CalendarPickerViewModel {
     guard let monthMetadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
-    
+    currentMonthMetaData = monthMetadata
     var days = makeDays(using: monthMetadata) // 이전 달 + 해당 달
     days += makeDaysOfNextMonth(using: days.count, monthMetadata.firstDay) // + 다음 달
     

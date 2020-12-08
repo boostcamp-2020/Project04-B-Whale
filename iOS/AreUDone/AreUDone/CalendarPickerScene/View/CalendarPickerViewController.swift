@@ -94,13 +94,17 @@ private extension CalendarPickerViewController {
   
   func bindUI() {
     viewModel.bindingInitializeDate { [weak self] days, selectedDate in
-      self?.updateSnapshot(with: days, animatingDifferences: false)
-      self?.headerView.baseDate = selectedDate
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: days, animatingDifferences: false)
+        self?.headerView.baseDate = selectedDate
+      }
     }
     
     viewModel.bindingUpdateCalendar { [weak self] days, selectedDate in
-      self?.updateSnapshot(with: days)
-      self?.headerView.baseDate = selectedDate
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: days)
+        self?.headerView.baseDate = selectedDate
+      }
     }
     
     viewModel.bindingSendSelectedDate { [weak self] date in
@@ -116,7 +120,6 @@ private extension CalendarPickerViewController {
   @objc func dimmerViewDidTapped() {
     viewModel.sendSelectedDate()
     coordinator?.dismiss()
-//    dismiss(animated: true) // 프레젠테이션 로직 옮겨주기
   }
 }
 
@@ -179,9 +182,20 @@ private extension CalendarPickerViewController {
 private extension CalendarPickerViewController {
   
   func configureDataSource() -> DataSource {
-    let datasource = DataSource(collectionView: collectionView) { collectionView, indexPath, day -> UICollectionViewCell? in
+    let datasource = DataSource(
+      collectionView: collectionView
+    ) { [weak self] collectionView, indexPath, day -> UICollectionViewCell? in
       let cell: CalendarDateCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       cell.day = day
+      
+      if let dayNumber = Int(day.number),
+         day.isWithinDisplayedMonth {
+        self?.viewModel.prepareForCardCount(with: dayNumber) { count in
+          DispatchQueue.main.async {
+            cell.updateCountView(with: count)
+          }
+        }
+      }
       
       return cell
     }
