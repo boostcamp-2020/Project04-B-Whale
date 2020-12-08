@@ -16,7 +16,8 @@ protocol BoardServiceProtocol: class {
   func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
   
   func fetchBoardDetail(with boardId: Int, completionHandler: @escaping (Result<BoardDetail, APIError>) -> Void)
-  func requestInvitation(with boardId: Int, and userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  func requestInvitation(withBoardId boardId: Int, andUserId userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  
 }
 
 final class BoardService: BoardServiceProtocol {
@@ -65,7 +66,7 @@ final class BoardService: BoardServiceProtocol {
     }
   }
   
-  func requestInvitation(with boardId: Int, and userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+  func requestInvitation(withBoardId boardId: Int, andUserId userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: BoardEndPoint.inviteUserToBoard(boardId: boardId, userId: userId)) { result in
       completionHandler(result)
     }
