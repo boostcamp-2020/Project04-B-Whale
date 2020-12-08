@@ -111,14 +111,15 @@ export class CardService extends BaseService {
 
         if (!card) throw new EntityNotFoundError('card is not exist');
 
-        const { list } = await this.cardRepository.findOne(cardId, { relations: ['list'] });
-        const { board } = await this.listRepository.findOne(list.id, { relations: ['board'] });
-        const { id: boardId } = board;
-        const isAccess = await this.customBoardRepository.checkAccess({ boardId, userId });
+        const { id: boardId } = await this.customBoardRepository.findBoardByCardId(cardId);
+        const isExistUser = await this.customBoardRepository.existUserByBoardId({
+            boardId,
+            userId,
+        });
 
-        if (!isAccess) throw new ForbiddenError('no access to this card');
+        if (!isExistUser) throw new ForbiddenError('no access to this card');
 
-        if (listId && !(await this.customListRepository.isListOfBoard({ boardId, listId }))) {
+        if (listId && !(await this.customBoardRepository.existListByBoardId({ boardId, listId }))) {
             throw new ConflictError(`can't move this card to list`);
         }
 
