@@ -6,19 +6,22 @@
 //
 
 import UIKit
-
+import NetworkFramework
 
 final class CalendarPickerViewCoordinator: NavigationCoordinator {
   
   private let selectedDate: Date
   var navigationController: UINavigationController?
+  let router: Routable
   
-  init(selectedDate: Date) {
+  init(router: Routable, selectedDate: Date) {
+    self.router = router
     self.selectedDate = selectedDate
   }
   
   func start() -> UIViewController {
-    let viewModel = CalendarPickerViewModel()
+    let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+    let viewModel = CalendarPickerViewModel(cardService: cardService)
     viewModel.selectedDate = selectedDate
     
     let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel)
