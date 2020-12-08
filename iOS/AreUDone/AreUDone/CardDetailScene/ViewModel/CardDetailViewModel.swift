@@ -22,6 +22,8 @@ protocol CardDetailViewModelProtocol {
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
   func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
+  func prepareUpdateCell(handler: (Int) -> Void)
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -32,6 +34,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let userService: UserServiceProtocol
+  private let commentService: CommentServiceProtocol
   private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
@@ -56,12 +59,14 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     id: Int,
     cardService: CardServiceProtocol,
     imageService: ImageServiceProtocol,
-    userService: UserServiceProtocol
+    userService: UserServiceProtocol,
+    commentService: CommentServiceProtocol
   ) {
     self.id = id
     self.cardService = cardService
     self.imageService = imageService
     self.userService = userService
+    self.commentService = commentService
   }
 
   
@@ -101,6 +106,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success(()):
         break
+        
       case .failure(let error):
         print(error)
       }
@@ -115,6 +121,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success(()):
         break
+        
       case .failure(let error):
         print(error)
       }
@@ -131,6 +138,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         case .success(let data):
           completionHandler(data)
           self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+          
         case .failure(let error):
           print(error)
         }
@@ -138,9 +146,26 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
+  func prepareUpdateCell(handler: (Int) -> Void) {
+    guard let userId = Int(UserInfo.shared.userId) else { return }
+    handler(userId)
+  }
+  
   func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void) {
     guard let boardId = boardId else { return }
     handler(id, boardId, cardMembers)
+  }
+  
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void) {
+    commentService.deleteComment(with: commentId) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   private func fetchUserData() {

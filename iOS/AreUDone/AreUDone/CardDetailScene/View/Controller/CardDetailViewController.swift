@@ -99,6 +99,12 @@ private extension CardDetailViewController {
       let cell: CommentCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.update(with: comment)
+      self?.viewModel.prepareUpdateCell(handler: { userId in
+        if comment.user.id == userId {
+          cell.confirmEditOption()
+          cell.delegate = self
+        }
+      })
       
       self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl) { data in
         let image = UIImage(data: data)
@@ -389,6 +395,8 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
 }
 
 
+// MARK:- Extension ContentInputViewControllerDelegate
+
 extension CardDetailViewController: ContentInputViewControllerDelegate {
   
   func send(with content: String) {
@@ -400,6 +408,8 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
 }
 
 
+// MARK:- Extension CardDetailMemberViewDelegate
+
 extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
@@ -408,3 +418,33 @@ extension CardDetailViewController: CardDetailMemberViewDelegate {
     }
   }
 }
+
+
+// MARK:- Extension ommentCollectionViewCellDelegate
+
+extension CardDetailViewController: CommentCollectionViewCellDelegate {
+  
+  func CommentCollectionViewCellEditButtonTapped(with cell: CommentCollectionViewCell) {
+    var snapshot = dataSource.snapshot()
+    guard
+      let indexPath = commentCollectionView.indexPath(for: cell),
+      let comment = dataSource.itemIdentifier(for: indexPath)
+    else { return }
+    
+    
+    let alert = UIAlertController(
+      alertType: .delete,
+      alertStyle: .actionSheet,
+      confirmAction: { [weak self] in
+        self?.viewModel.deleteComment(with: comment.id) {
+          snapshot.deleteItems([comment])
+          DispatchQueue.main.async {
+            self?.dataSource.apply(snapshot)
+          }
+        }
+      })
+    
+    present(alert, animated: true)
+  }
+}
+
