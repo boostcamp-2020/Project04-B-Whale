@@ -16,4 +16,16 @@ export class CustomBoardRepository extends BaseRepository {
             .getMany();
         return boards;
     }
+
+    async findBoardIdsByUserId(userId) {
+        const boards = await this.createQueryBuilder('board')
+            .select('board.id', 'id')
+            .leftJoin('board.invitations', 'invitation')
+            .where(`board.creator_id=:userId or invitation.user_id=:userId`, { userId })
+            .getRawMany();
+
+        const boardIds = boards.map((ele) => ele.id);
+
+        return boardIds;
+    }
 }
