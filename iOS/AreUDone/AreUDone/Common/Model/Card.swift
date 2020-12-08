@@ -48,9 +48,9 @@ extension Card: NSItemProviderWriting {
       let data = try encoder.encode(self)
       
       completionHandler(data, nil)
-      print("성공")
+      
     } catch {
-      print("에러")
+      
       completionHandler(nil, error)
     }
     
