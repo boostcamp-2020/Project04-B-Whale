@@ -338,7 +338,9 @@ private extension CardDetailViewController {
 extension CardDetailViewController: CommentViewDelegate {
   
   func commentSaveButtonTapped(with comment: String) {
-    viewModel.addComment(with: comment)
+    viewModel.addComment(with: comment) { [weak self] in
+      self?.viewModel.fetchDetailCard()
+    }
   }
 }
 

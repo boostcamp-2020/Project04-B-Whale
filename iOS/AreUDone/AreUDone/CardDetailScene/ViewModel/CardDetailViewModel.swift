@@ -18,7 +18,7 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void))
   
   func fetchDetailCard()
-  func addComment(with comment: String)
+  func addComment(with comment: String, completionHandler: @escaping (() -> Void))
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
   func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
@@ -94,8 +94,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func addComment(with comment: String) {
-    // TODO:- CommentService
+  func addComment(with comment: String, completionHandler: @escaping (() -> Void)) {
+    commentService.createComment(with: id, content: comment) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   func updateDueDate(with dueDate: String) {
