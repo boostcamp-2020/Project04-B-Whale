@@ -15,13 +15,13 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
-  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void))
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
-  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void)
+  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -43,12 +43,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
-  private var cardDetailMemberViewHandler: (([InvitedUser]?) -> Void)?
+  private var cardDetailMemberViewHandler: (([User]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
   private var boardId: Int?
-  private var cardMembers: [InvitedUser]?
+  private var cardMembers: [User]?
   
   // MARK:- Initializer
   
@@ -138,7 +138,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func prepareUpdateMember(handler: (Int, Int, [InvitedUser]?) -> Void) {
+  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void) {
     guard let boardId = boardId else { return }
     handler(id, boardId, cardMembers)
   }
@@ -191,7 +191,7 @@ extension CardDetailViewModel {
     commentViewProfileImageHandler = handler
   }
   
-  func bindingCardDetailMemberView(handler: @escaping (([InvitedUser]?) -> Void)) {
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void)) {
     cardDetailMemberViewHandler = handler
   }
 }

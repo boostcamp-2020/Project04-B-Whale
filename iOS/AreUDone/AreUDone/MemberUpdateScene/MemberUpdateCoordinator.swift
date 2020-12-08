@@ -20,11 +20,11 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
   
   private let cardId: Int
   private let boardId: Int
-  private let cardMember: [InvitedUser]?
+  private let cardMember: [User]?
   
   // MARK:- Initializer
   
-  init(router: Routable, cardId: Int, boardId: Int, cardMember: [InvitedUser]?) {
+  init(router: Routable, cardId: Int, boardId: Int, cardMember: [User]?) {
     self.router = router
     self.cardId = cardId
     self.boardId = boardId
