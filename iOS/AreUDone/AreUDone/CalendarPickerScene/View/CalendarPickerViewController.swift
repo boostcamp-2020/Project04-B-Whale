@@ -67,7 +67,8 @@ final class CalendarPickerViewController: UIViewController {
       alertType: .timePicker,
       alertStyle: .actionSheet,
       confirmAction: {
-        
+        let date = self.timePicker.date
+        self.viewModel.updateSelectedDate(to: date)
       })
     
     return alert
@@ -77,7 +78,7 @@ final class CalendarPickerViewController: UIViewController {
     let datePicker = UIDatePicker()
     datePicker.translatesAutoresizingMaskIntoConstraints = false
     datePicker.datePickerMode = .time
-    datePicker.timeZone = TimeZone(abbreviation: "GMT")
+    datePicker.locale = Locale.current
     if #available(iOS 13.4, *) {
       datePicker.preferredDatePickerStyle = .wheels
     }
@@ -136,6 +137,7 @@ private extension CalendarPickerViewController {
       DispatchQueue.main.async {
         self?.updateSnapshot(with: days, animatingDifferences: false)
         self?.headerView.baseDate = selectedDate
+        self?.timePicker.date = selectedDate
       }
     }
   }
@@ -145,6 +147,7 @@ private extension CalendarPickerViewController {
       DispatchQueue.main.async {
         self?.updateSnapshot(with: days)
         self?.headerView.baseDate = selectedDate
+        self?.timePicker.date = selectedDate
       }
     }
   }
