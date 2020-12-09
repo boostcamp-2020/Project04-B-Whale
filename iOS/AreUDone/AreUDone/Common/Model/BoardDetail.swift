@@ -9,9 +9,9 @@ import Foundation
 
 struct BoardDetail: Codable {
   let id: Int
-  let creator: Creator
+  let creator: User
   let title, color: String
-  let invitedUsers: [InvitedUser]
+  let invitedUsers: [User]
   var lists: [List]
 }
 

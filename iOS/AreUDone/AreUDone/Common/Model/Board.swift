@@ -19,10 +19,11 @@ struct Board: Codable {
 
 extension Board: Hashable {
   static func == (lhs: Board, rhs: Board) -> Bool {
-    return lhs.id == rhs.id
+    return lhs.id == rhs.id && lhs.title == rhs.title
   }
   
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
+    hasher.combine(title)
   }
 }
