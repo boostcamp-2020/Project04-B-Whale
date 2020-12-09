@@ -88,8 +88,8 @@ extension BoardDetailCoordinator {
     navigationController?.popViewController(animated: true)
   }
   
-  func pushToInvitation() {
-    invitationCoordinator = InvitationCoordinator(boardId: boardId)
+  func pushToInvitation(delegate: InvitationViewControllerDelegate) {
+    invitationCoordinator = InvitationCoordinator(router: router, boardId: boardId, delegate: delegate)
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()
@@ -98,7 +98,6 @@ extension BoardDetailCoordinator {
     
     navigationController?.present(subNavigationController, animated: true)
   }
-  
   
   func pushToCardDetail(of cardId: Int) {
     cardDetailCoordinator = CardDetailCoordinator(id: cardId, router: self.router)

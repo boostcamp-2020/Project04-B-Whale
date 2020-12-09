@@ -70,7 +70,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   // MARK: - Method
   
   func numberOfLists() -> Int {
-    boardDetail?.lists.count ?? 0
+    return boardDetail?.lists.count ?? 0
   }
   
   func remove(at index: Int) {
