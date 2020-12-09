@@ -185,57 +185,59 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('user0이 card0에 대해 댓글 작성 201 반환', async () => {
-        // given
-        const em = getEntityManagerOrTransactionManager('default');
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
 
-        const user0 = em.create(User, {
-            socialId: 0,
-            name: 'youngxpepp',
-            profileImageUrl: 'http://',
+            const user0 = em.create(User, {
+                socialId: 0,
+                name: 'youngxpepp',
+                profileImageUrl: 'http://',
+            });
+            const user1 = em.create(User, {
+                socialId: 1,
+                name: 'sooyeon',
+                profileImageUrl: 'http://',
+            });
+            await em.save([user0, user1]);
+
+            const board0 = em.create(Board, {
+                title: 'board title 0',
+                color: '#FFFFFF',
+                creator: user1,
+            });
+            await em.save(board0);
+
+            const list0 = em.create(List, {
+                title: 'list title 0',
+                position: 0,
+                board: board0,
+                creator: user1,
+            });
+            await em.save(list0);
+
+            const card0 = em.create(Card, {
+                title: 'card title 0',
+                content: 'card content 0',
+                position: 0,
+                dueDate: moment.tz('2020-12-03T09:37:00', 'Asia/Seoul').format(),
+                list: list0,
+                creator: user1,
+            });
+            await em.save(card0);
+
+            await em.save(em.create(Invitation, { user: user0, board: board0 }));
+
+            const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
+
+            // when
+            const response = await agent(app.httpServer)
+                .post(`/api/card/${card0.id}/comment`)
+                .set('Authorization', accessToken)
+                .send({ content: 'this is a comment' });
+
+            // then
+            expect(response.status).toEqual(201);
         });
-        const user1 = em.create(User, {
-            socialId: 1,
-            name: 'sooyeon',
-            profileImageUrl: 'http://',
-        });
-        await em.save([user0, user1]);
-
-        const board0 = em.create(Board, {
-            title: 'board title 0',
-            color: '#FFFFFF',
-            creator: user1,
-        });
-        await em.save(board0);
-
-        const list0 = em.create(List, {
-            title: 'list title 0',
-            position: 0,
-            board: board0,
-            creator: user1,
-        });
-        await em.save(list0);
-
-        const card0 = em.create(Card, {
-            title: 'card title 0',
-            content: 'card content 0',
-            position: 0,
-            dueDate: moment.tz('2020-12-03T09:37:00', 'Asia/Seoul').format(),
-            list: list0,
-            creator: user1,
-        });
-        await em.save(card0);
-
-        await em.save(em.create(Invitation, { user: user0, board: board0 }));
-
-        const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
-
-        // when
-        const response = await agent(app.httpServer)
-            .post(`/api/card/${card0.id}/comment`)
-            .set('Authorization', accessToken)
-            .send({ content: 'this is a comment' });
-
-        // then
-        expect(response.status).toEqual(201);
     });
 });
