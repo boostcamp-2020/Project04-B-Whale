@@ -91,18 +91,8 @@ const Modal = ({ onClose, visible }) => {
     };
 
     const addBoard = async () => {
-        const { status, data } = await createBoard({ title, color });
-        switch (status) {
-            case 201:
-                document.location = `/board/${data.id}`;
-                break;
-            case 400:
-            case 401:
-                window.location.href = '/login';
-                break;
-            default:
-                throw new Error(`Unhandled status type : ${status}`);
-        }
+        const { data } = await createBoard({ title, color });
+        document.location = `/board/${data.id}`;
     };
 
     return (

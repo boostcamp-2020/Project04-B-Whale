@@ -1,4 +1,4 @@
-import request from './api';
+import request from './request';
 
 // eslint-disable-next-line import/prefer-default-export
 export const searchUsersByName = async (name) => {

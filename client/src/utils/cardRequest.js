@@ -1,4 +1,4 @@
-import request from './api';
+import request from './request';
 
 export const getCardCount = async ({ startDate, endDate, member }) => {
     const config = {

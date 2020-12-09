@@ -11,19 +11,9 @@ export default ({ children }) => {
     const [state, dispatch] = useReducer(BoardsReducer, initBoards);
 
     useEffect(async () => {
-        const { status, data } = await getBoards();
+        const { data } = await getBoards();
 
-        switch (status) {
-            case 200:
-                dispatch({ type: 'GET_BOARDS', data });
-                break;
-            case 400:
-            case 401:
-                window.location.href = '/login';
-                break;
-            default:
-                throw new Error(`Unhandled status type : ${status}`);
-        }
+        dispatch({ type: 'GET_BOARDS', data });
     }, []);
 
     return (
