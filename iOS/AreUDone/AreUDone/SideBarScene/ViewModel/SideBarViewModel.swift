@@ -18,7 +18,7 @@ protocol SideBarViewModelProtocol {
   
   func numberOfMembers() -> Int
   func numberOfActivities() -> Int
-  func fetchMember(at index: Int) -> InvitedUser?
+  func fetchMember(at index: Int) -> User?
   func fetchActivity(at index: Int) -> Activity?
   func fetchSectionHeader(at index: Int) -> (image: String, title: String)
   func fetchProfileImage(with url: String, handler: @escaping (Data) -> Void)
@@ -37,7 +37,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   private var updateMembersInCollectionViewHandler: (() -> Void)?
   private var updateActivitiesInCollectionViewHandler: (() -> Void)?
   
-  private var boardMembers: [InvitedUser]? {
+  private var boardMembers: [User]? {
     didSet {
       updateMembersInCollectionViewHandler?()
     }
@@ -74,7 +74,11 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
-        self.boardMembers = boardDetail.invitedUsers
+        var invitedUsers = boardDetail.invitedUsers
+        invitedUsers.insert(boardDetail.creator, at: 0)
+        
+        self.boardMembers = invitedUsers
+        
       case .failure(let error):
         print(error)
       }
@@ -100,7 +104,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     return boardActivities?.count ?? 0
   }
   
-  func fetchMember(at index: Int) -> InvitedUser? {
+  func fetchMember(at index: Int) -> User? {
     
     return boardMembers?[index]
   }
