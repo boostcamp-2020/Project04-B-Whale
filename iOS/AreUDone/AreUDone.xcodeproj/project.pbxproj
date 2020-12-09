@@ -296,6 +296,7 @@
 		BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
 		BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
 		BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */; };
+		BD59A7122580D98000BF8928 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A7112580D97F00BF8928 /* Week.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -525,6 +526,7 @@
 		BD59A6D0257F192300BF8928 /* UserIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdStore.swift; sourceTree = "<group>"; };
 		BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEndPoint.swift; sourceTree = "<group>"; };
 		BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCardCount.swift; sourceTree = "<group>"; };
+		BD59A7112580D97F00BF8928 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -1421,6 +1423,7 @@
 				BDD18BB32568D682005DF00A /* VideoConstant.swift */,
 				336010CC256B7B2B009580A1 /* APICredentials.swift */,
 				BD59A60E25787C6300BF8928 /* Font.swift */,
+				BD59A7112580D97F00BF8928 /* Week.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1782,6 +1785,7 @@
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
 				333BA59F2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift in Sources */,
+				BD59A7122580D98000BF8928 /* Week.swift in Sources */,
 				BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */,

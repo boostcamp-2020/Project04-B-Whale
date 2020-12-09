@@ -46,7 +46,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   }
   
   func changeDate(to date: String, direction: Direction?) {
-    let date = date.toDateFormat(with: .dot)
+    let date = date.toDateAndTimeFormat()
     
     if let direction = direction {
       let day = direction == .left ? -1 : 1
