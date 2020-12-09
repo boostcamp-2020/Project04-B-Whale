@@ -22,6 +22,7 @@ enum CardEndPoint {
         dueDate: String?
        )
   case updateCardMember(id: Int, userIds: [Int])
+  case fetchCardsCount(startDate: String, endDate: String, member: String?)
 }
 
 extension CardEndPoint: EndPointable {
@@ -38,6 +39,9 @@ extension CardEndPoint: EndPointable {
       
     case .updateCardMember(let id, _):
       return "\(APICredentials.ip)/api/card/\(id)/member"
+      
+    case .fetchCardsCount:
+      return "\(APICredentials.ip)/api/card/count"
     }
   }
   
@@ -59,6 +63,13 @@ extension CardEndPoint: EndPointable {
       
     case .updateCardMember:
       return nil
+      
+    case .fetchCardsCount(let startDate, let endDate, let member):
+      var value = "startdate:" + startDate + " " + "enddate:" + endDate
+      if let member = member {
+        value += " " + member
+      }
+      return ["q": value]
     }
   }
   
@@ -75,6 +86,9 @@ extension CardEndPoint: EndPointable {
       
     case .updateCardMember:
       return .put
+      
+    case .fetchCardsCount:
+      return .get
     }
   }
   
