@@ -106,8 +106,8 @@ private extension BoardDetailFooterView {
 
 extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
-  func addButtonTapped(text: String) {
-    addHandler?(text)
+  func addButtonTapped(listTitle: String) {
+    addHandler?(listTitle)
     cancelButtonTapped()
   }
   
