@@ -1,24 +1,23 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
+import { agent } from 'supertest';
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
 import { Application } from '../../../src/Application';
-import { EntityNotFoundError } from '../../../src/common/error/EntityNotFoundError';
-import { ForbiddenError } from '../../../src/common/error/ForbiddenError';
-import { CommentDto } from '../../../src/dto/CommentDto';
+import { JwtUtil } from '../../../src/common/util/JwtUtil';
 import { Board } from '../../../src/model/Board';
 import { Card } from '../../../src/model/Card';
 import { Comment } from '../../../src/model/Comment';
 import { Invitation } from '../../../src/model/Invitation';
 import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
-import { CommentService } from '../../../src/service/CommentService';
 import { TestTransactionDelegate } from '../../TestTransactionDelegate';
 
-describe('CommentService.modifyComment() Test', () => {
+describe('PATCH /api/comment/{commentId}', () => {
     const app = new Application();
+    let jwtUtil = null;
 
     beforeAll(async () => {
-        await app.initEnvironment();
-        await app.initDatabase();
+        await app.initialize();
+        jwtUtil = JwtUtil.getInstance();
     });
 
     afterAll(async (done) => {
@@ -26,35 +25,53 @@ describe('CommentService.modifyComment() Test', () => {
         done();
     });
 
-    test('존재하지 않는 댓글을 수정할 때 EntityNotFoundError 발생', async () => {
-        const commentService = CommentService.getInstance();
+    test('존재하지 않는 댓글을 수정할 때 404 반환', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
-
             const user0 = em.create(User, {
                 socialId: 0,
                 name: 'youngxpepp',
                 profileImageUrl: 'http://',
             });
             await em.save(user0);
-
-            const commentDto = new CommentDto(1, 'edited content');
-
+            const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
             // when
+            const response = await agent(app.httpServer)
+                .patch(`/api/comment/1`)
+                .set('Authorization', accessToken)
+                .send({
+                    content: 'edited content',
+                });
             // then
-            try {
-                await commentService.removeComment({ userId: user0.id, commentDto });
-                fail();
-            } catch (error) {
-                expect(error).toBeInstanceOf(EntityNotFoundError);
-                expect(error.message).toEqual('Not found comment');
-            }
+            expect(response.status).toEqual(404);
         });
     });
 
-    test('댓글을 수정하려고 하지만 본인 댓글이 아니라서 ForBiddenError 발생', async () => {
-        const commentService = CommentService.getInstance();
+    test('commentId가 문자열일 때 호출 시 400 반환', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+            const user0 = em.create(User, {
+                socialId: 0,
+                name: 'youngxpepp',
+                profileImageUrl: 'http://',
+            });
+            await em.save(user0);
+            const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
+
+            // when
+            const response = await agent(app.httpServer)
+                .patch(`/api/comment/dd`)
+                .set('Authorization', accessToken)
+                .send();
+
+            // then
+            expect(response.status).toEqual(400);
+        });
+    });
+
+    test('본인 댓글이 아닌 댓글을 수정할 때 403 반환', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -105,25 +122,23 @@ describe('CommentService.modifyComment() Test', () => {
             });
             await em.save(comment0);
 
-            const commentDto = new CommentDto(comment0.id, 'edited content');
+            const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
+            const expectedContent = 'edited content';
 
             // when
-            // then
-            try {
-                await commentService.modifyComment({
-                    userId: user0.id,
-                    commentDto,
+            const response = await agent(app.httpServer)
+                .patch(`/api/comment/${comment0.id}`)
+                .set('Authorization', accessToken)
+                .send({
+                    content: expectedContent,
                 });
-                fail();
-            } catch (error) {
-                expect(error).toBeInstanceOf(ForbiddenError);
-                expect(error.message).toEqual(`Not your comment`);
-            }
+
+            // then
+            expect(response.status).toEqual(403);
         });
     });
 
-    test('본인이 작성한 댓글 수정', async () => {
-        const commentService = CommentService.getInstance();
+    test('본인이 작성한 댓글 삭제 성공 시 204 반환', async () => {
         await TestTransactionDelegate.transaction(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
@@ -167,17 +182,17 @@ describe('CommentService.modifyComment() Test', () => {
             });
             await em.save(comment0);
 
-            const commentDto = new CommentDto(comment0.id, 'edited content');
+            const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
+            const expectedContent = 'edited content';
 
             // when
-            await commentService.modifyComment({
-                userId: user0.id,
-                commentDto,
-            });
+            const response = await agent(app.httpServer)
+                .patch(`/api/comment/${comment0.id}`)
+                .set('Authorization', accessToken)
+                .send({ content: expectedContent });
 
             // then
-            const deletedComment0 = await em.findOne(Comment, comment0.id);
-            expect(deletedComment0.content).toEqual(commentDto.content);
+            expect(response.status).toEqual(204);
         });
     });
 });

@@ -68,8 +68,8 @@ export class CommentService extends BaseService {
     }
 
     @Transactional()
-    async modifyComment({ userId, commentId, commentDto }) {
-        const comment = await this.commentRepository.findOne(commentId, {
+    async modifyComment({ userId, commentDto }) {
+        const comment = await this.commentRepository.findOne(commentDto.id, {
             loadRelationIds: {
                 relations: ['user'],
                 disableMixedMap: true,
