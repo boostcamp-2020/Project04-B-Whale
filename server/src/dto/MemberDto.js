@@ -1,13 +1,12 @@
-import { IsArray, ValidateIf } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class MemberDto {
+    @IsNumber()
     id;
 
+    @IsNumber()
     card;
 
+    @IsNumber()
     user;
-
-    @ValidateIf((o) => o.user)
-    @IsArray()
-    userIds;
 }

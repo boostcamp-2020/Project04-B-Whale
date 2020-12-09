@@ -5,8 +5,8 @@ import { validator } from '../common/util/validator';
 import { CardCountDto } from '../dto/CardCountDto';
 import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 import { CardDto } from '../dto/CardDto';
-import { MemberDto } from '../dto/MemberDto';
 import { BadRequestError } from '../common/error/BadRequestError';
+import { AddMemberBodyDto } from '../dto/AddMemberBodyDto';
 
 export const CardRouter = () => {
     const router = Router();
@@ -88,7 +88,7 @@ export const CardRouter = () => {
         const { id: userId } = req.user;
         const { cardId } = req.params;
         const { userIds } = req.body;
-        await validator(MemberDto, { user: true, userIds });
+        await validator(AddMemberBodyDto, { cardId, userIds });
 
         await cardService.addMemberToCardByUserIds({ cardId, userId, userIds });
         res.status(204).end();
