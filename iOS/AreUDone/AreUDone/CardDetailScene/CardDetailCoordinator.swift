@@ -92,7 +92,7 @@ extension CardDetailCoordinator {
     navigationController?.present(calendarPickerViewController, animated: true)
   }
   
-  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [User]?) {
+  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [User]?, delegate: MemberUpdateViewControllerDelegate) {
     memberUpdateCoordinator = MemberUpdateCoordinator(
       router: router,
       cardId: cardId,
@@ -104,6 +104,7 @@ extension CardDetailCoordinator {
     guard let memberUpdateViewController = memberUpdateCoordinator.start()
             as? MemberUpdateViewController
     else { return }
+    memberUpdateViewController.delegate = delegate
     
     let subNavigationViewController = UINavigationController()
     

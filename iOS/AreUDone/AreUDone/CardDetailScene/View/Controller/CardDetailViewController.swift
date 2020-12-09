@@ -100,7 +100,7 @@ private extension CardDetailViewController {
       
       cell.update(with: comment)
       
-      self?.viewModel.prepareUpdateCell  { userId in
+      self?.viewModel.prepareUpdateCell { userId in
         guard comment.user.id == userId else { return }
         cell.confirmEditOption()
         cell.delegate = self
@@ -239,6 +239,9 @@ private extension CardDetailViewController {
     bindingCardDetailBoardTitle()
     bindingCardDetailMemberView()
     bindingCommentViewProfileImage()
+    bindingUpdateDueDateView()
+    bindingUpdateContentView()
+    bindingPrepareForUpdateMemberView()
   }
   
   func bindingCardDetailContentView() {
@@ -306,6 +309,29 @@ private extension CardDetailViewController {
       }
     }
   }
+  
+  func bindingUpdateDueDateView() {
+    viewModel.bindingUpdateDueDateView { [weak self] selectedDate in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateDueDateView(with: selectedDate)
+      }
+    }
+  }
+  
+  func bindingUpdateContentView() {
+    viewModel.bindingUpdateContentView { [weak self] content in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateContentView(with: content)
+      }
+    }
+  }
+  
+  func bindingPrepareForUpdateMemberView() {
+    viewModel.bindingPrepareForUpdateMemberView { [weak self] (cardId, boardId, cardMembers) in
+      guard let self = self else { return }
+      self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
+    }
+  }
 }
 
 
@@ -338,7 +364,9 @@ private extension CardDetailViewController {
 extension CardDetailViewController: CommentViewDelegate {
   
   func commentSaveButtonTapped(with comment: String) {
-    viewModel.addComment(with: comment)
+    viewModel.addComment(with: comment) { [weak self] in
+      self?.viewModel.fetchDetailCard()
+    }
   }
 }
 
@@ -388,9 +416,6 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
     viewModel.updateDueDate(with: selectedDate)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateDueDateView(with: selectedDate)
-    }
   }
 }
 
@@ -401,9 +426,6 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
   
   func send(with content: String) {
     viewModel.updateContent(with: content)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateContentView(with: content)
-    }
   }
 }
 
@@ -413,9 +435,7 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
 extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
-    viewModel.prepareUpdateMember { (cardId, boardId, cardMembers) in
-      cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers)
-    }
+    viewModel.prepareUpdateMemberView()
   }
 }
 
@@ -448,3 +468,12 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
   }
 }
 
+
+// MARK:- Extension MemberUpdateViewControllerDelegate
+
+extension CardDetailViewController: MemberUpdateViewControllerDelegate {
+  
+  func memberUpdateViewControllerWillDisappear() {
+    viewModel.fetchDetailCard()
+  }
+}
