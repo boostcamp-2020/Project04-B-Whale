@@ -7,12 +7,21 @@ import InvitedDropdown from './InvitedUserDropdown';
 import { getDetailBoard } from '../../utils/boardRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import AskOverDropdown from './AskOverDropdown';
+import AddListOrCard from './AddListOrCard';
+import List from './List';
 
 const MainContents = styled.div`
     height: 92%;
     width: 100%;
     background-color: ${(props) => props.backgroundColor};
 `;
+
+const Wrapper = styled.div`
+    display: flex;
+    margin-left: 10px;
+`;
+
+const ListWrapper = styled.div``;
 
 const Board = ({ match }) => {
     const { id } = match.params;
@@ -32,6 +41,11 @@ const Board = ({ match }) => {
         setBoardDetail(data);
     }, []);
 
+    const list = [
+        { id: 1, title: 'list1' },
+        { id: 2, title: 'list2' },
+    ];
+
     return (
         <>
             <Header />
@@ -42,6 +56,16 @@ const Board = ({ match }) => {
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
+                <Wrapper>
+                    {Boolean(list.length) && (
+                        <ListWrapper style={{ display: 'flex', alignItems: 'baseline' }}>
+                            {list.map((v) => {
+                                return <List key={v.id} />;
+                            })}
+                        </ListWrapper>
+                    )}
+                    <AddListOrCard parent="list" />
+                </Wrapper>
                 <ActivitySidebar
                     sidebarDisplay={sidebarDisplay}
                     setSidebarDisplay={setSidebarDisplay}
