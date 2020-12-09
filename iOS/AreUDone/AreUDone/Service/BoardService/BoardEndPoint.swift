@@ -61,8 +61,11 @@ extension BoardEndPoint: EndPointable {
     case .fetchAllBoards, .fetchBoardDetail:
       return .get
       
-    case .createBoard, .updateBoard, .inviteUserToBoard:
+    case .createBoard, .inviteUserToBoard:
       return .post
+      
+    case .updateBoard:
+      return .put
       
     case .deleteBoard, .exitBoard:
       return .delete
@@ -75,7 +78,7 @@ extension BoardEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json"
     ]
   }

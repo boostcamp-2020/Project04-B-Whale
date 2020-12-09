@@ -124,6 +124,7 @@
 		33638EC42573F99D006033CF /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		3373A4952578DC7200D92CC0 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4942578DC7200D92CC0 /* UIView+.swift */; };
 		3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4992578DEC300D92CC0 /* MemberFooterView.swift */; };
+		338316F2258078900040A467 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338316F1258078900040A467 /* NotificationName+.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -172,7 +173,6 @@
 		33F2D494257A2338008F1E06 /* SideBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */; };
 		33F2D49C257A31DF008F1E06 /* ImageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */; };
 		33F2D4A8257A3F6C008F1E06 /* MemberCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */; };
-		33F2D4B9257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */; };
 		33F2D4C7257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */; };
 		33F2D4DD257B3F47008F1E06 /* InvitationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4DC257B3F47008F1E06 /* InvitationCoordinator.swift */; };
 		33F2D4E6257B4079008F1E06 /* Invitation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33F2D4E5257B4079008F1E06 /* Invitation.storyboard */; };
@@ -189,6 +189,11 @@
 		33F2D551257DE9C7008F1E06 /* BoardAddTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */; };
 		33F2D55F257DF349008F1E06 /* BoardColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */; };
 		33F2D567257E2389008F1E06 /* BoardAddTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */; };
+		33F2D6A2257F41EB008F1E06 /* BoardDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6A1257F41EA008F1E06 /* BoardDetailCollectionView.swift */; };
+		33F2D6AA257F56C8008F1E06 /* ListEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6A9257F56C8008F1E06 /* ListEndPoint.swift */; };
+		33F2D6BD257F7635008F1E06 /* MembersCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6BC257F7635008F1E06 /* MembersCollectionViewDataSource.swift */; };
+		33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */; };
+		33F2D6CA257F838D008F1E06 /* ListCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */; };
 		33F2D58D257E678C008F1E06 /* BoardServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D58C257E678C008F1E06 /* BoardServiceTests.swift */; };
 		33F2D591257E69FF008F1E06 /* CardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7C2256E3D3600EA8791 /* CardDetail.swift */; };
 		33F2D595257E6A05008F1E06 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5CE25787F290057ACA4 /* ImageService.swift */; };
@@ -433,6 +438,7 @@
 		33638E0D2573F5D6006033CF /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelTests.swift; sourceTree = "<group>"; };
 		3373A4942578DC7200D92CC0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		3373A4992578DEC300D92CC0 /* MemberFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFooterView.swift; sourceTree = "<group>"; };
+		338316F1258078900040A467 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,7 +473,6 @@
 		33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarCollectionView.swift; sourceTree = "<group>"; };
 		33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleView.swift; sourceTree = "<group>"; };
 		33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionView.swift; sourceTree = "<group>"; };
-		33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D4DC257B3F47008F1E06 /* InvitationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCoordinator.swift; sourceTree = "<group>"; };
 		33F2D4E5257B4079008F1E06 /* Invitation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Invitation.storyboard; sourceTree = "<group>"; };
@@ -484,6 +489,11 @@
 		33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddTableView.swift; sourceTree = "<group>"; };
 		33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColorTableViewCell.swift; sourceTree = "<group>"; };
 		33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddTableViewDataSource.swift; sourceTree = "<group>"; };
+		33F2D6A1257F41EA008F1E06 /* BoardDetailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCollectionView.swift; sourceTree = "<group>"; };
+		33F2D6A9257F56C8008F1E06 /* ListEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEndPoint.swift; sourceTree = "<group>"; };
+		33F2D6BC257F7635008F1E06 /* MembersCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D58C257E678C008F1E06 /* BoardServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardServiceTests.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
@@ -664,7 +674,7 @@
 				333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */,
 				333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */,
 				33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */,
-				33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */,
+				33F2D6BC257F7635008F1E06 /* MembersCollectionViewDataSource.swift */,
 				3373A4992578DEC300D92CC0 /* MemberFooterView.swift */,
 				333BA5A62577C0440057ACA4 /* MemberCell.swift */,
 			);
@@ -754,9 +764,12 @@
 		335AC512256FDC91006A5C4A /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				33F2D6A1257F41EA008F1E06 /* BoardDetailCollectionView.swift */,
+				33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */,
 				333BA4FF2574ABA80057ACA4 /* BoardDetailFooterView.swift */,
 				335AC51B256FDDAB006A5C4A /* BoardDetailCollectionViewCell.swift */,
 				33638DED25739971006033CF /* ListCollectionView.swift */,
+				33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */,
 				335AC52D256FE7C7006A5C4A /* ListCollectionViewCell.swift */,
 				33638DE52573958A006033CF /* ListHeaderView.swift */,
 				33638DE02573956F006033CF /* ListFooterView.swift */,
@@ -799,6 +812,7 @@
 		336010FB256B8FAB009580A1 /* ListService */ = {
 			isa = PBXGroup;
 			children = (
+				33F2D6A9257F56C8008F1E06 /* ListEndPoint.swift */,
 				BDD18B3925664057005DF00A /* ListService.swift */,
 			);
 			path = ListService;
@@ -1371,6 +1385,7 @@
 				BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */,
 				BD59A61325787D4E00BF8928 /* UIFont+.swift */,
 				3373A4942578DC7200D92CC0 /* UIView+.swift */,
+				338316F1258078900040A467 /* NotificationName+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1719,6 +1734,7 @@
 				BD2AA80A256F8B5900EA8791 /* CommentCollectionView.swift in Sources */,
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
+				33F2D6CA257F838D008F1E06 /* ListCollectionViewDataSource.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
@@ -1726,11 +1742,11 @@
 				3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */,
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
-				33F2D4B9257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift in Sources */,
 				33F2D4F8257B582C008F1E06 /* InvitationTableViewCell.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
 				33F2D4EB257B40A1008F1E06 /* InvitationViewController.swift in Sources */,
 				BDEA7BEB2576385000CF6B11 /* AlertFactory.swift in Sources */,
+				33F2D6BD257F7635008F1E06 /* MembersCollectionViewDataSource.swift in Sources */,
 				BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */,
 				3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */,
 				33F2D4F0257B41CE008F1E06 /* InvitationViewModel.swift in Sources */,
@@ -1775,6 +1791,7 @@
 				33638DE12573956F006033CF /* ListFooterView.swift in Sources */,
 				BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */,
 				BD59A6522579D2D600BF8928 /* User.swift in Sources */,
+				33F2D6A2257F41EB008F1E06 /* BoardDetailCollectionView.swift in Sources */,
 				BD59A697257E184E00BF8928 /* MemberUpdateCoordinator.swift in Sources */,
 				BD59A66E257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift in Sources */,
 				335AC50B256F8D28006A5C4A /* BoardDetailViewModel.swift in Sources */,
@@ -1787,6 +1804,7 @@
 				333BA59F2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift in Sources */,
 				BD59A7122580D98000BF8928 /* Week.swift in Sources */,
 				BD2AA8A02574A3B200EA8791 /* CardDetailContentLabel.swift in Sources */,
+				33F2D6AA257F56C8008F1E06 /* ListEndPoint.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
@@ -1804,6 +1822,7 @@
 				BD59A666257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift in Sources */,
 				333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */,
 				333BA5912577A5D30057ACA4 /* SideBarHeaderView.swift in Sources */,
+				33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
 				BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
@@ -1815,6 +1834,7 @@
 				333BA587257792690057ACA4 /* ActivityEndPoint.swift in Sources */,
 				33F2D49C257A31DF008F1E06 /* ImageTitleView.swift in Sources */,
 				335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */,
+				338316F2258078900040A467 /* NotificationName+.swift in Sources */,
 				33638DE62573958B006033CF /* ListHeaderView.swift in Sources */,
 				333BA56825769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift in Sources */,
 				BD59A64D2579D1C100BF8928 /* UserJsonFactory.swift in Sources */,

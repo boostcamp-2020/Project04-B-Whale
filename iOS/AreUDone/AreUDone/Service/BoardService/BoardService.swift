@@ -12,7 +12,7 @@ protocol BoardServiceProtocol: class {
   
   func fetchAllBoards(completionHandler: @escaping (Result<Boards, APIError>) -> Void)
   func createBoard(withTitle title: String, color: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
-  func updateBoard(with boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func updateBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
   
   func fetchBoardDetail(with boardId: Int, completionHandler: @escaping (Result<BoardDetail, APIError>) -> Void)
@@ -48,7 +48,7 @@ final class BoardService: BoardServiceProtocol {
     }
   }
   
-  func updateBoard(with boardId: Int, title: String, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
+  func updateBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: BoardEndPoint.updateBoard(boardId: boardId, title: title)) { result in
       completionHandler(result)
     }

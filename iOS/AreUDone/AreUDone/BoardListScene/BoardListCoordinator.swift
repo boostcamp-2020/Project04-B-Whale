@@ -33,14 +33,16 @@ final class BoardListCoordinator: NavigationCoordinator {
   func start() -> UIViewController {
     
     guard let boardListViewController = storyboard.instantiateViewController(
-            identifier: BoardListViewController.identifier, creator: { coder in
-              let boardService = BoardService(router: MockRouter(jsonFactory: BoardListTrueJsonFactory()))
-      let viewModel = BoardListViewModel(boardService: boardService)
-      return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
-    }) as? BoardListViewController else { return UIViewController() }
-
+            identifier: BoardListViewController.identifier, creator: { [weak self] coder in
+              guard let self = self else { return UIViewController() }
+              
+              let boardService = BoardService(router: self.router)
+              let viewModel = BoardListViewModel(boardService: boardService)
+              return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
+            }) as? BoardListViewController else { return UIViewController() }
+    
     boardListViewController.coordinator = self
-
+    
     return boardListViewController
   }
 }
@@ -51,7 +53,7 @@ final class BoardListCoordinator: NavigationCoordinator {
 extension BoardListCoordinator {
   
   func pushToBoardDetail(boardId: Int) {
-    boardDetailCoordinator = BoardDetailCoordinator(boardId: boardId)
+    boardDetailCoordinator = BoardDetailCoordinator(router: router, boardId: boardId)
     boardDetailCoordinator.navigationController = navigationController
     
     let viewController = boardDetailCoordinator.start()
@@ -60,7 +62,7 @@ extension BoardListCoordinator {
     navigationController?.pushViewController(viewController, animated: true)
   }
   
-  func pushToBoardAdd() {
+  func presentBoardAdd() {
     boardAddCoordinator = BoardAddCoordinator(router: router)
     boardAddCoordinator.navigationController = navigationController
     
@@ -68,6 +70,7 @@ extension BoardListCoordinator {
     let subNavigationController = UINavigationController()
     subNavigationController.pushViewController(viewController, animated: true)
     
+    subNavigationController.modalPresentationStyle = .fullScreen
     navigationController?.present(subNavigationController, animated: true)
   }
 }

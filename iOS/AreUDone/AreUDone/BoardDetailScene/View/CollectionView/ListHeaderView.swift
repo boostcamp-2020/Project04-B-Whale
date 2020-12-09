@@ -11,11 +11,17 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+  private var viewModel: ListViewModelProtocol!
+  
+  private lazy var titleTextField: UITextField = {
+    let textField = UITextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    
+    textField.returnKeyType = .done
+    textField.delegate = self
+    textField.font = UIFont.nanumB(size: 18)
 
-    return titleLabel
+    return textField
   }()
   
   
@@ -24,6 +30,7 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
+    bindUI()
     configure()
   }
   
@@ -31,6 +38,16 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
     super.init(frame: frame)
     
     configure()
+  }
+  
+  
+  // MARK: - Method
+  
+  func update(with viewModel: ListViewModelProtocol) {
+    self.viewModel = viewModel
+    bindUI()
+
+    titleTextField.text = viewModel.fetchListTitle()
   }
 }
 
@@ -40,10 +57,10 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
 private extension ListHeaderView {
 
   func configure() {
-    addSubview(titleLabel)
+    addSubview(titleTextField)
     
     configureView()
-    configureTitle()
+    configureTitleTextField()
   }
   
   func configureView() {
@@ -55,15 +72,39 @@ private extension ListHeaderView {
     layer.shadowRadius = 0.4
     layer.shadowOpacity = 0.3
   }
-
-  func configureTitle() {
-    // TODO: 수정 예정
-    titleLabel.text = "TODO"
-    
+  
+  func configureTitleTextField() {
     NSLayoutConstraint.activate([
-      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
+      titleTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
+      titleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      titleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15)
     ])
+  }
+}
+
+extension ListHeaderView: UITextFieldDelegate {
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    if let title = textField.text {
+      viewModel.updateListTitle(to: title)
+    }
+    textField.resignFirstResponder()
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return false
+  }
+}
+
+private extension ListHeaderView {
+  
+  func bindUI() {
+    viewModel.bindingUpdateListTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.titleTextField.text = title
+      }
+    }
   }
 }
 

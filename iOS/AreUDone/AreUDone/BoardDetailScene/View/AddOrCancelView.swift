@@ -9,7 +9,7 @@ import UIKit
 
 protocol AddOrCancelViewDelegate: AnyObject {
   
-  func addButtonTapped(text: String)
+  func addButtonTapped(listTitle: String)
   func cancelButtonTapped()
 }
 
@@ -72,7 +72,7 @@ final class AddOrCancelView: UIView {
   // MARK: - Method
   
   @objc private func addButtonTapped() {
-    delegate?.addButtonTapped(text: textFieldView.text ?? "")
+    delegate?.addButtonTapped(listTitle: textFieldView.text ?? "")
   }
   
   @objc private func cancelButtonTapped() {

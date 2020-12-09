@@ -66,8 +66,7 @@ extension CalendarCoordinator {
   }
   
   func showCardDetail(for id: Int) {
-    let router = Router()
-    cardDetailCoordinator = CardDetailCoordinator(id: id, router: router)
+    cardDetailCoordinator = CardDetailCoordinator(id: id, router: self.router)
     cardDetailCoordinator.navigationController = navigationController
     
     let cardDetailViewController = cardDetailCoordinator.start()

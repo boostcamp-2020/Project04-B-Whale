@@ -14,10 +14,11 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   
   var navigationController: UINavigationController?
   private var invitationCoordinator: NavigationCoordinator!
-  private let boardId: Int
+  private var cardDetailCoordinator: NavigationCoordinator!
 
-  // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
-  //  private let router: Routable
+  private let boardId: Int
+  private let router: Routable
+  
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .boardDetail)
   }
@@ -25,7 +26,8 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   
   // MARK: - Initializer
   
-  init(boardId: Int) {
+  init(router: Routable, boardId: Int) {
+    self.router = router
     self.boardId = boardId
   }
   
@@ -37,11 +39,18 @@ final class BoardDetailCoordinator: NavigationCoordinator {
             identifier: BoardDetailViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController()}
               
-              let boardService = BoardService(router: MockRouter(jsonFactory: BoardDetailTrueJsonFactory()))
+              let boardService = BoardService(router: self.router)
+              let listService = ListService(router: self.router)
+              let cardService = CardService(router: self.router)
               let activityService = ActivityService(router: MockRouter(jsonFactory: ActivityTrueJsonFactory()))
-              let imageService = ImageService(router: Router()) // TODO: Router 구체 타입이 아니라 이전 Coordinator 에서 넘겨주도록 변경
+              let imageService = ImageService(router: self.router)
               
-              let boardDetailViewModel = BoardDetailViewModel(boardService: boardService, boardId: self.boardId)
+              let boardDetailViewModel = BoardDetailViewModel(
+                boardService: boardService,
+                listService: listService,
+                cardService: cardService,
+                boardId: self.boardId
+              )
               
               let sideBarViewModel = SideBarViewModel(
                 boardService: boardService,
@@ -89,5 +98,17 @@ extension BoardDetailCoordinator {
     
     navigationController?.present(subNavigationController, animated: true)
   }
+  
+  
+  func pushToCardDetail(of cardId: Int) {
+    cardDetailCoordinator = CardDetailCoordinator(id: cardId, router: self.router)
+    cardDetailCoordinator.navigationController = navigationController
+    
+    let cardDetailViewController = cardDetailCoordinator.start()
+    cardDetailViewController.hidesBottomBarWhenPushed = true
+    
+    navigationController?.pushViewController(cardDetailViewController, animated: true)
+  }
 }
+
 

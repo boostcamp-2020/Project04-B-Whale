@@ -12,6 +12,7 @@ protocol BoardListViewModelProtocol {
   func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   
+  func fetchBoardId(at indexPath: IndexPath, handler: (Int) -> Void)
   func fetchMyBoard()
   func fetchInvitedBoard()
 }
@@ -25,6 +26,8 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   private var initializeBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
   
+  private var boards: [[Board]] = Array(repeating: [], count: 2)
+
   
   // MARK: - Initializer
   
@@ -35,10 +38,18 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Method
   
+  func fetchBoardId(at indexPath: IndexPath, handler: (Int) -> Void) {
+    let board = boards[indexPath.section][indexPath.item]
+    handler(board.id)
+  }
+  
   func fetchMyBoard() {
     boardService.fetchAllBoards() { result in
       switch result {
       case .success(let boards):
+        self.boards[0] = boards.myBoards
+        self.boards[1] = boards.invitedBoards
+        
         self.updateBoardListCollectionViewHandler?(boards.myBoards)
       case .failure(let error):
         print(error)
@@ -50,6 +61,9 @@ final class BoardListViewModel: BoardListViewModelProtocol {
     boardService.fetchAllBoards() { result in
       switch result {
       case .success(let boards):
+        self.boards[0] = boards.myBoards
+        self.boards[1] = boards.invitedBoards
+        
         self.updateBoardListCollectionViewHandler?(boards.invitedBoards)
       case .failure(let error):
         print(error)

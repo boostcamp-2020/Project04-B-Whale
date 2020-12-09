@@ -14,7 +14,9 @@ final class ListCollectionViewCell: UICollectionViewCell, Reusable {
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-
+    
+    titleLabel.font = UIFont.nanumR(size: 18)
+    
     return titleLabel
   }()
   

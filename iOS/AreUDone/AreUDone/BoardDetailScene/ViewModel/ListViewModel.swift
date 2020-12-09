@@ -9,12 +9,16 @@ import Foundation
 
 protocol ListViewModelProtocol {
   
-  func numberOfCards() -> Int
+  func bindingUpdateListTitle(handler: @escaping (String) -> Void)
   
+  func numberOfCards() -> Int
+  func fetchListTitle() -> String
   func append(card: Card)
   func insert(card: Card, at index: Int)
   func fetchCard(at index: Int) -> Card
   func removeCard(at index: Int)
+  
+  func updateListTitle(to title: String)
   
   func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
 }
@@ -23,20 +27,37 @@ final class ListViewModel: ListViewModelProtocol {
   
   // MARK: - Property
   
-  private let list: List
+  private let listService: ListServiceProtocol
+  private let cardService: CardServiceProtocol
   
+  private var updateListTitleHandler: ((String) -> Void)?
+  
+  private let list: List
+  private var listTitle: String = ""
   
   // MARK: - Initializer
   
-  init(list: List) {
+  init(
+    listService: ListServiceProtocol,
+    cardService: CardServiceProtocol,
+    list: List
+  ) {
+    self.listService = listService
+    self.cardService = cardService
     self.list = list
+    
+    self.listTitle = list.title
   }
   
   
   // MARK: - Method
   
   func numberOfCards() -> Int {
-    list.cards.count
+    return list.cards.count
+  }
+  
+  func fetchListTitle() -> String {
+    return list.title
   }
   
   func append(card: Card) {
@@ -54,6 +75,23 @@ final class ListViewModel: ListViewModelProtocol {
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
     list.cards.remove(at: index)
+  }
+  
+  func updateListTitle(to title: String) {
+    listService.updateList(
+      withListId: list.id,
+      position: nil,
+      title: title) { result in
+      switch result {
+      case .success(()):
+        self.updateListTitleHandler?(title)
+        self.listTitle = title
+        
+      case .failure(let error):
+        self.updateListTitleHandler?(self.listTitle)
+        print(error)
+      }
+    }
   }
 }
 
@@ -80,5 +118,15 @@ extension ListViewModel {
     }
     
     return updatedIndexPaths
+  }
+}
+
+
+// MARK: - Extension bindUI
+
+extension ListViewModel {
+  
+  func bindingUpdateListTitle(handler: @escaping (String) -> Void) {
+    updateListTitleHandler = handler
   }
 }

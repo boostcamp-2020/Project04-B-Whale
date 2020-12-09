@@ -100,17 +100,13 @@ final class BoardListViewController: UIViewController {
     
     bindUI()
     configure()
-    viewModel.fetchMyBoard()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.isNavigationBarHidden = true
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    navigationController?.isNavigationBarHidden = false
+    
+    viewModel.fetchMyBoard()
   }
 }
 
@@ -182,8 +178,10 @@ private extension BoardListViewController {
 extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // TODO: boardId 받아오는 메소드 작성
-    coordinator?.pushToBoardDetail(boardId: 0)
+    
+    viewModel.fetchBoardId(at: indexPath) { boardId in
+      coordinator?.pushToBoardDetail(boardId: boardId)
+    }
   }
 }
 
@@ -218,6 +216,6 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
 private extension BoardListViewController {
   
   @objc func addBoardButtonTapped() {
-    coordinator?.pushToBoardAdd()
+    coordinator?.presentBoardAdd()
   }
 }

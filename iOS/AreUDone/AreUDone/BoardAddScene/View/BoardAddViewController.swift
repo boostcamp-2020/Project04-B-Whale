@@ -103,7 +103,9 @@ extension BoardAddViewController {
     }
     
     viewModel.bindingDismiss { [weak self] in
-      self?.coordinator?.dismiss()
+      DispatchQueue.main.async {
+        self?.coordinator?.dismiss()
+      }
     }
   }
 }

@@ -82,7 +82,7 @@ extension CardEndPoint: EndPointable {
       return .get
       
     case .updateCard:
-      return .patch
+      return .PATCH
       
     case .updateCardMember:
       return .put

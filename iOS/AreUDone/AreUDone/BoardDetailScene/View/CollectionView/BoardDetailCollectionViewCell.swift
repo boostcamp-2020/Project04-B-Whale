@@ -13,26 +13,18 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   // MARK: - Property
   
   private var viewModel: ListViewModelProtocol!
+  private var dataSource: UICollectionViewDataSource!
   
   private lazy var collectionView: ListCollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
-  
-    flowLayout.headerReferenceSize = CGSize(width: bounds.width, height: 45)
-    flowLayout.footerReferenceSize = CGSize(width: bounds.width, height: 45)
-    flowLayout.itemSize = CGSize(width: bounds.width - 40, height: 40)
     
-    flowLayout.sectionInset = UIEdgeInsets.sameInset(inset: 10)
-   
-    flowLayout.sectionHeadersPinToVisibleBounds = true
-    flowLayout.sectionFootersPinToVisibleBounds = true
-    
-    let collectionView = ListCollectionView(frame: .zero, collectionViewLayout: flowLayout)
+    let collectionView = ListCollectionView(frame: bounds, collectionViewLayout: flowLayout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.contentInset = UIEdgeInsets.sameInset(inset: 5)
     
     return collectionView
   }()
-  
+  private var isDroppable: Bool = true
   
   // MARK: - Initializer
   
@@ -48,11 +40,21 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     configure()
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    collectionView.reloadData()
+  }
  
   // MARK: - Method
 
-  func update(with viewModel: ListViewModelProtocol) {
+  func update(
+    with viewModel: ListViewModelProtocol,
+    dataSource: UICollectionViewDataSource
+  ) {
     self.viewModel = viewModel
+    self.dataSource = dataSource
+    collectionView.dataSource = dataSource
     
     collectionView.reloadData()
   }
@@ -67,12 +69,11 @@ private extension BoardDetailCollectionViewCell {
     addSubview(collectionView)
 
     configureCollectionView()
+    configureNotification()
   }
   
   func configureCollectionView() {
     collectionView.delegate = self
-    collectionView.dataSource = self
-    
     collectionView.dragInteractionEnabled = true
     collectionView.dragDelegate = self
     collectionView.dropDelegate = self
@@ -84,22 +85,10 @@ private extension BoardDetailCollectionViewCell {
       collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
     ])
   }
-}
-
-
-// MARK: - Extension UICollectionView DataSource
-
-extension BoardDetailCollectionViewCell: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfCards()
-  }
   
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: ListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-    
-    cell.update(with: viewModel.fetchCard(at: indexPath.row))
-    
-    return cell
+  func configureNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(listWillDragged), name: Notification.Name.listWillDragged, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(listDidDragged), name: Notification.Name.listDidDragged, object: nil)
   }
 }
 
@@ -108,19 +97,9 @@ extension BoardDetailCollectionViewCell: UICollectionViewDataSource {
 
 extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
   
-  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    switch kind {
-    case UICollectionView.elementKindSectionHeader:
-      let headerView: ListHeaderView = collectionView.dequeReusableHeaderView(forIndexPath: indexPath)
-      return headerView
-      
-    case UICollectionView.elementKindSectionFooter:
-      let footerView: ListFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
-      return footerView
-      
-    default:
-      return UICollectionReusableView()
-    }
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // TODO: 카드 id 얻어서 카드 상세화면으로 넘어가는 로직 필요(viewmodel에게 물어보면 될듯함)
+    
   }
 }
 
@@ -131,7 +110,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
   
   // 1. 드래깅 시작
   func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-    let card = viewModel.fetchCard(at: indexPath.row)
+    let card = viewModel.fetchCard(at: indexPath.item)
     let itemProvider = NSItemProvider(object: card)
     
     let dragItem = UIDragItem(itemProvider: itemProvider)
@@ -145,6 +124,12 @@ extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
 // MARK: - Extension UICollectionView Drop Delegate
 
 extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+    
+    
+    return isDroppable
+  }
   
   // 2. 드래깅 중
   func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -170,22 +155,22 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
       let destination = coordinator.destinationIndexPath
             
       switch (source, destination) {
-      ///  ** 1. 같은 테이블뷰**
+      ///  ** 1. 같은 컬렉션뷰**
       case (.some(let sourceIndexPath), .some(let destinationIndexPath)):
         changeData(inSame: collectionView, about: card, by: sourceIndexPath, and: destinationIndexPath)
                 
-      /// **2. 다른 테이블뷰: cell 이 있는 테이블뷰에 삽입할 때(insert)**
+      /// **2. 다른 컬렉션뷰: cell 이 있는 테이블뷰에 삽입할 때(insert)**
       case (nil, .some(let destinationIndexPath)):
         let localContext = coordinator.session.localDragSession?.localContext
         
         insertData(with: localContext) {
-          viewModel.insert(card: card, at: destinationIndexPath.row)
+          viewModel.insert(card: card, at: destinationIndexPath.item)
           
-          let row = destinationIndexPath.row
-          collectionView.insertItems(at: [IndexPath(row: row, section: 0)])
+          let item = destinationIndexPath.item
+          collectionView.insertItems(at: [IndexPath(item: item, section: 0)])
         }
                 
-      /// **3. 다른 테이블뷰: cell 이 없는 컬렉션뷰에 삽입할 때(append)**
+      /// **3. 다른 컬렉션뷰: cell 이 없는 컬렉션뷰에 삽입할 때(append)**
       case (.some(_), nil):
         fallthrough
       case (nil, nil):
@@ -194,8 +179,8 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
         insertData(with: localContext) {
           viewModel.append(card: card)
           
-          let row = viewModel.numberOfCards()-1
-          collectionView.insertItems(at: [IndexPath(row: row, section: 0)])
+          let item = viewModel.numberOfCards()-1
+          collectionView.insertItems(at: [IndexPath(item: item, section: 0)])
         }
       }
     }
@@ -209,8 +194,8 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   ) {
     let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
     
-    viewModel.removeCard(at: sourceIndexPath.row)
-    viewModel.insert(card: card, at: destinationIndexPath.row)
+    viewModel.removeCard(at: sourceIndexPath.item)
+    viewModel.insert(card: card, at: destinationIndexPath.item)
     
     collectionView.reloadItems(at: updatedIndexPaths)
   }
@@ -235,7 +220,22 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
               UICollectionView
             ) else { return }
     
-    sourceViewModel.removeCard(at: sourceIndexPath.row)
+    sourceViewModel.removeCard(at: sourceIndexPath.item)
+    // sourceViewModel 로부터 카드 id 얻어온 다음 list, position 정보 서버로 전송
+    
     collectionView.reloadSections(IndexSet(integer: 0))
+  }
+}
+
+
+// MARK: - Extension objc
+
+extension BoardDetailCollectionViewCell {
+  
+  @objc func listWillDragged() {
+    isDroppable = false
+  }
+  @objc func listDidDragged() {
+    isDroppable = true
   }
 }

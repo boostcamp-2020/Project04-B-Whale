@@ -15,14 +15,14 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
     case BoardEndPoint.fetchBoardDetail:
       return """
       {
-          "id": 0,
+          "id": 1,
           "creator": {
-              "id": 0,
+              "id": 2,
               "name": "심영민",
               "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
           },
           "title": "보드제목",
-          "color": "#525252",
+          "color": "#b1cf99",
           "invitedUsers": [
               {
                   "id": 1,
@@ -71,9 +71,37 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
                   ]
               },
               {
-                  "id": 1,
-                  "title": "리스트 제목2",
+                  "id": 2,
+                  "title": "리스트 제목",
                   "position": 1,
+                  "cards": [
+                      {
+                          "id": 0,
+                          "title": "카드 제목",
+                          "position": 0,
+                          "commentCount": 5,
+                          "dueDate": "2020-12-02"
+                      }
+                  ]
+              },
+              {
+                  "id": 3,
+                  "title": "리스트 제목",
+                  "position": 2,
+                  "cards": [
+                      {
+                          "id": 0,
+                          "title": "카드 제목",
+                          "position": 0,
+                          "commentCount": 5,
+                          "dueDate": "2020-12-02"
+                      }
+                  ]
+              },
+              {
+                  "id": 4,
+                  "title": "리스트 제목2",
+                  "position": 3,
                   "cards": [
                       {
                           "id": 0,
@@ -202,6 +230,7 @@ struct BoardDetailTrueJsonFactory: JsonFactory {
                           "dueDate": "2020-12-02"
                       }
                   ]
+
               }
           ]
       }
