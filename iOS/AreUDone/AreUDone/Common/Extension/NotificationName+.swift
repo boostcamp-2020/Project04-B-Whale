@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+extension Notification.Name {
+  
+  static let listWillDragged = Notification.Name("ListWillDragged")
+  static let listDidDragged = Notification.Name("ListDidDragged")
+}
