@@ -137,22 +137,26 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     let listId = lists[sourceIndex].id
     
     var position: Double
-    if lists.count != (destinationIndex+1) {
-      position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
-    } else {
+    if destinationIndex == 0 {
+      position = lists[destinationIndex].position / 2
+      
+    } else if destinationIndex == (lists.count-1) {
       // 맨 마지막에 넣는 경우 (다음에 올 수 있는 position 값 구함)
       position = (lists[destinationIndex].position + floor((lists[destinationIndex].position) + 1)) / 2
+      
+    } else {
+      position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
     }
         
-    listService.updateList(withListId: listId, position: position, title: nil) { result in
-      switch result {
-      case .success(()):
-        break
-
-      case .failure(let error):
-        print(error)
-      }
-    }
+//    listService.updateList(withListId: listId, position: position, title: nil) { result in
+//      switch result {
+//      case .success(()):
+//        break
+//
+//      case .failure(let error):
+//        print(error)
+//      }
+//    }
   }
   
   func createList(with title: String) {
