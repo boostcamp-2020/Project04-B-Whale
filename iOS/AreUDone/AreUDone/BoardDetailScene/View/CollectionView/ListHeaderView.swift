@@ -84,11 +84,14 @@ private extension ListHeaderView {
 
 extension ListHeaderView: UITextFieldDelegate {
   
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+  func textFieldDidEndEditing(_ textField: UITextField) {
     if let title = textField.text {
       viewModel.updateListTitle(to: title)
     }
-    
+    textField.resignFirstResponder()
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }

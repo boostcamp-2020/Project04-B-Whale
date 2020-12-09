@@ -12,13 +12,22 @@ protocol BoardDetailViewModelProtocol {
   func bindingUpdateBoardDetailCollectionView(handler: @escaping () -> Void)
   func bindingUpdateBackgroundColor(handler: @escaping (String) -> Void)
   func bindingUpdateBoardTitle(handler: @escaping (String) -> Void)
-    
-  func numberOfLists() -> Int
-  func fetchList(at index: Int, handler: ((ListViewModelProtocol) -> Void))
-  func insertList(list: List)
+  func bindingUpdateControlPageCounts(handler: @escaping (Int) -> Void)
   
+  func numberOfLists() -> Int
+  func fetchList(at index: Int) -> List?
+  func remove(at index: Int)
+  func insert(list: List, at index: Int)
+  
+  func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void))
+
   func updateBoardDetailCollectionView()
   func updateBoardTitle(to title: String)
+  
+  func createList(with title: String)
+  
+  func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
+
 }
 
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
@@ -33,10 +42,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   private var updateBoardDetailCollectionViewHandler: (() -> Void)?
   private var updateBackgroundColorHandler: ((String) -> Void)?
   private var updateBoardTitleHandler: ((String) -> Void)?
+  private var updateControlPageCountsHandler: ((Int) -> Void)?
   
   private var boardDetail: BoardDetail? {
     didSet {
-      updateBoardDetailCollectionViewHandler?()
+      self.updateBoardDetailCollectionViewHandler?()
     }
   }
   private var boardTitle: String = ""
@@ -62,17 +72,32 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardDetail?.lists.count ?? 0
   }
   
-  func fetchList(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
+  func remove(at index: Int) {
+    guard let lists = boardDetail?.lists,
+          lists.indices.contains(index) else { return }
+    boardDetail?.lists.remove(at: index)
+  }
+  
+  func insert(list: List, at index: Int) {
+    boardDetail?.lists.insert(list, at: index)
+  }
+  
+  
+  
+  func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
     guard let list = boardDetail?.lists[index] else { return }
     
-    let viewModel = ListViewModel(listService: listService, list: list)
+    let viewModel = ListViewModel(
+      listService: listService,
+      list: list
+    )
     handler(viewModel)
   }
   
-  func insertList(list: List) {
-    boardDetail?.lists.append(list)
+  func fetchList(at index: Int) -> List? {
+    return boardDetail?.lists[index]
   }
-  
+
   func updateBoardDetailCollectionView() {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
@@ -82,7 +107,8 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
         self.boardTitle = boardDetail.title
         self.updateBoardTitleHandler?(boardDetail.title)
         self.updateBackgroundColorHandler?(boardDetail.color)
-        
+        self.updateControlPageCountsHandler?(boardDetail.lists.count)
+
       case .failure(let error):
         print(error)
       }
@@ -93,7 +119,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardService.updateBoard(withBoardId: boardId, title: title) { result in
       switch result {
       case .success(()):
-        self.updateBoardTitle(to: title)
+        self.updateBoardTitleHandler?(title)
         self.boardTitle = title
         
       case .failure(let error):
@@ -103,10 +129,36 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     }
   }
   
+  func createList(with title: String) {
+    listService.createList(withBoardId: boardId, title: title) { result in
+      switch result {
+      case .success(()):
+        self.updateBoardDetailCollectionView()
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
   
-  
-//  func updateListViewModel()
-  
+  func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath] {
+    var updatedIndexPaths: [IndexPath]
+    
+    if firstIndexPath.item < secondIndexPath.item {
+      updatedIndexPaths =
+        (firstIndexPath.item...secondIndexPath.item)
+        .map { IndexPath(row: $0, section: 0) }
+      
+    } else if firstIndexPath.item > secondIndexPath.item {
+      updatedIndexPaths =
+        (secondIndexPath.item...firstIndexPath.item)
+        .map { IndexPath(row: $0, section: 0) }
+      
+    } else {
+      updatedIndexPaths = []
+    }
+    
+    return updatedIndexPaths
+  }
 }
 
 
@@ -124,5 +176,9 @@ extension BoardDetailViewModel {
   
   func bindingUpdateBoardTitle(handler: @escaping (String) -> Void) {
     updateBoardTitleHandler = handler
+  }
+  
+  func bindingUpdateControlPageCounts(handler: @escaping (Int) -> Void) {
+    updateControlPageCountsHandler = handler
   }
 }

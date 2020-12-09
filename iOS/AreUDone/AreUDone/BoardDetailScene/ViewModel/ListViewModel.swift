@@ -32,12 +32,14 @@ final class ListViewModel: ListViewModelProtocol {
   private var updateListTitleHandler: ((String) -> Void)?
   
   private let list: List
-
   private var listTitle: String = ""
   
   // MARK: - Initializer
   
-  init(listService: ListServiceProtocol, list: List) {
+  init(
+    listService: ListServiceProtocol,
+    list: List
+  ) {
     self.listService = listService
     self.list = list
     
