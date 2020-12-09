@@ -9,9 +9,18 @@ import Foundation
 
 extension Date {
   
-  func toString(withDividerFormat dividerFormat: String = ".") -> String {
+  func toString(withDividerFormat dividerFormat: String = "-") -> String {
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale.current
     dateFormatter.dateFormat = "yyyy\(dividerFormat)MM\(dividerFormat)dd"
+    
+    return dateFormatter.string(from: self)
+  }
+  
+  func toStringWithTime(withDividerFormat dividerFormat: String = "-") -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale.current
+    dateFormatter.dateFormat = "yyyy\(dividerFormat)MM\(dividerFormat)dd HH:mm:ss"
     
     return dateFormatter.string(from: self)
   }
