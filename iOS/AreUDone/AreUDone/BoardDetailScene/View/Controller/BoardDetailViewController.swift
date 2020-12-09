@@ -297,7 +297,7 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
     and destinationIndexPath: IndexPath
   ) {
     
-    // TODO: viewModel 로 바인딩하기
+    // TODO: API 연동해보고 success 후 로컬 변경 or 로컬 변경 우선 선택
     let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
     
     viewModel.remove(at: sourceIndexPath.row)
