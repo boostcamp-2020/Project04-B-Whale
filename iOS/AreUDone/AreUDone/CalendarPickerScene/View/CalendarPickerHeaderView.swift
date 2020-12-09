@@ -7,15 +7,32 @@
 
 import UIKit
 
+protocol CalendarPickerHeaderViewDelegate: NSObject {
+  
+  func HeaderViewTimeSettingButtonTapped()
+}
+
 final class CalendarPickerHeaderView: UIView {
   
   // MARK:- Property
   
   private lazy var monthLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 24)
     
     return label
+  }()
+  
+  private lazy var timeSettingButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("시간 설정", for: .normal)
+    button.titleLabel?.font = UIFont.nanumB(size: 15)
+    button.setTitleColor(.systemBlue, for: .normal)
+    button.isHidden = true
+    
+    return button
   }()
   
   private lazy var dayOfWeekStackView: UIStackView = {
@@ -25,7 +42,7 @@ final class CalendarPickerHeaderView: UIView {
     
     return stackView
   }()
-
+  
   private lazy var separatorView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +50,7 @@ final class CalendarPickerHeaderView: UIView {
     
     return view
   }()
-
+  
   private lazy var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.calendar = Calendar(identifier: .gregorian)
@@ -42,13 +59,15 @@ final class CalendarPickerHeaderView: UIView {
     
     return dateFormatter
   }()
-
+  
   var baseDate = Date() {
     didSet {
       monthLabel.text = dateFormatter.string(from: baseDate)
     }
   }
-
+  
+  weak var delegate: CalendarPickerHeaderViewDelegate?
+  
   
   // MARK:- Initializer
   
@@ -61,10 +80,15 @@ final class CalendarPickerHeaderView: UIView {
     
     configure()
   }
+  
+  
+  func prepareForTimeSetting() {
+    timeSettingButton.isHidden = false
+  }
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 private extension CalendarPickerHeaderView {
   
@@ -72,18 +96,22 @@ private extension CalendarPickerHeaderView {
     addSubview(monthLabel)
     addSubview(separatorView)
     addSubview(dayOfWeekStackView)
-
+    addSubview(timeSettingButton)
+    
     configureView()
     configureMonthLabel()
+    configureTimeSettingButton()
     configureSeparatorView()
     configureDayOfWeekStackView()
+    
+    addingTarget()
   }
   
   func configureView() {
     translatesAutoresizingMaskIntoConstraints = false
-
+    
     backgroundColor = .systemGroupedBackground
-
+    
     layer.maskedCorners = [
       .layerMinXMinYCorner,
       .layerMaxXMinYCorner
@@ -93,8 +121,6 @@ private extension CalendarPickerHeaderView {
   }
   
   func configureMonthLabel() {
-    monthLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       monthLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       monthLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
@@ -102,9 +128,14 @@ private extension CalendarPickerHeaderView {
     ])
   }
   
+  func configureTimeSettingButton() {
+    NSLayoutConstraint.activate([
+      timeSettingButton.centerYAnchor.constraint(equalTo: monthLabel.centerYAnchor),
+      timeSettingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+    ])
+  }
+  
   func configureSeparatorView() {
-    separatorView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
       separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -114,12 +145,8 @@ private extension CalendarPickerHeaderView {
   }
   
   func configureDayOfWeekStackView() {
-    dayOfWeekStackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    for dayNumber in 1...7 {
-      let title = dayOfWeekLetter(for: dayNumber)
-
-      let dayLabel = DayLabel(title: title)
+    Week.allCases.forEach {
+      let dayLabel = DayLabel(title: $0.korean)
       dayOfWeekStackView.addArrangedSubview(dayLabel)
     }
     
@@ -130,24 +157,21 @@ private extension CalendarPickerHeaderView {
     ])
   }
   
-  func dayOfWeekLetter(for dayNumber: Int) -> String {
-    switch dayNumber {
-    case 1:
-      return "일"
-    case 2:
-      return "월"
-    case 3:
-      return "화"
-    case 4:
-      return "수"
-    case 5:
-      return "목"
-    case 6:
-      return "금"
-    case 7:
-      return "토"
-    default:
-      return ""
-    }
+  func addingTarget() {
+    timeSettingButton.addTarget(
+      self,
+      action: #selector(timeSettingButtonTapped),
+      for: .touchUpInside
+    )
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CalendarPickerHeaderView {
+  
+  @objc private func timeSettingButtonTapped() {
+    delegate?.HeaderViewTimeSettingButtonTapped()
   }
 }

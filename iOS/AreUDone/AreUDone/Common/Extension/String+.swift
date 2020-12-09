@@ -17,7 +17,17 @@ extension String {
   func toDateFormat(with deviderFormat: DateDeviderFormat) -> Date {
     let dateFormatter = DateFormatter()
     let devider = deviderFormat.rawValue
+    dateFormatter.locale = Locale.current
     dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd"
+    
+    return dateFormatter.date(from: self) ?? Date()
+  }
+  
+  func toDateAndTimeFormat(with deviderFormat: DateDeviderFormat = .dash) -> Date {
+    let dateFormatter = DateFormatter()
+    let devider = deviderFormat.rawValue
+    dateFormatter.locale = Locale.current
+    dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd HH:mm:ss"
     
     return dateFormatter.date(from: self) ?? Date()
   }

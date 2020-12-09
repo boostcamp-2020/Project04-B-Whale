@@ -18,6 +18,7 @@ protocol AlertProtocol {
 enum AlertType {
   case dataLoss
   case delete
+  case timePicker
 }
 
 class AlertFactory {
@@ -28,6 +29,8 @@ class AlertFactory {
     case .dataLoss: alert = DataLossAlert(style: style)
       
     case .delete: alert = DeleteAlert(style: style)
+      
+    case .timePicker: alert = TimePickerAlert(style: style)
     }
     
     return alert
@@ -49,5 +52,14 @@ struct DeleteAlert: AlertProtocol {
   var message: String? { return nil }
   var actionTitle: String? { return "삭제"}
   var cancelTitle: String? { return "취소"}
+  var style: UIAlertController.Style
+}
+
+struct TimePickerAlert: AlertProtocol {
+  
+  var title: String? { return "시간을 선택해주세요" }
+  var message: String? { return nil }
+  var actionTitle: String? { return "완료" }
+  var cancelTitle: String? { return "취소" }
   var style: UIAlertController.Style
 }
