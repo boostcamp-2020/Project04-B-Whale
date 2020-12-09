@@ -42,7 +42,7 @@ final class CalendarPickerHeaderView: UIView {
     
     return stackView
   }()
-
+  
   private lazy var separatorView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ final class CalendarPickerHeaderView: UIView {
     
     return view
   }()
-
+  
   private lazy var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.calendar = Calendar(identifier: .gregorian)
@@ -59,7 +59,7 @@ final class CalendarPickerHeaderView: UIView {
     
     return dateFormatter
   }()
-
+  
   var baseDate = Date() {
     didSet {
       monthLabel.text = dateFormatter.string(from: baseDate)
@@ -67,7 +67,7 @@ final class CalendarPickerHeaderView: UIView {
   }
   
   weak var delegate: CalendarPickerHeaderViewDelegate?
-
+  
   
   // MARK:- Initializer
   
@@ -97,7 +97,7 @@ private extension CalendarPickerHeaderView {
     addSubview(separatorView)
     addSubview(dayOfWeekStackView)
     addSubview(timeSettingButton)
-
+    
     configureView()
     configureMonthLabel()
     configureTimeSettingButton()
@@ -109,9 +109,9 @@ private extension CalendarPickerHeaderView {
   
   func configureView() {
     translatesAutoresizingMaskIntoConstraints = false
-
+    
     backgroundColor = .systemGroupedBackground
-
+    
     layer.maskedCorners = [
       .layerMinXMinYCorner,
       .layerMaxXMinYCorner
@@ -145,10 +145,8 @@ private extension CalendarPickerHeaderView {
   }
   
   func configureDayOfWeekStackView() {
-    for dayNumber in 1...7 {
-      let title = dayOfWeekLetter(for: dayNumber)
-
-      let dayLabel = DayLabel(title: title)
+    Week.allCases.forEach {
+      let dayLabel = DayLabel(title: $0.korean)
       dayOfWeekStackView.addArrangedSubview(dayLabel)
     }
     
@@ -157,27 +155,6 @@ private extension CalendarPickerHeaderView {
       dayOfWeekStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
       dayOfWeekStackView.bottomAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: -5),
     ])
-  }
-  
-  func dayOfWeekLetter(for dayNumber: Int) -> String {
-    switch dayNumber {
-    case 1:
-      return "일"
-    case 2:
-      return "월"
-    case 3:
-      return "화"
-    case 4:
-      return "수"
-    case 5:
-      return "목"
-    case 6:
-      return "금"
-    case 7:
-      return "토"
-    default:
-      return ""
-    }
   }
   
   func addingTarget() {
