@@ -23,6 +23,7 @@ protocol BoardDetailViewModelProtocol {
 
   func updateBoardDetailCollectionView()
   func updateBoardTitle(to title: String)
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int)
   
   func createList(with title: String)
   
@@ -82,8 +83,6 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardDetail?.lists.insert(list, at: index)
   }
   
-  
-  
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
     guard let list = boardDetail?.lists[index] else { return }
     
@@ -127,6 +126,34 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
         print(error)
       }
     }
+  }
+  
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int) {
+    guard let lists = boardDetail?.lists else { return }
+    
+    // TODO: API 연동 후 수정 예정
+
+    let listId = lists[sourceIndex].id
+    
+    var position: Double
+    if lists.count != (destinationIndex+1) {
+      position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
+    } else {
+      // 맨 마지막에 넣는 경우 (다음에 올 수 있는 position 값 구함)
+      position = (lists[destinationIndex].position + floor((lists[destinationIndex].position) + 1)) / 2
+    }
+    
+    print(position)
+    
+//    listService.updateList(withListId: listId, position: position, title: nil) { result in
+//      switch result {
+//      case .success(()):
+//        break
+//
+//      case .failure(let error):
+//        print(error)
+//      }
+//    }
   }
   
   func createList(with title: String) {

@@ -244,9 +244,7 @@ extension BoardDetailViewController: UICollectionViewDragDelegate {
     let itemProvider = NSItemProvider(object: list)
     
     let dragItem = UIDragItem(itemProvider: itemProvider)
-    
-    session.localContext = (viewModel, indexPath, collectionView)
-    
+        
     return [dragItem]
   }
   
@@ -285,7 +283,9 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
       guard let source = coordinator.items.first?.sourceIndexPath,
             let destination = coordinator.destinationIndexPath
       else { return }
-      
+     
+      viewModel.updatePosition(of: source.item, to: destination.item)
+
       changeData(inSame: collectionView, about: list, by: source, and: destination)
     }
   }
@@ -296,14 +296,14 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
     by sourceIndexPath: IndexPath,
     and destinationIndexPath: IndexPath
   ) {
+    
+    // TODO: viewModel 로 바인딩하기
     let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
     
     viewModel.remove(at: sourceIndexPath.row)
     viewModel.insert(list: list, at: destinationIndexPath.row)
     
     collectionView.reloadItems(at: updatedIndexPaths)
-    
-    
   }
 }
 
