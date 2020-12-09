@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol CalendarPickerHeaderViewDelegate: NSObject {
+  
+  func HeaderViewTimeSettingButtonTapped()
+}
+
 final class CalendarPickerHeaderView: UIView {
   
   // MARK:- Property
@@ -25,6 +30,7 @@ final class CalendarPickerHeaderView: UIView {
     button.setTitle("시간 설정", for: .normal)
     button.titleLabel?.font = UIFont.nanumB(size: 15)
     button.setTitleColor(.systemBlue, for: .normal)
+    button.isHidden = true
     
     return button
   }()
@@ -59,6 +65,8 @@ final class CalendarPickerHeaderView: UIView {
       monthLabel.text = dateFormatter.string(from: baseDate)
     }
   }
+  
+  weak var delegate: CalendarPickerHeaderViewDelegate?
 
   
   // MARK:- Initializer
@@ -72,10 +80,15 @@ final class CalendarPickerHeaderView: UIView {
     
     configure()
   }
+  
+  
+  func prepareForTimeSetting() {
+    timeSettingButton.isHidden = false
+  }
 }
 
 
-// MARK:- Extension
+// MARK:- Extension Configure Method
 
 private extension CalendarPickerHeaderView {
   
@@ -182,6 +195,6 @@ private extension CalendarPickerHeaderView {
 private extension CalendarPickerHeaderView {
   
   @objc private func timeSettingButtonTapped() {
-    
+    delegate?.HeaderViewTimeSettingButtonTapped()
   }
 }

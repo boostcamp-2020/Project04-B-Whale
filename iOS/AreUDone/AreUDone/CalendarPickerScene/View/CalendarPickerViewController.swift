@@ -27,11 +27,19 @@ final class CalendarPickerViewController: UIViewController {
   private lazy var dimmedBackgroundView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
     return view
   }()
-  private lazy var headerView = CalendarPickerHeaderView()
-  private lazy var collectionView: CalendarCollectionView = {
+  
+  private lazy var headerView: CalendarPickerHeaderView = {
+    let view = CalendarPickerHeaderView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     
+    return view
+  }()
+  
+  private lazy var collectionView: CalendarCollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
@@ -49,11 +57,33 @@ final class CalendarPickerViewController: UIViewController {
         self?.viewModel.fetchUpdatedCalendar(to: 1)
       }
     }
-    collectionView.delegate = self
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     
     return collectionView
   }()
+  
+  private lazy var timeSettingActionSheet: UIAlertController = {
+    let alert = UIAlertController(
+      alertType: .timePicker,
+      alertStyle: .actionSheet,
+      confirmAction: {
+        
+      })
     
+    return alert
+  }()
+  
+  private lazy var timePicker: UIDatePicker = {
+    let datePicker = UIDatePicker()
+    datePicker.translatesAutoresizingMaskIntoConstraints = false
+    datePicker.datePickerMode = .time
+    datePicker.timeZone = TimeZone(abbreviation: "GMT")
+    if #available(iOS 13.4, *) {
+      datePicker.preferredDatePickerStyle = .wheels
+    }
+    return datePicker
+  }()
+  
   private let viewModel: CalendarPickerViewModelProtocol
   lazy var dataSource = configureDataSource()
   
@@ -84,42 +114,45 @@ final class CalendarPickerViewController: UIViewController {
     
     bindUI()
     addGestureRecognizer()
-    configureConstraints()
-    
+    configure()
+
     viewModel.fetchInitialCalendar()
   }
 }
 
+
+// MARK:- Extension bindUI
+
 private extension CalendarPickerViewController {
   
   func bindUI() {
+    bindingInitializeDate()
+    bindingUpdateCalendar()
+    bindingSendSelectedDate()
+  }
+  
+  func bindingInitializeDate() {
     viewModel.bindingInitializeDate { [weak self] days, selectedDate in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: days, animatingDifferences: false)
         self?.headerView.baseDate = selectedDate
       }
     }
-    
+  }
+  
+  func bindingUpdateCalendar() {
     viewModel.bindingUpdateCalendar { [weak self] days, selectedDate in
       DispatchQueue.main.async {
         self?.updateSnapshot(with: days)
         self?.headerView.baseDate = selectedDate
       }
     }
-    
+  }
+  
+  func bindingSendSelectedDate() {
     viewModel.bindingSendSelectedDate { [weak self] date in
       self?.delegate?.send(selectedDate: date)
     }
-  }
-  
-  func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewDidTapped))
-    dimmedBackgroundView.addGestureRecognizer(tapRecognizer)
-  }
-  
-  @objc func dimmerViewDidTapped() {
-    viewModel.sendSelectedDate()
-    coordinator?.dismiss()
   }
 }
 
@@ -128,10 +161,12 @@ private extension CalendarPickerViewController {
 
 private extension CalendarPickerViewController {
   
-  func configureConstraints() {
-    dimmedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    headerView.translatesAutoresizingMaskIntoConstraints = false
+  func configure() {
+    collectionView.delegate = self
+    if !(delegate is CalendarViewController) {
+      headerView.delegate = self
+      headerView.prepareForTimeSetting()
+    }
     
     view.addSubview(dimmedBackgroundView)
     view.addSubview(collectionView)
@@ -140,6 +175,7 @@ private extension CalendarPickerViewController {
     configureDimmerViewConstraints()
     configureCollectionViewConstraints()
     configureHeaderViewConstraints()
+    configureTimeSettingActionSheet()
   }
   
   func configureDimmerViewConstraints() {
@@ -153,16 +189,10 @@ private extension CalendarPickerViewController {
   
   func configureCollectionViewConstraints() {
     NSLayoutConstraint.activate([
-      collectionView.leadingAnchor.constraint(
-        equalTo: view.readableContentGuide.leadingAnchor),
-      collectionView.trailingAnchor.constraint(
-        equalTo: view.readableContentGuide.trailingAnchor),
-      collectionView.centerYAnchor.constraint(
-        equalTo: view.centerYAnchor,
-        constant: 10),
-      collectionView.heightAnchor.constraint(
-        equalTo: view.heightAnchor,
-        multiplier: 0.5)
+      collectionView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+      collectionView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+      collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: 10),
+      collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
     ])
   }
   
@@ -173,6 +203,35 @@ private extension CalendarPickerViewController {
       headerView.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 85)
     ])
+  }
+  
+  func configureTimeSettingActionSheet() {
+    timeSettingActionSheet.view.addSubview(timePicker)
+      timeSettingActionSheet.view.heightAnchor.constraint(equalToConstant: 250).isActive = true
+      
+      NSLayoutConstraint.activate([
+        timePicker.leadingAnchor.constraint(equalTo: timeSettingActionSheet.view.leadingAnchor),
+        timePicker.trailingAnchor.constraint(equalTo: timeSettingActionSheet.view.trailingAnchor),
+        timePicker.topAnchor.constraint(equalTo: timeSettingActionSheet.view.topAnchor, constant: 20),
+        timePicker.bottomAnchor.constraint(equalTo: timeSettingActionSheet.view.bottomAnchor),
+        timePicker.heightAnchor.constraint(equalTo: timeSettingActionSheet.view.heightAnchor, multiplier: 0.5)
+      ])
+  }
+  
+  func addGestureRecognizer() {
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewDidTapped))
+    dimmedBackgroundView.addGestureRecognizer(tapRecognizer)
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CalendarPickerViewController {
+  
+  @objc func dimmerViewDidTapped() {
+    viewModel.sendSelectedDate()
+    coordinator?.dismiss()
   }
 }
 
@@ -240,3 +299,9 @@ extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
+extension CalendarPickerViewController: CalendarPickerHeaderViewDelegate {
+  
+  func HeaderViewTimeSettingButtonTapped() {
+    present(timeSettingActionSheet, animated: true)
+  }
+}
