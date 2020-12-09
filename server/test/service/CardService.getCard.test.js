@@ -42,7 +42,7 @@ describe('CardService.getCard() Test', () => {
             // when
             // then
             try {
-                const card = await cardService.getCard({ userId: user0.id, cardId: 1 });
+                await cardService.getCard({ userId: user0.id, cardId: 1 });
                 fail();
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityNotFoundError);

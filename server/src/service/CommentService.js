@@ -1,7 +1,6 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
-import { CommentDto } from '../dto/CommentDto';
 import { BaseService } from './BaseService';
 
 export class CommentService extends BaseService {
