@@ -88,6 +88,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     
     let viewModel = ListViewModel(
       listService: listService,
+      cardService: cardService,
       list: list
     )
     handler(viewModel)
@@ -142,18 +143,16 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       // 맨 마지막에 넣는 경우 (다음에 올 수 있는 position 값 구함)
       position = (lists[destinationIndex].position + floor((lists[destinationIndex].position) + 1)) / 2
     }
-    
-    print(position)
-    
-//    listService.updateList(withListId: listId, position: position, title: nil) { result in
-//      switch result {
-//      case .success(()):
-//        break
-//
-//      case .failure(let error):
-//        print(error)
-//      }
-//    }
+        
+    listService.updateList(withListId: listId, position: position, title: nil) { result in
+      switch result {
+      case .success(()):
+        break
+
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   func createList(with title: String) {
@@ -161,6 +160,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       switch result {
       case .success(()):
         self.updateBoardDetailCollectionView()
+        
       case .failure(let error):
         print(error)
       }

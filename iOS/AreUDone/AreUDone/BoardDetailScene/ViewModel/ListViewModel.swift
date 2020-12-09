@@ -28,6 +28,7 @@ final class ListViewModel: ListViewModelProtocol {
   // MARK: - Property
   
   private let listService: ListServiceProtocol
+  private let cardService: CardServiceProtocol
   
   private var updateListTitleHandler: ((String) -> Void)?
   
@@ -38,9 +39,11 @@ final class ListViewModel: ListViewModelProtocol {
   
   init(
     listService: ListServiceProtocol,
+    cardService: CardServiceProtocol,
     list: List
   ) {
     self.listService = listService
+    self.cardService = cardService
     self.list = list
     
     self.listTitle = list.title

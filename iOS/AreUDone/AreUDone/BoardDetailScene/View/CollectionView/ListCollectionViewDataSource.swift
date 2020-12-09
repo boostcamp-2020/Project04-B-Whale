@@ -19,7 +19,7 @@ final class ListCollectionViewDataSource: NSObject, UICollectionViewDataSource {
   
   init(viewModel: ListViewModelProtocol) {
     self.viewModel = viewModel
-    
+
     super.init()
   }
   
@@ -48,6 +48,8 @@ final class ListCollectionViewDataSource: NSObject, UICollectionViewDataSource {
       return headerView
       
     case UICollectionView.elementKindSectionFooter:
+      // TODO: 여기서 카드 추가화면 띄우는 로직 필요
+      // viewmodel.createCard(리스트id) 핸들러? footerview에게 넘겨주기
       let footerView: ListFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
       return footerView
       

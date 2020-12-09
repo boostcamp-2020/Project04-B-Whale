@@ -24,7 +24,7 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     
     return collectionView
   }()
-  private var drop = true
+  private var isDroppable: Bool = true
   
   // MARK: - Initializer
   
@@ -74,7 +74,6 @@ private extension BoardDetailCollectionViewCell {
   
   func configureCollectionView() {
     collectionView.delegate = self
-    
     collectionView.dragInteractionEnabled = true
     collectionView.dragDelegate = self
     collectionView.dropDelegate = self
@@ -96,7 +95,13 @@ private extension BoardDetailCollectionViewCell {
 
 // MARK: - Extension UICollectionView Delegate
 
-extension BoardDetailCollectionViewCell: UICollectionViewDelegate {}
+extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // TODO: 카드 id 얻어서 카드 상세화면으로 넘어가는 로직 필요(viewmodel에게 물어보면 될듯함)
+    
+  }
+}
 
 
 // MARK: - Extension UICollectionView Drag Delegate
@@ -123,7 +128,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
     
     
-    return drop
+    return isDroppable
   }
   
   // 2. 드래깅 중
@@ -228,9 +233,9 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
 extension BoardDetailCollectionViewCell {
   
   @objc func listWillDragged() {
-    drop = false
+    isDroppable = false
   }
   @objc func listDidDragged() {
-    drop = true
+    isDroppable = true
   }
 }

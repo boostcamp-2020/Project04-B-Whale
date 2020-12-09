@@ -10,7 +10,7 @@ import UIKit
 final class ListFooterView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
-  
+    
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -26,10 +26,7 @@ final class ListFooterView: UICollectionReusableView, Reusable {
 
     view.layer.cornerRadius = 10
     
-    view.layer.shadowColor = UIColor.black.cgColor
-    view.layer.shadowOffset = .zero
-    view.layer.shadowRadius = 1
-    view.layer.shadowOpacity = 1
+    view.addShadow(offset: .zero, radius: 1, opacity: 1)
     
     view.backgroundColor = .white
     
@@ -71,6 +68,9 @@ private extension ListFooterView {
   }
   
   func configureBaseView() {
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
+    baseView.addGestureRecognizer(gestureRecognizer)
+    
     NSLayoutConstraint.activate([
       baseView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
       baseView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -87,4 +87,13 @@ private extension ListFooterView {
   }
 }
 
+
+// MARK: - Extension objc
+
+extension ListFooterView {
+  
+  @objc func baseViewTapped() {
+    
+  }
+}
 
