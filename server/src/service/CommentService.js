@@ -47,4 +47,23 @@ export class CommentService extends BaseService {
 
         return comment;
     }
+
+    @Transactional()
+    async removeComment({ userId, commentId }) {
+        const comment = await this.commentRepository.findOne(commentId, {
+            loadRelationIds: {
+                relations: ['user'],
+                disableMixedMap: true,
+            },
+        });
+
+        if (comment === undefined) {
+            throw new EntityNotFoundError('Not found comment');
+        }
+        if (userId !== comment.user.id) {
+            throw new ForbiddenError('Not your comment');
+        }
+
+        await this.commentRepository.remove(comment);
+    }
 }
