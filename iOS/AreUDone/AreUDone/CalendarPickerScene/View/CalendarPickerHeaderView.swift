@@ -13,9 +13,20 @@ final class CalendarPickerHeaderView: UIView {
   
   private lazy var monthLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 24)
     
     return label
+  }()
+  
+  private lazy var timeSettingButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("시간 설정", for: .normal)
+    button.titleLabel?.font = UIFont.nanumB(size: 15)
+    button.setTitleColor(.systemBlue, for: .normal)
+    
+    return button
   }()
   
   private lazy var dayOfWeekStackView: UIStackView = {
@@ -72,11 +83,15 @@ private extension CalendarPickerHeaderView {
     addSubview(monthLabel)
     addSubview(separatorView)
     addSubview(dayOfWeekStackView)
+    addSubview(timeSettingButton)
 
     configureView()
     configureMonthLabel()
+    configureTimeSettingButton()
     configureSeparatorView()
     configureDayOfWeekStackView()
+    
+    addingTarget()
   }
   
   func configureView() {
@@ -93,8 +108,6 @@ private extension CalendarPickerHeaderView {
   }
   
   func configureMonthLabel() {
-    monthLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       monthLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       monthLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
@@ -102,9 +115,14 @@ private extension CalendarPickerHeaderView {
     ])
   }
   
+  func configureTimeSettingButton() {
+    NSLayoutConstraint.activate([
+      timeSettingButton.centerYAnchor.constraint(equalTo: monthLabel.centerYAnchor),
+      timeSettingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+    ])
+  }
+  
   func configureSeparatorView() {
-    separatorView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
       separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -114,8 +132,6 @@ private extension CalendarPickerHeaderView {
   }
   
   func configureDayOfWeekStackView() {
-    dayOfWeekStackView.translatesAutoresizingMaskIntoConstraints = false
-    
     for dayNumber in 1...7 {
       let title = dayOfWeekLetter(for: dayNumber)
 
@@ -149,5 +165,23 @@ private extension CalendarPickerHeaderView {
     default:
       return ""
     }
+  }
+  
+  func addingTarget() {
+    timeSettingButton.addTarget(
+      self,
+      action: #selector(timeSettingButtonTapped),
+      for: .touchUpInside
+    )
+  }
+}
+
+
+// MARK:- Extension obj-c
+
+private extension CalendarPickerHeaderView {
+  
+  @objc private func timeSettingButtonTapped() {
+    
   }
 }
