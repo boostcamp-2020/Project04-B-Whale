@@ -24,6 +24,7 @@ final class CardDetailViewController: UIViewController {
   
   private lazy var scrollView: UIScrollView = {
     let view = UIScrollView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.showsVerticalScrollIndicator = false
     view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
     
@@ -32,6 +33,7 @@ final class CardDetailViewController: UIViewController {
   
   private lazy var stackView: CardDetailStackView = {
     let stackView = CardDetailStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
     
     return stackView
   }()
@@ -52,6 +54,15 @@ final class CardDetailViewController: UIViewController {
   
   private lazy var commentView: CommentView = {
     let view = CommentView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
+  private lazy var dummyViewForCommentView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .white
     
     return view
   }()
@@ -149,6 +160,7 @@ private extension CardDetailViewController {
     configureScrollView()
     configureStackView()
     configureCommentView()
+    configureDummyViewForCommentView()
     addEndEdittingGesture()
   }
   
@@ -163,14 +175,13 @@ private extension CardDetailViewController {
     
     view.addSubview(scrollView)
     view.addSubview(commentView)
+    view.addSubview(dummyViewForCommentView)
     scrollView.addSubview(stackView)
     stackView.addArrangedSubview(cardDetailMemberView)
     stackView.addArrangedSubview(commentCollectionView)
   }
   
   func configureScrollView() {
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -180,8 +191,6 @@ private extension CardDetailViewController {
   }
   
   func configureStackView() {
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
       stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
@@ -192,13 +201,19 @@ private extension CardDetailViewController {
   }
   
   func configureCommentView() {
-    commentView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       commentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       commentView.heightAnchor.constraint(equalToConstant: 60),
       commentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
       commentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+    ])
+  }
+  
+  func configureDummyViewForCommentView() {
+    NSLayoutConstraint.activate([
+      dummyViewForCommentView.widthAnchor.constraint(equalTo: view.widthAnchor),
+      dummyViewForCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      dummyViewForCommentView.topAnchor.constraint(equalTo: commentView.bottomAnchor)
     ])
   }
   
@@ -344,12 +359,14 @@ private extension CardDetailViewController {
       let keybaordRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keybaordRectangle.height
       commentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+      dummyViewForCommentView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
       stackView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
   }
   
   @objc func keyboardWillHide(_ notification: Notification) {
     commentView.transform = .identity
+    dummyViewForCommentView.transform = .identity
     stackView.transform = .identity
   }
   
