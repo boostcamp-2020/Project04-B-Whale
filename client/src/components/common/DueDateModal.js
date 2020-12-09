@@ -4,6 +4,7 @@ import { IoIosClose } from 'react-icons/io';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
+import { modifyCardDueDate } from '../../utils/cardRequest';
 
 registerLocale('ko', ko);
 
@@ -64,12 +65,21 @@ const Button = styled.button.attrs({ type: 'button' })`
 `;
 
 const MoveModal = ({ onClose }) => {
+    // TODO: 처음 시간은 선택된 카드에 저장된 dueDate 값으로 세팅해야할 것
     const [startDate, setStartDate] = useState(new Date());
 
     const onClickClose = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
+    };
+
+    const onClickChangeDueDate = () => {
+        // TODO: context에 저장된 카드 id를 가져와야할 것
+        const cardId = 1;
+        const dueDate = startDate;
+        modifyCardDueDate({ cardId, dueDate });
+        onClose();
     };
 
     return (
@@ -98,7 +108,7 @@ const MoveModal = ({ onClose }) => {
                             inline
                         />
                     </DateWrapper>
-                    <Button>저장하기</Button>
+                    <Button onClick={onClickChangeDueDate}>저장하기</Button>
                 </ModalBody>
             </ModalWrapper>
         </>
