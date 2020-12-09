@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 final class BoardDetailViewController: UIViewController {
   
@@ -13,20 +14,25 @@ final class BoardDetailViewController: UIViewController {
   
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
+  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel)
   
   private lazy var titleTextField: UITextField = {
     let textField = UITextField()
     
-    textField.returnKeyType = .done
     textField.delegate = self
+    textField.returnKeyType = .done
     textField.textColor = .white
     
     return textField
   }()
   @IBOutlet private weak var collectionView: BoardDetailCollectionView! {
     didSet {
-      collectionView.dataSource = self
+      collectionView.dataSource = dataSource
       collectionView.delegate = self
+      
+      collectionView.dragInteractionEnabled = true
+      collectionView.dragDelegate = self
+      collectionView.dropDelegate = self
     }
   }
   private let pageControl: UIPageControl = {
@@ -35,6 +41,7 @@ final class BoardDetailViewController: UIViewController {
     
     return pageControl
   }()
+  private var firstScrollOffset: CGFloat!
   private var scrollOffset: CGFloat!
   
   private let sideBarViewController: SideBarViewControllerProtocol
@@ -56,13 +63,13 @@ final class BoardDetailViewController: UIViewController {
   required init?(coder: NSCoder) {
     fatalError("This controller must be initialized with code")
   }
-  
+ 
   
   // MARK: - Life Cycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+   
     bindUI()
     configure()
     
@@ -73,13 +80,6 @@ final class BoardDetailViewController: UIViewController {
     super.viewDidAppear(animated)
     
     configureSideBarView()
-  }
-  
-  
-  // MARK: - Method
-  
-  private func updatePageControlNumber(to numbers: Int) {
-    pageControl.numberOfPages = numbers
   }
 }
 
@@ -148,14 +148,15 @@ private extension BoardDetailViewController {
     flowLayout.scrollDirection = .horizontal
     
     flowLayout.itemSize = CGSize(
-      width: view.bounds.width - (sectionSpacing * 2),
+      width: view.bounds.width * 0.8 - (sectionSpacing * 2),
       height: view.bounds.height * 0.8
     )
     
-    scrollOffset = (flowLayout.sectionInset.left
+    firstScrollOffset = (flowLayout.sectionInset.left
                       + flowLayout.itemSize.width
                       + flowLayout.minimumLineSpacing
                       + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+    scrollOffset = flowLayout.itemSize.width + flowLayout.minimumLineSpacing
     
     flowLayout.footerReferenceSize = CGSize(
       width: flowLayout.minimumLineSpacing + flowLayout.itemSize.width + flowLayout.sectionInset.left,
@@ -184,63 +185,124 @@ private extension BoardDetailViewController {
   }
 }
 
-// MARK: - Extension UICollectionViewDataSource
 
-extension BoardDetailViewController: UICollectionViewDataSource {
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    let numberOfPages = viewModel.numberOfLists()
-    updatePageControlNumber(to: numberOfPages)
-    
-    return numberOfPages
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-    
-    viewModel.fetchList(at: indexPath.item) { viewModel in
-      cell.update(with: viewModel)
-    }
-  
-    return cell
-  }
-}
-
-
-// MARK: - Extension UICollectionViewDelegate
+// MARK: - Extension UICollectionView Scroll / Delegate
 
 extension BoardDetailViewController: UICollectionViewDelegate {
   
-  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let footerView: BoardDetailFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
-    
-    // TODO: 추후 수정 예정
-    footerView.addHandler = { [weak self] text in
-      self?.viewModel.insertList(list: List(id: 4, title: text, position: 0, cards: []))
-      self?.collectionView.reloadSections(IndexSet(integer: 0))
-      self?.pageControl.currentPage += 1
-    }
-    return footerView
-  }
-}
-
-
-// MARK: - Extension UICollectionView Scroll
-
-extension BoardDetailViewController {
-  
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let index = scrollView.contentOffset.x / scrollOffset
-    
     var renewedIndex: CGFloat
-    if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+    var expectedX: CGFloat
+
+    if scrollView.contentOffset.x < firstScrollOffset {
+      let index = scrollView.contentOffset.x / scrollOffset
+      
+      renewedIndex = makeRenewedIndex(
+        with: index,
+        currentX: scrollView.contentOffset.x,
+        targetX: targetContentOffset.pointee.x
+      )
+      expectedX = renewedIndex * firstScrollOffset
+
+    } else {
+      let index = (scrollView.contentOffset.x - firstScrollOffset) / scrollOffset
+      renewedIndex = makeRenewedIndex(
+        with: index,
+        currentX: scrollView.contentOffset.x,
+        targetX: targetContentOffset.pointee.x
+      )
+      expectedX = renewedIndex * scrollOffset + firstScrollOffset
+      renewedIndex += 1
+    }
+    
+    targetContentOffset.pointee = CGPoint(x: expectedX, y: 0)
+    pageControl.currentPage = Int(renewedIndex)
+  }
+  
+  func makeRenewedIndex(with index: CGFloat, currentX: CGFloat, targetX: CGFloat) -> CGFloat {
+    var renewedIndex: CGFloat
+
+    if currentX > targetX {
       renewedIndex = floor(index) // 왼쪽
     } else {
       renewedIndex = ceil(index)  // 오른쪽
     }
+    return renewedIndex
+  }
+}
+
+
+// MARK: - Extension UICollectionView Drag Delegate
+
+extension BoardDetailViewController: UICollectionViewDragDelegate {
+  
+  // 1. 드래깅 시작
+  func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    guard let list = viewModel.fetchList(at: indexPath.item) else { return [] }
     
-    targetContentOffset.pointee = CGPoint(x: renewedIndex * scrollOffset, y: 0)
-    pageControl.currentPage = Int(renewedIndex)
+    let itemProvider = NSItemProvider(object: list)
+    
+    let dragItem = UIDragItem(itemProvider: itemProvider)
+    
+    session.localContext = (viewModel, indexPath, collectionView)
+    
+    return [dragItem]
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
+    NotificationCenter.default.post(name: Notification.Name.listWillDragged, object: nil)
+
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
+    NotificationCenter.default.post(name: Notification.Name.listDidDragged, object: nil)
+  }
+}
+
+
+// MARK: - Extension UICollectionView Drop Delegate
+
+extension BoardDetailViewController: UICollectionViewDropDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+    return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    guard coordinator.session.hasItemsConforming(
+            toTypeIdentifiers: [kUTTypeData as String])
+    else { return }
+    
+    processDraggedItem(by: collectionView, and: coordinator)
+  }
+  
+  private func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
+    
+    coordinator.session.loadObjects(ofClass: List.self) { [self] item in
+      guard let list = item.first as? List else { return }
+      
+      guard let source = coordinator.items.first?.sourceIndexPath,
+            let destination = coordinator.destinationIndexPath
+      else { return }
+      
+      changeData(inSame: collectionView, about: list, by: source, and: destination)
+    }
+  }
+  
+  private func changeData(
+    inSame collectionView: UICollectionView,
+    about list: List,
+    by sourceIndexPath: IndexPath,
+    and destinationIndexPath: IndexPath
+  ) {
+    let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
+    
+    viewModel.remove(at: sourceIndexPath.row)
+    viewModel.insert(list: list, at: destinationIndexPath.row)
+    
+    collectionView.reloadItems(at: updatedIndexPaths)
+    
+    
   }
 }
 
@@ -248,10 +310,15 @@ extension BoardDetailViewController {
 // MARK: - Extension UITextField Delegate
 
 extension BoardDetailViewController: UITextFieldDelegate {
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
     if let title = textField.text {
       viewModel.updateBoardTitle(to: title)
     }
+    textField.resignFirstResponder()
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
@@ -278,6 +345,12 @@ private extension BoardDetailViewController {
     viewModel.bindingUpdateBoardTitle { [weak self] title in
       DispatchQueue.main.async {
         self?.titleTextField.text = title
+      }
+    }
+    
+    viewModel.bindingUpdateControlPageCounts { [weak self] counts in
+      DispatchQueue.main.async {
+        self?.pageControl.numberOfPages = counts
       }
     }
   }

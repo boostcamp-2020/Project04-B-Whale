@@ -184,7 +184,7 @@ extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // TODO: boardId 받아오는 메소드 작성
-    coordinator?.pushToBoardDetail(boardId: 0)
+    coordinator?.pushToBoardDetail(boardId: 1)
   }
 }
 
