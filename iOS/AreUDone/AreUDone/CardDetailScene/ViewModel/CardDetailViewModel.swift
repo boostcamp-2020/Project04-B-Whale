@@ -16,12 +16,15 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
   func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void))
+  func bindingUpdateDueDateView(handler: @escaping ((String) -> Void))
+  func bindingUpdateContentView(handler: @escaping ((String) -> Void))
+  func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String, completionHandler: @escaping (() -> Void))
-  func updateDueDate(with dueDate: String, completionHandler: @escaping (() -> Void))
-  func updateContent(with content: String, completionHandler: @escaping (() -> Void))
-  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void)
+  func updateDueDate(with dueDate: String)
+  func updateContent(with content: String)
+  func prepareUpdateMemberView()
   func prepareUpdateCell(handler: (Int) -> Void)
   func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
@@ -47,6 +50,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
   private var cardDetailMemberViewHandler: (([User]?) -> Void)?
+  private var prepareForUpdateMemberViewHandler: ((Int, Int, [User]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
@@ -106,11 +110,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func updateDueDate(with dueDate: String, completionHandler: @escaping (() -> Void)) {
-    cardService.updateCard(id: id, dueDate: dueDate) { result in
+  func updateDueDate(with dueDate: String) {
+    cardService.updateCard(id: id, dueDate: dueDate) { [weak self] result in
       switch result {
       case .success(()):
-        completionHandler()
+        self?.updateDueDateHandler?(dueDate)
         
       case .failure(let error):
         print(error)
@@ -118,11 +122,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func updateContent(with content: String, completionHandler: @escaping (() -> Void)) {
-    cardService.updateCard(id: id, content: content) { result in
+  func updateContent(with content: String) {
+    cardService.updateCard(id: id, content: content) { [weak self] result in
       switch result {
       case .success(()):
-        completionHandler()
+        self?.updateContentHandler?(content)
         
       case .failure(let error):
         print(error)
@@ -153,9 +157,9 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     handler(userId)
   }
   
-  func prepareUpdateMember(handler: (Int, Int, [User]?) -> Void) {
+  func prepareUpdateMemberView() {
     guard let boardId = boardId else { return }
-    handler(id, boardId, cardMembers)
+    prepareForUpdateMemberViewHandler?(id, boardId, cardMembers)
   }
   
   func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void) {
@@ -224,5 +228,17 @@ extension CardDetailViewModel {
   
   func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void)) {
     cardDetailMemberViewHandler = handler
+  }
+  
+  func bindingUpdateDueDateView(handler: @escaping ((String) -> Void)) {
+    updateDueDateHandler = handler
+  }
+  
+  func bindingUpdateContentView(handler: @escaping ((String) -> Void)) {
+    updateContentHandler = handler
+  }
+  
+  func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void)) {
+    prepareForUpdateMemberViewHandler = handler
   }
 }

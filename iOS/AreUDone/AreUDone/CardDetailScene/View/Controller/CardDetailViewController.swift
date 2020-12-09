@@ -239,6 +239,9 @@ private extension CardDetailViewController {
     bindingCardDetailBoardTitle()
     bindingCardDetailMemberView()
     bindingCommentViewProfileImage()
+    bindingUpdateDueDateView()
+    bindingUpdateContentView()
+    bindingPrepareForUpdateMemberView()
   }
   
   func bindingCardDetailContentView() {
@@ -304,6 +307,29 @@ private extension CardDetailViewController {
       DispatchQueue.main.async {
         self?.cardDetailMemberView.update(with: members)
       }
+    }
+  }
+  
+  func bindingUpdateDueDateView() {
+    viewModel.bindingUpdateDueDateView { [weak self] selectedDate in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateDueDateView(with: selectedDate)
+      }
+    }
+  }
+  
+  func bindingUpdateContentView() {
+    viewModel.bindingUpdateContentView { [weak self] content in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateContentView(with: content)
+      }
+    }
+  }
+  
+  func bindingPrepareForUpdateMemberView() {
+    viewModel.bindingPrepareForUpdateMemberView { [weak self] (cardId, boardId, cardMembers) in
+      guard let self = self else { return }
+      self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
     }
   }
 }
@@ -389,11 +415,7 @@ extension CardDetailViewController: CardDetailDueDateViewDelegate {
 extension CardDetailViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
-    viewModel.updateDueDate(with: selectedDate) {
-      DispatchQueue.main.async { [weak self] in
-        self?.stackView.updateDueDateView(with: selectedDate)
-      }
-    }
+    viewModel.updateDueDate(with: selectedDate)
   }
 }
 
@@ -403,11 +425,7 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
 extension CardDetailViewController: ContentInputViewControllerDelegate {
   
   func send(with content: String) {
-    viewModel.updateContent(with: content) {
-      DispatchQueue.main.async { [weak self] in
-        self?.stackView.updateContentView(with: content)
-      }
-    }
+    viewModel.updateContent(with: content)
   }
 }
 
@@ -417,9 +435,7 @@ extension CardDetailViewController: ContentInputViewControllerDelegate {
 extension CardDetailViewController: CardDetailMemberViewDelegate {
   
   func cardDetailMemberEditButtonTapped() {
-    viewModel.prepareUpdateMember { (cardId, boardId, cardMembers) in
-      cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
-    }
+    viewModel.prepareUpdateMemberView()
   }
 }
 
@@ -452,6 +468,8 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
   }
 }
 
+
+// MARK:- Extension MemberUpdateViewControllerDelegate
 
 extension CardDetailViewController: MemberUpdateViewControllerDelegate {
   
