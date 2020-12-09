@@ -69,7 +69,7 @@ final class BoardDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-   
+
     bindUI()
     configure()
     
@@ -105,6 +105,7 @@ private extension BoardDetailViewController {
   }
   
   func configureNavigationBar() {
+    navigationController?.isNavigationBarHidden = false
     navigationItem.largeTitleDisplayMode = .never
     guard let navigationBar = navigationController?.navigationBar else { return }
     
