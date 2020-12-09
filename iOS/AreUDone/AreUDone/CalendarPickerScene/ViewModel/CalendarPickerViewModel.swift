@@ -32,7 +32,6 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   private lazy var basedate: Date! = selectedDate
   private let cardService: CardServiceProtocol
   private var type = "me"
-  private var currentMonthMetaData: MonthMetadata?
   private var countDictionary = [String: Int]()
   
   private let calendar = Calendar(identifier: .gregorian)
@@ -55,8 +54,8 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   func fetchInitialCalendar() {
     let days = daysInMonth(for: selectedDate)
-    fetchCardCount { [unowned self] in
-      initializeCalendarHandler?(days, selectedDate)
+    fetchCardCount {
+      self.initializeCalendarHandler?(days, self.selectedDate)
     }
   }
   
@@ -68,8 +67,8 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     )) ?? basedate
     
     let days = daysInMonth(for: basedate)
-    fetchCardCount { [unowned self] in
-      updateCalendarHandler?(days, basedate)
+    fetchCardCount {
+      self.updateCalendarHandler?(days, self.basedate)
     }
   }
   
@@ -146,7 +145,7 @@ private extension CalendarPickerViewModel {
     guard let monthMetadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
-    currentMonthMetaData = monthMetadata
+    
     var days = makeDays(using: monthMetadata) // 이전 달 + 해당 달
     days += makeDaysOfNextMonth(using: days.count, monthMetadata.firstDay) // + 다음 달
     
