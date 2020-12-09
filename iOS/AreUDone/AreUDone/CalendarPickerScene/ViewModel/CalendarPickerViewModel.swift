@@ -80,7 +80,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   }
   
   func sendSelectedDate() {
-    let date = selectedDate.toString()
+    let date = selectedDate.toStringWithTime()
     sendSelectedDateHandler?(date)
   }
   
