@@ -208,10 +208,10 @@ describe('Board API Test', () => {
                     'Content-Type': 'application/json',
                 })
                 .send({
-                    title: '카드 추가',
+                    title: 'card title',
                     dueDate: '2020-12-31 00:00:00',
                     position: 1,
-                    content: '카드 상세',
+                    content: 'card detail',
                 });
 
             // then
