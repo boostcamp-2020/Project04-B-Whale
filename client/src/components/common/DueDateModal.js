@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../../styles/customDatepicker.css';
 import ko from 'date-fns/locale/ko';
 import { modifyCardDueDate } from '../../utils/cardRequest';
 
@@ -50,6 +51,7 @@ const DateWrapper = styled.div``;
 const SelectDate = styled.input.attrs({
     type: 'text',
 })`
+    width: 15.1em;
     margin: 10px 0;
     padding: 3px 5px;
     border: ${(props) => props.theme.border};
@@ -106,6 +108,12 @@ const MoveModal = ({ onClose }) => {
                             showTimeInput
                             locale="ko"
                             inline
+                            dayClassName={(date) => {
+                                if (date.getMonth() !== startDate.getMonth()) return 'day-disable';
+                                if (date.getDay() === 6) return 'saturday';
+                                if (date.getDay() === 0) return 'sunday';
+                                return undefined;
+                            }}
                         />
                     </DateWrapper>
                     <Button onClick={onClickChangeDueDate}>저장하기</Button>
