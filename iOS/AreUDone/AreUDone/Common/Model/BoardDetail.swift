@@ -14,14 +14,3 @@ struct BoardDetail: Codable {
   let invitedUsers: [User]
   var lists: [List]
 }
-
-// MARK: - Creator
-struct Creator: Codable {
-  let id: Int
-  let name, profileImageUrl: String
-}
-
-struct InvitedUser: Codable {
-  let id: Int
-  let name, profileImageUrl: String
-}

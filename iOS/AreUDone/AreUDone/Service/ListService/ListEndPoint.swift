@@ -12,7 +12,7 @@ import KeychainFramework
 enum ListEndPoint {
   
   case createList(boardId: Int, title: String)
-  case updateList(listId: Int, position: Int?, title: String?)
+  case updateList(listId: Int, position: Double?, title: String?)
   case deleteList(listId: Int)
 }
 

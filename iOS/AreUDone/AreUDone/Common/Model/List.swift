@@ -16,10 +16,10 @@ import MobileCoreServices
 class List: NSObject, Codable {
   let id: Int
   let title: String
-  let position: Int
+  let position: Double
   var cards: [Card]
   
-  init(id: Int, title: String, position: Int, cards: [Card]) {
+  init(id: Int, title: String, position: Double, cards: [Card]) {
     self.id = id
     self.title = title
     self.position = position
