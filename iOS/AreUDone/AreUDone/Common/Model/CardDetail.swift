@@ -13,6 +13,7 @@ struct CardDetail: Codable {
   let title: String
   let content: String?
   let dueDate: String
+  let members: [User]?
   let comments: [Comment]?
   let board: Board
   let list: List

@@ -13,6 +13,7 @@ protocol CalendarPickerViewModelProtocol {
   func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void)
   func bindingSendSelectedDate(handler: @escaping (String) -> Void)
   
+  func prepareForCardCount(with day: Int, completionHandler: ((Int) -> Void))
   func fetchInitialCalendar()
   func fetchUpdatedCalendar(to months: Int)
   func updateSelectedDate(to date: Date)
@@ -29,6 +30,9 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   var selectedDate: Date!
   private lazy var basedate: Date! = selectedDate
+  private let cardService: CardServiceProtocol
+  private var type = "me"
+  private var countDictionary = [String: Int]()
   
   private let calendar = Calendar(identifier: .gregorian)
   
@@ -39,34 +43,33 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   }()
   
   
+  // MARK:- Initializer
+  
+  init(cardService: CardServiceProtocol) {
+    self.cardService = cardService
+  }
+  
+  
   // MARK: - Method
-  
-  func bindingInitializeDate(handler: @escaping ([Day], Date) -> Void) {
-    initializeCalendarHandler = handler
-  }
-  
-  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void) {
-    updateCalendarHandler = handler
-  }
-  
-  func bindingSendSelectedDate(handler: @escaping (String) -> Void) {
-    sendSelectedDateHandler = handler
-  }
   
   func fetchInitialCalendar() {
     let days = daysInMonth(for: selectedDate)
-    initializeCalendarHandler?(days, selectedDate)
+    fetchCardCount {
+      self.initializeCalendarHandler?(days, self.selectedDate)
+    }
   }
   
   func fetchUpdatedCalendar(to months: Int) {
-    basedate = (self.calendar.date(
+    basedate = (calendar.date(
       byAdding: .month,
       value: months,
       to: basedate
     )) ?? basedate
     
     let days = daysInMonth(for: basedate)
-    updateCalendarHandler?(days, basedate)
+    fetchCardCount {
+      self.updateCalendarHandler?(days, self.basedate)
+    }
   }
   
   func updateSelectedDate(to date: Date) {
@@ -81,10 +84,64 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     sendSelectedDateHandler?(date)
   }
   
+  func prepareForCardCount(with day: Int, completionHandler: ((Int) -> Void)) {
+    let count = countDictionary["\(day)"] ?? 0
+    completionHandler(count)
+  }
   
-  // MARK: Calendar 계산
+  private func fetchCardCount(completionHandler: @escaping (() -> Void)) {
+    guard
+      let startDateAsString = basedate.startOfMonth()?.toString(withDividerFormat: "-"),
+      let endDateAsString = basedate.endOfMonth()?.toString(withDividerFormat: "-")
+    else { return }
+    
+    cardService.fetchCardsCount(
+      startDate: startDateAsString,
+      endDate: endDateAsString,
+      member: type
+    ) { [weak self] result in
+      switch result {
+      case .success(let monthCardCount):
+        monthCardCount.cardCounts.forEach { dailyCard in
+          guard
+            let day = self?.dateFormatter.string(from: dailyCard.dueDate.toDateFormat(with: .dash))
+          else { return }
+          
+          self?.countDictionary[day] = dailyCard.count
+        }
+        
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+}
+
+
+// MARK:- Extension bindUI
+
+extension CalendarPickerViewModel {
   
-  private func daysInMonth(for baseDate: Date) -> [Day] {
+  func bindingInitializeDate(handler: @escaping ([Day], Date) -> Void) {
+    initializeCalendarHandler = handler
+  }
+  
+  func bindingUpdateCalendar(handler: @escaping ([Day], Date) -> Void) {
+    updateCalendarHandler = handler
+  }
+  
+  func bindingSendSelectedDate(handler: @escaping (String) -> Void) {
+    sendSelectedDateHandler = handler
+  }
+}
+
+// MARK: Calendar 계산
+
+private extension CalendarPickerViewModel {
+  
+  func daysInMonth(for baseDate: Date) -> [Day] {
     guard let monthMetadata = try? monthMetadata(for: baseDate) else {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
@@ -95,7 +152,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
     
-  private func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
+  func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
     guard let numberOfDaysInMonth = calendar.range(
       of: .day,
       in: .month,
@@ -115,7 +172,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
       firstDayIndex: firstDayWeekday)
   }
   
-  private func makeDay(
+  func makeDay(
     offsetBy dayOffset: Int,
     for baseDate: Date,
     isWithinDisplayedMonth: Bool
@@ -133,7 +190,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     )
   }
   
-  private func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
+  func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
     let numberOfDaysInMonth = monthMetadata.numberOfDays        // 한 달의 일 수
     let firstDayOfMonth = monthMetadata.firstDay                // 해당 달의 첫 번째 날
     let firstDayOfMonthIndex = monthMetadata.firstDayIndex      // 해당 달의 첫 번째 날의 인덱스
@@ -157,7 +214,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  private func makeDaysOfNextMonth(
+  func makeDaysOfNextMonth(
     using counts: Int, _ firstDayOfDisplayedMonth: Date
   ) -> [Day] {
     guard let lastDayInMonth = calendar.date(
@@ -177,7 +234,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     return days
   }
   
-  private enum CalendarDataError: Error {
+  enum CalendarDataError: Error {
     case metadataGeneration
   }
 }

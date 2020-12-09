@@ -23,6 +23,7 @@ public protocol Routable {
 }
 
 extension Routable {
+  
   func handleNetworkResponseError(_ response: HTTPURLResponse) -> APIError? {
     switch response.statusCode {
     case 200...299: return nil
@@ -33,7 +34,7 @@ extension Routable {
     }
   }
   
-  func configureRequest(from route: EndPointable) -> URLRequest? {
+  public func configureRequest(from route: EndPointable) -> URLRequest? {
     var urlComponents = route.baseURL
     
     if let query = route.query {
@@ -47,7 +48,7 @@ extension Routable {
     
     if let url = urlComponents.url {
       var request = URLRequest(url: url)
-      
+
       request.httpMethod = route.httpMethod?.rawValue
       request.httpBody = route.bodies?.encode().data(using: String.Encoding.utf8)
       route.headers?.forEach { key, value in

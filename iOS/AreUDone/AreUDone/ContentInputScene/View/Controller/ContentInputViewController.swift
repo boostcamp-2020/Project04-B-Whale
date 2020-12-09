@@ -113,13 +113,13 @@ private extension ContentInputViewController {
   
   @objc func cancelButtonTapped() {
     view.endEditing(true)
+    
     let alert = UIAlertController(
       alertType: .dataLoss,
-      alertStyle: .actionSheet
-    ) { [weak self] in
+      alertStyle: .actionSheet,
+      confirmAction:  { [weak self] in
       self?.contentInputCoordinator?.dismiss()
-    }
-    cancelAction: { }
+    })
     
     present(alert, animated: true, completion: nil)
   }

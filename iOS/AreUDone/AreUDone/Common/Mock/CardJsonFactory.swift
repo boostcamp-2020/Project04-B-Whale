@@ -92,6 +92,23 @@ struct CardTrueJsonFactory: JsonFactory {
                 "title": "재밌게 끝내기",
                 "content": "2주밖에 남지 않았습니다. 열심히 하겠습니다ㅠㅠ",
                 "dueDate": "2020-12-02",
+                "members": [
+                        {
+                            "id": 1,
+                            "name": "서명렬",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                        {
+                            "id": 2,
+                            "name": "박수연",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                        {
+                            "id": 3,
+                            "name": "이건홍",
+                            "profileImageUrl": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg"
+                        },
+                    ],
                 "comments" : [
                     {
                         "id": 1,
@@ -174,6 +191,38 @@ struct CardTrueJsonFactory: JsonFactory {
                 }
             }
             """.data(using: .utf8)
+      
+    case CardEndPoint.fetchCardsCount:
+      return """
+            {
+                "cardCounts" : [
+                      {
+                          "dueDate": "2020-01-01",
+                          "count": 1
+                      },
+                      {
+                          "dueDate": "2020-01-02",
+                          "count": 3
+                      },
+                      {
+                          "dueDate": "2020-01-15",
+                          "count": 2
+                      },
+                      {
+                          "dueDate": "2020-01-21",
+                          "count": 5
+                      },
+                      {
+                          "dueDate": "2020-01-23",
+                          "count": 7
+                      },
+                      {
+                          "dueDate": "2020-01-26",
+                          "count": 11
+                      }
+                ]
+            }
+            """.data(using: .utf8)
     default:
       return nil
     }
@@ -192,17 +241,3 @@ struct CardFalseJsonFactory: JsonFactory {
     }
   }
 }
-
-/*
- 
- {
-     "id": 0,
-     "content": "화이팅!123",
-     "createdAt": "2020-12-02",
-     "user": {
-         "id": 0,
-         "name": "서명렬",
-         "profileImageUrl": ""
-     }
- },
- */

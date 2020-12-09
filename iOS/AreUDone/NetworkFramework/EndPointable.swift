@@ -21,8 +21,8 @@ public enum HTTPMethod: String {
        get,
        put,
        delete,
-       patch
+       PATCH
 }
 public typealias HTTPHeader = [String: String]
-public typealias HTTPBody = [String: String]
+public typealias HTTPBody = [String: Any]
 public typealias HTTPQuery = [String: String]

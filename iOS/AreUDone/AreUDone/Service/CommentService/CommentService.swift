@@ -10,6 +10,8 @@ import NetworkFramework
 
 protocol CommentServiceProtocol {
   
+  func createComment(with cardId: Int, content: String, completionHandler: @escaping ((Result<Void, APIError>) -> Void))
+  func deleteComment(with commentId: Int, compeletionHandler: @escaping ((Result<Void, APIError>) -> Void))
 }
 
 class CommentService: CommentServiceProtocol {
@@ -28,4 +30,15 @@ class CommentService: CommentServiceProtocol {
   
   // MARK: - Method
   
+  func createComment(with cardId: Int, content: String, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+    router.request(route: CommentEndPoint.createComment(cardId: cardId, content: content)) { (result: Result<Void, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func deleteComment(with commentId: Int, compeletionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+    router.request(route: CommentEndPoint.deleteComment(commentId: commentId)) { (result: Result<Void, APIError>) in
+      compeletionHandler(result)
+    }
+  }
 }

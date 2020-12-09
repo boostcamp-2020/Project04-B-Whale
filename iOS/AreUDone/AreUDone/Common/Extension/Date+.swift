@@ -9,10 +9,29 @@ import Foundation
 
 extension Date {
   
-  func toString() -> String {
+  func toString(withDividerFormat dividerFormat: String = ".") -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy.MM.dd"
+    dateFormatter.dateFormat = "yyyy\(dividerFormat)MM\(dividerFormat)dd"
     
     return dateFormatter.string(from: self)
+  }
+  
+  func startOfMonth() -> Date? {
+    let calendar = Calendar(identifier: .gregorian)
+    guard
+      let date = calendar.date(bySetting: .day, value: 1, of: self)
+    else { return nil }
+    
+    return calendar.date(byAdding: .month, value: -1, to: date)
+  }
+  
+  func endOfMonth() -> Date? {
+    let calendar = Calendar(identifier: .gregorian)
+    
+    guard
+      let date = calendar.date(bySetting: .day, value: 1, of: self)
+    else { return nil }
+    
+    return calendar.date(byAdding: .day, value: -1, to: date)
   }
 }

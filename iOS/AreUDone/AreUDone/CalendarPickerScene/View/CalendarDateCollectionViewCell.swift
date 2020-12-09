@@ -29,6 +29,14 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
     
     return label
   }()
+  
+  private lazy var cardCountView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .clear
+    
+    return view
+  }()
 
   var day: Day? {
     didSet {
@@ -51,6 +59,16 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
 
     configure()
   }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    cardCountView.backgroundColor = .clear
+  }
+  
+  func updateCountView(with count: Int) {
+    cardCountView.backgroundColor = cardCountColor(for: count)
+  }
 }
 
 
@@ -61,9 +79,11 @@ private extension CalendarDateCollectionViewCell {
   func configure() {
     addSubview(selectionBackgroundView)
     contentView.addSubview(numberLabel)
+    contentView.addSubview(cardCountView)
 
     configureSelectionBackgroundView()
     configureNumberLabel()
+    configureCardCountView()
   }
   
   func configureNumberLabel() {
@@ -78,7 +98,7 @@ private extension CalendarDateCollectionViewCell {
   func configureSelectionBackgroundView() {
     selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let size = frame.width - 15
+    let size = frame.width - 20
 
     NSLayoutConstraint.activate([
       selectionBackgroundView.centerYAnchor.constraint(equalTo: numberLabel.centerYAnchor),
@@ -88,6 +108,15 @@ private extension CalendarDateCollectionViewCell {
     ])
     
     selectionBackgroundView.layer.cornerRadius = size / 2
+  }
+  
+  func configureCardCountView() {
+    NSLayoutConstraint.activate([
+      cardCountView.centerXAnchor.constraint(equalTo: numberLabel.centerXAnchor),
+      cardCountView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      cardCountView.widthAnchor.constraint(equalToConstant: 7),
+      cardCountView.heightAnchor.constraint(equalTo: cardCountView.widthAnchor)
+    ])
   }
   
   func updateSelectionStatus() {
@@ -107,5 +136,22 @@ private extension CalendarDateCollectionViewCell {
   func applyDefaultStyle(isWithinDisplayedMonth: Bool) {
     numberLabel.textColor = isWithinDisplayedMonth ? .label : .secondaryLabel
     selectionBackgroundView.isHidden = true
+  }
+  
+  func cardCountColor(for count: Int) -> UIColor? {
+    switch count {
+    case 0:
+      break
+    case 1...2:
+      return UIColor(red: 140/255, green: 241/255, blue: 152/255, alpha: 1.0)
+    case 3...5:
+      return UIColor(red: 57/255, green: 187/255, blue: 81/255, alpha: 1.0)
+    case 6...10:
+      return UIColor(red: 42/255, green: 147/255, blue: 62/255, alpha: 1.0)
+    default:
+      return UIColor(red: 28/255, green: 92/255, blue: 43/255, alpha: 1.0)
+    }
+    
+    return nil
   }
 }

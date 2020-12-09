@@ -25,6 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     Keychain.shared.save(value: decodedToken, forKey: "token")
     
+    let tokenParser = TokenParser()
+    let items = tokenParser.decode(jwtToken: decodedToken)
+    
+    UserIdStore.saveUserId(with: items)
+    
     sceneCoordinator.start()
   }
   

@@ -36,6 +36,13 @@ final class CardDetailViewController: UIViewController {
     return stackView
   }()
   
+  private lazy var cardDetailMemberView: CardDetailMemberView = {
+    let view = CardDetailMemberView(viewModel: viewModel)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   private lazy var commentCollectionView: CommentCollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -93,6 +100,12 @@ private extension CardDetailViewController {
       
       cell.update(with: comment)
       
+      self?.viewModel.prepareUpdateCell { userId in
+        guard comment.user.id == userId else { return }
+        cell.confirmEditOption()
+        cell.delegate = self
+      }
+      
       self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl) { data in
         let image = UIImage(data: data)
         DispatchQueue.main.async {
@@ -142,6 +155,7 @@ private extension CardDetailViewController {
   func configureView() {
     commentView.delegate = self
     scrollView.delegate = self
+    cardDetailMemberView.delegate = self
     stackView.setupContentViewDelegate(self)
     stackView.setupDueDateViewDelegate(self)
     
@@ -150,6 +164,7 @@ private extension CardDetailViewController {
     view.addSubview(scrollView)
     view.addSubview(commentView)
     scrollView.addSubview(stackView)
+    stackView.addArrangedSubview(cardDetailMemberView)
     stackView.addArrangedSubview(commentCollectionView)
   }
   
@@ -222,7 +237,11 @@ private extension CardDetailViewController {
     bindingCardDetailNavigationBarTitle()
     bindingCardDetailListTitle()
     bindingCardDetailBoardTitle()
+    bindingCardDetailMemberView()
     bindingCommentViewProfileImage()
+    bindingUpdateDueDateView()
+    bindingUpdateContentView()
+    bindingPrepareForUpdateMemberView()
   }
   
   func bindingCardDetailContentView() {
@@ -281,6 +300,38 @@ private extension CardDetailViewController {
       }
     }
   }
+  
+  func bindingCardDetailMemberView() {
+    viewModel.bindingCardDetailMemberView { [weak self] members in
+      guard let members = members else { return }
+      DispatchQueue.main.async {
+        self?.cardDetailMemberView.update(with: members)
+      }
+    }
+  }
+  
+  func bindingUpdateDueDateView() {
+    viewModel.bindingUpdateDueDateView { [weak self] selectedDate in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateDueDateView(with: selectedDate)
+      }
+    }
+  }
+  
+  func bindingUpdateContentView() {
+    viewModel.bindingUpdateContentView { [weak self] content in
+      DispatchQueue.main.async { [weak self] in
+        self?.stackView.updateContentView(with: content)
+      }
+    }
+  }
+  
+  func bindingPrepareForUpdateMemberView() {
+    viewModel.bindingPrepareForUpdateMemberView { [weak self] (cardId, boardId, cardMembers) in
+      guard let self = self else { return }
+      self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
+    }
+  }
 }
 
 
@@ -313,7 +364,9 @@ private extension CardDetailViewController {
 extension CardDetailViewController: CommentViewDelegate {
   
   func commentSaveButtonTapped(with comment: String) {
-    viewModel.addComment(with: comment)
+    viewModel.addComment(with: comment) { [weak self] in
+      self?.viewModel.fetchDetailCard()
+    }
   }
 }
 
@@ -363,19 +416,64 @@ extension CardDetailViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
     viewModel.updateDueDate(with: selectedDate)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateDueDateView(with: selectedDate)
-    }
   }
 }
 
+
+// MARK:- Extension ContentInputViewControllerDelegate
 
 extension CardDetailViewController: ContentInputViewControllerDelegate {
   
   func send(with content: String) {
     viewModel.updateContent(with: content)
-    DispatchQueue.main.async { [weak self] in
-      self?.stackView.updateContentView(with: content)
-    }
+  }
+}
+
+
+// MARK:- Extension CardDetailMemberViewDelegate
+
+extension CardDetailViewController: CardDetailMemberViewDelegate {
+  
+  func cardDetailMemberEditButtonTapped() {
+    viewModel.prepareUpdateMemberView()
+  }
+}
+
+
+// MARK:- Extension ommentCollectionViewCellDelegate
+
+extension CardDetailViewController: CommentCollectionViewCellDelegate {
+  
+  func CommentCollectionViewCellEditButtonTapped(with cell: CommentCollectionViewCell) {
+    var snapshot = dataSource.snapshot()
+    guard
+      let indexPath = commentCollectionView.indexPath(for: cell),
+      let comment = dataSource.itemIdentifier(for: indexPath)
+    else { return }
+    
+    
+    let alert = UIAlertController(
+      alertType: .delete,
+      alertStyle: .actionSheet,
+      confirmAction: { [weak self] in
+        self?.viewModel.deleteComment(with: comment.id) {
+          snapshot.deleteItems([comment])
+          DispatchQueue.main.async {
+            self?.dataSource.apply(snapshot)
+          }
+        }
+      })
+    
+    present(alert, animated: true)
+  }
+}
+
+
+// MARK:- Extension MemberUpdateViewControllerDelegate
+
+extension CardDetailViewController: MemberUpdateViewControllerDelegate {
+  
+  func memberUpdateViewControllerWillDisappear() {
+    viewModel.fetchDetailCard()
   }
 }

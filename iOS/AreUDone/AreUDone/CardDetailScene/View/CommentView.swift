@@ -19,8 +19,6 @@ final class CommentView: UIView {
   private lazy var profileImageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    let image = UIImage(systemName: "circle")
-    view.image = image
     view.layer.masksToBounds = true
     
     return view

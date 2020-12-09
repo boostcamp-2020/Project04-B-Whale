@@ -15,11 +15,18 @@ protocol CardDetailViewModelProtocol {
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void))
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void))
+  func bindingUpdateDueDateView(handler: @escaping ((String) -> Void))
+  func bindingUpdateContentView(handler: @escaping ((String) -> Void))
+  func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void))
   
   func fetchDetailCard()
-  func addComment(with comment: String)
+  func addComment(with comment: String, completionHandler: @escaping (() -> Void))
   func updateDueDate(with dueDate: String)
   func updateContent(with content: String)
+  func prepareUpdateMemberView()
+  func prepareUpdateCell(handler: (Int) -> Void)
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
 }
 
@@ -30,6 +37,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let userService: UserServiceProtocol
+  private let commentService: CommentServiceProtocol
   private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
@@ -41,9 +49,13 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var updateDueDateHandler: ((String) -> Void)?
   private var updateContentHandler: ((String) -> Void)?
   private var commentViewProfileImageHandler: ((Data) -> Void)?
+  private var cardDetailMemberViewHandler: (([User]?) -> Void)?
+  private var prepareForUpdateMemberViewHandler: ((Int, Int, [User]?) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
+  private var boardId: Int?
+  private var cardMembers: [User]?
   
   // MARK:- Initializer
   
@@ -51,14 +63,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     id: Int,
     cardService: CardServiceProtocol,
     imageService: ImageServiceProtocol,
-    userService: UserServiceProtocol
+    userService: UserServiceProtocol,
+    commentService: CommentServiceProtocol
   ) {
     self.id = id
     self.cardService = cardService
     self.imageService = imageService
     self.userService = userService
+    self.commentService = commentService
   }
-
+  
   
   // MARK:- Method
   
@@ -66,12 +80,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardService.fetchDetailCard(id: id) { [weak self] result in
       switch result {
       case .success(let detailCard):
+        self?.boardId = detailCard.board.id
+        self?.cardMembers = detailCard.members
+        
         self?.cardDetailContentViewHandler?(detailCard.content)
         self?.cardDetailDueDateViewHandler?(detailCard.dueDate)
         self?.cardDetailCommentsViewHandler?(detailCard.comments)
         self?.cardDetailNavigationBarTitleHandler?(detailCard.title)
         self?.cardDetailListTitleHandler?(detailCard.list.title)
         self?.cardDetailBoardTitleHandler?(detailCard.board.title)
+        self?.cardDetailMemberViewHandler?(detailCard.members)
         self?.fetchUserData()
         
       case .failure(let error):
@@ -80,18 +98,24 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func addComment(with comment: String) {
-    // TODO:- CommentService
+  func addComment(with comment: String, completionHandler: @escaping (() -> Void)) {
+    commentService.createComment(with: id, content: comment) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   func updateDueDate(with dueDate: String) {
-    cardService.updateCard(
-      id: id,
-      dueDate: dueDate
-    ) { result in
+    cardService.updateCard(id: id, dueDate: dueDate) { [weak self] result in
       switch result {
       case .success(()):
-        break
+        self?.updateDueDateHandler?(dueDate)
+        
       case .failure(let error):
         print(error)
       }
@@ -99,13 +123,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   }
   
   func updateContent(with content: String) {
-    cardService.updateCard(
-      id: id,
-      content: content
-    ) { result in
+    cardService.updateCard(id: id, content: content) { [weak self] result in
       switch result {
       case .success(()):
-        break
+        self?.updateContentHandler?(content)
+        
       case .failure(let error):
         print(error)
       }
@@ -122,9 +144,32 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         case .success(let data):
           completionHandler(data)
           self.cache.setObject(data as NSData, forKey: urlAsString as NSString)
+          
         case .failure(let error):
           print(error)
         }
+      }
+    }
+  }
+  
+  func prepareUpdateCell(handler: (Int) -> Void) {
+    guard let userId = Int(UserInfo.shared.userId) else { return }
+    handler(userId)
+  }
+  
+  func prepareUpdateMemberView() {
+    guard let boardId = boardId else { return }
+    prepareForUpdateMemberViewHandler?(id, boardId, cardMembers)
+  }
+  
+  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void) {
+    commentService.deleteComment(with: commentId) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
       }
     }
   }
@@ -133,8 +178,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     userService.requestMe { [weak self] result in
       switch result {
       case .success(let user):
-        self?.fetchProfileImage(with: user.profileImageUrl) { data in
-          self?.commentViewProfileImageHandler?(data)
+        if let cachedData = self?.cache.object(forKey: user.profileImageUrl as NSString) {
+          self?.commentViewProfileImageHandler?(cachedData as Data)
+        } else {
+          self?.fetchProfileImage(with: user.profileImageUrl) { data in
+            self?.commentViewProfileImageHandler?(data)
+          }
         }
         
       case .failure(let error):
@@ -175,5 +224,21 @@ extension CardDetailViewModel {
   
   func bindingCommentViewProfileImage(handler: @escaping ((Data) -> Void)) {
     commentViewProfileImageHandler = handler
+  }
+  
+  func bindingCardDetailMemberView(handler: @escaping (([User]?) -> Void)) {
+    cardDetailMemberViewHandler = handler
+  }
+  
+  func bindingUpdateDueDateView(handler: @escaping ((String) -> Void)) {
+    updateDueDateHandler = handler
+  }
+  
+  func bindingUpdateContentView(handler: @escaping ((String) -> Void)) {
+    updateContentHandler = handler
+  }
+  
+  func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void)) {
+    prepareForUpdateMemberViewHandler = handler
   }
 }

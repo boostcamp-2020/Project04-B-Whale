@@ -194,6 +194,70 @@
 		33F2D6BD257F7635008F1E06 /* MembersCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6BC257F7635008F1E06 /* MembersCollectionViewDataSource.swift */; };
 		33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */; };
 		33F2D6CA257F838D008F1E06 /* ListCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */; };
+		33F2D58D257E678C008F1E06 /* BoardServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D58C257E678C008F1E06 /* BoardServiceTests.swift */; };
+		33F2D591257E69FF008F1E06 /* CardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7C2256E3D3600EA8791 /* CardDetail.swift */; };
+		33F2D595257E6A05008F1E06 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5CE25787F290057ACA4 /* ImageService.swift */; };
+		33F2D599257E6A0A008F1E06 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B2325663E74005DF00A /* UserService.swift */; };
+		33F2D59D257E6A36008F1E06 /* CustomSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */; };
+		33F2D5A1257E6A3F008F1E06 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4942578DC7200D92CC0 /* UIView+.swift */; };
+		33F2D5A5257E6A54008F1E06 /* InvitationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4DC257B3F47008F1E06 /* InvitationCoordinator.swift */; };
+		33F2D5A9257E6A57008F1E06 /* InvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4EA257B40A1008F1E06 /* InvitationViewController.swift */; };
+		33F2D5AD257E6A5A008F1E06 /* InvitationTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D507257B6AFE008F1E06 /* InvitationTableViewDataSource.swift */; };
+		33F2D5B1257E6A5D008F1E06 /* InvitationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4EF257B41CE008F1E06 /* InvitationViewModel.swift */; };
+		33F2D5B5257E6A5F008F1E06 /* InvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4F7257B582C008F1E06 /* InvitationTableViewCell.swift */; };
+		33F2D5B9257E6A64008F1E06 /* SideBarHeaderContentsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5962577B8640057ACA4 /* SideBarHeaderContentsFactory.swift */; };
+		33F2D5BD257E6A68008F1E06 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA57C25777CF50057ACA4 /* SideBarViewModel.swift */; };
+		33F2D5C1257E6A6B008F1E06 /* ImageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */; };
+		33F2D5C5257E6A6F008F1E06 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA55225768F3B0057ACA4 /* SideBarView.swift */; };
+		33F2D5C9257E6A72008F1E06 /* SideBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D493257A2338008F1E06 /* SideBarCollectionView.swift */; };
+		33F2D5CD257E6A74008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4C6257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift */; };
+		33F2D5D1257E6A76008F1E06 /* SideBarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5902577A5D30057ACA4 /* SideBarHeaderView.swift */; };
+		33F2D5D5257E6A78008F1E06 /* SideBarCollectionViewActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA56725769F9F0057ACA4 /* SideBarCollectionViewActivityCell.swift */; };
+		33F2D5D9257E6A7B008F1E06 /* SideBarCollectionViewMembersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA59E2577BB570057ACA4 /* SideBarCollectionViewMembersCell.swift */; };
+		33F2D5DD257E6A7E008F1E06 /* MemberCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4A7257A3F6C008F1E06 /* MemberCollectionView.swift */; };
+		33F2D5E1257E6A80008F1E06 /* MembersCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D4B8257A8D0A008F1E06 /* MembersCollectionViewDataSource.swift */; };
+		33F2D5E5257E6A82008F1E06 /* MemberFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3373A4992578DEC300D92CC0 /* MemberFooterView.swift */; };
+		33F2D5E9257E6A85008F1E06 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5A62577C0440057ACA4 /* MemberCell.swift */; };
+		33F2D5ED257E6A8F008F1E06 /* BoardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA56C25776ABE0057ACA4 /* BoardDetail.swift */; };
+		33F2D5F1257E6AA7008F1E06 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA581257791180057ACA4 /* Activity.swift */; };
+		33F2D5F5257E6AAC008F1E06 /* UserEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BFA2577768D00CF6B11 /* UserEndPoint.swift */; };
+		33F2D5F9257E6AB3008F1E06 /* CardDetailStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7ED256F421E00EA8791 /* CardDetailStackView.swift */; };
+		33F2D5FD257E6AB7008F1E06 /* CardDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7F2256F424800EA8791 /* CardDetailContentView.swift */; };
+		33F2D601257E6ABD008F1E06 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8BC2574D0A200EA8791 /* CommentView.swift */; };
+		33F2D605257E6ACA008F1E06 /* ContentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BD72576246B00CF6B11 /* ContentInputViewController.swift */; };
+		33F2D609257E6AD1008F1E06 /* ContentInputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BE2257627E100CF6B11 /* ContentInputCoordinator.swift */; };
+		33F2D60D257E6AD6008F1E06 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6512579D2D600BF8928 /* User.swift */; };
+		33F2D611257E6AE2008F1E06 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A61325787D4E00BF8928 /* UIFont+.swift */; };
+		33F2D615257E6AE7008F1E06 /* BoardDetailJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA577257775950057ACA4 /* BoardDetailJsonFactory.swift */; };
+		33F2D619257E6AEB008F1E06 /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B452566408F005DF00A /* ActivityService.swift */; };
+		33F2D61D257E6AF1008F1E06 /* ActivityJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA58B2577987A0057ACA4 /* ActivityJsonFactory.swift */; };
+		33F2D621257E6B04008F1E06 /* CustomBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA4F0257496B10057ACA4 /* CustomBarButtonItem.swift */; };
+		33F2D625257E6B1A008F1E06 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE27E2B256B9215002308B9 /* UITableView+.swift */; };
+		33F2D629257E6B1E008F1E06 /* ContentInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BDD2576258000CF6B11 /* ContentInputViewModel.swift */; };
+		33F2D62D257E6B25008F1E06 /* UserJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A64C2579D1C100BF8928 /* UserJsonFactory.swift */; };
+		33F2D631257E6B2C008F1E06 /* CardDetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */; };
+		33F2D63C257E6B30008F1E06 /* CardDetailDueDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */; };
+		33F2D640257E6B36008F1E06 /* DayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6062578782100BF8928 /* DayLabel.swift */; };
+		33F2D644257E6B41008F1E06 /* BoardDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA4FF2574ABA80057ACA4 /* BoardDetailFooterView.swift */; };
+		33F2D648257E6B48008F1E06 /* BoardAddCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D529257DDC70008F1E06 /* BoardAddCoordinator.swift */; };
+		33F2D64C257E6B50008F1E06 /* BoardAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */; };
+		33F2D650257E6B53008F1E06 /* BoardAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D53C257DDD42008F1E06 /* BoardAddViewModel.swift */; };
+		33F2D654257E6B55008F1E06 /* BoardColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */; };
+		33F2D658257E6B58008F1E06 /* BoardTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D548257DE682008F1E06 /* BoardTitleTableViewCell.swift */; };
+		33F2D65C257E6B5A008F1E06 /* BoardAddTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */; };
+		33F2D660257E6B5C008F1E06 /* BoardAddTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */; };
+		33F2D664257E6B6F008F1E06 /* CommentTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8C12574D8AA00EA8791 /* CommentTextField.swift */; };
+		33F2D668257E6B76008F1E06 /* ActivityEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA586257792690057ACA4 /* ActivityEndPoint.swift */; };
+		33F2D66C257E6B7D008F1E06 /* AddOrCancelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5132574D06C0057ACA4 /* AddOrCancelView.swift */; };
+		33F2D670257E6B83008F1E06 /* ImageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */; };
+		33F2D677257E6BC9008F1E06 /* CommentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA809256F8B5900EA8791 /* CommentCollectionView.swift */; };
+		33F2D67F257E6BE6008F1E06 /* CommentCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA8CC2575230B00EA8791 /* CommentCollectionViewHeader.swift */; };
+		33F2D683257E6BEA008F1E06 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA80E256F8B6C00EA8791 /* CommentCollectionViewCell.swift */; };
+		33F2D687257E6C0A008F1E06 /* CardDetailContentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA89F2574A3B200EA8791 /* CardDetailContentLabel.swift */; };
+		33F2D68B257E6C0F008F1E06 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A60E25787C6300BF8928 /* Font.swift */; };
+		33F2D68F257E6C4F008F1E06 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */; };
+		33F2D696257E6F43008F1E06 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */; };
+		33F2D69A257E6FB0008F1E06 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA7BEF25763AB300CF6B11 /* UIAlertController+.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
@@ -220,6 +284,23 @@
 		BD59A61425787D4E00BF8928 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A61325787D4E00BF8928 /* UIFont+.swift */; };
 		BD59A64D2579D1C100BF8928 /* UserJsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A64C2579D1C100BF8928 /* UserJsonFactory.swift */; };
 		BD59A6522579D2D600BF8928 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6512579D2D600BF8928 /* User.swift */; };
+		BD59A65A257DCE9C00BF8928 /* CardDetailMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A659257DCE9C00BF8928 /* CardDetailMemberView.swift */; };
+		BD59A666257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A665257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift */; };
+		BD59A66E257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A66D257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift */; };
+		BD59A67B257E151500BF8928 /* MemberUpdate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */; };
+		BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
+		BD59A689257E163100BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
+		BD59A697257E184E00BF8928 /* MemberUpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */; };
+		BD59A69F257E228900BF8928 /* MemberTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A69E257E228900BF8928 /* MemberTableView.swift */; };
+		BD59A6A4257E230500BF8928 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6A3257E230500BF8928 /* MemberTableViewCell.swift */; };
+		BD59A6AC257E2F6F00BF8928 /* MemberTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6AB257E2F6F00BF8928 /* MemberTableViewDataSource.swift */; };
+		BD59A6C7257F13E200BF8928 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6C6257F13E100BF8928 /* UserInfo.swift */; };
+		BD59A6CC257F180100BF8928 /* TokenParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6CB257F180100BF8928 /* TokenParser.swift */; };
+		BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6D0257F192300BF8928 /* UserIdStore.swift */; };
+		BD59A6F1257F3D5A00BF8928 /* CommentEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */; };
+		BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */; };
+		BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */; };
+		BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -412,6 +493,7 @@
 		33F2D6BC257F7635008F1E06 /* MembersCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		33F2D58C257E678C008F1E06 /* BoardServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardServiceTests.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -438,6 +520,21 @@
 		BD59A61325787D4E00BF8928 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		BD59A64C2579D1C100BF8928 /* UserJsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJsonFactory.swift; sourceTree = "<group>"; };
 		BD59A6512579D2D600BF8928 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BD59A659257DCE9C00BF8928 /* CardDetailMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberView.swift; sourceTree = "<group>"; };
+		BD59A665257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberCollectionView.swift; sourceTree = "<group>"; };
+		BD59A66D257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MemberUpdate.storyboard; sourceTree = "<group>"; };
+		BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateViewController.swift; sourceTree = "<group>"; };
+		BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateViewModel.swift; sourceTree = "<group>"; };
+		BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberUpdateCoordinator.swift; sourceTree = "<group>"; };
+		BD59A69E257E228900BF8928 /* MemberTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableView.swift; sourceTree = "<group>"; };
+		BD59A6A3257E230500BF8928 /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
+		BD59A6AB257E2F6F00BF8928 /* MemberTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewDataSource.swift; sourceTree = "<group>"; };
+		BD59A6C6257F13E100BF8928 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		BD59A6CB257F180100BF8928 /* TokenParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenParser.swift; sourceTree = "<group>"; };
+		BD59A6D0257F192300BF8928 /* UserIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdStore.swift; sourceTree = "<group>"; };
+		BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEndPoint.swift; sourceTree = "<group>"; };
+		BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCardCount.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -722,6 +819,7 @@
 		336010FF256B8FB5009580A1 /* CommentService */ = {
 			isa = PBXGroup;
 			children = (
+				BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */,
 				BDD18B3F25664077005DF00A /* CommentService.swift */,
 			);
 			path = CommentService;
@@ -912,6 +1010,7 @@
 				336011C1256CFC44009580A1 /* CalendarPickerScene */,
 				BD2AA79D256DF87D00EA8791 /* CardDetailScene */,
 				BDEA7BCE257623EA00CF6B11 /* ContentInputScene */,
+				BD59A664257DF9BB00BF8928 /* MemberUpdateScene */,
 				33601227256E4FEF009580A1 /* BoardListScene */,
 				33F2D527257DDC45008F1E06 /* BoardAddScene */,
 				335AC4ED256F8ABE006A5C4A /* BoardDetailScene */,
@@ -928,6 +1027,7 @@
 				33EE01BE25690EEF003D3221 /* InitCoordinatorFactoryTests.swift */,
 				3360110A256B9123009580A1 /* RouterTests.swift */,
 				33638E0D2573F5D6006033CF /* ListViewModelTests.swift */,
+				33F2D58C257E678C008F1E06 /* BoardServiceTests.swift */,
 				33B87E322565072000354880 /* Info.plist */,
 			);
 			path = AreUDoneTests;
@@ -1191,6 +1291,9 @@
 				BD2AA7F2256F424800EA8791 /* CardDetailContentView.swift */,
 				BD2AA7F7256F4E3900EA8791 /* CardDetailDueDateView.swift */,
 				BD2AA8D72575FFB500EA8791 /* CardDetailLocationView.swift */,
+				BD59A659257DCE9C00BF8928 /* CardDetailMemberView.swift */,
+				BD59A665257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift */,
+				BD59A66D257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift */,
 			);
 			path = StackView;
 			sourceTree = "<group>";
@@ -1205,6 +1308,64 @@
 				335AC520256FDFD8006A5C4A /* List.swift */,
 				333BA581257791180057ACA4 /* Activity.swift */,
 				BD59A6512579D2D600BF8928 /* User.swift */,
+				BD59A6C6257F13E100BF8928 /* UserInfo.swift */,
+				BD59A6CB257F180100BF8928 /* TokenParser.swift */,
+				BD59A6D0257F192300BF8928 /* UserIdStore.swift */,
+				BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BD59A664257DF9BB00BF8928 /* MemberUpdateScene */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A696257E184E00BF8928 /* MemberUpdateCoordinator.swift */,
+				BD59A67F257E151B00BF8928 /* Resources */,
+				BD59A6B0257E2F7300BF8928 /* Model */,
+				BD59A680257E154C00BF8928 /* View */,
+				BD59A687257E161B00BF8928 /* ViewModel */,
+			);
+			path = MemberUpdateScene;
+			sourceTree = "<group>";
+		};
+		BD59A67F257E151B00BF8928 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A67A257E151500BF8928 /* MemberUpdate.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BD59A680257E154C00BF8928 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A681257E155800BF8928 /* Controller */,
+				BD59A69E257E228900BF8928 /* MemberTableView.swift */,
+				BD59A6A3257E230500BF8928 /* MemberTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BD59A681257E155800BF8928 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A682257E157000BF8928 /* MemberUpdateViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BD59A687257E161B00BF8928 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A688257E163100BF8928 /* MemberUpdateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BD59A6B0257E2F7300BF8928 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BD59A6AB257E2F6F00BF8928 /* MemberTableViewDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1502,6 +1663,7 @@
 				338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */,
 				BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */,
 				33B87E232565071F00354880 /* Assets.xcassets in Resources */,
+				BD59A67B257E151500BF8928 /* MemberUpdate.storyboard in Resources */,
 				333BA560257695CD0057ACA4 /* SideBarViewController.xib in Resources */,
 				33601236256E50FC009580A1 /* BoardList.storyboard in Resources */,
 			);
@@ -1547,8 +1709,10 @@
 				BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */,
 				33601247256E5302009580A1 /* BoardListViewModel.swift in Sources */,
 				335AC51C256FDDAB006A5C4A /* BoardDetailCollectionViewCell.swift in Sources */,
+				BD59A69F257E228900BF8928 /* MemberTableView.swift in Sources */,
 				33F2D494257A2338008F1E06 /* SideBarCollectionView.swift in Sources */,
 				333BA56D25776ABE0057ACA4 /* BoardDetail.swift in Sources */,
+				BD59A6F1257F3D5A00BF8928 /* CommentEndPoint.swift in Sources */,
 				333BA5142574D06C0057ACA4 /* AddOrCancelView.swift in Sources */,
 				333BA58C2577987A0057ACA4 /* ActivityJsonFactory.swift in Sources */,
 				33F2D514257CB39A008F1E06 /* CustomSegmentControl.swift in Sources */,
@@ -1556,9 +1720,11 @@
 				33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */,
 				BDD18B3A25664057005DF00A /* ListService.swift in Sources */,
 				BDE27E37256B934B002308B9 /* NibLoadable.swift in Sources */,
+				BD59A6AC257E2F6F00BF8928 /* MemberTableViewDataSource.swift in Sources */,
 				333BA5A72577C0440057ACA4 /* MemberCell.swift in Sources */,
 				BD2AA73E256CDE8900EA8791 /* DeleteCardView.swift in Sources */,
 				33F2D567257E2389008F1E06 /* BoardAddTableViewDataSource.swift in Sources */,
+				BD59A6CC257F180100BF8928 /* TokenParser.swift in Sources */,
 				BDEA7BDE2576258000CF6B11 /* ContentInputViewModel.swift in Sources */,
 				33B87E1E2565071C00354880 /* SigninViewController.swift in Sources */,
 				336010D5256B891C009580A1 /* Date+.swift in Sources */,
@@ -1567,6 +1733,7 @@
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				33F2D6CA257F838D008F1E06 /* ListCollectionViewDataSource.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
+				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
 				3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */,
@@ -1591,6 +1758,7 @@
 				BD2AA7B5256DFBCD00EA8791 /* CardDetailCoordinator.swift in Sources */,
 				335AC4CF256F6C51006A5C4A /* SectionContentFactory.swift in Sources */,
 				335AC521256FDFD8006A5C4A /* List.swift in Sources */,
+				BD59A6C7257F13E200BF8928 /* UserInfo.swift in Sources */,
 				33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */,
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
@@ -1600,6 +1768,7 @@
 				BD2AA7A7256DF93800EA8791 /* CardDetailViewModel.swift in Sources */,
 				BDD18ACA256545FC005DF00A /* SigninCoordinator.swift in Sources */,
 				BDD18BA52567BB4D005DF00A /* VideoPlayerLooper.swift in Sources */,
+				BD59A689257E163100BF8928 /* MemberUpdateViewModel.swift in Sources */,
 				BD2AA7EE256F421E00EA8791 /* CardDetailStackView.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */,
@@ -1620,9 +1789,12 @@
 				BDE27E2C256B9215002308B9 /* UITableView+.swift in Sources */,
 				BD59A6522579D2D600BF8928 /* User.swift in Sources */,
 				33F2D6A2257F41EB008F1E06 /* BoardDetailCollectionView.swift in Sources */,
+				BD59A697257E184E00BF8928 /* MemberUpdateCoordinator.swift in Sources */,
+				BD59A66E257DFBDE00BF8928 /* CardDetailMemberCollectionViewCell.swift in Sources */,
 				335AC50B256F8D28006A5C4A /* BoardDetailViewModel.swift in Sources */,
 				33F2D53D257DDD42008F1E06 /* BoardAddViewModel.swift in Sources */,
 				33638DFE2573C660006033CF /* UIEdgeInsets+.swift in Sources */,
+				BD59A65A257DCE9C00BF8928 /* CardDetailMemberView.swift in Sources */,
 				33F2D55F257DF349008F1E06 /* BoardColorTableViewCell.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
 				BDD18B342566403E005DF00A /* BoardService.swift in Sources */,
@@ -1639,13 +1811,16 @@
 				33F2D551257DE9C7008F1E06 /* BoardAddTableView.swift in Sources */,
 				338364D725666C1200F92EE4 /* SigninButton.swift in Sources */,
 				333BA55325768F3B0057ACA4 /* SideBarView.swift in Sources */,
+				BD59A6A4257E230500BF8928 /* MemberTableViewCell.swift in Sources */,
 				335AC4EF256F8ADF006A5C4A /* BoardDetailCoordinator.swift in Sources */,
 				338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */,
 				33F2D4C7257A92DA008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */,
+				BD59A666257DFB5A00BF8928 /* CardDetailMemberCollectionView.swift in Sources */,
 				333BA578257775950057ACA4 /* BoardDetailJsonFactory.swift in Sources */,
 				333BA5912577A5D30057ACA4 /* SideBarHeaderView.swift in Sources */,
 				33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
+				BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
 				335AC500256F8BED006A5C4A /* BoardDetailViewController.swift in Sources */,
@@ -1668,6 +1843,7 @@
 				336011EE256D4877009580A1 /* DateStepper.swift in Sources */,
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				333BA53B2575FFCC0057ACA4 /* SideBarViewController.swift in Sources */,
+				BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */,
 				33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */,
@@ -1690,73 +1866,139 @@
 				33EE01DA25690F83003D3221 /* CalendarViewController.swift in Sources */,
 				33638E702573F88A006033CF /* CalendarPickerHeaderView.swift in Sources */,
 				33638E3D2573F7AE006033CF /* String+.swift in Sources */,
+				33F2D5AD257E6A5A008F1E06 /* InvitationTableViewDataSource.swift in Sources */,
 				3383649A256614D200F92EE4 /* Router.swift in Sources */,
+				33F2D621257E6B04008F1E06 /* CustomBarButtonItem.swift in Sources */,
+				33F2D5D9257E6A7B008F1E06 /* SideBarCollectionViewMembersCell.swift in Sources */,
 				3383649E256614DA00F92EE4 /* Routable.swift in Sources */,
+				33F2D595257E6A05008F1E06 /* ImageService.swift in Sources */,
+				33F2D5C9257E6A72008F1E06 /* SideBarCollectionView.swift in Sources */,
 				33EE019B25690979003D3221 /* VideoPlayerLooper.swift in Sources */,
 				33EE01CA25690F57003D3221 /* SigninChecker.swift in Sources */,
+				33F2D611257E6AE2008F1E06 /* UIFont+.swift in Sources */,
 				33EE01D225690F70003D3221 /* CalendarCoordinator.swift in Sources */,
 				33638E392573F7A9006033CF /* Reusable.swift in Sources */,
+				33F2D650257E6B53008F1E06 /* BoardAddViewModel.swift in Sources */,
 				3360111E256B91CB009580A1 /* CardService.swift in Sources */,
 				33638E742573F88F006033CF /* CalendarCollectionView.swift in Sources */,
 				33638E352573F7A4006033CF /* CardDetailCoordinator.swift in Sources */,
 				3360112D256B9211009580A1 /* APICredentials.swift in Sources */,
 				33638E312573F78A006033CF /* CardCollectionViewCell.swift in Sources */,
+				33F2D5B5257E6A5F008F1E06 /* InvitationTableViewCell.swift in Sources */,
+				33F2D5E5257E6A82008F1E06 /* MemberFooterView.swift in Sources */,
+				33F2D5A5257E6A54008F1E06 /* InvitationCoordinator.swift in Sources */,
 				33638E592573F7F6006033CF /* CardContentView.swift in Sources */,
 				33EE01E225690F9C003D3221 /* CalendarViewModel.swift in Sources */,
+				33F2D644257E6B41008F1E06 /* BoardDetailFooterView.swift in Sources */,
+				33F2D68F257E6C4F008F1E06 /* PaddingLabel.swift in Sources */,
+				33F2D66C257E6B7D008F1E06 /* AddOrCancelView.swift in Sources */,
 				33638E212573F76D006033CF /* CalendarPickerViewCoordinator.swift in Sources */,
 				33638E2D2573F782006033CF /* CalendarPickerViewModel.swift in Sources */,
 				33638E292573F77E006033CF /* BoardDetailCoordinator.swift in Sources */,
+				33F2D658257E6B58008F1E06 /* BoardTitleTableViewCell.swift in Sources */,
 				33638EB42573F974006033CF /* BoardListViewController.swift in Sources */,
+				33F2D591257E69FF008F1E06 /* CardDetail.swift in Sources */,
+				33F2D64C257E6B50008F1E06 /* BoardAddViewController.swift in Sources */,
+				33F2D5A1257E6A3F008F1E06 /* UIView+.swift in Sources */,
 				338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */,
+				33F2D60D257E6AD6008F1E06 /* User.swift in Sources */,
+				33F2D5CD257E6A74008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */,
 				33638E412573F7BF006033CF /* CardDetailViewController.swift in Sources */,
+				33F2D5D1257E6A76008F1E06 /* SideBarHeaderView.swift in Sources */,
 				33EE01C325690F24003D3221 /* InitCoordinatorFactory.swift in Sources */,
 				33601129256B91D5009580A1 /* Card.swift in Sources */,
 				33EE01FA25691044003D3221 /* Keychain.swift in Sources */,
+				33F2D660257E6B5C008F1E06 /* BoardAddTableView.swift in Sources */,
 				33B87E312565072000354880 /* AreUDoneTests.swift in Sources */,
+				33F2D599257E6A0A008F1E06 /* UserService.swift in Sources */,
+				33F2D5B9257E6A64008F1E06 /* SideBarHeaderContentsFactory.swift in Sources */,
+				33F2D664257E6B6F008F1E06 /* CommentTextField.swift in Sources */,
+				33F2D5FD257E6AB7008F1E06 /* CardDetailContentView.swift in Sources */,
+				33F2D619257E6AEB008F1E06 /* ActivityService.swift in Sources */,
 				33638E782573F897006033CF /* UICollectionView+.swift in Sources */,
+				33F2D59D257E6A36008F1E06 /* CustomSegmentControl.swift in Sources */,
+				33F2D61D257E6AF1008F1E06 /* ActivityJsonFactory.swift in Sources */,
+				33F2D670257E6B83008F1E06 /* ImageEndPoint.swift in Sources */,
+				33F2D605257E6ACA008F1E06 /* ContentInputViewController.swift in Sources */,
+				33F2D5DD257E6A7E008F1E06 /* MemberCollectionView.swift in Sources */,
+				33F2D5F1257E6AA7008F1E06 /* Activity.swift in Sources */,
 				33638EC02573F98C006033CF /* SectionContentFactory.swift in Sources */,
 				33638EA82573F948006033CF /* ListFooterView.swift in Sources */,
 				33638E7C2573F8E9006033CF /* NibLoadable.swift in Sources */,
+				33F2D65C257E6B5A008F1E06 /* BoardAddTableViewDataSource.swift in Sources */,
 				33638E552573F7F3006033CF /* CardDetailViewModel.swift in Sources */,
 				33638E0E2573F5D6006033CF /* ListViewModelTests.swift in Sources */,
+				33F2D615257E6AE7008F1E06 /* BoardDetailJsonFactory.swift in Sources */,
+				33F2D640257E6B36008F1E06 /* DayLabel.swift in Sources */,
 				33638E882573F90B006033CF /* BoardListJsonFactory.swift in Sources */,
+				33F2D5A9257E6A57008F1E06 /* InvitationViewController.swift in Sources */,
+				33F2D696257E6F43008F1E06 /* AlertFactory.swift in Sources */,
 				33601125256B91D2009580A1 /* CardEndPoint.swift in Sources */,
 				33638E152573F738006033CF /* TabbarItemContentsFactory.swift in Sources */,
 				33EE01DE25690F8F003D3221 /* UIViewController+.swift in Sources */,
+				33F2D5C1257E6A6B008F1E06 /* ImageTitleView.swift in Sources */,
+				33F2D5ED257E6A8F008F1E06 /* BoardDetail.swift in Sources */,
 				33638E902573F922006033CF /* BoardEndPoint.swift in Sources */,
 				33638E5D2573F7FA006033CF /* DeleteCardView.swift in Sources */,
+				33F2D5C5257E6A6F008F1E06 /* SideBarView.swift in Sources */,
+				33F2D68B257E6C0F008F1E06 /* Font.swift in Sources */,
 				33638EA92573F94E006033CF /* Board.swift in Sources */,
 				33638E492573F7CD006033CF /* CardCollectionView.swift in Sources */,
 				33EE01BF25690EEF003D3221 /* InitCoordinatorFactoryTests.swift in Sources */,
 				33EE01F22569101A003D3221 /* SigninViewModel.swift in Sources */,
 				33601116256B916C009580A1 /* JsonFactory.swift in Sources */,
 				33638EA02573F944006033CF /* ListHeaderView.swift in Sources */,
+				33F2D69A257E6FB0008F1E06 /* UIAlertController+.swift in Sources */,
 				33638E8C2573F910006033CF /* BoardDetailViewModel.swift in Sources */,
+				33F2D625257E6B1A008F1E06 /* UITableView+.swift in Sources */,
+				33F2D609257E6AD1008F1E06 /* ContentInputCoordinator.swift in Sources */,
+				33F2D5E1257E6A80008F1E06 /* MembersCollectionViewDataSource.swift in Sources */,
 				33601112256B9156009580A1 /* MockRouter.swift in Sources */,
+				33F2D62D257E6B25008F1E06 /* UserJsonFactory.swift in Sources */,
+				33F2D67F257E6BE6008F1E06 /* CommentCollectionViewHeader.swift in Sources */,
 				33638E052573F5A1006033CF /* ListViewModel.swift in Sources */,
+				33F2D648257E6B48008F1E06 /* BoardAddCoordinator.swift in Sources */,
 				33EE01D625690F7C003D3221 /* UIStoryboard+.swift in Sources */,
 				33601131256B93C2009580A1 /* Date+.swift in Sources */,
+				33F2D5D5257E6A78008F1E06 /* SideBarCollectionViewActivityCell.swift in Sources */,
+				33F2D63C257E6B30008F1E06 /* CardDetailDueDateView.swift in Sources */,
 				33638E9C2573F93F006033CF /* ListCollectionViewCell.swift in Sources */,
+				33F2D5E9257E6A85008F1E06 /* MemberCell.swift in Sources */,
+				33F2D601257E6ABD008F1E06 /* CommentView.swift in Sources */,
+				BD59A6F8257F514500BF8928 /* MemberUpdateViewController.swift in Sources */,
 				33EE01EE2569100F003D3221 /* SigninViewController.swift in Sources */,
 				33EE01F62569102A003D3221 /* VideoConstant.swift in Sources */,
 				33EE01E625690FBB003D3221 /* TabbarCoordinator.swift in Sources */,
 				33638E512573F7D8006033CF /* MonthMetadata.swift in Sources */,
+				33F2D668257E6B76008F1E06 /* ActivityEndPoint.swift in Sources */,
+				33F2D677257E6BC9008F1E06 /* CommentCollectionView.swift in Sources */,
 				33638E252573F77A006033CF /* CalendarPickerViewController.swift in Sources */,
 				3360111A256B9170009580A1 /* CardJsonFactory.swift in Sources */,
 				33638E4D2573F7D2006033CF /* Day.swift in Sources */,
+				33F2D629257E6B1E008F1E06 /* ContentInputViewModel.swift in Sources */,
+				33F2D5F9257E6AB3008F1E06 /* CardDetailStackView.swift in Sources */,
 				33638EC42573F99D006033CF /* BoardListCollectionViewCell.swift in Sources */,
+				33F2D687257E6C0A008F1E06 /* CardDetailContentLabel.swift in Sources */,
 				33638EB82573F981006033CF /* BoardListViewModel.swift in Sources */,
+				33F2D5BD257E6A68008F1E06 /* SideBarViewModel.swift in Sources */,
 				33638EBC2573F987006033CF /* BoardListCollectionView.swift in Sources */,
+				33F2D5B1257E6A5D008F1E06 /* InvitationViewModel.swift in Sources */,
+				BD59A6FC257F514D00BF8928 /* MemberUpdateViewModel.swift in Sources */,
+				33F2D5F5257E6AAC008F1E06 /* UserEndPoint.swift in Sources */,
 				33638E192573F73E006033CF /* DateStepper.swift in Sources */,
 				33638E982573F932006033CF /* ListCollectionView.swift in Sources */,
+				33F2D683257E6BEA008F1E06 /* CommentCollectionViewCell.swift in Sources */,
 				33EE01EA25690FC8003D3221 /* SigninCoordinator.swift in Sources */,
 				3360110B256B9123009580A1 /* RouterTests.swift in Sources */,
 				33638E802573F8FF006033CF /* CalendarDateCollectionViewCell.swift in Sources */,
 				333BA5BC2578781C0057ACA4 /* SideBarViewController.swift in Sources */,
 				33638EB02573F967006033CF /* UIEdgeInsets+.swift in Sources */,
+				33F2D631257E6B2C008F1E06 /* CardDetailLocationView.swift in Sources */,
 				33638E452573F7C4006033CF /* BoardDetailViewController.swift in Sources */,
+				33F2D58D257E678C008F1E06 /* BoardServiceTests.swift in Sources */,
 				33638E092573F5B1006033CF /* List.swift in Sources */,
 				33638E652573F813006033CF /* BoardDetailCollectionViewCell.swift in Sources */,
+				33F2D654257E6B55008F1E06 /* BoardColorTableViewCell.swift in Sources */,
 				33638E1D2573F749006033CF /* BoardListCoordinator.swift in Sources */,
 				33EE01CE25690F69003D3221 /* Coordinator.swift in Sources */,
 				33638E942573F927006033CF /* BoardService.swift in Sources */,

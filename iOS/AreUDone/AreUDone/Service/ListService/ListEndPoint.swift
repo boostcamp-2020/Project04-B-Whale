@@ -45,7 +45,7 @@ extension ListEndPoint: EndPointable {
       return .post
       
     case .updateList:
-      return .patch
+      return .PATCH
       
     case .deleteList:
       return .delete

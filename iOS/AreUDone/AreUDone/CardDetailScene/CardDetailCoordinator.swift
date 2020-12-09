@@ -20,6 +20,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
   private let id: Int
   private var contentInputCoordinator: NavigationCoordinator!
   private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
+  private var memberUpdateCoordinator: MemberUpdateCoordinator!
   
   // MARK:- Initializer
   
@@ -40,11 +41,13 @@ final class CardDetailCoordinator: NavigationCoordinator {
               let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let imageService = ImageService(router: self.router)
               let userService = UserService(router: MockRouter(jsonFactory: UserJsonFactory()))
+              let commentService = CommentService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
                 imageService: imageService,
-                userService: userService
+                userService: userService,
+                commentService: commentService
               )
               
               return CardDetailViewController(
@@ -78,7 +81,7 @@ extension CardDetailCoordinator {
   
   func showCalendar(with stringToDate: String, delegate: CalendarPickerViewControllerDelegate) {
     let date = stringToDate.toDateFormat(with: .dash)
-    calendarPickerCoordinator = CalendarPickerViewCoordinator(selectedDate: date)
+    calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
     
     guard let calendarPickerViewController = calendarPickerCoordinator.start()
@@ -87,5 +90,25 @@ extension CardDetailCoordinator {
     
     calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
+  }
+  
+  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [User]?, delegate: MemberUpdateViewControllerDelegate) {
+    memberUpdateCoordinator = MemberUpdateCoordinator(
+      router: router,
+      cardId: cardId,
+      boardId: boardId,
+      cardMember: cardMember
+    )
+    memberUpdateCoordinator.navigationController = navigationController
+    
+    guard let memberUpdateViewController = memberUpdateCoordinator.start()
+            as? MemberUpdateViewController
+    else { return }
+    memberUpdateViewController.delegate = delegate
+    
+    let subNavigationViewController = UINavigationController()
+    
+    subNavigationViewController.pushViewController(memberUpdateViewController, animated: true)
+    navigationController?.present(subNavigationViewController, animated: true)
   }
 }
