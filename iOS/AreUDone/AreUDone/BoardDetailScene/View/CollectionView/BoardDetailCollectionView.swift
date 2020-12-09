@@ -37,6 +37,10 @@ private extension BoardDetailCollectionView {
     showsHorizontalScrollIndicator = false
     decelerationRate = UIScrollView.DecelerationRate.fast
     
+    registerCell()
+  }
+  
+  func registerCell() {
     register(BoardDetailCollectionViewCell.self)
     registerFooterView(BoardDetailFooterView.self)
   }
