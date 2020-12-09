@@ -3,6 +3,7 @@ import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-
 import { Application } from '../../../src/Application';
 import { EntityNotFoundError } from '../../../src/common/error/EntityNotFoundError';
 import { ForbiddenError } from '../../../src/common/error/ForbiddenError';
+import { CommentDto } from '../../../src/dto/CommentDto';
 import { Board } from '../../../src/model/Board';
 import { Card } from '../../../src/model/Card';
 import { Comment } from '../../../src/model/Comment';
@@ -12,7 +13,7 @@ import { User } from '../../../src/model/User';
 import { CommentService } from '../../../src/service/CommentService';
 import { TestTransactionDelegate } from '../../TestTransactionDelegate';
 
-describe('CommentService.removeComment() Test', () => {
+describe('CommentService.modifyComment() Test', () => {
     const app = new Application();
 
     beforeAll(async () => {
@@ -25,7 +26,7 @@ describe('CommentService.removeComment() Test', () => {
         done();
     });
 
-    test('존재하지 않는 댓글을 삭제할 때 EntityNotFoundError 발생', async () => {
+    test('존재하지 않는 댓글을 수정할 때 EntityNotFoundError 발생', async () => {
         const commentService = CommentService.getInstance();
         await TestTransactionDelegate.transaction(async () => {
             // given
@@ -38,10 +39,12 @@ describe('CommentService.removeComment() Test', () => {
             });
             await em.save(user0);
 
+            const commentDto = new CommentDto({ cotent: 'edited content' });
+
             // when
             // then
             try {
-                await commentService.removeComment({ userId: user0.id, commentId: 1 });
+                await commentService.removeComment({ userId: user0.id, commentId: 1, commentDto });
                 fail();
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityNotFoundError);
@@ -50,7 +53,7 @@ describe('CommentService.removeComment() Test', () => {
         });
     });
 
-    test('user0이 댓글을 삭제하려고 하지만 본인 댓글이 아니라서 ForBiddenError 발생', async () => {
+    test('댓글을 수정하려고 하지만 본인 댓글이 아니라서 ForBiddenError 발생', async () => {
         const commentService = CommentService.getInstance();
         await TestTransactionDelegate.transaction(async () => {
             // given
@@ -102,10 +105,16 @@ describe('CommentService.removeComment() Test', () => {
             });
             await em.save(comment0);
 
+            const commentDto = new CommentDto({ cotent: 'edited content' });
+
             // when
             // then
             try {
-                await commentService.removeComment({ userId: user0.id, commentId: comment0.id });
+                await commentService.modifyComment({
+                    userId: user0.id,
+                    commentId: comment0.id,
+                    commentDto,
+                });
                 fail();
             } catch (error) {
                 expect(error).toBeInstanceOf(ForbiddenError);
@@ -114,7 +123,7 @@ describe('CommentService.removeComment() Test', () => {
         });
     });
 
-    test('user0이 본인이 작성한 댓글 comment0 삭제', async () => {
+    test('본인이 작성한 댓글 수정', async () => {
         const commentService = CommentService.getInstance();
         await TestTransactionDelegate.transaction(async () => {
             // given
@@ -159,12 +168,18 @@ describe('CommentService.removeComment() Test', () => {
             });
             await em.save(comment0);
 
+            const commentDto = new CommentDto({ content: 'edited content' });
+
             // when
-            await commentService.removeComment({ userId: user0.id, commentId: comment0.id });
+            await commentService.modifyComment({
+                userId: user0.id,
+                commentId: comment0.id,
+                commentDto,
+            });
 
             // then
             const deletedComment0 = await em.findOne(Comment, comment0.id);
-            expect(deletedComment0).toEqual(undefined);
+            expect(deletedComment0.content).toEqual(commentDto.content);
         });
     });
 });
