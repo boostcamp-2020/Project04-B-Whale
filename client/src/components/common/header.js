@@ -16,11 +16,7 @@ const HeaderDiv = styled.div`
 
 const LogoImg = styled.img`
     width: 250px;
-    position: absolute;
-    top: 40px;
-    left: 50%;
     cursor: pointer;
-    transform: translate(-50%, -50%);
 `;
 
 const HeaderTitle = styled.div`
@@ -44,6 +40,7 @@ const Header = () => {
         localStorage.removeItem('jwt');
         document.location = '/';
     };
+
     return (
         <>
             <HeaderDiv>
@@ -51,7 +48,7 @@ const Header = () => {
                 <HeaderTitle>
                     <LogoImg
                         src={logo}
-                        alt="naver login"
+                        alt="AreUDone logo"
                         onClick={() => {
                             document.location = '/';
                         }}
