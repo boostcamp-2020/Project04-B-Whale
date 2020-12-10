@@ -162,13 +162,5 @@ extension SideBarViewModel {
   func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void) {
     updateSideBarCollectionViewHandler = handler
   }
-  
-//  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void) {
-//    updateActivitiesInCollectionViewHandler = handler
-//  }
 }
-
-
-
-
 
