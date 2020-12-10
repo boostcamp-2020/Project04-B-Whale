@@ -171,7 +171,10 @@ extension CalendarViewController: CardCellDelegate {
       guard let self = self else { return }
       var snapshot = self.dataSource.snapshot()
       snapshot.deleteItems([item])
-      self.dataSource.apply(snapshot)
+      
+      DispatchQueue.main.async {
+        self.dataSource.apply(snapshot)
+      }
     }
   }
   
