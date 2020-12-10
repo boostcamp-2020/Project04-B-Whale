@@ -43,6 +43,7 @@ const InvitedUserDropdown = ({ onClose }) => {
     const { creator, invitedUsers } = boardDetail;
     // TODO: 카드에 members 정보를 default 값으로 변경
     const [userIds, setUserIds] = useState([1, 2]);
+    const [searchedUsers, setSearchedUsers] = useState([creator, ...invitedUsers]);
 
     const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
@@ -53,21 +54,23 @@ const InvitedUserDropdown = ({ onClose }) => {
         }
     };
 
+    const onChangeUserSearch = (e) => {
+        if (e.target.value === '') {
+            setSearchedUsers([creator, ...invitedUsers]);
+            return;
+        }
+
+        const regex = new RegExp(`^${e.target.value}`);
+        const newSearchUsers = searchedUsers.filter((user) => user.name.search(regex) !== -1);
+        setSearchedUsers(newSearchUsers);
+    };
+
     return (
         <>
             <Wrapper onClick={onClickClose} />
             <DropdownWrapper>
-                <SearchInput />
-                <Member
-                    key={creator.id}
-                    memberId={creator.id}
-                    profileImageUrl={creator.profileImageUrl}
-                    name={creator.name}
-                    checked={userIds.includes(creator.id)}
-                    selectedMember={userIds}
-                    changeMember={setUserIds}
-                />
-                {invitedUsers.map(({ id, profileImageUrl, name }) => (
+                <SearchInput onChange={onChangeUserSearch} />
+                {searchedUsers.map(({ id, profileImageUrl, name }) => (
                     <Member
                         key={id}
                         memberId={id}
