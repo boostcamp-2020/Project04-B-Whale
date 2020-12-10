@@ -27,4 +27,8 @@ export class Comment {
     @ManyToOne(() => Card, (card) => card.comments, { nullable: false })
     @JoinColumn({ name: 'card_id' })
     card;
+
+    updateContent(content) {
+        this.content = content;
+    }
 }
