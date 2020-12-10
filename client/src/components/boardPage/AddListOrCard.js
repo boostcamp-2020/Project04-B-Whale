@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
-import { DatePicker, Modal } from 'antd';
+import { DatePicker, Modal, Input } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { createList } from '../../utils/listRequest';
@@ -28,9 +28,8 @@ const AddListButton = styled.button`
     }
 `;
 
-const TitleInput = styled.input`
+const TitleInput = styled(Input)`
     height: '30px';
-    margin-bottom: '5px';
 `;
 
 const InputWrapper = styled.div`
@@ -88,7 +87,7 @@ const AddListBtnInput = ({ parent, history }) => {
 
     const addListHandler = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-        const replacedTitle = input.current.value.replace(/ /g, '');
+        const replacedTitle = input.current.value?.replace(/ /g, '');
         if (!replacedTitle) {
             showInvalidTitleModal();
             return;
@@ -146,6 +145,7 @@ const AddListBtnInput = ({ parent, history }) => {
                 {parent === 'card' && (
                     <DatePicker
                         showTime
+                        style={{ marginTop: '5px' }}
                         defaultValue={moment(
                             `${new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
                                 .toISOString()
