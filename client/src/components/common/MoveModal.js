@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { modifyCardPosition } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     position: fixed;
@@ -74,9 +75,10 @@ const MoveModal = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { lists } = boardDetail;
     // TODO: 현재 카드의 리스트 아이디, 카드 위치로 변경할 것
-    const currentListId = 2;
+    const currentListId = 3;
     const currentCardPosition = 1;
     const [selectedList, setSelectedList] = useState(lists[currentListId - 1]);
+    const positionElement = useRef();
 
     const onClickClose = (e) => {
         if (e.target === e.currentTarget) {
@@ -87,6 +89,33 @@ const MoveModal = ({ onClose }) => {
     const onChangeList = (e) => {
         const index = e.target.selectedIndex;
         setSelectedList(lists[index]);
+    };
+
+    const onClickMoveCard = async () => {
+        // TODO: context에 저장된 현재 카드 id로 변경할 것
+        const cardId = 5;
+        const listId = selectedList.id;
+        const { selectedIndex } = positionElement.current;
+        const { value } = positionElement.current;
+        const cardCount = selectedList.cards.length;
+        let position = 0;
+
+        if (selectedIndex === 0) {
+            position = Number(value) / 2;
+        } else if (selectedIndex === cardCount) {
+            position = Number(value);
+        } else if (selectedList.id !== currentListId) {
+            const preValue = positionElement.current[selectedIndex - 1].value;
+            position = (Number(value) + Number(preValue)) / 2;
+        } else if (selectedIndex + 1 === cardCount) {
+            position = Number(value) + 1;
+        } else {
+            const nextValue = positionElement.current[selectedIndex + 1].value;
+            position = (Number(value) + Number(nextValue)) / 2;
+        }
+
+        await modifyCardPosition({ cardId, listId, position });
+        onClose();
     };
 
     return (
@@ -116,7 +145,11 @@ const MoveModal = ({ onClose }) => {
                     </SelectWrapper>
                     <SelectWrapper>
                         <SelectLabel htmlFor="position-select">위치</SelectLabel>
-                        <Select id="position-select" defaultValue={currentCardPosition}>
+                        <Select
+                            ref={positionElement}
+                            id="position-select"
+                            defaultValue={currentCardPosition}
+                        >
                             {selectedList.cards.map((card, index) => (
                                 <option key={card.id} value={card.position}>
                                     {index + 1}
@@ -129,7 +162,7 @@ const MoveModal = ({ onClose }) => {
                             )}
                         </Select>
                     </SelectWrapper>
-                    <Button>이동</Button>
+                    <Button onClick={onClickMoveCard}>이동</Button>
                 </ModalBody>
             </ModalWrapper>
         </>
