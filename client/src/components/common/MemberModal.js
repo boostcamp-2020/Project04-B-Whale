@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { addMemberToCard } from '../../utils/cardRequest';
 import Member from './Member';
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
     height: 100%;
 `;
 
-const DropdownWrapper = styled.div`
+const ModalWrapper = styled.div`
     position: absolute;
     top: 2.2em;
     left: 0.7em;
@@ -22,6 +23,19 @@ const DropdownWrapper = styled.div`
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
     overflow: scroll;
+`;
+
+const ModalHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 3px;
+    border-bottom: ${(props) => props.theme.border};
+`;
+
+const ModalTitle = styled.div`
+    font-size: 18px;
+    font-weight: 700;
 `;
 
 const SearchInput = styled.input.attrs({
@@ -38,7 +52,7 @@ const SearchInput = styled.input.attrs({
     }
 `;
 
-const InvitedUserDropdown = ({ onClose }) => {
+const MemberModal = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { creator, invitedUsers } = boardDetail;
     // TODO: 카드에 members 정보를 default 값으로 변경
@@ -68,7 +82,12 @@ const InvitedUserDropdown = ({ onClose }) => {
     return (
         <>
             <Wrapper onClick={onClickClose} />
-            <DropdownWrapper>
+            <ModalWrapper>
+                <ModalHeader>
+                    <div />
+                    <ModalTitle>멤버</ModalTitle>
+                    <IoIosClose size={24} cursor="pointer" onClick={onClose} />
+                </ModalHeader>
                 <SearchInput onChange={onChangeUserSearch} />
                 {searchedUsers.map(({ id, profileImageUrl, name }) => (
                     <Member
@@ -81,9 +100,9 @@ const InvitedUserDropdown = ({ onClose }) => {
                         changeMember={setUserIds}
                     />
                 ))}
-            </DropdownWrapper>
+            </ModalWrapper>
         </>
     );
 };
 
-export default InvitedUserDropdown;
+export default MemberModal;
