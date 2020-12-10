@@ -89,8 +89,7 @@ private extension SideBarView {
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
     
-    viewModel.updateMembersInCollectionView()
-    viewModel.updateActivitiesInCollectionView()
+    viewModel.updateCollectionView()
   }
 }
 
@@ -100,16 +99,9 @@ private extension SideBarView {
 private extension SideBarView {
   
   func bindUI() {
-    // TODO: reloadSection 시 경고 뜨는 이유 알아보기
-    viewModel.bindingUpdateMembersInCollectionView { [weak self] in
+    viewModel.bindingUpdateSideBarCollectionView { [weak self] in
       DispatchQueue.main.async {
-        self?.collectionView.reloadData()
-      }
-    }
-    
-    viewModel.bindingUpdateActivitiesInCollectionView { [weak self] in
-      DispatchQueue.main.async {
-        self?.collectionView.reloadData()
+          self?.collectionView.reloadData()
       }
     }
   }

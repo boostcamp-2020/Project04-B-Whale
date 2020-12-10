@@ -70,7 +70,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   // MARK: - Method
   
   func numberOfLists() -> Int {
-    boardDetail?.lists.count ?? 0
+    return boardDetail?.lists.count ?? 0
   }
   
   func remove(at index: Int) {
@@ -146,7 +146,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     } else {
       position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
     }
-     
+
     // TODO: API 에 버그가 있어서 수정되면 주석 해제
 //    listService.updateList(withListId: listId, position: position, title: nil) { result in
 //      switch result {

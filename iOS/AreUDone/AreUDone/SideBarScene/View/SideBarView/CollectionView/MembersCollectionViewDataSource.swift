@@ -12,14 +12,14 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
   // MARK: - Property
 
   private let viewModel: SideBarViewModelProtocol
-  private var handler: (() -> Void)?
+  private weak var delegate: SideBarViewControllerProtocol?
 
 
   // MARK: - Initializer
 
-  init(viewModel: SideBarViewModelProtocol, handler: (() -> Void)? = nil) {
+  init(viewModel: SideBarViewModelProtocol, delegate: SideBarViewControllerProtocol) {
     self.viewModel = viewModel
-    self.handler = handler
+    self.delegate = delegate
     
     super.init()
   }
@@ -46,12 +46,9 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let footerView: MemberFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
-    
-    footerView.update(with: "초대하기")
-    footerView.handler = { [weak self] in
-      self?.handler?()
-    }
+    let footerView: MemberFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)    
+    footerView.delegate = delegate
+
     return footerView
   }
 }

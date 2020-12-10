@@ -7,14 +7,18 @@
 
 import UIKit
 
+protocol InvitationViewControllerDelegate: AnyObject {
+  
+  func reloadMemberCollectionView()
+}
+
 final class InvitationViewController: UIViewController {
   
   // MARK: property
   
-  private var timer = Timer()
-  
   private let viewModel: InvitationViewModelProtocol
   weak var coordinator: InvitationCoordinator?
+  weak var delegate: InvitationViewControllerDelegate?
   
   private let searchController: UISearchController = {
     let searchController = UISearchController(searchResultsController: nil)
@@ -29,6 +33,8 @@ final class InvitationViewController: UIViewController {
       tableView.dataSource = dataSource
       tableView.delegate = self
       tableView.register(InvitationTableViewCell.self)
+      
+      tableView.rowHeight = 70
     }
   }
   @IBOutlet weak var searchBarView: UIView! {
@@ -36,7 +42,9 @@ final class InvitationViewController: UIViewController {
       searchBarView.addSubview(searchController.searchBar)
     }
   }
+  
   private lazy var dataSource = InvitationTableViewDataSource(viewModel: viewModel)
+  private var timer: Timer = Timer()
 
   
   // MARK: - Initializer
@@ -90,36 +98,24 @@ private extension InvitationViewController {
 }
 
 
-// MARK: - Extension BindUI
-
-private extension InvitationViewController {
-  
-  func bindUI() {
-    viewModel.bindingUpdateInvitationTableView {
-      self.tableView.reloadData()
-    }
-  }
-}
-
-
 // MARK: - Extension UISearchBarDelegate
 
 extension InvitationViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    guard let searchKeyword = searchController.searchBar.text else { return }
+    guard let searchKeyword = searchController.searchBar.text,
+          !searchKeyword.isEmpty else { return }
     
     debounce(time: 0.5) {
-      print(searchKeyword)
-      // TODO: viewmodel 의 searchUser 호출
+      self.viewModel.searchUser(of: searchKeyword)
     }
   }
   
   func debounce(time: TimeInterval, handler: @escaping () -> Void) {
     timer.invalidate()
-    timer = Timer.scheduledTimer(withTimeInterval: time, repeats: false, block: { timer in
+    timer = Timer.scheduledTimer(withTimeInterval: time, repeats: false) { timer in
       handler()
-    })
+    }
   }
 }
 
@@ -129,6 +125,21 @@ extension InvitationViewController: UISearchResultsUpdating {
 extension InvitationViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    viewModel.addUserToBoard(of: indexPath.row)
+    viewModel.inviteUserToBoard(of: indexPath.row)
+    self.delegate?.reloadMemberCollectionView()
+  }
+}
+
+
+// MARK: - Extension BindUI
+
+private extension InvitationViewController {
+  
+  func bindUI() {
+    viewModel.bindingUpdateInvitationTableView { [weak self] in
+      DispatchQueue.main.async {
+        self?.tableView.reloadData()
+      }
+    }
   }
 }

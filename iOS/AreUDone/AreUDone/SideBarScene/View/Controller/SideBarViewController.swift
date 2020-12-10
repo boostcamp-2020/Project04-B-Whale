@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol SideBarViewControllerProtocol {
+protocol SideBarViewControllerProtocol: AnyObject {
+  
+  func pushToInvitation()
   
   func start()
   func configureTopHeight(to topHeight: CGFloat)
@@ -28,9 +30,12 @@ final class SideBarViewController: UIViewController {
   // MARK: - Property
   
   private let viewModel: SideBarViewModelProtocol
-  private let sideBarDataSource: UICollectionViewDataSource
-  private let membersDataSource: UICollectionViewDataSource
-  weak var coordinator: BoardDetailCoordinator?
+  private lazy var sideBarDataSource: UICollectionViewDataSource = SideBarCollectionViewDataSource(
+    viewModel: viewModel,
+    memberDataSource: membersDataSource
+  )
+  private lazy var membersDataSource: UICollectionViewDataSource = MembersCollectionViewDataSource(viewModel: viewModel, delegate: self)
+  private weak var coordinator: BoardDetailCoordinator?
 
   private lazy var sideBarMinimumX: CGFloat = view.bounds.width * 0.25
   private lazy var sideBarMaximumX: CGFloat = view.bounds.width
@@ -65,14 +70,7 @@ final class SideBarViewController: UIViewController {
     coordinator: BoardDetailCoordinator
   ) {
     self.viewModel = viewModel
-    
-    membersDataSource = MembersCollectionViewDataSource(viewModel: viewModel) {
-      coordinator.pushToInvitation()
-    }
-    sideBarDataSource = SideBarCollectionViewDataSource(
-      viewModel: viewModel,
-      memberDataSource: membersDataSource
-    )
+    self.coordinator = coordinator
     
     super.init(nibName: nibName, bundle: bundle)
   }
@@ -207,9 +205,23 @@ private extension SideBarViewController {
 }
 
 
+// MARK: - Extension UIGestureRecognizer Delegate
+
+extension SideBarViewController: UIGestureRecognizerDelegate {
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return touch.view?.isDescendant(of: sideBarView) == true ? false : true
+  }
+}
+
+
 // MARK: - Extension SideBarViewProtocol
 
 extension SideBarViewController: SideBarViewControllerProtocol {
+  
+  func pushToInvitation() {
+    coordinator?.pushToInvitation(delegate: self)
+  }
   
   func start() {
     configure()
@@ -229,11 +241,11 @@ extension SideBarViewController: SideBarViewControllerProtocol {
 }
 
 
-// MARK: - Extension UIGestureRecognizerDelegate
+// MARK: - Extension InvitationViewController Delegate
 
-extension SideBarViewController: UIGestureRecognizerDelegate {
+extension SideBarViewController: InvitationViewControllerDelegate {
   
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    return touch.view?.isDescendant(of: sideBarView) == true ? false : true
+  func reloadMemberCollectionView() {
+    viewModel.updateCollectionView()
   }
 }
