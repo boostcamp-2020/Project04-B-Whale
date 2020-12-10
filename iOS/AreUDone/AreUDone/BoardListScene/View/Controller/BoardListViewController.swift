@@ -60,17 +60,6 @@ final class BoardListViewController: UIViewController {
       let boardTitles = BoardSegment.allCases.map { $0.rawValue }
       segmentControl.setButtonTitles(buttonTitles: boardTitles)
       segmentControl.delegate = self
-      
-      segmentControl.layer.cornerRadius = 10
-      segmentControl.layer.maskedCorners = [
-        .layerMinXMaxYCorner,
-        .layerMaxXMaxYCorner
-      ]
-      segmentControl.addShadow(
-        offset: CGSize(width: 0, height: -1),
-        radius: 2,
-        opacity: 0.5
-      )
     }
   }
   

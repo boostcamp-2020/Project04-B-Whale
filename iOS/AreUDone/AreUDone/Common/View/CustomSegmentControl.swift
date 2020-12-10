@@ -72,6 +72,17 @@ private extension CustomSegmentedControl {
   }
   
   func configureView() {
+    layer.cornerRadius = 10
+    layer.maskedCorners = [
+      .layerMinXMaxYCorner,
+      .layerMaxXMaxYCorner
+    ]
+    addShadow(
+      offset: CGSize(width: 0, height: -1),
+      radius: 2,
+      opacity: 0.5
+    )
+    
     backgroundColor = UIColor.white
   }
   
