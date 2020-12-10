@@ -49,6 +49,22 @@ export class CustomBoardRepository extends BaseRepository {
         return isAuth.length !== 0;
     }
 
+    async existUsersByBoardId({ boardId, userIds }) {
+        const creatorCount = await this.createQueryBuilder('board')
+            .where('board.id=:boardId', { boardId })
+            .andWhere('board.creator_id IN(:...userIds)', { userIds })
+            .getCount();
+        const isExistinvitation = await this.createQueryBuilder('board')
+            .innerJoinAndSelect('board.invitations', 'invitation')
+            .where('board.id=:boardId', { boardId })
+            .andWhere('invitation.user_id IN(:...userIds)', { userIds })
+            .getOne();
+
+        const invitationCount = isExistinvitation ? isExistinvitation.invitations.length : 0;
+
+        return userIds.length === creatorCount + invitationCount;
+    }
+
     async existListByBoardId({ boardId, listId }) {
         const lists = await this.createQueryBuilder('board')
             .innerJoin('board.lists', 'list')
