@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import moment from 'moment';
 import { CalendarStatusContext } from '../../context/CalendarContext';
-import {
-    CardScrollStatusContext,
-    CardScrollDispatchContext,
-} from '../../context/CardScrollContext';
+import { CardScrollStatusContext } from '../../context/CardScrollContext';
 import { getCardsByDueDate } from '../../utils/cardRequest';
 
 const cardScrollReducer = (state, action) => {
@@ -33,7 +30,7 @@ const cardScrollReducer = (state, action) => {
 };
 
 const CardScrollProvider = ({ children }) => {
-    const { selectedDate, member } = useContext(CalendarStatusContext);
+    const calendarStatus = useContext(CalendarStatusContext);
     const [cardScrollState, cardScrollDispatch] = useReducer(cardScrollReducer, {
         loading: false,
         data: null,
@@ -44,20 +41,18 @@ const CardScrollProvider = ({ children }) => {
         cardScrollDispatch({ type: 'LOADING' });
         try {
             const response = await getCardsByDueDate({
-                dueDate: moment(selectedDate).format('YYYY-MM-DD'),
-                member,
+                dueDate: moment(calendarStatus.selectedDate).format('YYYY-MM-DD'),
+                member: calendarStatus.member,
             });
             cardScrollDispatch({ type: 'SUCCESS', data: response?.data });
         } catch (error) {
             cardScrollDispatch({ type: 'ERROR', error });
         }
-    }, []);
+    }, [calendarStatus]);
 
     return (
         <CardScrollStatusContext.Provider value={cardScrollState}>
-            <CardScrollDispatchContext.Provider value={cardScrollDispatch}>
-                {children}
-            </CardScrollDispatchContext.Provider>
+            {children}
         </CardScrollStatusContext.Provider>
     );
 };
