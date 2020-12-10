@@ -12,14 +12,14 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
   // MARK: - Property
 
   private let viewModel: SideBarViewModelProtocol
-  private var handler: (() -> Void)?
+  private weak var delegate: SideBarViewControllerProtocol?
 
 
   // MARK: - Initializer
 
-  init(viewModel: SideBarViewModelProtocol, handler: (() -> Void)? = nil) {
+  init(viewModel: SideBarViewModelProtocol, delegate: SideBarViewControllerProtocol) {
     self.viewModel = viewModel
-    self.handler = handler
+    self.delegate = delegate
     
     super.init()
   }
@@ -36,7 +36,9 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
     
     if let member = viewModel.fetchMember(at: indexPath.item) {
       viewModel.fetchProfileImage(with: member.profileImageUrl) { data in
+        
         DispatchQueue.main.async {
+          print(member.name)
           cell.update(with: data, and: member)
         }
       }
@@ -49,9 +51,8 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
     let footerView: MemberFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
     
     footerView.update(with: "초대하기")
-    footerView.handler = { [weak self] in
-      self?.handler?()
-    }
+    footerView.delegate = delegate
+
     return footerView
   }
 }

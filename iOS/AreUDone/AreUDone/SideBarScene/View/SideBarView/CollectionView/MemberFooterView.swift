@@ -12,7 +12,7 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
   
-  var handler: (() -> Void)?
+  weak var delegate: SideBarViewControllerProtocol?
   
   private lazy var baseView: UIView = {
     let view = UIView()
@@ -93,6 +93,6 @@ private extension MemberFooterView {
 private extension MemberFooterView {
   
   @objc func baseViewTapped() {
-    handler?()
+    delegate?.pushToInvitation()
   }
 }
