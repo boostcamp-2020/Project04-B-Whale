@@ -303,6 +303,7 @@
 		BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */; };
 		BD59A7122580D98000BF8928 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A7112580D97F00BF8928 /* Week.swift */; };
 		BD59A745258209BE00BF8928 /* TitleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A744258209BD00BF8928 /* TitleChangeable.swift */; };
+		BD59A74A258212A700BF8928 /* FetchDailyCardsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A749258212A700BF8928 /* FetchDailyCardsOption.swift */; };
 		BDD18AB425653CE5005DF00A /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */; };
 		BDD18ABD2565449D005DF00A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */; };
 		BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AC4256544C6005DF00A /* Coordinator.swift */; };
@@ -539,6 +540,7 @@
 		BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCardCount.swift; sourceTree = "<group>"; };
 		BD59A7112580D97F00BF8928 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		BD59A744258209BD00BF8928 /* TitleChangeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleChangeable.swift; sourceTree = "<group>"; };
+		BD59A749258212A700BF8928 /* FetchDailyCardsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDailyCardsOption.swift; sourceTree = "<group>"; };
 		BDD18AB325653CE5005DF00A /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		BDD18ABC2565449D005DF00A /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		BDD18AC4256544C6005DF00A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -1442,6 +1444,7 @@
 				BD59A60E25787C6300BF8928 /* Font.swift */,
 				BD59A7112580D97F00BF8928 /* Week.swift */,
 				BD59A744258209BD00BF8928 /* TitleChangeable.swift */,
+				BD59A749258212A700BF8928 /* FetchDailyCardsOption.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1744,6 +1747,7 @@
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
 				3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */,
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
+				BD59A74A258212A700BF8928 /* FetchDailyCardsOption.swift in Sources */,
 				336011FE256D5CFE009580A1 /* String+.swift in Sources */,
 				33F2D4F8257B582C008F1E06 /* InvitationTableViewCell.swift in Sources */,
 				3360122A256E5022009580A1 /* BoardListCoordinator.swift in Sources */,
