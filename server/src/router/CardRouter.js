@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { isNumberString } from 'class-validator';
 import { CardService } from '../service/CardService';
 import { queryParser } from '../common/util/queryParser';
 import { validator } from '../common/util/validator';
@@ -7,6 +8,7 @@ import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 import { CardDto } from '../dto/CardDto';
 import { BadRequestError } from '../common/error/BadRequestError';
 import { AddMemberBodyDto } from '../dto/AddMemberBodyDto';
+import { CommentService } from '../service/CommentService';
 
 export const CardRouter = () => {
     const router = Router();
@@ -74,8 +76,8 @@ export const CardRouter = () => {
         const userId = req.user.id;
         const { cardId } = req.params;
 
-        if (cardId === undefined) {
-            throw new BadRequestError('No params');
+        if (cardId === undefined || !isNumberString(cardId)) {
+            throw new BadRequestError('Wrong params');
         }
 
         const card = await cardService.getCard({ userId, cardId });
@@ -102,6 +104,25 @@ export const CardRouter = () => {
 
         await cardService.addMemberToCardByUserIds({ cardId, userId, userIds });
         res.status(204).end();
+    });
+
+    router.post('/:cardId/comment', async (req, res) => {
+        const commentService = CommentService.getInstance();
+        const userId = req.user.id;
+        const { cardId } = req.params;
+        const { content } = req.body;
+
+        if (cardId === undefined || !isNumberString(cardId)) {
+            throw new BadRequestError('Wrong params');
+        }
+
+        if (content === undefined) {
+            throw new BadRequestError('Empty content');
+        }
+
+        await commentService.addComment({ userId, cardId, content });
+
+        res.status(201).end();
     });
 
     return router;

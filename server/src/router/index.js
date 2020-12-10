@@ -5,6 +5,7 @@ import { UserRouter } from './UserRouter';
 import { BoardRouter } from './BoardRouter';
 import { CardRouter } from './CardRouter';
 import { ListRouter } from './ListRouter';
+import { CommentRouter } from './CommentRouter';
 
 export const IndexRouter = () => {
     const router = Router();
@@ -14,6 +15,7 @@ export const IndexRouter = () => {
     router.use('/api/board', passport.authenticate('jwt', { session: false }), BoardRouter());
     router.use('/api/card', passport.authenticate('jwt', { session: false }), CardRouter());
     router.use('/api/list', passport.authenticate('jwt', { session: false }), ListRouter());
+    router.use('/api/comment', passport.authenticate('jwt', { session: false }), CommentRouter());
 
     return router;
 };

@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import { Application } from '../../src/Application';
 import { JwtUtil } from '../../src/common/util/JwtUtil';
 import { Board } from '../../src/model/Board';
-import { List } from '../../src/model/List';
 import { Invitation } from '../../src/model/Invitation';
 import { User } from '../../src/model/User';
 import { TestTransactionDelegate } from '../TestTransactionDelegate';

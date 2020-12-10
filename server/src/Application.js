@@ -34,9 +34,9 @@ export class Application {
 
     async initialize() {
         await this.initEnvironment();
+        await this.initDatabase();
         this.initPassport();
         this.registerMiddleware();
-        await this.initDatabase();
     }
 
     async initEnvironment() {
