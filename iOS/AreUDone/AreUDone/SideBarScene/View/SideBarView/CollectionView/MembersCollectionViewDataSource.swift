@@ -36,9 +36,7 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
     
     if let member = viewModel.fetchMember(at: indexPath.item) {
       viewModel.fetchProfileImage(with: member.profileImageUrl) { data in
-        
         DispatchQueue.main.async {
-          print(member.name)
           cell.update(with: data, and: member)
         }
       }
@@ -48,9 +46,7 @@ final class MembersCollectionViewDataSource: NSObject, UICollectionViewDataSourc
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let footerView: MemberFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
-    
-    footerView.update(with: "초대하기")
+    let footerView: MemberFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)    
     footerView.delegate = delegate
 
     return footerView

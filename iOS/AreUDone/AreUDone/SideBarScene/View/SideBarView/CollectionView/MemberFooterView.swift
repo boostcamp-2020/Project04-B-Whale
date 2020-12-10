@@ -29,6 +29,8 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
+    titleLabel.text = "초대하기"
+    
     return titleLabel
   }()
   
@@ -44,13 +46,6 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
   override init(frame: CGRect) {
     super.init(frame: frame)
     configure()
-  }
-  
-  
-  // MARK: - Method
-  
-  func update(with title: String) {
-    titleLabel.text = title
   }
 }
 

@@ -47,7 +47,13 @@ final class InvitationCoordinator: NavigationCoordinator {
               let userService = UserService(router: self.router)
               let boardService = BoardService(router: self.router)
               let imageSerivce = ImageService(router: self.router)
-              let viewModel = InvitationViewModel(userService: userService, boardService: boardService, imageService: imageSerivce, boardId: self.boardId)
+              
+              let viewModel = InvitationViewModel(
+                userService: userService,
+                boardService: boardService,
+                imageService: imageSerivce,
+                boardId: self.boardId
+              )
               
               let viewController = InvitationViewController(coder: coder, viewModel: viewModel)
               viewController?.delegate = self.delegate

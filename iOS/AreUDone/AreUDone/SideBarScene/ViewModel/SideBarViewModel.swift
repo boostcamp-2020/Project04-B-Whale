@@ -75,15 +75,15 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   func updateCollectionView() {
     
-    updateMembersInCollectionView()
-    updateActivitiesInCollectionView()
+    fetchMembers()
+    fetchActivities()
     
     group.notify(queue: .main) {
       self.updateSideBarCollectionViewHandler?()
     }
   }
   
-  private func updateMembersInCollectionView() {
+  private func fetchMembers() {
     group.enter()
 
     boardService.fetchBoardDetail(with: boardId) { result in
@@ -101,7 +101,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     }
   }
   
-  private func updateActivitiesInCollectionView() {
+  private func fetchActivities() {
     group.enter()
 
     activityService.fetchActivities(withBoardId: boardId) { result in
