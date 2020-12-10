@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
+import BoardDetailContext from '../../context/BoardDetailContext';
 
 const Wrapper = styled.div`
     position: fixed;
@@ -11,9 +12,9 @@ const Wrapper = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-    position: relative;
-    top: 3.5em;
-    left: 21.6em;
+    position: absolute;
+    top: 2.2em;
+    left: 0.6em;
     width: 300px;
     padding: 5px;
     background-color: ${(props) => props.theme.whiteColor};
@@ -57,6 +58,7 @@ const SelectLabel = styled.label`
 const Select = styled.select`
     background: none;
     font-family: inherit;
+    cursor: pointer;
 `;
 
 const Button = styled.button.attrs({ type: 'button' })`
@@ -69,41 +71,68 @@ const Button = styled.button.attrs({ type: 'button' })`
 `;
 
 const MoveModal = ({ onClose }) => {
+    const { boardDetail } = useContext(BoardDetailContext);
+    const { lists } = boardDetail;
+    // TODO: 현재 카드의 리스트 아이디, 카드 위치로 변경할 것
+    const currentListId = 2;
+    const currentCardPosition = 1;
+    const [selectedList, setSelectedList] = useState(lists[currentListId - 1]);
+
     const onClickClose = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
     };
 
+    const onChangeList = (e) => {
+        const index = e.target.selectedIndex;
+        setSelectedList(lists[index]);
+    };
+
     return (
-        <Wrapper onClick={onClickClose}>
+        <>
+            <Wrapper onClick={onClickClose} />
             <ModalWrapper>
                 <ModalHeader>
                     <div />
                     <ModalTitle>카드 이동</ModalTitle>
-                    <IoIosClose size={24} onClick={onClose} />
+                    <IoIosClose size={24} cursor="pointer" onClick={onClose} />
                 </ModalHeader>
                 <ModalBody>
                     <ModalTitle>목적지 선택</ModalTitle>
                     <SelectWrapper>
                         <SelectLabel htmlFor="list-select">리스트</SelectLabel>
-                        <Select id="list-select" defaultValue="list1">
-                            <option value="list1">List1</option>
-                            <option value="list2">list2</option>
-                            <option value="list3">List3</option>
+                        <Select
+                            id="list-select"
+                            defaultValue={currentListId}
+                            onChange={onChangeList}
+                        >
+                            {lists.map((list) => (
+                                <option key={list.id} value={list.id}>
+                                    {list.title}
+                                </option>
+                            ))}
                         </Select>
                     </SelectWrapper>
                     <SelectWrapper>
                         <SelectLabel htmlFor="position-select">위치</SelectLabel>
-                        <Select id="position-select" defaultValue="position1">
-                            <option value="position1">Position1</option>
-                            <option value="position2">Position2</option>
+                        <Select id="position-select" defaultValue={currentCardPosition}>
+                            {selectedList.cards.map((card, index) => (
+                                <option key={card.id} value={card.position}>
+                                    {index + 1}
+                                </option>
+                            ))}
+                            {currentListId !== selectedList.id && (
+                                <option value={selectedList.cards.length + 1}>
+                                    {selectedList.cards.length + 1}
+                                </option>
+                            )}
                         </Select>
                     </SelectWrapper>
                     <Button>이동</Button>
                 </ModalBody>
             </ModalWrapper>
-        </Wrapper>
+        </>
     );
 };
 
