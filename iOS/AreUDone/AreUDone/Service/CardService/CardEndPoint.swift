@@ -23,6 +23,7 @@ enum CardEndPoint {
        )
   case updateCardMember(id: Int, userIds: [Int])
   case fetchCardsCount(startDate: String, endDate: String, member: String?)
+  case deleteCard(id: Int)
 }
 
 extension CardEndPoint: EndPointable {
@@ -42,6 +43,9 @@ extension CardEndPoint: EndPointable {
       
     case .fetchCardsCount:
       return "\(APICredentials.ip)/api/card/count"
+      
+    case .deleteCard(let id):
+      return "\(APICredentials.ip)/api/card/\(id)"
     }
   }
   
@@ -70,6 +74,9 @@ extension CardEndPoint: EndPointable {
         value += " " + member
       }
       return ["q": value]
+      
+    case .deleteCard:
+      return nil
     }
   }
   
@@ -89,6 +96,9 @@ extension CardEndPoint: EndPointable {
       
     case .fetchCardsCount:
       return .get
+      
+    case .deleteCard:
+      return .delete
     }
   }
   

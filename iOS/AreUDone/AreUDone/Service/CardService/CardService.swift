@@ -27,6 +27,7 @@ protocol CardServiceProtocol {
     member: String?,
     completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
   )
+  func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void))
 }
 
 extension CardServiceProtocol {
@@ -117,6 +118,12 @@ class CardService: CardServiceProtocol {
       endDate: endDate,
       member: member
     )) { (result: Result<MonthCardCount, APIError>) in
+      completionHandler(result)
+    }
+  }
+  
+  func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+    router.request(route: CardEndPoint.deleteCard(id: cardId)) { (result: Result<Void, APIError>) in
       completionHandler(result)
     }
   }
