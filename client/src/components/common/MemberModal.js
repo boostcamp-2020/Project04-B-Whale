@@ -71,12 +71,14 @@ const MemberModal = ({ onClose }) => {
     };
 
     const onChangeUserSearch = (e) => {
-        if (e.target.value === '') {
+        const text = e.target.value;
+        if (text.includes('\\')) return;
+        if (text === '') {
             setSearchedUsers(allInvitedUsers);
             return;
         }
 
-        const regex = new RegExp(`^${e.target.value}`);
+        const regex = new RegExp(`^${text}`);
         const newSearchUsers = allInvitedUsers.filter((user) => user.name.search(regex) !== -1);
         newSearchUsers.sort((a) => (userIds.includes(a.id) ? -1 : 1));
         setSearchedUsers(newSearchUsers);
