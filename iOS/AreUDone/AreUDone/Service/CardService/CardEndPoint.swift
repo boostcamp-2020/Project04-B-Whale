@@ -110,7 +110,7 @@ extension CardEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json"
     ]
   }
