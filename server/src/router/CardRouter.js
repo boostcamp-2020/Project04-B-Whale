@@ -6,6 +6,7 @@ import { CardCountDto } from '../dto/CardCountDto';
 import { GetCardsByDateQueryDto } from '../dto/GetCardsByDateQueryDto';
 import { CardDto } from '../dto/CardDto';
 import { BadRequestError } from '../common/error/BadRequestError';
+import { AddMemberBodyDto } from '../dto/AddMemberBodyDto';
 
 export const CardRouter = () => {
     const router = Router();
@@ -90,6 +91,17 @@ export const CardRouter = () => {
         };
         await cardService.deleteCard(config);
         res.sendStatus(204);
+    });
+
+    router.put('/:cardId/member', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const { id: userId } = req.user;
+        const { cardId } = req.params;
+        const { userIds } = req.body;
+        await validator(AddMemberBodyDto, { cardId, userIds });
+
+        await cardService.addMemberToCardByUserIds({ cardId, userId, userIds });
+        res.status(204).end();
     });
 
     return router;
