@@ -91,8 +91,8 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   private func fetchCardCount(completionHandler: @escaping (() -> Void)) {
     guard
-      let startDateAsString = basedate.startOfMonth()?.toString(withDividerFormat: "-"),
-      let endDateAsString = basedate.endOfMonth()?.toString(withDividerFormat: "-")
+      let startDateAsString = basedate.startOfMonth()?.toString(),
+      let endDateAsString = basedate.endOfMonth()?.toString()
     else { return }
     
     cardService.fetchCardsCount(
