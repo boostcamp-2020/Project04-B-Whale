@@ -91,7 +91,7 @@ struct CardTrueJsonFactory: JsonFactory {
                 "id": 1,
                 "title": "재밌게 끝내기",
                 "content": "2주밖에 남지 않았습니다. 열심히 하겠습니다ㅠㅠ",
-                "dueDate": "2020-12-02",
+                "dueDate": "2020-12-02 11:00:00",
                 "members": [
                         {
                             "id": 1,
