@@ -5,10 +5,16 @@ const CardWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: ${(props) => props.cardWidth};
-    height: ${(props) => props.cardHeight};
-    border: 0.1rem solid ${(props) => props.theme.blackColor};
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
     padding-left: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.2rem 0rem ${(props) => props.theme.lightGrayColor};
+    color: #586069;
+    background-color: white;
+    &:hover {
+        background-color: ${(props) => props.theme.lightGrayColor};
+    }
 `;
 
 const CardTitle = styled.div`
@@ -25,8 +31,6 @@ const CardDueDate = styled.div`
     align-items: center;
     justify-content: center;
     height: 1.5rem;
-    padding: 0 1rem 0 1rem;
-    border: 0.1rem solid ${(props) => props.theme.lightGrayColor};
     margin: 0 1rem 0 0;
 `;
 
@@ -37,12 +41,11 @@ const CardCommentCount = styled.div`
     width: 2rem;
     height: 1.5rem;
     padding: 0 1rem 0 1rem;
-    border: 0.1rem solid ${(props) => props.theme.lightGrayColor};
 `;
 
-const Card = ({ cardWidth, cardHeight, cardTitle, cardDueDate, cardCommentCount }) => {
+const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount }) => {
     return (
-        <CardWrapper cardWidth={cardWidth} cardHeight={cardHeight}>
+        <CardWrapper width={width} height={height}>
             <CardTitle>{cardTitle}</CardTitle>
             <CardDueDateCommentCountFlexBox>
                 <CardDueDate>{cardDueDate}</CardDueDate>
