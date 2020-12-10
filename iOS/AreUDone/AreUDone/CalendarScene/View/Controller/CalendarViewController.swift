@@ -23,54 +23,35 @@ final class CalendarViewController: UIViewController {
 
   private lazy var dataSource = configureDataSource()
 
-  private lazy var cardCollectionView: CardCollectionView = {
-    let flowLayout = UICollectionViewFlowLayout()
-    let collectionView = CardCollectionView(
-      frame: CGRect.zero,
-      collectionViewLayout: flowLayout
-    )
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    
-    return collectionView
-  }()
+  @IBOutlet weak var cardCollectionView: CardCollectionView!
+
+  @IBOutlet weak var baseView: UIView! {
+    didSet {
+      baseView.backgroundColor = .clear
+      baseView.addShadow(
+        offset: .zero,
+        radius: 3,
+        opacity: 0.5
+      )
+    }
+  }
   
-  private lazy var baseView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = .clear
-    view.addShadow(
-      offset: .zero,
-      radius: 3,
-      opacity: 0.5
-    )
-    
-    return view
-  }()
+  @IBOutlet weak var titleLabel: UILabel! {
+    didSet {
+      titleLabel.font = UIFont.nanumB(size: 30)
+      titleLabel.text = "전체 카드"
+    }
+  }
+
+  @IBOutlet weak var dateStepper: DateStepper!
   
-  private lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont.nanumB(size: 30)
-    label.text = "전체 카드"
-    
-    return label
-  }()
-  
-  private lazy var dateStepper: DateStepper = {
-    let dateStepper = DateStepper()
-    dateStepper.translatesAutoresizingMaskIntoConstraints = false
-    
-    return dateStepper
-  }()
-  
-  private lazy var segmentedControl: CustomSegmentedControl = {
-    let segmentedControl = CustomSegmentedControl()
-    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-    let titles = CardSegment.allCases.map { $0.text }
-    segmentedControl.setButtonTitles(buttonTitles: titles)
-    
-    return segmentedControl
-  }()
+  @IBOutlet private weak var segmentedControl: CustomSegmentedControl! {
+    didSet {
+      let titles = CardSegment.allCases.map { $0.text }
+      segmentedControl.setButtonTitles(buttonTitles: titles)
+    }
+  }
+
 
   
   // MARK: - Initializer
@@ -144,65 +125,6 @@ private extension CalendarViewController {
     
     dateStepper.delegate = self
     viewModel.initializeDate()
-    
-    configureView()
-    configureTitleLabel()
-    configureDateStepper()
-    configureBaseView()
-    configureCardCollectionView()
-    configureSegmentedControl()
-  }
-  
-  func configureView() {
-    view.addSubview(titleLabel)
-    view.addSubview(dateStepper)
-    view.addSubview(baseView)
-    baseView.addSubview(cardCollectionView)
-    baseView.addSubview(segmentedControl)
-  }
-  
-  func configureTitleLabel() {
-    NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: baseView.leadingAnchor, constant: 10),
-      titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-      titleLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.06)
-    ])
-  }
-  
-  func configureDateStepper() {
-    NSLayoutConstraint.activate([
-      dateStepper.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-      dateStepper.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
-      dateStepper.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-      dateStepper.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
-    ])
-  }
-  
-  func configureBaseView() {
-    NSLayoutConstraint.activate([
-      baseView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-      baseView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-      baseView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-      baseView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
-    ])
-  }
-  
-  func configureCardCollectionView() {
-    NSLayoutConstraint.activate([
-      cardCollectionView.topAnchor.constraint(equalTo: baseView.topAnchor),
-      cardCollectionView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
-      cardCollectionView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
-      cardCollectionView.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor)
-    ])
-  }
-  
-  func configureSegmentedControl() {
-    NSLayoutConstraint.activate([
-      segmentedControl.bottomAnchor.constraint(equalTo: baseView.bottomAnchor),
-      segmentedControl.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
-      segmentedControl.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
-      segmentedControl.heightAnchor.constraint(equalToConstant: 50),
-    ])
   }
 }
 
@@ -213,6 +135,7 @@ private extension CalendarViewController {
   
   func bindUI() {
     bindingInitializeCardCollectionView()
+    bindingUpdateCardCollectionView()
     bindingUpdateDate()
   }
   
@@ -311,13 +234,24 @@ extension CalendarViewController: UICollectionViewDelegate {
 
 extension CalendarViewController: CustomSegmentedControlDelegate {
   
-  func change(to title: TitleChangeable) {
-    self.titleLabel.text = title.text
+  func change(to segmented: TitleChangeable) {
+    self.titleLabel.text = segmented.text
     UIView.transition(
       with: titleLabel,
       duration: 0.3,
       options: .transitionFlipFromLeft,
       animations: nil,
       completion: nil)
+    
+    switch segmented {
+    case CardSegment.allCard:
+      viewModel.fetchUpdateDailyCards(withOption: .allCard)
+      
+    case CardSegment.myCard:
+      viewModel.fetchUpdateDailyCards(withOption: .myCard)
+      
+    default:
+      return
+    }
   }
 }

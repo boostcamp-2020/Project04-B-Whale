@@ -8,24 +8,97 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="NanumBarunpenB.ttf">
+            <string>NanumBarunpen-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Calendar View Controller-->
-        <scene sceneID="wD8-fD-Fzp">
+        <scene sceneID="h1h-jn-ZkT">
             <objects>
-                <viewController storyboardIdentifier="CalendarViewController" id="wCX-r5-nRh" customClass="CalendarViewController" customModule="AreUDone" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="H7c-pU-k8V">
+                <viewController storyboardIdentifier="CalendarViewController" id="dww-qn-DTV" customClass="CalendarViewController" customModule="AreUDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2ij-hR-TD9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Mzv-cZ-RHA"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 카드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuB-J3-HwS">
+                                <rect key="frame" x="20" y="64" width="112.5" height="55"/>
+                                <fontDescription key="fontDescription" name="NanumBarunpen-Bold" family="NanumBarunpen" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26k-J8-FJY">
+                                <rect key="frame" x="10" y="129" width="394" height="713"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Mgr-hO-jXA" customClass="CardCollectionView" customModule="AreUDone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="663"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fLM-tM-eZ2">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlO-vv-bNx" customClass="CustomSegmentedControl" customModule="AreUDone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="663" width="394" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="9on-qu-KVG"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dlO-vv-bNx" secondAttribute="trailing" id="4sc-e9-mjJ"/>
+                                    <constraint firstItem="Mgr-hO-jXA" firstAttribute="top" secondItem="26k-J8-FJY" secondAttribute="top" id="PnE-bD-pxj"/>
+                                    <constraint firstItem="Mgr-hO-jXA" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" id="ZCW-7n-CqJ"/>
+                                    <constraint firstItem="dlO-vv-bNx" firstAttribute="top" secondItem="Mgr-hO-jXA" secondAttribute="bottom" id="ZqY-qu-Uf4"/>
+                                    <constraint firstAttribute="bottom" secondItem="dlO-vv-bNx" secondAttribute="bottom" id="pBO-RN-fXk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mgr-hO-jXA" secondAttribute="trailing" id="sym-h0-P52"/>
+                                    <constraint firstItem="dlO-vv-bNx" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" id="y1S-Ms-jTM"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JjI-Mb-dZ4" customClass="DateStepper" customModule="AreUDone" customModuleProvider="target">
+                                <rect key="frame" x="152.5" y="64.5" width="241.5" height="54"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9a7-qQ-npf"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="26k-J8-FJY" firstAttribute="leading" secondItem="9a7-qQ-npf" secondAttribute="leading" constant="10" id="CSh-J2-mDt"/>
+                            <constraint firstItem="9a7-qQ-npf" firstAttribute="trailing" secondItem="26k-J8-FJY" secondAttribute="trailing" constant="10" id="JTf-hw-NNv"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="height" secondItem="2ij-hR-TD9" secondAttribute="height" multiplier="0.06" id="Rhm-UE-mQ9"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="centerY" secondItem="ZuB-J3-HwS" secondAttribute="centerY" id="Xse-Be-UVw"/>
+                            <constraint firstItem="9a7-qQ-npf" firstAttribute="bottom" secondItem="26k-J8-FJY" secondAttribute="bottom" constant="20" id="bOg-4c-6d9"/>
+                            <constraint firstItem="ZuB-J3-HwS" firstAttribute="top" secondItem="9a7-qQ-npf" secondAttribute="top" constant="20" id="dMk-1h-TeY"/>
+                            <constraint firstItem="ZuB-J3-HwS" firstAttribute="height" secondItem="2ij-hR-TD9" secondAttribute="height" multiplier="0.06" constant="1" id="eEy-W7-9O3"/>
+                            <constraint firstItem="26k-J8-FJY" firstAttribute="top" secondItem="ZuB-J3-HwS" secondAttribute="bottom" constant="10" id="jYP-xz-pZn"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="trailing" secondItem="9a7-qQ-npf" secondAttribute="trailing" constant="-20" id="v7Q-WL-13h"/>
+                            <constraint firstItem="ZuB-J3-HwS" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" constant="10" id="wub-IU-qdU"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="leading" secondItem="ZuB-J3-HwS" secondAttribute="trailing" constant="20" id="xFn-8Z-XUD"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="baseView" destination="26k-J8-FJY" id="SSZ-5X-UfJ"/>
+                        <outlet property="cardCollectionView" destination="Mgr-hO-jXA" id="Xzp-a5-Ofs"/>
+                        <outlet property="dateStepper" destination="JjI-Mb-dZ4" id="BdK-Ja-9lk"/>
+                        <outlet property="segmentedControl" destination="dlO-vv-bNx" id="hnb-Ve-1NA"/>
+                        <outlet property="titleLabel" destination="ZuB-J3-HwS" id="34x-Xy-rd9"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4gg-Ph-4IS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ENR-91-Jv3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="61.607142857142854"/>
+            <point key="canvasLocation" x="233" y="60"/>
         </scene>
     </scenes>
     <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
