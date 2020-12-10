@@ -1,11 +1,9 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import UserDetailForDropdown from './UserDetailForDropdown';
+import { Modal, Button } from 'antd';
 import BoardDetailContext from '../../context/BoardDetailContext';
-import { searchUsersByName } from '../../utils/userRequest';
-import MaterialUiModal from './MaterialUiModal';
+import 'antd/dist/antd.css';
+import { deleteList } from '../../utils/listRequest';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -45,30 +43,56 @@ const EachMenuDiv = styled.div`
 
 const ListMenuDropdown = ({ listMenuState, setListMenuState, listId }) => {
     const wrapper = useRef();
-    const dialog = useRef();
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [deleteModalState, setDeleteModalState] = useState(false);
-    const onClose = (evt) => {
-        console.log(123123);
+    const onDimmedClick = (evt) => {
         if (evt.target === wrapper.current) setListMenuState(false);
     };
 
-    const deleteListOnClick = () => {
-        setDeleteModalState(true);
-        // setListMenuState(false);
+    const onCancelClick = () => {
+        setDeleteModalState(false);
+        setListMenuState(false);
+    };
+
+    const handleAgree = async () => {
+        // TODO: status switch
+        // eslint-disable-next-line no-unused-vars
+        const { status } = await deleteList({ listId });
+
+        boardDetail.lists.splice(
+            boardDetail.lists.findIndex((v) => {
+                return v.id === listId;
+            }),
+            1,
+        );
+        setBoardDetail({ ...boardDetail });
+        setDeleteModalState(false);
+        setListMenuState(false);
     };
 
     return (
-        <Wrapper onClick={onClose} ref={wrapper}>
+        <Wrapper onClick={onDimmedClick} ref={wrapper}>
             <DropdownWrapper offsetX={listMenuState.offsetX} offsetY={listMenuState.offsetY}>
                 <EachMenuDiv>리스트 이동</EachMenuDiv>
-                <EachMenuDiv onClick={deleteListOnClick}>리스트 삭제</EachMenuDiv>
+                <EachMenuDiv onClick={() => setDeleteModalState(true)}>리스트 삭제</EachMenuDiv>
             </DropdownWrapper>
-            <MaterialUiModal
-                listId={listId}
-                open={deleteModalState}
-                setOpen={setDeleteModalState}
-                setListMenuState={setListMenuState}
-            />
+
+            <Modal
+                visible={deleteModalState}
+                onOk={handleAgree}
+                onCancel={onCancelClick}
+                style={{ top: '40%' }}
+                footer={[
+                    <Button key="no" onClick={onCancelClick}>
+                        아니오
+                    </Button>,
+                    <Button key="yes" type="primary" onClick={handleAgree}>
+                        예
+                    </Button>,
+                ]}
+            >
+                <p>정말 삭제하시겠습니까?😥</p>
+            </Modal>
         </Wrapper>
     );
 };
