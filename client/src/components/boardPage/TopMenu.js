@@ -35,6 +35,9 @@ const BoardInput = styled.input`
     margin-left: 2em;
     margin-right: 2%;
     z-index: 3;
+    &:focus {
+        outline: 1px solid blue;
+    }
 `;
 
 const ButtonForGettingInvitedUser = styled.button`
@@ -148,6 +151,7 @@ const TopMenu = ({
                         setInvitedDropdownDisplay({
                             visible: true,
                             offsetY: evt.target.getBoundingClientRect().left,
+                            offsetX: evt.target.getBoundingClientRect().top,
                         })
                     }
                 >
@@ -158,6 +162,7 @@ const TopMenu = ({
                         setAskoverDropdownDisplay({
                             visible: true,
                             offsetY: evt.target.getBoundingClientRect().left,
+                            offsetX: evt.target.getBoundingClientRect().top,
                         })
                     }
                 >
