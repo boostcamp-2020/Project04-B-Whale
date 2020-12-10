@@ -9,7 +9,7 @@ import UIKit
 
 protocol CustomSegmentedControlDelegate: AnyObject {
   
-  func change(to title: TitleChangeable)
+  func change(to segmented: TitleChangeable)
 }
 
 final class CustomSegmentedControl: UIView {
@@ -67,8 +67,9 @@ private extension CustomSegmentedControl {
   func configure() {
     configureView()
     configureButton()
-    configureSelectorView()
+    
     configStackView()
+    configureSelectorView()
   }
   
   func configureView() {
@@ -103,14 +104,17 @@ private extension CustomSegmentedControl {
   }
   
   private func configureSelectorView() {
-    let selectorWidth = frame.width / CGFloat(buttonTitles.count)
+    layoutIfNeeded()
+    let padding: CGFloat = 10
+    let selectorWidth = (UIScreen.main.bounds.width - padding * 2) / CGFloat(buttonTitles.count)
     
     selectorView = UIView(
       frame: CGRect(
-        x: selectorWidth * (widthRate/2),
+        x: selectorWidth * widthRate - (selectorWidth * widthRate / 2),
         y: frame.height * heightRate,
         width: selectorWidth * widthRate,
-        height: 2)
+        height: 2
+      )
     )
     selectorView.backgroundColor = selectorViewColor
     addSubview(selectorView)
@@ -156,7 +160,7 @@ private extension CustomSegmentedControl {
       
       
       UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut) {
-        self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate/2)
+        self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate) - (selectorWidth * self.widthRate / 2)
       }.startAnimation()
       
       button.setTitleColor(selectorTextColor, for: .normal)
