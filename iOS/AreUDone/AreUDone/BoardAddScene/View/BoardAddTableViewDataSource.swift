@@ -34,6 +34,11 @@ final class BoardAddTableViewDataSource: NSObject, UITableViewDataSource {
       let cell: TitleTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
       cell.delegate = self
       
+      cell.update(
+        withTitle: "보드 제목",
+        placeholder: "보드 제목을 입력해주세요"
+      )
+      
       return cell
       
     case 1:

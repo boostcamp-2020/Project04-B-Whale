@@ -111,13 +111,14 @@ extension BoardDetailCoordinator {
     navigationController?.pushViewController(cardDetailViewController, animated: true)
   }
   
-  func presentCardAdd() {
-    cardAddCoordinator = CardAddCoordinator(router: router)
-    cardAddCoordinator.navigationController = navigationController
+  func presentCardAdd(ofListId listId: Int) {
+    cardAddCoordinator = CardAddCoordinator(router: router, listId: listId)
     
     let viewController = cardAddCoordinator.start()
     let subNavigationController = UINavigationController()
     subNavigationController.pushViewController(viewController, animated: true)
+    
+    cardAddCoordinator.navigationController = subNavigationController
     
     subNavigationController.modalPresentationStyle = .fullScreen
     navigationController?.present(subNavigationController, animated: true)
