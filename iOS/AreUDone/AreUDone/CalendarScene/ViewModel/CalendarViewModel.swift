@@ -14,11 +14,18 @@ protocol CalendarViewModelProtocol {
   func bindingUpdateDate(handler: @escaping (String) -> Void)
   
   func fetchInitializeDailyCards()
-  func fetchUpdateDailyCards()
+  func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption)
   
   func initializeDate()
   func changeDate(to date: String, direction: Direction?)
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
+}
+
+extension CalendarViewModelProtocol {
+  
+  func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption = .allCard) {
+    fetchUpdateDailyCards(withOption: option)
+  }
 }
 
 final class CalendarViewModel: CalendarViewModelProtocol {
@@ -75,8 +82,16 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     }
   }
   
-  private func fetchDailyCards(with handler: ((Cards) -> Void)?) {
-    cardService.fetchDailyCards(dateString: Date().toString()) { result in
+  func fetchInitializeDailyCards() {
+    fetchDailyCards(with: initializeCardTableViewHandler)
+  }
+  
+  func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption = .allCard) {
+    fetchDailyCards(with: updateCardTableViewHandler, option: option)
+  }
+  
+  private func fetchDailyCards(with handler: ((Cards) -> Void)?, option: FetchDailyCardsOption = .allCard) {
+    cardService.fetchDailyCards(dateString: Date().toString(), option: option) { result in
       switch result {
       case .success(let cards):
         //TODO: - self가 순환참조를 일으키는 확인해야 함.
@@ -99,14 +114,6 @@ extension CalendarViewModel {
   
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void) {
     updateCardTableViewHandler = handler
-  }
-  
-  func fetchInitializeDailyCards() {
-    fetchDailyCards(with: initializeCardTableViewHandler)
-  }
-  
-  func fetchUpdateDailyCards() {
-    fetchDailyCards(with: updateCardTableViewHandler)
   }
   
   func bindingUpdateDate(handler: @escaping (String) -> Void) {
