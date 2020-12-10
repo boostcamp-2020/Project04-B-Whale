@@ -1,13 +1,19 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
-import { DatePicker } from 'antd';
+import { DatePicker, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: baseline;
+`;
 
 const AddListButton = styled.button`
     ${(props) => props.parent === 'card' && 'background: none'};
@@ -32,7 +38,6 @@ const InputWrapper = styled.div`
     flex-direction: column;
     width: 250px;
     height: ${(props) => (props.parent === 'card' ? 'auto' : 'auto')}px;
-    /* height: 80px; */
     padding: 5px;
     border-radius: 8px;
     background-color: lightgray;
@@ -42,6 +47,17 @@ const AddButton = styled.button`
     width: auto;
     padding: 0 10px;
     height: 30px;
+`;
+
+const FooterBtnDiv = styled.div`
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-start;
+`;
+
+const CloseBtn = styled(GrClose)`
+    margin: auto 5px;
+    cursor: pointer;
 `;
 
 const AddListBtnInput = ({ parent, history }) => {
@@ -60,7 +76,23 @@ const AddListBtnInput = ({ parent, history }) => {
         datetime = dateString;
     };
 
-    const addListHandler = async () => {
+    const showInvalidTitleModal = () => {
+        Modal.info({
+            title: '잘못된 형식입니다.',
+            content: <p>리스트 제목을 입력해주세요😩</p>,
+            onOk() {},
+            onCancel() {},
+            style: { top: '40%' },
+        });
+    };
+
+    const addListHandler = async (evt) => {
+        if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
+        const replacedTitle = input.current.value.replace(/ /g, '');
+        if (!replacedTitle) {
+            showInvalidTitleModal();
+            return;
+        }
         const { status } = await createList({
             title: input.current.value,
             boardId: boardDetail.id,
@@ -77,11 +109,7 @@ const AddListBtnInput = ({ parent, history }) => {
                 window.location.href = '/login';
                 break;
             case 403:
-                alert('해당 보드에 접근할 수 없습니다.');
-                history.goBack();
-                break;
             case 404:
-                alert('해당 보드가 존재하지 않습니다.');
                 history.goBack();
                 break;
             default:
@@ -90,7 +118,7 @@ const AddListBtnInput = ({ parent, history }) => {
     };
 
     const addCardHandler = () => {
-        console.log(datetime);
+        // TODO: 카드추가 handler, datetime
     };
 
     if (state === 'button') {
@@ -98,22 +126,22 @@ const AddListBtnInput = ({ parent, history }) => {
             <div>
                 <AddListButton parent={parent} onClick={() => setState('input')}>
                     <AiOutlinePlus />
-                    {parent === 'list' ? 'Add a list' : 'Add a card'}
+                    {parent === 'list' ? ' 리스트 추가' : ' 카드 추가'}
                 </AddListButton>
             </div>
         );
     }
     return (
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        <Wrapper>
             <InputWrapper parent={parent}>
                 <TitleInput
                     ref={input}
                     placeholder={
                         parent === 'list' ? '리스트 제목을 입력하세요.' : '카드 제목을 입력하세요.'
                     }
-                    style={{ height: '30px', marginBottom: '5px' }}
                     autoFocus="autoFocus"
                     type="text"
+                    onKeyDown={addListHandler}
                 />
                 {parent === 'card' && (
                     <DatePicker
@@ -129,23 +157,14 @@ const AddListBtnInput = ({ parent, history }) => {
                         clearIcon={false}
                     />
                 )}
-                <div
-                    style={{
-                        marginTop: '5px',
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                    }}
-                >
+                <FooterBtnDiv>
                     <AddButton onClick={parent === 'list' ? addListHandler : addCardHandler}>
-                        {parent === 'list' ? 'Add List' : 'Add Card'}
+                        만들기
                     </AddButton>
-                    <GrClose
-                        onClick={() => setState('button')}
-                        style={{ margin: 'auto 5px', cursor: 'pointer' }}
-                    />
-                </div>
+                    <CloseBtn onClick={() => setState('button')} />
+                </FooterBtnDiv>
             </InputWrapper>
-        </div>
+        </Wrapper>
     );
 };
 

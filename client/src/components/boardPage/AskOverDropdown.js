@@ -29,6 +29,10 @@ const DropdownWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `;
+const ContentWrapper = styled.div`
+    max-height: 400px;
+    overflow: scroll;
+`;
 
 const SearchInput = styled.input.attrs({
     type: 'text',
@@ -84,7 +88,7 @@ const AskOverDropdown = (props) => {
                     onChange={handleChange}
                     ref={input}
                 />
-                <div style={{ maxHeight: '400px', overflow: 'scroll' }}>
+                <ContentWrapper>
                     {searchedUsers.map(({ profileImageUrl, name, id }) => (
                         <UserDetailForDropdown
                             profileImageUrl={profileImageUrl}
@@ -100,7 +104,7 @@ const AskOverDropdown = (props) => {
                             setAskoverDropdownDisplay={props.setAskoverDropdownDisplay}
                         />
                     ))}
-                </div>
+                </ContentWrapper>
             </DropdownWrapper>
         </Wrapper>
     );

@@ -19,6 +19,9 @@ const MainContents = styled.div`
 const Wrapper = styled.div`
     display: flex;
     margin-left: 10px;
+    max-width: 100%;
+    overflow-x: scroll;
+    height: 90%;
 `;
 
 const ListWrapper = styled.div``;
@@ -57,7 +60,7 @@ const Board = ({ match }) => {
                 />
                 <Wrapper>
                     {Boolean(boardDetail.lists?.length) && (
-                        <ListWrapper style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <ListWrapper style={{ display: 'flex' }}>
                             {boardDetail.lists.map((v) => {
                                 return <List key={v.id} id={v.id} title={v.title} />;
                             })}
