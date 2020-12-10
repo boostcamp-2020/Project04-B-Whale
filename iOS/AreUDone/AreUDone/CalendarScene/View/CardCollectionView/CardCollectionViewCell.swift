@@ -50,7 +50,7 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
   }()
   
   var delegate: CardCellDelegate?
-  
+  var isSwiped: Bool = false
   
   // MARK:- Initializer
   
@@ -171,9 +171,11 @@ extension CardCollectionViewCell: UIScrollViewDelegate {
     if scrollView.contentOffset.x <= 0 {
       scrollView.bounces = false
       scrollView.contentOffset.x = 0
+      isSwiped = false
     } else {
       scrollView.bounces = true
       delegate?.resetCellOffset(without: self)
+      isSwiped = true
     }
   }
 }

@@ -20,12 +20,12 @@ final class CalendarViewController: UIViewController {
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
-
+  
   private lazy var dataSource = configureDataSource()
-
+  
   @IBOutlet weak var dateStepper: DateStepper!
   @IBOutlet weak var cardCollectionView: CardCollectionView!
-
+  
   
   // MARK: - Initializer
   
@@ -175,6 +175,14 @@ extension CalendarViewController: CardCellDelegate {
   }
   
   func didSelect(for cell: CardCollectionViewCell) {
+    guard let visibleCells = cardCollectionView.visibleCells as? [CardCollectionViewCell] else { return }
+    for visibleCell in visibleCells {
+      if visibleCell.isSwiped {
+        cardCollectionView.resetVisibleCellOffset()
+        return
+      }
+    }
+    
     if let indexPath = cardCollectionView.indexPath(for: cell),
        let card = dataSource.itemIdentifier(for: indexPath) {
       calendarCoordinator?.showCardDetail(for: card.id)
