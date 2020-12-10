@@ -24,7 +24,7 @@ final class CardAddTableViewDataSource: NSObject, UITableViewDataSource {
   // MARK: - Method
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 2
+    return 3
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,13 +34,31 @@ final class CardAddTableViewDataSource: NSObject, UITableViewDataSource {
       let cell: TitleTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
       cell.delegate = self
       
+      cell.update(
+        withTitle: "카드 제목",
+        placeholder: "카드 제목을 입력해주세요"
+      )
+      
       return cell
-//
-//    case 1:
-//      let cell: BoardColorTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//      cell.delegate = self
-//      return cell
-//
+
+    case 1:
+      let cell: CardAddCalendarTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+      
+      viewModel.fetchDate { dateString in
+        cell.update(with: dateString)
+      }
+    
+      return cell
+      
+    case 2:
+      let cell: CardAddContentsTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+
+      viewModel.fetchContent { content in
+        cell.update(withContent: content)
+      }
+      
+      return cell
+      
     default:
       return UITableViewCell()
     }
@@ -52,14 +70,9 @@ final class CardAddTableViewDataSource: NSObject, UITableViewDataSource {
 
 extension CardAddTableViewDataSource: TitleTableViewCellDelegate {
   
-  func textFieldDidChanged(with title: String) {
+  func textFieldDidChanged(to title: String) {
+    viewModel.updateListTitle(to: title)
   }
-}
-
-
-// MARK: - Extension      Delegate
-
-extension CardAddTableViewDataSource {
 }
 
 
