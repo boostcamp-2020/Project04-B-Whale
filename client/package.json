@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "latest",
+    "@material-ui/core": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "antd": "4.9.2",
     "axios": "^0.21.0",
     "moment": "^2.29.1",
     "query-string": "^6.13.7",
@@ -17,9 +20,7 @@
     "react-scripts": "4.0.0",
     "styled-components": "^5.2.1",
     "styled-reset": "^4.3.1",
-    "web-vitals": "^0.2.4",
-    "antd": "4.9.2",
-    "@ant-design/icons": "latest"
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
