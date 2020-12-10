@@ -129,7 +129,7 @@ export default function List({ title, id }) {
                 </ListContentWrapper>
                 <CardsWrapper style={{ marginTop: '5px' }}>카드들</CardsWrapper>
                 <FooterAddBtnDiv>
-                    <AddListOrCard parent="card" />
+                    <AddListOrCard parent="card" id={id} />
                 </FooterAddBtnDiv>
             </ListWrapper>
             {listMenuState.visible && (
