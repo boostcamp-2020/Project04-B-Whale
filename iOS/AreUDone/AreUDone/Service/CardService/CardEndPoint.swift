@@ -11,7 +11,7 @@ import KeychainFramework
 
 enum CardEndPoint {
   
-  case fetchDailyCards(dateString: String)
+  case fetchDailyCards(dateString: String, option: FetchDailyCardsOption = .allCard)
   case fetchDetailCard(id: Int)
   case updateCard(
         id: Int,
@@ -22,7 +22,7 @@ enum CardEndPoint {
         dueDate: String?
        )
   case updateCardMember(id: Int, userIds: [Int])
-  case fetchCardsCount(startDate: String, endDate: String, member: String?)
+  case fetchCardsCount(startDate: String, endDate: String)
   case deleteCard(id: Int)
 }
 
@@ -56,8 +56,14 @@ extension CardEndPoint: EndPointable {
   
   var query: HTTPQuery? {
     switch self {
-    case .fetchDailyCards(let dateString): // ?q=date:2020-01-01
-      return ["q": "date:\(dateString)"]
+    case .fetchDailyCards(let dateString, let option): // ?q=date:2020-01-01 member:me
+      var value = "date:\(dateString)"
+      
+      if let optionValue = option.value {
+        value += " member:\(optionValue)"
+      }
+      
+      return ["q": value]
       
     case .fetchDetailCard:
       return nil
@@ -68,12 +74,8 @@ extension CardEndPoint: EndPointable {
     case .updateCardMember:
       return nil
       
-    case .fetchCardsCount(let startDate, let endDate, let member):
-      var value = "startdate:" + startDate + " " + "enddate:" + endDate
-      if let member = member {
-        value += " " + member
-      }
-      return ["q": value]
+    case .fetchCardsCount(let startDate, let endDate):
+      return ["q": "startdate:\(startDate) enddate\(endDate)"]
       
     case .deleteCard:
       return nil

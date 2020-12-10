@@ -9,7 +9,7 @@ import Foundation
 import NetworkFramework
 
 protocol CardServiceProtocol {
-  func fetchDailyCards(dateString: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
+  func fetchDailyCards(dateString: String, option: FetchDailyCardsOption, completionHandler: @escaping (Result<Cards, APIError>) -> Void)
   func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void))
   func updateCard(
     id: Int,
@@ -24,7 +24,6 @@ protocol CardServiceProtocol {
   func fetchCardsCount(
     startDate: String,
     endDate: String,
-    member: String?,
     completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
   )
   func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void))
@@ -68,8 +67,8 @@ class CardService: CardServiceProtocol {
   
   // MARK: - Method
   
-  func fetchDailyCards(dateString: String, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
-    router.request(route: CardEndPoint.fetchDailyCards(dateString: dateString)) { (result: Result<Cards, APIError>) in
+  func fetchDailyCards(dateString: String, option: FetchDailyCardsOption, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
+    router.request(route: CardEndPoint.fetchDailyCards(dateString: dateString, option: option)) { (result: Result<Cards, APIError>) in
       completionHandler(result)
     }
   }
@@ -110,13 +109,11 @@ class CardService: CardServiceProtocol {
   func fetchCardsCount(
     startDate: String,
     endDate: String,
-    member: String?,
     completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
   ) {
     router.request(route: CardEndPoint.fetchCardsCount(
       startDate: startDate,
-      endDate: endDate,
-      member: member
+      endDate: endDate
     )) { (result: Result<MonthCardCount, APIError>) in
       completionHandler(result)
     }
