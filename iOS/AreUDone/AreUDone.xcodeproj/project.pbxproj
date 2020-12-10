@@ -132,6 +132,8 @@
 		338317332581E0340040A467 /* CardAddTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338317322581E0340040A467 /* CardAddTableView.swift */; };
 		338317382581E10E0040A467 /* CardAddTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338317372581E10E0040A467 /* CardAddTableViewDataSource.swift */; };
 		338317402581E21E0040A467 /* CardAddCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383173F2581E21E0040A467 /* CardAddCalendarTableViewCell.swift */; };
+		3383174D2581F6A00040A467 /* ListCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */; };
+		3383175225820C2B0040A467 /* CardAddContentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3383175125820C2B0040A467 /* CardAddContentsTableViewCell.swift */; };
 		338364592565574E00F92EE4 /* InitCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */; };
 		338364612565586800F92EE4 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364602565586800F92EE4 /* SigninViewModel.swift */; };
 		3383647925660EDE00F92EE4 /* NetworkFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 3383647725660EDE00F92EE4 /* NetworkFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -453,6 +455,7 @@
 		338317322581E0340040A467 /* CardAddTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAddTableView.swift; sourceTree = "<group>"; };
 		338317372581E10E0040A467 /* CardAddTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAddTableViewDataSource.swift; sourceTree = "<group>"; };
 		3383173F2581E21E0040A467 /* CardAddCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAddCalendarTableViewCell.swift; sourceTree = "<group>"; };
+		3383175125820C2B0040A467 /* CardAddContentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAddContentsTableViewCell.swift; sourceTree = "<group>"; };
 		338364582565574E00F92EE4 /* InitCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoordinatorFactory.swift; sourceTree = "<group>"; };
 		338364602565586800F92EE4 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SigninViewModel.swift; path = AreUDone/SignInScene/ViewModel/SigninViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3383647525660EDE00F92EE4 /* NetworkFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -969,6 +972,7 @@
 				338317322581E0340040A467 /* CardAddTableView.swift */,
 				338317372581E10E0040A467 /* CardAddTableViewDataSource.swift */,
 				3383173F2581E21E0040A467 /* CardAddCalendarTableViewCell.swift */,
+				3383175125820C2B0040A467 /* CardAddContentsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1886,6 +1890,7 @@
 				BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,
+				3383175225820C2B0040A467 /* CardAddContentsTableViewCell.swift in Sources */,
 				335AC500256F8BED006A5C4A /* BoardDetailViewController.swift in Sources */,
 				336010C3256B786E009580A1 /* Card.swift in Sources */,
 				336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */,
@@ -1966,6 +1971,7 @@
 				33F2D5A1257E6A3F008F1E06 /* UIView+.swift in Sources */,
 				338364A2256614DE00F92EE4 /* EndPointable.swift in Sources */,
 				33F2D60D257E6AD6008F1E06 /* User.swift in Sources */,
+				3383174D2581F6A00040A467 /* ListCollectionViewDataSource.swift in Sources */,
 				33F2D5CD257E6A74008F1E06 /* SideBarCollectionViewDataSource.swift in Sources */,
 				33638E412573F7BF006033CF /* CardDetailViewController.swift in Sources */,
 				33F2D5D1257E6A76008F1E06 /* SideBarHeaderView.swift in Sources */,

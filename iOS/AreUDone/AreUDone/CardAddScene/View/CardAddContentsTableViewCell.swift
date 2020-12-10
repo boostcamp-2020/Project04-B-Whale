@@ -1,5 +1,5 @@
 //
-//  CardAddCalendarTableViewCell.swift
+//  CardAddContentsTableViewCell.swift
 //  AreUDone
 //
 //  Created by a1111 on 2020/12/10.
@@ -7,38 +7,31 @@
 
 import UIKit
 
-protocol CardAddCalendarTableViewCellDelegate: AnyObject {
-  
-  func textFieldDidChanged(with title: String)
-}
-
-final class CardAddCalendarTableViewCell: UITableViewCell, Reusable {
+final class CardAddContentsTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Property
-  
-  weak var delegate: CardAddCalendarTableViewCellDelegate?
-  
+    
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.textAlignment = .left
     label.font = UIFont.nanumB(size: 18)
-    label.text = "마감 날짜"
+    label.text = "내용 입력"
     
     return label
   }()
-  
-  private lazy var dueDateLabel: UILabel = {
+  private lazy var contents: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.textAlignment = .left
     label.font = UIFont.nanumR(size: 18)
-    
+    label.numberOfLines = 0
+   
     return label
   }()
-  
+
   
   // MARK: - Initializer
   
@@ -57,23 +50,23 @@ final class CardAddCalendarTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Method
   
-  func update(with dateString: String) {
-    dueDateLabel.text = dateString
+  func update(withContent content: String) {
+    contents.text = content
   }
 }
 
 
 // MARK: - Extension Configure Method
 
-private extension CardAddCalendarTableViewCell {
+private extension CardAddContentsTableViewCell {
   
   func configure() {
     addSubview(titleLabel)
-    addSubview(dueDateLabel)
+    addSubview(contents)
     
     configureView()
     configureTitleLabel()
-    configureDueDateLabel()
+    configureContents()
   }
   
   func configureView() {
@@ -89,10 +82,12 @@ private extension CardAddCalendarTableViewCell {
     ])
   }
   
-  func configureDueDateLabel() {
+  func configureContents() {
     NSLayoutConstraint.activate([
-      dueDateLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
-      dueDateLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+      contents.topAnchor.constraint(equalTo: topAnchor, constant:  10),
+      contents.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
+      contents.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+      contents.bottomAnchor.constraint(equalTo: bottomAnchor, constant:  -10)
     ])
   }
 }

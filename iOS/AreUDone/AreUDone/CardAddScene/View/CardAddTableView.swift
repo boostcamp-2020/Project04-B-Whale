@@ -42,7 +42,7 @@ private extension CardAddTableView {
   
   func configureView() {
     backgroundColor = color
-    rowHeight = height
+    estimatedRowHeight = UITableView.automaticDimension
     
     registerCell()
   }
@@ -50,6 +50,7 @@ private extension CardAddTableView {
   func registerCell() {
     register(TitleTableViewCell.self)
     register(CardAddCalendarTableViewCell.self)
+    register(CardAddContentsTableViewCell.self)
   }
 }
 
