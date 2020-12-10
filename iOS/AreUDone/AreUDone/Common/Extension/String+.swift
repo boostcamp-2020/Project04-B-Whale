@@ -14,7 +14,7 @@ enum DateDeviderFormat: String {
 
 extension String {
   
-  func toDateFormat(with deviderFormat: DateDeviderFormat) -> Date {
+  func toDateFormat(with deviderFormat: DateDeviderFormat = .dash) -> Date {
     let dateFormatter = DateFormatter()
     let devider = deviderFormat.rawValue
     dateFormatter.locale = Locale.current
