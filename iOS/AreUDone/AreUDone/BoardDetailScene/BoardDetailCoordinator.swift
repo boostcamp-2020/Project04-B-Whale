@@ -15,6 +15,7 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   var navigationController: UINavigationController?
   private var invitationCoordinator: NavigationCoordinator!
   private var cardDetailCoordinator: NavigationCoordinator!
+  private var cardAddCoordinator: NavigationCoordinator!
 
   private let boardId: Int
   private let router: Routable
@@ -90,6 +91,7 @@ extension BoardDetailCoordinator {
   
   func pushToInvitation(delegate: InvitationViewControllerDelegate) {
     invitationCoordinator = InvitationCoordinator(router: router, boardId: boardId, delegate: delegate)
+  
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()
@@ -107,6 +109,19 @@ extension BoardDetailCoordinator {
     cardDetailViewController.hidesBottomBarWhenPushed = true
     
     navigationController?.pushViewController(cardDetailViewController, animated: true)
+  }
+  
+  func presentCardAdd(ofListId listId: Int) {
+    cardAddCoordinator = CardAddCoordinator(router: router, listId: listId)
+    
+    let viewController = cardAddCoordinator.start()
+    let subNavigationController = UINavigationController()
+    subNavigationController.pushViewController(viewController, animated: true)
+    
+    cardAddCoordinator.navigationController = subNavigationController
+    
+    subNavigationController.modalPresentationStyle = .fullScreen
+    navigationController?.present(subNavigationController, animated: true)
   }
 }
 

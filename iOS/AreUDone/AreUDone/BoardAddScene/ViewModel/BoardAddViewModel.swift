@@ -13,7 +13,7 @@ protocol BoardAddViewModelProtocol {
   func bindingUpdateBoardColor(handler: @escaping (String) -> Void)
   func bindingDismiss(handler: @escaping () -> Void)
   
-  func updateBoardTitle(with title: String)
+  func updateBoardTitle(to title: String)
   func updateRGBHexString()
   func createBoard()
 }
@@ -49,7 +49,7 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
   
   // MARK: - Method
   
-  func updateBoardTitle(with title: String) {
+  func updateBoardTitle(to title: String) {
     boardTitle = title
   }
   
@@ -86,7 +86,7 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
 
 private extension BoardAddViewModel {
   
-  private func check(title: String, colorAsString: String) {
+  func check(title: String, colorAsString: String) {
     if colorAsString.isEmpty || boardTitle.isEmpty {
       isCreateEnableHandler?(false)
     } else {
