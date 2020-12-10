@@ -20,11 +20,11 @@ final class CalendarViewController: UIViewController {
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
-
+  
   private lazy var dataSource = configureDataSource()
-
+  
   @IBOutlet weak var cardCollectionView: CardCollectionView!
-
+  
   @IBOutlet weak var baseView: UIView! {
     didSet {
       baseView.backgroundColor = .clear
@@ -42,7 +42,7 @@ final class CalendarViewController: UIViewController {
       titleLabel.text = "전체 카드"
     }
   }
-
+  
   @IBOutlet weak var dateStepper: DateStepper!
   
   @IBOutlet private weak var segmentedControl: CustomSegmentedControl! {
@@ -51,8 +51,7 @@ final class CalendarViewController: UIViewController {
       segmentedControl.setButtonTitles(buttonTitles: titles)
     }
   }
-
-
+  
   
   // MARK: - Initializer
   
@@ -121,9 +120,8 @@ private extension CalendarViewController {
   func configure() {
     segmentedControl.delegate = self
     cardCollectionView.delegate = self
-    viewModel.fetchInitializeDailyCards()
-    
     dateStepper.delegate = self
+    
     viewModel.initializeDate()
   }
 }
@@ -134,17 +132,8 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func bindUI() {
-    bindingInitializeCardCollectionView()
     bindingUpdateCardCollectionView()
     bindingUpdateDate()
-  }
-  
-  func bindingInitializeCardCollectionView() {
-    viewModel.bindingInitializeCardCollectionView { [weak self] cards in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: cards, animatingDifferences: false)
-      }
-    }
   }
   
   func bindingUpdateCardCollectionView() {
@@ -156,8 +145,10 @@ private extension CalendarViewController {
   }
   
   func bindingUpdateDate() {
-    viewModel.bindingUpdateDate { date in
-      self.dateStepper.updateDate(date: date)
+    viewModel.bindingUpdateDate { [weak self] date in
+      DispatchQueue.main.async {
+        self?.dateStepper.updateDate(date: date)
+      }
     }
   }
 }

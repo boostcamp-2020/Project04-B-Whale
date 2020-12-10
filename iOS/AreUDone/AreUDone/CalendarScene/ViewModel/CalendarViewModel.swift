@@ -9,13 +9,10 @@ import Foundation
 
 protocol CalendarViewModelProtocol {
   
-  func bindingInitializeCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateDate(handler: @escaping (String) -> Void)
   
-  func fetchInitializeDailyCards()
   func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption)
-  
   func initializeDate()
   func changeDate(to date: String, direction: Direction?)
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
@@ -32,11 +29,20 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   
   // MARK: - Property
   
-  private var initializeCardTableViewHandler: ((Cards) -> Void)?
-  private var updateCardTableViewHandler: ((Cards) -> Void)?
+  private var updateCardCollectionViewHandler: ((Cards) -> Void)?
   private var updateDateHandler: ((String) -> Void)?
   
-  let cardService: CardServiceProtocol
+  private let cardService: CardServiceProtocol
+  private var fetchDailyCardOption: FetchDailyCardsOption = .allCard {
+    didSet {
+      fetchDailyCards()
+    }
+  }
+  private var selectedDate: Date = Date() {
+    didSet {
+      fetchDailyCards()
+    }
+  }
   
   
   // MARK:- Initializer
@@ -49,25 +55,21 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   // MARK:- Method
   
   func initializeDate() {
-    let date = Date().toString()
-    updateDateHandler?(date)
+    selectedDate = Date()
   }
   
   func changeDate(to dateAsString: String, direction: Direction?) {
     guard
       let direction = direction
     else {
-      let date = dateAsString.toDateAndTimeFormat()
-      updateDateHandler?(date.toString())
+      selectedDate = dateAsString.toDateAndTimeFormat()
       return
     }
     
-    let date = dateAsString.toDateFormat(withDividerFormat: .dash)
+    let date = dateAsString.toDateFormat()
     let value = direction == .left ? -1 : 1
     let calendar = Calendar(identifier: .gregorian)
-    if let updatedDate = calendar.date(byAdding: .day, value: value, to: date)?.toString() {
-      updateDateHandler?(updatedDate)
-    }
+    selectedDate = calendar.date(byAdding: .day, value: value, to: date)!
   }
   
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void) {
@@ -82,20 +84,17 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     }
   }
   
-  func fetchInitializeDailyCards() {
-    fetchDailyCards(with: initializeCardTableViewHandler)
-  }
-  
   func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption = .allCard) {
-    fetchDailyCards(with: updateCardTableViewHandler, option: option)
+    fetchDailyCardOption = option
   }
   
-  private func fetchDailyCards(with handler: ((Cards) -> Void)?, option: FetchDailyCardsOption = .allCard) {
-    cardService.fetchDailyCards(dateString: Date().toString(), option: option) { result in
+  private func fetchDailyCards() {
+    cardService.fetchDailyCards(dateString: selectedDate.toString(), option: fetchDailyCardOption) { result in
       switch result {
       case .success(let cards):
         //TODO: - self가 순환참조를 일으키는 확인해야 함.
-        handler?(cards)
+        self.updateDateHandler?(self.selectedDate.toString())
+        self.updateCardCollectionViewHandler?(cards)
       case .failure(let error):
         print(error)
       }
@@ -108,12 +107,8 @@ final class CalendarViewModel: CalendarViewModelProtocol {
 
 extension CalendarViewModel {
   
-  func bindingInitializeCardCollectionView(handler: @escaping (Cards) -> Void) {
-    initializeCardTableViewHandler = handler
-  }
-  
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void) {
-    updateCardTableViewHandler = handler
+    updateCardCollectionViewHandler = handler
   }
   
   func bindingUpdateDate(handler: @escaping (String) -> Void) {
