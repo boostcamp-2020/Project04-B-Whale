@@ -45,17 +45,20 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     updateDateHandler?(date)
   }
   
-  func changeDate(to date: String, direction: Direction?) {
-    let date = date.toDateAndTimeFormat()
-    
-    if let direction = direction {
-      let day = direction == .left ? -1 : 1
-      let calendar = Calendar(identifier: .gregorian)
-      if let updatedDate = calendar.date(byAdding: DateComponents(day: day), to: date)?.toString() {
-        updateDateHandler?(updatedDate)
-      }
-    } else {
+  func changeDate(to dateAsString: String, direction: Direction?) {
+    guard
+      let direction = direction
+    else {
+      let date = dateAsString.toDateAndTimeFormat()
       updateDateHandler?(date.toString())
+      return
+    }
+    
+    let date = dateAsString.toDateFormat(with: .dash)
+    let value = direction == .left ? -1 : 1
+    let calendar = Calendar(identifier: .gregorian)
+    if let updatedDate = calendar.date(byAdding: .day, value: value, to: date)?.toString() {
+      updateDateHandler?(updatedDate)
     }
   }
   
