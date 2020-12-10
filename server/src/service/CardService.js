@@ -203,16 +203,16 @@ export class CardService extends BaseService {
             .select('MAX(card.position)', 'maxPosition')
             .where('card.list = :listId', { listId })
             .getRawOne();
-        const card = {
+
+        const card = this.cardRepository.create({
             title,
             content,
             position: cardWithMaxPosition.maxPosition + 1,
             dueDate,
             list: list.list_id,
             creator: userId,
-        };
-        const createCard = this.cardRepository.create(card);
-        await this.cardRepository.save(createCard);
+        });
+        await this.cardRepository.save(card);
     }
 
     @Transactional()
