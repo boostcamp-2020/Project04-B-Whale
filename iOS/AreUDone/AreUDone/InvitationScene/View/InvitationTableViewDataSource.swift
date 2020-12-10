@@ -25,14 +25,17 @@ final class InvitationTableViewDataSource: NSObject, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // TODO: 데이터가 0개일 경우 backgroundview 로 안내
-    return 5
+    return viewModel.numberOfUsers()
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: InvitationTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
     
-    cell.imageView?.image = UIImage(systemName: "person")
-    cell.textLabel?.text = "샘플"
+    viewModel.fetchUserInfo(at: indexPath.row) { user, data in
+      DispatchQueue.main.async {
+        cell.update(with: data, and: user)
+      }
+    }
     
     return cell
   }
