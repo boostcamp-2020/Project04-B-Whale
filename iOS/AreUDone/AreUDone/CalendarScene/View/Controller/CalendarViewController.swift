@@ -13,8 +13,8 @@ enum Section {
 
 final class CalendarViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<String, Card>
+  typealias DataSource = UICollectionViewDiffableDataSource<Section, Card>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Card>
   
   // MARK: - Property
   
@@ -66,7 +66,8 @@ final class CalendarViewController: UIViewController {
   private lazy var segmentedControl: CustomSegmentedControl = {
     let segmentedControl = CustomSegmentedControl()
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-    segmentedControl.setButtonTitles(buttonTitles: ["전체카드", "나의 카드"])
+    let titles = CardSegment.allCases.map { $0.text }
+    segmentedControl.setButtonTitles(buttonTitles: titles)
     
     return segmentedControl
   }()
@@ -124,7 +125,7 @@ private extension CalendarViewController {
     guard let cards = item.cards else { return }
     var snapshot = Snapshot()
     
-    snapshot.appendSections([""])
+    snapshot.appendSections([.main])
     snapshot.appendItems(cards)
     
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -137,6 +138,7 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func configure() {
+    segmentedControl.delegate = self
     cardCollectionView.delegate = self
     viewModel.fetchInitializeDailyCards()
     
@@ -301,5 +303,21 @@ extension CalendarViewController: UICollectionViewDelegate {
   
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     cardCollectionView.resetVisibleCellOffset()
+  }
+}
+
+
+// MARK:- Extension CustomSegmentedControlDelegate
+
+extension CalendarViewController: CustomSegmentedControlDelegate {
+  
+  func change(to title: TitleChangeable) {
+    self.titleLabel.text = title.text
+    UIView.transition(
+      with: titleLabel,
+      duration: 0.3,
+      options: .transitionFlipFromLeft,
+      animations: nil,
+      completion: nil)
   }
 }

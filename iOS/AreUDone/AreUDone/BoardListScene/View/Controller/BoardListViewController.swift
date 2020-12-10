@@ -16,13 +16,9 @@ final class BoardListViewController: UIViewController {
   
   
   // MARK: - Enum
+  
   enum Section {
     case main
-  }
-  
-  enum BoardSegment: String, CaseIterable {
-    case myBoard = "나의 보드"
-    case invitedBoard = "공유 보드"
   }
   
   
@@ -57,7 +53,7 @@ final class BoardListViewController: UIViewController {
   }
   @IBOutlet weak var segmentControl: CustomSegmentedControl! {
     didSet {
-      let boardTitles = BoardSegment.allCases.map { $0.rawValue }
+      let boardTitles = BoardSegment.allCases.map { $0.text }
       segmentControl.setButtonTitles(buttonTitles: boardTitles)
       segmentControl.delegate = self
     }
@@ -179,8 +175,8 @@ extension BoardListViewController: UICollectionViewDelegate {
 
 extension BoardListViewController: CustomSegmentedControlDelegate {
   
-  func change(to title: String) {
-    self.titleView.text = title
+  func change(to title: TitleChangeable) {
+    self.titleView.text = title.text
     UIView.transition(
       with: titleView,
       duration: 0.3,
@@ -189,9 +185,10 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
       completion: nil)
     
     switch title {
-    case BoardSegment.myBoard.rawValue:
+    case BoardSegment.myBoard:
       viewModel.fetchMyBoard()
-    case BoardSegment.invitedBoard.rawValue:
+      
+    case BoardSegment.invitedBoard:
       viewModel.fetchInvitedBoard()
     default:
       break

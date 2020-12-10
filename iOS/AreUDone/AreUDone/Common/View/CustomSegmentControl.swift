@@ -9,7 +9,7 @@ import UIKit
 
 protocol CustomSegmentedControlDelegate: AnyObject {
   
-  func change(to title: String)
+  func change(to title: TitleChangeable)
 }
 
 final class CustomSegmentedControl: UIView {
@@ -142,7 +142,18 @@ private extension CustomSegmentedControl {
       let selectorWidth = frame.width / CGFloat(buttonTitles.count)
       let selectorPosition = selectorWidth * CGFloat(index)
       selectedIndex = index
-      delegate?.change(to: buttonTitles[selectedIndex])
+      
+      switch delegate {
+      case is CalendarViewController:
+        delegate?.change(to: CardSegment.allCases[selectedIndex])
+        
+      case is BoardListViewController:
+        delegate?.change(to: BoardSegment.allCases[selectedIndex])
+        
+      default:
+        return
+      }
+      
       
       UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut) {
         self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate/2)
