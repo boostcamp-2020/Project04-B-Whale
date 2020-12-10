@@ -75,7 +75,7 @@ extension CardEndPoint: EndPointable {
       return nil
       
     case .fetchCardsCount(let startDate, let endDate):
-      return ["q": "startdate:\(startDate) enddate\(endDate)"]
+      return ["q": "startdate:\(startDate) enddate:\(endDate) member:me"]
       
     case .deleteCard:
       return nil
