@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
@@ -59,7 +59,7 @@ const MemberModal = ({ onClose }) => {
     const [userIds, setUserIds] = useState([1, 2]);
     const allInvitedUsers = [creator, ...invitedUsers];
     const [searchedUsers, setSearchedUsers] = useState(allInvitedUsers);
-    allInvitedUsers.sort((a) => !userIds.includes(a.id));
+    allInvitedUsers.sort((a) => (userIds.includes(a.id) ? -1 : 1));
 
     const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
@@ -78,7 +78,7 @@ const MemberModal = ({ onClose }) => {
 
         const regex = new RegExp(`^${e.target.value}`);
         const newSearchUsers = allInvitedUsers.filter((user) => user.name.search(regex) !== -1);
-        newSearchUsers.sort((a) => !userIds.includes(a.id));
+        newSearchUsers.sort((a) => (userIds.includes(a.id) ? -1 : 1));
         setSearchedUsers(newSearchUsers);
     };
 
