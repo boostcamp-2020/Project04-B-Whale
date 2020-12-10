@@ -175,8 +175,8 @@ extension BoardListViewController: UICollectionViewDelegate {
 
 extension BoardListViewController: CustomSegmentedControlDelegate {
   
-  func change(to title: TitleChangeable) {
-    self.titleView.text = title.text
+  func change(to segmented: TitleChangeable) {
+    titleView.text = segmented.text
     UIView.transition(
       with: titleView,
       duration: 0.3,
@@ -184,7 +184,7 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
       animations: nil,
       completion: nil)
     
-    switch title {
+    switch segmented {
     case BoardSegment.myBoard:
       viewModel.fetchMyBoard()
       
