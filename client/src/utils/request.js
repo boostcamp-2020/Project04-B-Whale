@@ -30,7 +30,7 @@ instance.interceptors.response.use(
             default:
                 break;
         }
-        return { data: response.data };
+        return response;
     },
 
     (error) => {

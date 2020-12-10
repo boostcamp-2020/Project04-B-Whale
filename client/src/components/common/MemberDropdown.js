@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { addMemberToCard } from '../../utils/cardRequest';
 import Member from './Member';
 
 const Wrapper = styled.div`
@@ -41,10 +42,13 @@ const InvitedUserDropdown = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { creator, invitedUsers } = boardDetail;
     // TODO: 카드에 members 정보를 default 값으로 변경
-    const [selectedMember, setSelectedMember] = useState([1, 2]);
+    const [userIds, setUserIds] = useState([1, 2]);
 
-    const onClickClose = (e) => {
+    const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
+            // TODO: context에 저장된 카드 id 가져오도록 변경할 것
+            const cardId = 1;
+            await addMemberToCard({ cardId, userIds });
             onClose();
         }
     };
@@ -59,9 +63,9 @@ const InvitedUserDropdown = ({ onClose }) => {
                     memberId={creator.id}
                     profileImageUrl={creator.profileImageUrl}
                     name={creator.name}
-                    checked={selectedMember.includes(creator.id)}
-                    selectedMember={selectedMember}
-                    changeMember={setSelectedMember}
+                    checked={userIds.includes(creator.id)}
+                    selectedMember={userIds}
+                    changeMember={setUserIds}
                 />
                 {invitedUsers.map(({ id, profileImageUrl, name }) => (
                     <Member
@@ -69,9 +73,9 @@ const InvitedUserDropdown = ({ onClose }) => {
                         memberId={id}
                         profileImageUrl={profileImageUrl}
                         name={name}
-                        checked={selectedMember.includes(id)}
-                        selectedMember={selectedMember}
-                        changeMember={setSelectedMember}
+                        checked={userIds.includes(id)}
+                        selectedMember={userIds}
+                        changeMember={setUserIds}
                     />
                 ))}
             </DropdownWrapper>
