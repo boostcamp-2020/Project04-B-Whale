@@ -18,6 +18,7 @@ protocol CalendarViewModelProtocol {
   
   func initializeDate()
   func changeDate(to date: String, direction: Direction?)
+  func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
 }
 
 final class CalendarViewModel: CalendarViewModelProtocol {
@@ -59,6 +60,18 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     let calendar = Calendar(identifier: .gregorian)
     if let updatedDate = calendar.date(byAdding: .day, value: value, to: date)?.toString() {
       updateDateHandler?(updatedDate)
+    }
+  }
+  
+  func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void) {
+    cardService.deleteCard(for: cardId) { result in
+      switch result {
+      case .success(()):
+        completionHandler()
+        
+      case .failure(let error):
+        print(error)
+      }
     }
   }
   

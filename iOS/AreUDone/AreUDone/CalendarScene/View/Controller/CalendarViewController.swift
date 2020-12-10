@@ -162,11 +162,16 @@ extension CalendarViewController: CalendarPickerViewControllerDelegate {
 extension CalendarViewController: CardCellDelegate {
   
   func remove(cell: CardCollectionViewCell) {
-    if let indexPath = cardCollectionView.indexPath(for: cell),
-       let item = dataSource.itemIdentifier(for: indexPath) {
-      var snapshot = dataSource.snapshot()
+    guard
+      let indexPath = cardCollectionView.indexPath(for: cell),
+      let item = dataSource.itemIdentifier(for: indexPath)
+    else { return }
+    
+    viewModel.deleteCard(for: item.id) { [weak self] in
+      guard let self = self else { return }
+      var snapshot = self.dataSource.snapshot()
       snapshot.deleteItems([item])
-      
+      self.dataSource.apply(snapshot)
     }
   }
   
