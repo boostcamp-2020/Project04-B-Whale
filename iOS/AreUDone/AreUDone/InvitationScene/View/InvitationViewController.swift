@@ -107,19 +107,19 @@ private extension InvitationViewController {
 extension InvitationViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    guard let searchKeyword = searchController.searchBar.text else { return }
+    guard let searchKeyword = searchController.searchBar.text,
+          !searchKeyword.isEmpty else { return }
     
     debounce(time: 0.5) {
-      print(searchKeyword)
-      // TODO: viewmodel 의 searchUser 호출
+      self.viewModel.searchUser(of: searchKeyword)
     }
   }
   
   func debounce(time: TimeInterval, handler: @escaping () -> Void) {
     timer.invalidate()
-    timer = Timer.scheduledTimer(withTimeInterval: time, repeats: false, block: { timer in
+    timer = Timer.scheduledTimer(withTimeInterval: time, repeats: false) { timer in
       handler()
-    })
+    }
   }
 }
 
