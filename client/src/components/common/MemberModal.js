@@ -57,7 +57,8 @@ const MemberModal = ({ onClose }) => {
     const { creator, invitedUsers } = boardDetail;
     // TODO: 카드에 members 정보를 default 값으로 변경
     const [userIds, setUserIds] = useState([1, 2]);
-    const [searchedUsers, setSearchedUsers] = useState([creator, ...invitedUsers]);
+    const allInvitedUsers = [creator, ...invitedUsers];
+    const [searchedUsers, setSearchedUsers] = useState(allInvitedUsers);
 
     const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
@@ -70,12 +71,12 @@ const MemberModal = ({ onClose }) => {
 
     const onChangeUserSearch = (e) => {
         if (e.target.value === '') {
-            setSearchedUsers([creator, ...invitedUsers]);
+            setSearchedUsers(allInvitedUsers);
             return;
         }
 
         const regex = new RegExp(`^${e.target.value}`);
-        const newSearchUsers = searchedUsers.filter((user) => user.name.search(regex) !== -1);
+        const newSearchUsers = allInvitedUsers.filter((user) => user.name.search(regex) !== -1);
         setSearchedUsers(newSearchUsers);
     };
 
