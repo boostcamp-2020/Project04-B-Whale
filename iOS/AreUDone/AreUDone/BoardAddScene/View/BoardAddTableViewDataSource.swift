@@ -52,8 +52,8 @@ final class BoardAddTableViewDataSource: NSObject, UITableViewDataSource {
 
 extension BoardAddTableViewDataSource: TitleTableViewCellDelegate {
   
-  func textFieldDidChanged(with title: String) {
-    viewModel.updateBoardTitle(with: title)
+  func textFieldDidChanged(to title: String) {
+    viewModel.updateBoardTitle(to: title)
   }
 }
 

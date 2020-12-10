@@ -30,7 +30,6 @@ final class ListHeaderView: UICollectionReusableView, Reusable {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     
-    bindUI()
     configure()
   }
   
