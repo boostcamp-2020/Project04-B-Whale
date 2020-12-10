@@ -86,7 +86,7 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
 
 private extension BoardAddViewModel {
   
-  private func check(title: String, colorAsString: String) {
+  func check(title: String, colorAsString: String) {
     if colorAsString.isEmpty || boardTitle.isEmpty {
       isCreateEnableHandler?(false)
     } else {

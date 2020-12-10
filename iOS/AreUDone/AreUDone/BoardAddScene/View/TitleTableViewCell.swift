@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol BoardTitleTableViewCellDelegate: AnyObject {
+protocol TitleTableViewCellDelegate: AnyObject {
   
   func textFieldDidChanged(with title: String)
 }
 
-final class BoardTitleTableViewCell: UITableViewCell, Reusable {
+final class TitleTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Property
   
-  weak var delegate: BoardTitleTableViewCellDelegate?
+  weak var delegate: TitleTableViewCellDelegate?
   
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -64,7 +64,7 @@ final class BoardTitleTableViewCell: UITableViewCell, Reusable {
 
 // MARK: - Extension Configure Method
 
-private extension BoardTitleTableViewCell {
+private extension TitleTableViewCell {
   
   func configure() {
     contentView.addSubview(titleLabel)

@@ -31,7 +31,7 @@ final class BoardAddTableViewDataSource: NSObject, UITableViewDataSource {
     
     switch indexPath.row {
     case 0:
-      let cell: BoardTitleTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+      let cell: TitleTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
       cell.delegate = self
       
       return cell
@@ -50,7 +50,7 @@ final class BoardAddTableViewDataSource: NSObject, UITableViewDataSource {
 
 // MARK: - Extension BoardTitleTableViewCell Delegate
 
-extension BoardAddTableViewDataSource: BoardTitleTableViewCellDelegate {
+extension BoardAddTableViewDataSource: TitleTableViewCellDelegate {
   
   func textFieldDidChanged(with title: String) {
     viewModel.updateBoardTitle(with: title)

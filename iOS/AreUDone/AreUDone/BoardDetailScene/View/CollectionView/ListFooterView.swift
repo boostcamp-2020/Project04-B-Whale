@@ -93,7 +93,7 @@ private extension ListFooterView {
 extension ListFooterView {
   
   @objc func baseViewTapped() {
-    
+    // 카드 추가 버튼 탭
   }
 }
 

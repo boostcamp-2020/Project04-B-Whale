@@ -1,13 +1,13 @@
 //
-//  BoardAddTableView.swift
+//  CardAddTableView.swift
 //  AreUDone
 //
-//  Created by a1111 on 2020/12/07.
+//  Created by a1111 on 2020/12/10.
 //
 
 import UIKit
 
-final class BoardAddTableView: UITableView {
+final class CardAddTableView: UITableView {
   
   // MARK: - Property
   
@@ -33,13 +33,25 @@ final class BoardAddTableView: UITableView {
 
 // MARK: - Extension Configure Method
 
-private extension BoardAddTableView {
+private extension CardAddTableView {
   
   func configure() {
-    backgroundColor = color
     
+    configureView()
+  }
+  
+  func configureView() {
+    backgroundColor = color
     rowHeight = height
+    
+    registerCell()
+  }
+  
+  func registerCell() {
     register(TitleTableViewCell.self)
-    register(BoardColorTableViewCell.self)
+    register(CardAddCalendarTableViewCell.self)
   }
 }
+
+
+
