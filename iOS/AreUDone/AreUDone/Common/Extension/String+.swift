@@ -7,27 +7,27 @@
 
 import UIKit
 
-enum DateDeviderFormat: String {
+enum DateDividerFormat: String {
   case dot = "."
   case dash = "-"
 }
 
 extension String {
   
-  func toDateFormat(with deviderFormat: DateDeviderFormat = .dash) -> Date {
+  func toDateFormat(withDividerFormat dividerFormat: DateDividerFormat = .dash) -> Date {
     let dateFormatter = DateFormatter()
-    let devider = deviderFormat.rawValue
+    let divider = dividerFormat.rawValue
     dateFormatter.locale = Locale.current
-    dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd"
+    dateFormatter.dateFormat = "yyyy\(divider)MM\(divider)dd"
     
     return dateFormatter.date(from: self) ?? Date()
   }
   
-  func toDateAndTimeFormat(with deviderFormat: DateDeviderFormat = .dash) -> Date {
+  func toDateAndTimeFormat(withDividerFormat dividerFormat: DateDividerFormat = .dash) -> Date {
     let dateFormatter = DateFormatter()
-    let devider = deviderFormat.rawValue
+    let divider = dividerFormat.rawValue
     dateFormatter.locale = Locale.current
-    dateFormatter.dateFormat = "yyyy\(devider)MM\(devider)dd HH:mm:ss"
+    dateFormatter.dateFormat = "yyyy\(divider)MM\(divider)dd HH:mm:ss"
     
     return dateFormatter.date(from: self) ?? Date()
   }

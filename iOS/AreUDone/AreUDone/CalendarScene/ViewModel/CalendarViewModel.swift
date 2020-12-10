@@ -54,7 +54,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
       return
     }
     
-    let date = dateAsString.toDateFormat(with: .dash)
+    let date = dateAsString.toDateFormat(withDividerFormat: .dash)
     let value = direction == .left ? -1 : 1
     let calendar = Calendar(identifier: .gregorian)
     if let updatedDate = calendar.date(byAdding: .day, value: value, to: date)?.toString() {

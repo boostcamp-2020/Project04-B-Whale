@@ -142,7 +142,7 @@ extension CalendarViewController: DateStepperDelegate {
   }
   
   func dateLabelDidTapped(of dateString: String) {
-    calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(with: .dot), delegate: self)
+    calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(withDividerFormat: .dot), delegate: self)
   }
 }
 

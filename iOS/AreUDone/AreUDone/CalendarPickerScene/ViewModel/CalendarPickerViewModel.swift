@@ -104,7 +104,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
       case .success(let monthCardCount):
         monthCardCount.cardCounts.forEach { dailyCard in
           guard
-            let day = self?.dateFormatter.string(from: dailyCard.dueDate.toDateFormat(with: .dash))
+            let day = self?.dateFormatter.string(from: dailyCard.dueDate.toDateFormat(withDividerFormat: .dash))
           else { return }
           
           self?.countDictionary[day] = dailyCard.count

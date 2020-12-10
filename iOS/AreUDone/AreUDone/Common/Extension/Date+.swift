@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
   
-  func toString(withDividerFormat dividerFormat: DateDeviderFormat = .dash) -> String {
+  func toString(withDividerFormat dividerFormat: DateDividerFormat = .dash) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale.current
     let divider = dividerFormat.rawValue
@@ -18,7 +18,7 @@ extension Date {
     return dateFormatter.string(from: self)
   }
   
-  func toStringWithTime(withDividerFormat dividerFormat: DateDeviderFormat = .dash) -> String {
+  func toStringWithTime(withDividerFormat dividerFormat: DateDividerFormat = .dash) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale.current
     let divider = dividerFormat.rawValue
