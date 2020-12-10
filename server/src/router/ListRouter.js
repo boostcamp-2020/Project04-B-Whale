@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { ListService } from '../service/ListService';
 import { CardService } from '../service/CardService';
+import { CardDto } from '../dto/CardDto';
+import { validator } from '../common/util/validator';
 
 export const ListRouter = () => {
     const router = Router();
@@ -36,6 +38,10 @@ export const ListRouter = () => {
             dueDate: req.body.dueDate,
             content: req.body.content,
         };
+        await validator(CardDto, {
+            dueDate: config.dueDate,
+        });
+
         await cardService.createCard(config);
         res.sendStatus(201);
     });
