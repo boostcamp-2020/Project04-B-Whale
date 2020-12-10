@@ -9,6 +9,7 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { createCard } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: flex;
@@ -59,50 +60,40 @@ const CloseBtn = styled(GrClose)`
     cursor: pointer;
 `;
 
-const AddListBtnInput = ({ parent, history }) => {
+const AddListOrCard = ({ parent, id, history }) => {
+    const getFormattedDate = (datetime) => {
+        return `${datetime.getFullYear()}-${`0${datetime.getMonth() + 1}`.slice(
+            -2,
+        )}-${`0${datetime.getDate()}`.slice(-2)} ${`0${datetime.getHours()}`.slice(
+            -2,
+        )}:${`0${datetime.getMinutes()}`.slice(-2)}:${`0${datetime.getSeconds()}`.slice(-2)}`;
+    };
+
     const [state, setState] = useState('button');
-    let datetime = '';
+    const [dueDate, setDueDate] = useState(getFormattedDate(new Date()));
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
+
     const okHandler = (value) => {
-        const m = new Date(value);
-        const dateString = `${m.getFullYear()}-${`0${m.getMonth() + 1}`.slice(
-            -2,
-        )}-${`0${m.getDate()}`.slice(-2)} ${`0${m.getHours()}`.slice(
-            -2,
-        )}:${`0${m.getMinutes()}`.slice(-2)}:${`0${m.getSeconds()}`.slice(-2)}`;
-        datetime = dateString;
+        setDueDate(getFormattedDate(new Date(value)));
     };
 
     const showInvalidTitleModal = () => {
         Modal.info({
-            title: '잘못된 형식입니다.',
-            content: <p>리스트 제목을 입력해주세요😩</p>,
-            onOk() {},
-            onCancel() {},
+            title: `${parent === 'list' ? '리스트 ' : '카드 '} 제목을 입력해주세요😩`,
+            onOk() {
+                input.current.focus();
+            },
             style: { top: '40%' },
         });
     };
 
-    const addListHandler = async (evt) => {
-        if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-        const replacedTitle = input.current.value?.replace(/ /g, '');
-        if (!replacedTitle) {
-            showInvalidTitleModal();
-            return;
-        }
-        const { status } = await createList({
-            title: input.current.value,
-            boardId: boardDetail.id,
-        });
+    const switchStatus = (status, executeAfterSuccess) => {
         switch (status) {
             case 201:
-                setBoardDetail({
-                    ...boardDetail,
-                    lists: [...boardDetail.lists, { title: input.current.value }],
-                });
-                setState('button');
+            case 204:
+                executeAfterSuccess();
                 break;
             case 401:
                 window.location.href = '/login';
@@ -116,8 +107,46 @@ const AddListBtnInput = ({ parent, history }) => {
         }
     };
 
-    const addCardHandler = () => {
+    const setStateList = () => {
+        setBoardDetail({
+            ...boardDetail,
+            lists: [...boardDetail.lists, { title: input.current.value }],
+        });
+        setState('button');
+    };
+
+    const setStateCard = () => {};
+
+    const checkInputHandler = (evt) => {
+        if (evt.keyCode !== undefined && evt.keyCode !== 13) return false;
+        const replacedTitle = input.current.value?.replace(/ /g, '');
+        if (!replacedTitle) {
+            showInvalidTitleModal();
+            return false;
+        }
+        return true;
+    };
+
+    const addListHandler = async (evt) => {
+        if (!checkInputHandler(evt)) return;
+        const { status } = await createList({
+            title: input.current.value,
+            boardId: boardDetail.id,
+        });
+        switchStatus(status, setStateList);
+    };
+
+    const addCardHandler = async (evt) => {
         // TODO: 카드추가 handler, datetime
+        // status switch
+        if (!checkInputHandler(evt)) return;
+        const { status } = await createCard({
+            listId: id,
+            title: input.current.value,
+            content: '',
+            dueDate,
+        });
+        switchStatus(status, setStateCard);
     };
 
     if (state === 'button') {
@@ -168,4 +197,4 @@ const AddListBtnInput = ({ parent, history }) => {
     );
 };
 
-export default withRouter(AddListBtnInput);
+export default withRouter(AddListOrCard);
