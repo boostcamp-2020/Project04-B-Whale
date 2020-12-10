@@ -12,6 +12,7 @@ protocol ListViewModelProtocol {
   func bindingUpdateListTitle(handler: @escaping (String) -> Void)
   
   func numberOfCards() -> Int
+  func fetchListId() -> Int
   func fetchListTitle() -> String
   func append(card: Card)
   func insert(card: Card, at index: Int)
@@ -54,6 +55,10 @@ final class ListViewModel: ListViewModelProtocol {
   
   func numberOfCards() -> Int {
     return list.cards.count
+  }
+  
+  func fetchListId() -> Int {
+    return list.id
   }
   
   func fetchListTitle() -> String {
