@@ -39,8 +39,8 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
             identifier: MemberUpdateViewController.identifier,
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
-              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
-              let boardService = BoardService(router: MockRouter(jsonFactory: BoardDetailTrueJsonFactory()))
+              let cardService = CardService(router: self.router)
+              let boardService = BoardService(router: self.router)
               let imageService = ImageService(router: self.router)
               let viewModel = MemberUpdateViewModel(
                 cardId: self.cardId,

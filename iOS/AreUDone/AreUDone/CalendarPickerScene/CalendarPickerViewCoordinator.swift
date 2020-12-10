@@ -20,7 +20,7 @@ final class CalendarPickerViewCoordinator: NavigationCoordinator {
   }
   
   func start() -> UIViewController {
-    let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+    let cardService = CardService(router: router)
     let viewModel = CalendarPickerViewModel(cardService: cardService)
     viewModel.selectedDate = selectedDate
     

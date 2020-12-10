@@ -38,10 +38,10 @@ final class CardDetailCoordinator: NavigationCoordinator {
             identifier: CardDetailViewController.identifier,
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
-              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+              let cardService = CardService(router: self.router)
               let imageService = ImageService(router: self.router)
-              let userService = UserService(router: MockRouter(jsonFactory: UserJsonFactory()))
-              let commentService = CommentService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+              let userService = UserService(router: self.router)
+              let commentService = CommentService(router: self.router)
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
