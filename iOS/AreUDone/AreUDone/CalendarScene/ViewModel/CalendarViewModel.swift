@@ -13,7 +13,6 @@ protocol CalendarViewModelProtocol {
   func bindingUpdateDate(handler: @escaping (String) -> Void)
   
   func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption)
-  func initializeDate()
   func changeDate(to date: String, direction: Direction?)
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
 }
@@ -53,10 +52,6 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   
   
   // MARK:- Method
-  
-  func initializeDate() {
-    selectedDate = Date()
-  }
   
   func changeDate(to dateAsString: String, direction: Direction?) {
     guard

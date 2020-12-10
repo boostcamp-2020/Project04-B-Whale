@@ -77,6 +77,7 @@ final class CalendarViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    viewModel.fetchUpdateDailyCards()
     navigationController?.navigationBar.isHidden = true
   }
 }
@@ -121,8 +122,6 @@ private extension CalendarViewController {
     segmentedControl.delegate = self
     cardCollectionView.delegate = self
     dateStepper.delegate = self
-    
-    viewModel.initializeDate()
   }
 }
 
@@ -237,7 +236,6 @@ extension CalendarViewController: CustomSegmentedControlDelegate {
     switch segmented {
     case CardSegment.allCard:
       viewModel.fetchUpdateDailyCards(withOption: .allCard)
-      
     case CardSegment.myCard:
       viewModel.fetchUpdateDailyCards(withOption: .myCard)
       
