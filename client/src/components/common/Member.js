@@ -36,9 +36,18 @@ const NameDiv = styled.div`
     margin: auto 10px;
 `;
 
-const Member = ({ profileImageUrl, name, checked }) => {
+const Member = ({ memberId, profileImageUrl, name, checked, selectedMember, changeMember }) => {
+    const onClickMember = (id) => {
+        if (checked) {
+            const index = selectedMember.findIndex((member) => member === id);
+            selectedMember.splice(index, 1);
+            return changeMember([...selectedMember]);
+        }
+        return changeMember([...selectedMember, id]);
+    };
+
     return (
-        <UserDiv>
+        <UserDiv onClick={() => onClickMember(memberId)}>
             <Wrapper>
                 <ProfileImageDiv>
                     <ProfileImage src={profileImageUrl} alt={`${name} image`} align="center" />
