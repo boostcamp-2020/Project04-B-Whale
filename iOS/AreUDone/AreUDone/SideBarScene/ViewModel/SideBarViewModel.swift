@@ -10,11 +10,12 @@ import NetworkFramework
 
 protocol SideBarViewModelProtocol {
   
-  func bindingUpdateMembersInCollectionView(handler: @escaping () -> Void)
-  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void)
+  func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void)
+//  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void)
   
-  func updateMembersInCollectionView()
-  func updateActivitiesInCollectionView()
+  func updateCollectionView()
+//  func updateMembersInCollectionView()
+//  func updateActivitiesInCollectionView()
   
   func numberOfMembers() -> Int
   func numberOfActivities() -> Int
@@ -34,21 +35,23 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   private let boardId: Int
   private let sideBarHeaderContentsFactory: SideBarHeaderContentsFactoryProtocol
   
-  private var updateMembersInCollectionViewHandler: (() -> Void)?
-  private var updateActivitiesInCollectionViewHandler: (() -> Void)?
+  private var updateSideBarCollectionViewHandler: (() -> Void)?
+//  private var updateActivitiesInCollectionViewHandler: (() -> Void)?
   
   private var boardMembers: [User]? {
     didSet {
-      updateMembersInCollectionViewHandler?()
+//      updateSideBarCollectionViewHandler?()
     }
   }
   private var boardActivities: [Activity]? {
     didSet {
-      updateActivitiesInCollectionViewHandler?()
+      // TODO: boardActivity 는 viewModel 나눠야하나?
+//      updateActivitiesInCollectionViewHandler?()
     }
   }
   
   private let cache: NSCache<NSString, NSData> = NSCache()
+  let group = DispatchGroup()
 
   
   // MARK: - Initializer
@@ -70,7 +73,19 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   // MARK: - Method
   
-  func updateMembersInCollectionView() {
+  func updateCollectionView() {
+    
+    updateMembersInCollectionView()
+    updateActivitiesInCollectionView()
+    
+    group.notify(queue: .main) {
+      self.updateSideBarCollectionViewHandler?()
+    }
+  }
+  
+  private func updateMembersInCollectionView() {
+    group.enter()
+
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
@@ -82,10 +97,13 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       case .failure(let error):
         print(error)
       }
+      self.group.leave()
     }
   }
   
-  func updateActivitiesInCollectionView() {
+  private func updateActivitiesInCollectionView() {
+    group.enter()
+
     activityService.fetchActivities(withBoardId: boardId) { result in
       switch result {
       case .success(let activities):
@@ -93,6 +111,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
       case .failure(let error):
         print(error)
       }
+      self.group.leave()
     }
   }
   
@@ -105,7 +124,6 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   }
   
   func fetchMember(at index: Int) -> User? {
-    
     return boardMembers?[index]
   }
   
@@ -141,13 +159,13 @@ final class SideBarViewModel: SideBarViewModelProtocol {
 
 extension SideBarViewModel {
   
-  func bindingUpdateMembersInCollectionView(handler: @escaping () -> Void) {
-    updateMembersInCollectionViewHandler = handler
+  func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void) {
+    updateSideBarCollectionViewHandler = handler
   }
   
-  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void) {
-    updateActivitiesInCollectionViewHandler = handler
-  }
+//  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void) {
+//    updateActivitiesInCollectionViewHandler = handler
+//  }
 }
 
 
