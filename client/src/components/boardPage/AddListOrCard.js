@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import { createList } from '../../utils/listRequest';
+import BoardDetailContext from '../../context/BoardDetailContext';
 
 const AddListButton = styled.button`
     ${(props) => props.parent === 'card' && 'background: none'};
@@ -41,11 +44,12 @@ const AddButton = styled.button`
     height: 30px;
 `;
 
-export default function AddListBtnInput({ parent }) {
+const AddListBtnInput = ({ parent, history }) => {
     const [state, setState] = useState('button');
     let datetime = '';
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
-
+    const input = useRef();
     const okHandler = (value) => {
         const m = new Date(value);
         const dateString = `${m.getFullYear()}-${`0${m.getMonth() + 1}`.slice(
@@ -56,7 +60,36 @@ export default function AddListBtnInput({ parent }) {
         datetime = dateString;
     };
 
-    const addCardOrListHandler = () => {
+    const addListHandler = async () => {
+        const { status } = await createList({
+            title: input.current.value,
+            boardId: boardDetail.id,
+        });
+        switch (status) {
+            case 201:
+                setBoardDetail({
+                    ...boardDetail,
+                    lists: [...boardDetail.lists, { title: input.current.value }],
+                });
+                setState('button');
+                break;
+            case 401:
+                window.location.href = '/login';
+                break;
+            case 403:
+                alert('해당 보드에 접근할 수 없습니다.');
+                history.goBack();
+                break;
+            case 404:
+                alert('해당 보드가 존재하지 않습니다.');
+                history.goBack();
+                break;
+            default:
+                throw new Error(`Unhandled status type : ${status}`);
+        }
+    };
+
+    const addCardHandler = () => {
         console.log(datetime);
     };
 
@@ -74,6 +107,7 @@ export default function AddListBtnInput({ parent }) {
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
             <InputWrapper parent={parent}>
                 <TitleInput
+                    ref={input}
                     placeholder={
                         parent === 'list' ? '리스트 제목을 입력하세요.' : '카드 제목을 입력하세요.'
                     }
@@ -102,7 +136,7 @@ export default function AddListBtnInput({ parent }) {
                         justifyContent: 'flex-start',
                     }}
                 >
-                    <AddButton onClick={addCardOrListHandler}>
+                    <AddButton onClick={parent === 'list' ? addListHandler : addCardHandler}>
                         {parent === 'list' ? 'Add List' : 'Add Card'}
                     </AddButton>
                     <GrClose
@@ -113,4 +147,6 @@ export default function AddListBtnInput({ parent }) {
             </InputWrapper>
         </div>
     );
-}
+};
+
+export default withRouter(AddListBtnInput);
