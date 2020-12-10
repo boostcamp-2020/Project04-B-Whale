@@ -29,22 +29,21 @@ const Board = ({ match }) => {
     const [invitedDropdownDisplay, setInvitedDropdownDisplay] = useState({
         visible: false,
         offsetY: 0,
+        offsetX: 0,
     });
+
     const [askoverDropdownDisplay, setAskoverDropdownDisplay] = useState({
         visible: false,
         offsetY: 0,
+        offsetX: 0,
     });
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
 
     useEffect(async () => {
-        const { data } = await getDetailBoard(id);
+        const { status, data } = await getDetailBoard(id);
+        console.log(status);
         setBoardDetail(data);
     }, []);
-
-    const list = [
-        { id: 1, title: 'list1' },
-        { id: 2, title: 'list2' },
-    ];
 
     return (
         <>
@@ -57,10 +56,10 @@ const Board = ({ match }) => {
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
                 <Wrapper>
-                    {Boolean(list.length) && (
+                    {Boolean(boardDetail.lists?.length) && (
                         <ListWrapper style={{ display: 'flex', alignItems: 'baseline' }}>
-                            {list.map((v) => {
-                                return <List key={v.id} />;
+                            {boardDetail.lists.map((v) => {
+                                return <List key={v.id} id={v.id} title={v.title} />;
                             })}
                         </ListWrapper>
                     )}
