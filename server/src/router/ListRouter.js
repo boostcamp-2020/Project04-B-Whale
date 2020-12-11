@@ -42,8 +42,8 @@ export const ListRouter = () => {
             dueDate: config.dueDate,
         });
 
-        await cardService.createCard(config);
-        res.sendStatus(201);
+        const createdCard = await cardService.createCard(config);
+        res.status(201).json(createdCard);
     });
 
     return router;

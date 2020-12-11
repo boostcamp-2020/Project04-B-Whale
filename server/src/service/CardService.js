@@ -213,6 +213,13 @@ export class CardService extends BaseService {
             creator: userId,
         });
         await this.cardRepository.save(card);
+        return {
+            cardId: card.id,
+            title: card.title,
+            position: card.position,
+            dueDate: card.dueDate,
+            content: card.content,
+        };
     }
 
     @Transactional()
@@ -224,6 +231,7 @@ export class CardService extends BaseService {
             .where('card.id = :cardId', { cardId })
             .getRawOne();
         if (!card) throw new EntityNotFoundError();
+
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, card.list_board_id);
         await this.cardRepository.delete(cardId);
