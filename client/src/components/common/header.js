@@ -38,7 +38,7 @@ const Header = () => {
 
     const logoutHandler = () => {
         localStorage.removeItem('jwt');
-        document.location = '/';
+        document.location = '/login';
     };
 
     return (

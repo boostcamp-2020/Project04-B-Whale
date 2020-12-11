@@ -86,21 +86,15 @@ export default function List({ title, id }) {
         setBoardDetail({ ...boardDetail });
     };
 
-    const changeTitleHandler = (status) => {
-        switch (status) {
-            case 204:
-                updateContextListTitle();
-                break;
-            default:
-                break;
-        }
+    const changeTitleHandler = () => {
+        updateContextListTitle();
         setTitleInputState(false);
     };
 
     const changeListTitle = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-        const { status } = await updateListTitle({ listId: id, title: listTitle });
-        changeTitleHandler(status);
+        await updateListTitle({ listId: id, title: listTitle });
+        changeTitleHandler();
     };
 
     const menuClickHandler = (evt) => {
