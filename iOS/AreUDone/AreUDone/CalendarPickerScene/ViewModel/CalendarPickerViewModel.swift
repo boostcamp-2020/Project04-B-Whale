@@ -100,6 +100,8 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     ) { [weak self] result in
       switch result {
       case .success(let monthCardCount):
+        self?.countDictionary = .init()
+        
         monthCardCount.cardCounts.forEach { dailyCard in
           guard
             let day = self?.dateFormatter.string(from: dailyCard.dueDate.toDateFormat(withDividerFormat: .dash))
