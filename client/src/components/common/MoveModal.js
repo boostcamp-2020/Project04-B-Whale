@@ -105,14 +105,11 @@ const MoveModal = ({ onClose }) => {
             position = Number(value) / 2;
         } else if (selectedIndex === cardCount) {
             position = Number(value);
-        } else if (selectedList.id !== currentListId) {
-            const preValue = positionElement.current[selectedIndex - 1].value;
-            position = (Number(value) + Number(preValue)) / 2;
-        } else if (selectedIndex + 1 === cardCount) {
+        } else if (selectedList.id === currentListId && selectedIndex + 1 === cardCount) {
             position = Number(value) + 1;
         } else {
-            const nextValue = positionElement.current[selectedIndex + 1].value;
-            position = (Number(value) + Number(nextValue)) / 2;
+            const preValue = positionElement.current[selectedIndex - 1].value;
+            position = (Number(value) + Number(preValue)) / 2;
         }
 
         await modifyCardPosition({ cardId, listId, position });
