@@ -2,6 +2,7 @@ import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
+import { BadRequestError } from '../common/error/BadRequestError';
 
 export class BoardService extends BaseService {
     static instance = null;
@@ -59,7 +60,7 @@ export class BoardService extends BaseService {
             where: { id: boardId },
         });
         if (!board) throw new EntityNotFoundError();
-        this.checkForbidden(hostId, boardId);
+        await this.checkForbidden(hostId, boardId);
         const boardDetail = await this.boardRepository
             .createQueryBuilder('board')
             .innerJoin('board.creator', 'creator')
@@ -97,7 +98,13 @@ export class BoardService extends BaseService {
 
     @Transactional()
     async inviteUserIntoBoard(hostId, boardId, userId) {
-        this.checkForbidden(hostId, boardId);
+        await this.checkForbidden(hostId, boardId);
+        if (hostId === userId) throw new BadRequestError(`Can't invite host.`);
+        const invitedUsers = await this.invitationRepository.findOne({
+            user: userId,
+            board: boardId,
+        });
+        if (invitedUsers) throw new BadRequestError(`Duplicate user.`);
         const invitation = {
             board: boardId,
             user: userId,
@@ -110,7 +117,7 @@ export class BoardService extends BaseService {
     async updateBoard(hostId, boardId, title) {
         const board = await this.boardRepository.findOne(boardId);
         if (!board) throw new EntityNotFoundError();
-        this.checkForbidden(hostId, boardId);
+        await this.checkForbidden(hostId, boardId);
         board.title = title;
         await this.boardRepository.save(board);
     }
