@@ -92,25 +92,25 @@ extension CardEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createCard:
-      return .post
+      return .POST
       
     case .fetchDailyCards:
-      return .get
+      return .GET
       
     case .fetchDetailCard:
-      return .get
+      return .GET
       
     case .updateCard:
       return .PATCH
       
     case .updateCardMember:
-      return .put
+      return .PUT
       
     case .fetchCardsCount:
-      return .get
+      return .GET
       
     case .deleteCard:
-      return .delete
+      return .DELETE
     }
   }
   
@@ -118,11 +118,23 @@ extension CardEndPoint: EndPointable {
     guard let accessToken = Keychain.shared.loadValue(forKey: "token")
     else { return nil }
     
-    return [
-      "Authorization": "\(accessToken)",
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Accept": "application/json"
-    ]
+    switch self {
+    case .updateCardMember:
+      return [
+        "Authorization": "\(accessToken)",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      ]
+      
+    default:
+      return [
+        "Authorization": "\(accessToken)",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json"
+      ]
+    }
+    
+    
   }
   
   var bodies: HTTPBody? {
