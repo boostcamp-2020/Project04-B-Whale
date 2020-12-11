@@ -31,7 +31,6 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   var selectedDate: Date!
   private lazy var basedate: Date! = selectedDate
   private let cardService: CardServiceProtocol
-  private var type = "me"
   private var countDictionary = [String: Int]()
   
   private let calendar = Calendar(identifier: .gregorian)
@@ -97,8 +96,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
     
     cardService.fetchCardsCount(
       startDate: startDateAsString,
-      endDate: endDateAsString,
-      member: type
+      endDate: endDateAsString
     ) { [weak self] result in
       switch result {
       case .success(let monthCardCount):

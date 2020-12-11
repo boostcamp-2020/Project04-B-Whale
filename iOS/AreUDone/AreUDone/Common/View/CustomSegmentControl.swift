@@ -9,7 +9,7 @@ import UIKit
 
 protocol CustomSegmentedControlDelegate: AnyObject {
   
-  func change(to title: String)
+  func change(to segmented: TitleChangeable)
 }
 
 final class CustomSegmentedControl: UIView {
@@ -67,11 +67,23 @@ private extension CustomSegmentedControl {
   func configure() {
     configureView()
     configureButton()
-    configureSelectorView()
+    
     configStackView()
+    configureSelectorView()
   }
   
   func configureView() {
+    layer.cornerRadius = 10
+    layer.maskedCorners = [
+      .layerMinXMaxYCorner,
+      .layerMaxXMaxYCorner
+    ]
+    addShadow(
+      offset: CGSize(width: 0, height: -1),
+      radius: 2,
+      opacity: 0.5
+    )
+    
     backgroundColor = UIColor.white
   }
   
@@ -92,14 +104,17 @@ private extension CustomSegmentedControl {
   }
   
   private func configureSelectorView() {
-    let selectorWidth = frame.width / CGFloat(buttonTitles.count)
+    layoutIfNeeded()
+    let padding: CGFloat = 10
+    let selectorWidth = (UIScreen.main.bounds.width - padding * 2) / CGFloat(buttonTitles.count)
     
     selectorView = UIView(
       frame: CGRect(
-        x: selectorWidth * (widthRate/2),
+        x: selectorWidth * widthRate - (selectorWidth * widthRate / 2),
         y: frame.height * heightRate,
         width: selectorWidth * widthRate,
-        height: 2)
+        height: 2
+      )
     )
     selectorView.backgroundColor = selectorViewColor
     addSubview(selectorView)
@@ -131,10 +146,21 @@ private extension CustomSegmentedControl {
       let selectorWidth = frame.width / CGFloat(buttonTitles.count)
       let selectorPosition = selectorWidth * CGFloat(index)
       selectedIndex = index
-      delegate?.change(to: buttonTitles[selectedIndex])
+      
+      switch delegate {
+      case is CalendarViewController:
+        delegate?.change(to: CardSegment.allCases[selectedIndex])
+        
+      case is BoardListViewController:
+        delegate?.change(to: BoardSegment.allCases[selectedIndex])
+        
+      default:
+        return
+      }
+      
       
       UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut) {
-        self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate/2)
+        self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate) - (selectorWidth * self.widthRate / 2)
       }.startAnimation()
       
       button.setTitleColor(selectorTextColor, for: .normal)

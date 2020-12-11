@@ -13,8 +13,8 @@ enum Section {
 
 final class CalendarViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<String, Card>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<String, Card>
+  typealias DataSource = UICollectionViewDiffableDataSource<Section, Card>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Card>
   
   // MARK: - Property
   
@@ -23,8 +23,34 @@ final class CalendarViewController: UIViewController {
   
   private lazy var dataSource = configureDataSource()
   
-  @IBOutlet weak var dateStepper: DateStepper!
   @IBOutlet weak var cardCollectionView: CardCollectionView!
+  
+  @IBOutlet weak var baseView: UIView! {
+    didSet {
+      baseView.backgroundColor = .clear
+      baseView.addShadow(
+        offset: .zero,
+        radius: 3,
+        opacity: 0.5
+      )
+    }
+  }
+  
+  @IBOutlet weak var titleLabel: UILabel! {
+    didSet {
+      titleLabel.font = UIFont.nanumB(size: 30)
+      titleLabel.text = "전체 카드"
+    }
+  }
+  
+  @IBOutlet weak var dateStepper: DateStepper!
+  
+  @IBOutlet private weak var segmentedControl: CustomSegmentedControl! {
+    didSet {
+      let titles = CardSegment.allCases.map { $0.text }
+      segmentedControl.setButtonTitles(buttonTitles: titles)
+    }
+  }
   
   
   // MARK: - Initializer
@@ -51,6 +77,7 @@ final class CalendarViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    viewModel.fetchUpdateDailyCards()
     navigationController?.navigationBar.isHidden = true
   }
 }
@@ -79,7 +106,7 @@ private extension CalendarViewController {
     guard let cards = item.cards else { return }
     var snapshot = Snapshot()
     
-    snapshot.appendSections([""])
+    snapshot.appendSections([.main])
     snapshot.appendItems(cards)
     
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -92,11 +119,9 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func configure() {
+    segmentedControl.delegate = self
     cardCollectionView.delegate = self
-    viewModel.fetchInitializeDailyCards()
-    
     dateStepper.delegate = self
-    viewModel.initializeDate()
   }
 }
 
@@ -106,16 +131,8 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func bindUI() {
-    bindingInitializeCardCollectionView()
+    bindingUpdateCardCollectionView()
     bindingUpdateDate()
-  }
-  
-  func bindingInitializeCardCollectionView() {
-    viewModel.bindingInitializeCardCollectionView { [weak self] cards in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: cards, animatingDifferences: false)
-      }
-    }
   }
   
   func bindingUpdateCardCollectionView() {
@@ -127,8 +144,10 @@ private extension CalendarViewController {
   }
   
   func bindingUpdateDate() {
-    viewModel.bindingUpdateDate { date in
-      self.dateStepper.updateDate(date: date)
+    viewModel.bindingUpdateDate { [weak self] date in
+      DispatchQueue.main.async {
+        self?.dateStepper.updateDate(date: date)
+      }
     }
   }
 }
@@ -162,11 +181,19 @@ extension CalendarViewController: CalendarPickerViewControllerDelegate {
 extension CalendarViewController: CardCellDelegate {
   
   func remove(cell: CardCollectionViewCell) {
-    if let indexPath = cardCollectionView.indexPath(for: cell),
-       let item = dataSource.itemIdentifier(for: indexPath) {
-      var snapshot = dataSource.snapshot()
+    guard
+      let indexPath = cardCollectionView.indexPath(for: cell),
+      let item = dataSource.itemIdentifier(for: indexPath)
+    else { return }
+    
+    viewModel.deleteCard(for: item.id) { [weak self] in
+      guard let self = self else { return }
+      var snapshot = self.dataSource.snapshot()
       snapshot.deleteItems([item])
       
+      DispatchQueue.main.async {
+        self.dataSource.apply(snapshot)
+      }
     }
   }
   
@@ -197,5 +224,31 @@ extension CalendarViewController: UICollectionViewDelegate {
   
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     cardCollectionView.resetVisibleCellOffset()
+  }
+}
+
+
+// MARK:- Extension CustomSegmentedControlDelegate
+
+extension CalendarViewController: CustomSegmentedControlDelegate {
+  
+  func change(to segmented: TitleChangeable) {
+    self.titleLabel.text = segmented.text
+    UIView.transition(
+      with: titleLabel,
+      duration: 0.3,
+      options: .transitionFlipFromLeft,
+      animations: nil,
+      completion: nil)
+    
+    switch segmented {
+    case CardSegment.allCard:
+      viewModel.fetchUpdateDailyCards(withOption: .allCard)
+    case CardSegment.myCard:
+      viewModel.fetchUpdateDailyCards(withOption: .myCard)
+      
+    default:
+      return
+    }
   }
 }

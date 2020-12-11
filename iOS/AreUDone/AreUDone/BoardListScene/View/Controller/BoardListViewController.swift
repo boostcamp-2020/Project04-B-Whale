@@ -16,13 +16,9 @@ final class BoardListViewController: UIViewController {
   
   
   // MARK: - Enum
+  
   enum Section {
     case main
-  }
-  
-  enum BoardSegment: String, CaseIterable {
-    case myBoard = "나의 보드"
-    case invitedBoard = "공유 보드"
   }
   
   
@@ -57,20 +53,9 @@ final class BoardListViewController: UIViewController {
   }
   @IBOutlet weak var segmentControl: CustomSegmentedControl! {
     didSet {
-      let boardTitles = BoardSegment.allCases.map { $0.rawValue }
+      let boardTitles = BoardSegment.allCases.map { $0.text }
       segmentControl.setButtonTitles(buttonTitles: boardTitles)
       segmentControl.delegate = self
-      
-      segmentControl.layer.cornerRadius = 10
-      segmentControl.layer.maskedCorners = [
-        .layerMinXMaxYCorner,
-        .layerMaxXMaxYCorner
-      ]
-      segmentControl.addShadow(
-        offset: CGSize(width: 0, height: -1),
-        radius: 2,
-        opacity: 0.5
-      )
     }
   }
   
@@ -190,8 +175,8 @@ extension BoardListViewController: UICollectionViewDelegate {
 
 extension BoardListViewController: CustomSegmentedControlDelegate {
   
-  func change(to title: String) {
-    self.titleView.text = title
+  func change(to segmented: TitleChangeable) {
+    titleView.text = segmented.text
     UIView.transition(
       with: titleView,
       duration: 0.3,
@@ -199,10 +184,11 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
       animations: nil,
       completion: nil)
     
-    switch title {
-    case BoardSegment.myBoard.rawValue:
+    switch segmented {
+    case BoardSegment.myBoard:
       viewModel.fetchMyBoard()
-    case BoardSegment.invitedBoard.rawValue:
+      
+    case BoardSegment.invitedBoard:
       viewModel.fetchInvitedBoard()
     default:
       break

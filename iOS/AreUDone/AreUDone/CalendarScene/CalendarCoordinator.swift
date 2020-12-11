@@ -35,8 +35,9 @@ final class CalendarCoordinator: NavigationCoordinator {
     
     guard let calendarViewController = storyboard.instantiateViewController(
             identifier: CalendarViewController.identifier,
-            creator: { coder in
-              let cardService = CardService(router: MockRouter(jsonFactory: CardTrueJsonFactory()))
+            creator: { [weak self] coder in
+              guard let self = self else { return UIViewController() }
+              let cardService = CardService(router: self.router)
               let viewModel = CalendarViewModel(cardService: cardService)
               return CalendarViewController(coder: coder, viewModel: viewModel)
             }) as? CalendarViewController
