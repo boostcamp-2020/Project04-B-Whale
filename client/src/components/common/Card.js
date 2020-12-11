@@ -12,13 +12,15 @@ const CardWrapper = styled.div`
     box-shadow: 0 0.2rem 0rem ${(props) => props.theme.lightGrayColor};
     color: #586069;
     background-color: white;
+    margin-bottom: 10px;
+    cursor: pointer;
     &:hover {
         background-color: ${(props) => props.theme.lightGrayColor};
     }
 `;
 
 const CardTitle = styled.div`
-    font-size: 2rem;
+    font-size: ${(props) => (props.fontSize?.titleSize ? props.fontSize?.titleSize : '2rem')};
     margin-bottom: 0.5rem;
 `;
 
@@ -32,6 +34,7 @@ const CardDueDate = styled.div`
     justify-content: center;
     height: 1.5rem;
     margin: 0 1rem 0 0;
+    font-size: ${(props) => (props.fontSize?.dueDateSize ? props.fontSize.dueDateSize : '')};
 `;
 
 const CardCommentCount = styled.div`
@@ -43,12 +46,12 @@ const CardCommentCount = styled.div`
     padding: 0 1rem;
 `;
 
-const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount }) => {
+const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount, fontSize }) => {
     return (
         <CardWrapper width={width} height={height}>
-            <CardTitle>{cardTitle}</CardTitle>
+            <CardTitle fontSize={fontSize}>{cardTitle}</CardTitle>
             <CardDueDateCommentCountFlexBox>
-                <CardDueDate>{cardDueDate}</CardDueDate>
+                <CardDueDate fontSize={fontSize}>{cardDueDate}</CardDueDate>
                 <CardCommentCount>{cardCommentCount}</CardCommentCount>
             </CardDueDateCommentCountFlexBox>
         </CardWrapper>
