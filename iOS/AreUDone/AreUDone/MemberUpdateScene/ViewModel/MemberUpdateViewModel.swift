@@ -11,7 +11,7 @@ protocol MemberUpdateViewModelProtocol {
   
   func fetchMemberData(completionHandler: @escaping (([User], [User]?) -> Void))
   func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
-  func updateCardMember(with member: User, completionHandler: @escaping () -> Void)
+  func updateCardMember(with member: [User], completionHandler: @escaping () -> Void)
 }
 
 final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
@@ -80,9 +80,12 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     }
   }
   
-  func updateCardMember(with member: User, completionHandler: @escaping () -> Void) {
-    let userId = member.id
-    cardService.updateCardMember(id: cardId, userIds: [userId]) { result in
+  func updateCardMember(with members: [User], completionHandler: @escaping () -> Void) {
+    var userIds = [Int]()
+    members.forEach { member in
+      userIds.append(member.id)
+    }
+    cardService.updateCardMember(id: cardId, userIds: userIds) { result in
       switch result {
       case .success(()):
         completionHandler()
