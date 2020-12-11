@@ -30,7 +30,6 @@ export const BoardRouter = () => {
 
     router.post('/:id/invitation', async (req, res) => {
         const boardService = BoardService.getInstance();
-        // TODO: 나는 초대될 수 없음, 초대 중복 체크
         await boardService.inviteUserIntoBoard(req.user.id, req.params.id, req.body.userId);
         res.sendStatus(201);
     });
