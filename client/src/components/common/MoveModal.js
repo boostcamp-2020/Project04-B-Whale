@@ -77,7 +77,8 @@ const MoveModal = ({ onClose }) => {
     // TODO: 현재 카드의 리스트 아이디, 카드 위치로 변경할 것
     const currentListId = 3;
     const currentCardPosition = 1;
-    const [selectedList, setSelectedList] = useState(lists[currentListId - 1]);
+    const currentListIndex = lists.findIndex((list) => list.id === currentListId);
+    const [selectedList, setSelectedList] = useState(lists[currentListIndex]);
     const positionElement = useRef();
 
     const onClickClose = (e) => {
