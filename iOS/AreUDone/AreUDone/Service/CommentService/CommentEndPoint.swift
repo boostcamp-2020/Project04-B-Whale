@@ -38,10 +38,10 @@ extension CommentEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createComment:
-      return .post
+      return .POST
       
     case .deleteComment:
-      return .delete
+      return .DELETE
     }
   }
   
@@ -51,7 +51,7 @@ extension CommentEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }

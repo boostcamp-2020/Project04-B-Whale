@@ -34,7 +34,7 @@ extension ActivityEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .fetchActivities:
-      return .get
+      return .GET
     }
   }
   

@@ -162,11 +162,13 @@ extension MemberUpdateViewController: UITableViewDelegate {
     guard let member = dataSource.itemIdentifier(for: indexPath) else { return }
     
     let section: MemberSection = indexPath.section == 0 ? .notInvited : .invited
+    snapshot.deleteItems([member])
+    snapshot.appendItems([member], toSection: section)
     
-    viewModel.updateCardMember(with: member) {
-      snapshot.deleteItems([member])
-      snapshot.appendItems([member], toSection: section)
-      DispatchQueue.main.async { [weak self] in
+    let members = snapshot.itemIdentifiers(inSection: .invited)
+    
+    viewModel.updateCardMember(with: members) { [weak self] in
+      DispatchQueue.main.async {
         self?.dataSource.apply(snapshot, animatingDifferences: true)
       }
     }

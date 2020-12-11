@@ -32,7 +32,7 @@ extension CardEndPoint: EndPointable {
     switch self {
     case .createCard(let listId, _, _, _):
       return "\(APICredentials.ip)/api/list/\(listId)/card"
-    
+      
     case .fetchDailyCards:
       return "\(APICredentials.ip)/api/card"
       
@@ -68,7 +68,7 @@ extension CardEndPoint: EndPointable {
       }
       
       return ["q": value]
-
+      
     case .createCard:
       return nil
       
@@ -92,25 +92,25 @@ extension CardEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createCard:
-      return .post
+      return .POST
       
     case .fetchDailyCards:
-      return .get
+      return .GET
       
     case .fetchDetailCard:
-      return .get
+      return .GET
       
     case .updateCard:
       return .PATCH
       
     case .updateCardMember:
-      return .put
+      return .PUT
       
     case .fetchCardsCount:
-      return .get
+      return .GET
       
     case .deleteCard:
-      return .delete
+      return .DELETE
     }
   }
   
@@ -120,7 +120,7 @@ extension CardEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }
@@ -129,14 +129,14 @@ extension CardEndPoint: EndPointable {
     switch self {
     case .createCard(_, let title, let dueDate, let content):
       return ["title": title, "dueDate": dueDate, "content": content]
-    
+      
     case .updateCard(
-          _,
-          let listId,
-          let title,
-          let content,
-          let position,
-          let dueDate
+      _,
+      let listId,
+      let title,
+      let content,
+      let position,
+      let dueDate
     ):
       var body = [String: String]()
       if let listId = listId {

@@ -59,16 +59,16 @@ extension BoardEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .fetchAllBoards, .fetchBoardDetail:
-      return .get
+      return .GET
       
     case .createBoard, .inviteUserToBoard:
-      return .post
+      return .POST
       
     case .updateBoard:
-      return .put
+      return .PUT
       
     case .deleteBoard, .exitBoard:
-      return .delete
+      return .DELETE
     }
   }
   
@@ -78,7 +78,7 @@ extension BoardEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }

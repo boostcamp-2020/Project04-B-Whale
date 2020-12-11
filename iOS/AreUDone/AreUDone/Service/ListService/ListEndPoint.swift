@@ -42,13 +42,13 @@ extension ListEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createList:
-      return .post
+      return .POST
       
     case .updateList:
       return .PATCH
       
     case .deleteList:
-      return .delete
+      return .DELETE
     }
   }
   
@@ -58,7 +58,7 @@ extension ListEndPoint: EndPointable {
     
     return [
       "Authorization": "\(accessToken)",
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       "Accept": "application/json"
     ]
   }
