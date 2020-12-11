@@ -74,9 +74,11 @@ const Button = styled.button.attrs({ type: 'button' })`
 const MoveModal = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { lists } = boardDetail;
+    // TODO: context에 저장된 현재 카드 id로 변경할 것
+    const cardId = 5;
     // TODO: 현재 카드의 리스트 아이디, 카드 위치로 변경할 것
-    const currentListId = 3;
-    const currentCardPosition = 1;
+    const currentListId = 1;
+    const currentCardPosition = 1.8125;
     const currentListIndex = lists.findIndex((list) => list.id === currentListId);
     const [selectedList, setSelectedList] = useState(lists[currentListIndex]);
     const positionElement = useRef();
@@ -93,23 +95,26 @@ const MoveModal = ({ onClose }) => {
     };
 
     const onClickMoveCard = async () => {
-        // TODO: context에 저장된 현재 카드 id로 변경할 것
-        const cardId = 5;
         const listId = selectedList.id;
         const { selectedIndex } = positionElement.current;
-        const { value } = positionElement.current;
+        const value = Number(positionElement.current.value);
         const cardCount = selectedList.cards.length;
         let position = 0;
 
+        if (currentCardPosition === value) {
+            onClose();
+            return;
+        }
+
         if (selectedIndex === 0) {
-            position = Number(value) / 2;
+            position = value / 2;
         } else if (selectedIndex === cardCount) {
-            position = Number(value);
+            position = value;
         } else if (selectedList.id === currentListId && selectedIndex + 1 === cardCount) {
-            position = Number(value) + 1;
+            position = value + 1;
         } else {
-            const preValue = positionElement.current[selectedIndex - 1].value;
-            position = (Number(value) + Number(preValue)) / 2;
+            const preValue = Number(positionElement.current[selectedIndex - 1].value);
+            position = (value + preValue) / 2;
         }
 
         await modifyCardPosition({ cardId, listId, position });
@@ -136,7 +141,9 @@ const MoveModal = ({ onClose }) => {
                         >
                             {lists.map((list) => (
                                 <option key={list.id} value={list.id}>
-                                    {list.title}
+                                    {list.id === currentListId
+                                        ? `${list.title} (current)`
+                                        : list.title}
                                 </option>
                             ))}
                         </Select>
@@ -150,7 +157,7 @@ const MoveModal = ({ onClose }) => {
                         >
                             {selectedList.cards.map((card, index) => (
                                 <option key={card.id} value={card.position}>
-                                    {index + 1}
+                                    {card.id === cardId ? `${index + 1} (current)` : index + 1}
                                 </option>
                             ))}
                             {currentListId !== selectedList.id && (
