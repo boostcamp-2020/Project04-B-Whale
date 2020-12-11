@@ -9,7 +9,7 @@ import Foundation
 import NetworkFramework
 
 protocol ListServiceProtocol {
-  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<List, APIError>) -> Void)
   func deleteList(withListId listId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func updateList(withListId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
 }
@@ -37,7 +37,7 @@ class ListService: ListServiceProtocol {
   
   // MARK: - Method
   
-  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<List, APIError>) -> Void) {
     router.request(route: ListEndPoint.createList(boardId: boardId, title: title)) { result in
       completionHandler(result)
     }
