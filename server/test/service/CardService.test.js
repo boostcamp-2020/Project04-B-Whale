@@ -145,7 +145,12 @@ describe('Card Service Test', () => {
                 socialId: '1234',
                 profileImageUrl: 'image',
             });
-            await em.save(user1);
+            const user2 = em.create(User, {
+                name: 'user2',
+                socialId: '12345',
+                profileImageUrl: 'image',
+            });
+            await em.save([user1, user2]);
 
             const board1 = em.create(Board, {
                 title: 'board title',
@@ -153,6 +158,8 @@ describe('Card Service Test', () => {
                 creator: user1.id,
             });
             await em.save(board1);
+
+            await em.save(em.create(Invitation, { user: user2, board: board1 }));
 
             const list1 = em.create(List, {
                 title: 'list title',
@@ -165,6 +172,8 @@ describe('Card Service Test', () => {
             const cardPromises = [];
             let position = 1;
             const cardData1 = { dueDate: '2020-07-07', count: 2 };
+            const cardData2 = { dueDate: '2020-07-09', count: 3 };
+            const cardData3 = { dueDate: '2020-08-07', count: 1 };
             for (let i = 0; i < cardData1.count; i += 1) {
                 const card = em.create(Card, {
                     title: 'card title',
@@ -172,14 +181,36 @@ describe('Card Service Test', () => {
                     position,
                     dueDate: cardData1.dueDate,
                     list: list1,
+                    creator: user2,
+                });
+                position += 1;
+                cardPromises.push(em.save(card));
+            }
+            for (let i = 0; i < cardData2.count; i += 1) {
+                const card = em.create(Card, {
+                    title: 'card title',
+                    content: 'card content',
+                    position,
+                    dueDate: cardData2.dueDate,
+                    list: list1,
                     creator: user1,
                 });
                 position += 1;
                 cardPromises.push(em.save(card));
             }
+            const card = em.create(Card, {
+                title: 'card title',
+                content: 'card content',
+                position,
+                dueDate: cardData3.dueDate,
+                list: list1,
+                creator: user1,
+            });
+            cardPromises.push(em.save(card));
 
             const [card1Info] = await Promise.all(cardPromises);
 
+            await em.save(em.create(Member, { user: user1, card }));
             await em.save(em.create(Member, { user: user1, card: card1Info }));
 
             // when
@@ -192,8 +223,10 @@ describe('Card Service Test', () => {
             });
 
             // then
-            const [data1] = cardCountList;
-            expect(data1).toEqual(cardData1);
+            expect(cardCountList).toHaveLength(2);
+            const [data1, data2] = cardCountList;
+            expect(data1).toEqual({ ...cardData1, count: 1 });
+            expect(data2).toEqual(cardData2);
         });
     });
 
