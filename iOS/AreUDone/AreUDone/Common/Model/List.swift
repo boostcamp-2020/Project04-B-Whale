@@ -8,11 +8,6 @@
 import Foundation
 import MobileCoreServices
 
-// TODO: API 연동 확인 후 삭제 예정
-//struct Lists: Codable {
-//  let lists: [List]
-//}
-
 class List: NSObject, Codable {
   let id: Int
   let title: String
@@ -24,6 +19,14 @@ class List: NSObject, Codable {
     self.title = title
     self.position = position
     self.cards = cards
+  }
+  
+  required init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.id = try container.decode(Int.self, forKey: .id)
+    self.title = try container.decode(String.self, forKey: .title)
+    self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
+    self.cards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
   }
 }
 

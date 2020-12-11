@@ -15,14 +15,14 @@ struct Cards: Codable {
 class Card: NSObject, Codable {
   let id: Int
   let title, dueDate: String
-  let position: Int?
+  let position: Double
   let commentCount: Int
   
   init(
     id: Int,
     title: String,
     dueDate: String,
-    position: Int,
+    position: Double,
     commentCount: Int
   ) {
     self.id = id
@@ -30,6 +30,15 @@ class Card: NSObject, Codable {
     self.dueDate = dueDate
     self.position = position
     self.commentCount = commentCount
+  }
+  
+  required init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.id = try container.decode(Int.self, forKey: .id)
+    self.title = try container.decode(String.self, forKey: .title)
+    self.dueDate = try container.decode(String.self, forKey: .dueDate)
+    self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
+    self.commentCount = try container.decodeIfPresent(Int.self, forKey: .commentCount) ?? 0
   }
 }
 
