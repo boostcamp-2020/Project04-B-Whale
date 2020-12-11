@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { FaHome } from 'react-icons/fa';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { inviteUserIntoBoard } from '../../utils/boardRequest';
 
@@ -39,6 +40,7 @@ const InvitedUserDetail = ({
     name,
     parent,
     already,
+    host,
     setAskoverDropdownDisplay,
 }) => {
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
@@ -51,7 +53,6 @@ const InvitedUserDetail = ({
             setBoardDetail({ ...boardDetail });
         }
     };
-
     return (
         <UserDiv already={already} parent={parent}>
             <div style={{ display: 'flex' }}>
@@ -60,6 +61,11 @@ const InvitedUserDetail = ({
                 </ProfileImageDiv>
                 <NameDiv>{name}</NameDiv>
             </div>
+            {host && parent !== 'invite' && (
+                <div style={{ margin: 'auto 10px', color: 'green' }}>
+                    <FaHome />
+                </div>
+            )}
             {already && parent === 'invite' && (
                 <div style={{ color: 'red', margin: 'auto 10px' }}>초대된 유저</div>
             )}
