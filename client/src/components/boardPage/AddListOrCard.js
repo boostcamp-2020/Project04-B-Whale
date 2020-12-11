@@ -90,24 +90,11 @@ const AddListBtnInput = ({ parent, history }) => {
             title: input.current.value,
             boardId: boardDetail.id,
         });
-        switch (status) {
-            case 201:
-                setBoardDetail({
-                    ...boardDetail,
-                    lists: [...boardDetail.lists, { title: input.current.value }],
-                });
-                setState('button');
-                break;
-            case 401:
-                window.location.href = '/login';
-                break;
-            case 403:
-            case 404:
-                history.goBack();
-                break;
-            default:
-                throw new Error(`Unhandled status type : ${status}`);
-        }
+        setBoardDetail({
+            ...boardDetail,
+            lists: [...boardDetail.lists, { title: input.current.value }],
+        });
+        setState('button');
     };
 
     const addCardHandler = () => {
