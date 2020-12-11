@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
+import moment from 'moment';
 import { DatePicker, Modal, Input } from 'antd';
 import 'antd/dist/antd.css';
-import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 
@@ -66,13 +66,7 @@ const AddListBtnInput = ({ parent, history }) => {
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
     const okHandler = (value) => {
-        const m = new Date(value);
-        const dateString = `${m.getFullYear()}-${`0${m.getMonth() + 1}`.slice(
-            -2,
-        )}-${`0${m.getDate()}`.slice(-2)} ${`0${m.getHours()}`.slice(
-            -2,
-        )}:${`0${m.getMinutes()}`.slice(-2)}:${`0${m.getSeconds()}`.slice(-2)}`;
-        datetime = dateString;
+        datetime = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
     };
 
     const showInvalidTitleModal = () => {
