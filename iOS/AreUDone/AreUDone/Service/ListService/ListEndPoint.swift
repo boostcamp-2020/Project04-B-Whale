@@ -42,13 +42,13 @@ extension ListEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createList:
-      return .post
+      return .POST
       
     case .updateList:
       return .PATCH
       
     case .deleteList:
-      return .delete
+      return .DELETE
     }
   }
   

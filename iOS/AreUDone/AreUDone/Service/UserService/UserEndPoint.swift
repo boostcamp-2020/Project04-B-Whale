@@ -55,7 +55,7 @@ extension UserEndPoint: EndPointable {
     case .requestLogin,
          .requestMe,
          .searchUser:
-      return .get
+      return .GET
     }
   }
   

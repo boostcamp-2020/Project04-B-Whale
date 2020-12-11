@@ -31,7 +31,7 @@ extension ImageEndPoint: EndPointable {
   }
   
   var httpMethod: HTTPMethod? {
-    return .get
+    return .GET
   }
   
   var headers: HTTPHeader? {

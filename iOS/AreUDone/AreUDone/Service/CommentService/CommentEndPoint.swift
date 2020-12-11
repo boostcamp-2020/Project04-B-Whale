@@ -38,10 +38,10 @@ extension CommentEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .createComment:
-      return .post
+      return .POST
       
     case .deleteComment:
-      return .delete
+      return .DELETE
     }
   }
   
