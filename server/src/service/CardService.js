@@ -214,7 +214,7 @@ export class CardService extends BaseService {
         });
         await this.cardRepository.save(card);
         return {
-            cardId: card.id,
+            id: card.id,
             title: card.title,
             position: card.position,
             dueDate: card.dueDate,

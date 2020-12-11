@@ -38,7 +38,7 @@ export class ListService extends BaseService {
         });
         await this.listRepository.save(list);
         return {
-            listId: list.id,
+            id: list.id,
             title: list.title,
             position: list.position,
         };
