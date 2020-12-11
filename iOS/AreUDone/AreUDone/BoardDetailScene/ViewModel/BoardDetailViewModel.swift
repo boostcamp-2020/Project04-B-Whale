@@ -23,8 +23,8 @@ protocol BoardDetailViewModelProtocol {
 
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int)
-  
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, handler: @escaping (Double) -> Void)
+
   func createList(with title: String)
   
   func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
@@ -129,7 +129,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     }
   }
   
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int) {
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, handler: @escaping (Double) -> Void) {
     guard let lists = boardDetail?.lists else { return }
     
     let listId = lists[sourceIndex].id
@@ -138,25 +138,24 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     if destinationIndex == 0 {
       // 맨 앞에 넣는 경우
       position = lists[destinationIndex].position / 2
-      
     } else if destinationIndex == (lists.count-1) {
       // 맨 마지막에 넣는 경우
       position = lists[destinationIndex].position + 1
-      
+    } else if sourceIndex < destinationIndex {
+      position = (lists[destinationIndex].position + lists[destinationIndex+1].position) / 2
     } else {
       position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
     }
+    
+    listService.updateList(withListId: listId, position: position, title: nil) { result in
+      switch result {
+      case .success(_):
+        handler(position)
 
-    // TODO: API 에 버그가 있어서 수정되면 주석 해제
-//    listService.updateList(withListId: listId, position: position, title: nil) { result in
-//      switch result {
-//      case .success(()):
-//        break
-//
-//      case .failure(let error):
-//        print(error)
-//      }
-//    }
+      case .failure(let error):
+        print(error)
+      }
+    }
   }
   
   func createList(with title: String) {

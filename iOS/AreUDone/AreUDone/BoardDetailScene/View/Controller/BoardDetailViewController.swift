@@ -286,22 +286,24 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
             let destination = coordinator.destinationIndexPath
       else { return }
      
-      viewModel.updatePosition(of: source.item, to: destination.item)
-
-      changeData(inSame: collectionView, about: list, by: source, and: destination)
+      viewModel.updatePosition(of: source.item, to: destination.item) { position in
+        DispatchQueue.main.async {
+          changeData(inSame: collectionView, about: list, to: position, of: source, and: destination)
+        }
+      }
     }
   }
   
   private func changeData(
     inSame collectionView: UICollectionView,
     about list: List,
-    by sourceIndexPath: IndexPath,
+    to position: Double,
+    of sourceIndexPath: IndexPath,
     and destinationIndexPath: IndexPath
   ) {
-    
-    // TODO: API 연동해보고 success 후 로컬 변경 or 로컬 변경 우선 선택
     let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
-    
+
+    list.position = position
     viewModel.remove(at: sourceIndexPath.row)
     viewModel.insert(list: list, at: destinationIndexPath.row)
     
