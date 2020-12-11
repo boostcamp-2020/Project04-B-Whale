@@ -32,7 +32,7 @@ extension CardEndPoint: EndPointable {
     switch self {
     case .createCard(let listId, _, _, _):
       return "\(APICredentials.ip)/api/list/\(listId)/card"
-    
+      
     case .fetchDailyCards:
       return "\(APICredentials.ip)/api/card"
       
@@ -68,7 +68,7 @@ extension CardEndPoint: EndPointable {
       }
       
       return ["q": value]
-
+      
     case .createCard:
       return nil
       
@@ -118,37 +118,25 @@ extension CardEndPoint: EndPointable {
     guard let accessToken = Keychain.shared.loadValue(forKey: "token")
     else { return nil }
     
-    switch self {
-    case .updateCardMember:
-      return [
-        "Authorization": "\(accessToken)",
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      ]
-      
-    default:
-      return [
-        "Authorization": "\(accessToken)",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept": "application/json"
-      ]
-    }
-    
-    
+    return [
+      "Authorization": "\(accessToken)",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    ]
   }
   
   var bodies: HTTPBody? {
     switch self {
     case .createCard(_, let title, let dueDate, let content):
       return ["title": title, "dueDate": dueDate, "content": content]
-    
+      
     case .updateCard(
-          _,
-          let listId,
-          let title,
-          let content,
-          let position,
-          let dueDate
+      _,
+      let listId,
+      let title,
+      let content,
+      let position,
+      let dueDate
     ):
       var body = [String: String]()
       if let listId = listId {
