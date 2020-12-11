@@ -8,6 +8,7 @@ import AddListOrCard from './AddListOrCard';
 import ListMenuDropdown from './ListMenuDropdown';
 import { updateListTitle } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import Card from '../common/Card';
 
 const ListWrapper = styled.div`
     background-color: lightgray;
@@ -73,27 +74,16 @@ export default function List({ title, id }) {
         offsetY: 0,
         offsetX: 0,
     });
-
     const updateContextListTitle = () => {
         boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
         setBoardDetail({ ...boardDetail });
     };
 
-    const changeTitleHandler = (status) => {
-        switch (status) {
-            case 204:
-                updateContextListTitle();
-                break;
-            default:
-                break;
-        }
-        setTitleInputState(false);
-    };
-
     const changeListTitle = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-        const { status } = await updateListTitle({ listId: id, title: listTitle });
-        changeTitleHandler(status);
+        await updateListTitle({ listId: id, title: listTitle });
+        updateContextListTitle();
+        setTitleInputState(false);
     };
 
     const menuClickHandler = (evt) => {
@@ -127,7 +117,19 @@ export default function List({ title, id }) {
                     )}
                     <AiOutlineMenu onClick={menuClickHandler} style={{ cursor: 'pointer' }} />
                 </ListContentWrapper>
-                <CardsWrapper style={{ marginTop: '5px' }}>카드들</CardsWrapper>
+                <CardsWrapper style={{ marginTop: '5px' }}>
+                    {boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards?.map(
+                        (v) => (
+                            <Card
+                                width="230px"
+                                height="60px"
+                                fontSize={{ titleSize: '1rem', dueDateSize: '11px' }}
+                                cardTitle={v.title}
+                                cardDueDate={v.dueDate}
+                            />
+                        ),
+                    )}
+                </CardsWrapper>
                 <FooterAddBtnDiv>
                     <AddListOrCard parent="card" id={id} />
                 </FooterAddBtnDiv>
