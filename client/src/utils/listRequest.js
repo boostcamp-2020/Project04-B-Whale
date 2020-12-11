@@ -28,3 +28,13 @@ export const deleteList = async ({ listId }) => {
 
     return response;
 };
+
+export const modifyListPosition = async ({ listId, position }) => {
+    const response = await request({
+        url: `/api/list/${listId}`,
+        method: 'PATCH',
+        data: { position },
+    });
+
+    return response;
+};
