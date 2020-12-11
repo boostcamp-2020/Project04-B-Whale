@@ -8,6 +8,7 @@ import AddListOrCard from './AddListOrCard';
 import ListMenuDropdown from './ListMenuDropdown';
 import { updateListTitle } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import ListMoveDropdown from './ListMoveDropdown';
 
 const ListWrapper = styled.div`
     background-color: lightgray;
@@ -69,6 +70,12 @@ export default function List({ title, id }) {
     const [listTitle, setListTitle] = useState(title);
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [listMenuState, setListMenuState] = useState({
+        visible: false,
+        offsetY: 0,
+        offsetX: 0,
+    });
+
+    const [listMoveDropdownState, setListMoveDropdownState] = useState({
         visible: false,
         offsetY: 0,
         offsetX: 0,
@@ -137,6 +144,17 @@ export default function List({ title, id }) {
                     listId={id}
                     listMenuState={listMenuState}
                     setListMenuState={setListMenuState}
+                    listMoveDropdownState={listMoveDropdownState}
+                    setListMoveDropdownState={setListMoveDropdownState}
+                />
+            )}
+            {listMoveDropdownState.visible && (
+                <ListMoveDropdown
+                    listId={id}
+                    listMenuState={listMenuState}
+                    setListMenuState={setListMenuState}
+                    listMoveDropdownState={listMoveDropdownState}
+                    setListMoveDropdownState={setListMoveDropdownState}
                 />
             )}
         </>
