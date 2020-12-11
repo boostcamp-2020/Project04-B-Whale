@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Modal, Button } from 'antd';
@@ -41,10 +42,17 @@ const EachMenuDiv = styled.div`
     }
 `;
 
-const ListMenuDropdown = ({ listMenuState, setListMenuState, listId }) => {
+const ListMenuDropdown = ({
+    listId,
+    listMenuState,
+    setListMenuState,
+    listMoveDropdownState,
+    setListMoveDropdownState,
+}) => {
     const wrapper = useRef();
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [deleteModalState, setDeleteModalState] = useState(false);
+
     const onDimmedClick = (evt) => {
         if (evt.target === wrapper.current) setListMenuState(false);
     };
@@ -52,6 +60,15 @@ const ListMenuDropdown = ({ listMenuState, setListMenuState, listId }) => {
     const onCancelClick = () => {
         setDeleteModalState(false);
         setListMenuState(false);
+    };
+
+    const listMoveBtnHandler = (evt) => {
+        setListMoveDropdownState({
+            offsetX: listMenuState.offsetX,
+            offsetY: listMenuState.offsetY,
+            visible: true,
+        });
+        setListMenuState({ visible: false });
     };
 
     const handleAgree = async () => {
@@ -73,7 +90,7 @@ const ListMenuDropdown = ({ listMenuState, setListMenuState, listId }) => {
     return (
         <Wrapper onClick={onDimmedClick} ref={wrapper}>
             <DropdownWrapper offsetX={listMenuState.offsetX} offsetY={listMenuState.offsetY}>
-                <EachMenuDiv>리스트 이동</EachMenuDiv>
+                <EachMenuDiv onClick={listMoveBtnHandler}>리스트 이동</EachMenuDiv>
                 <EachMenuDiv onClick={() => setDeleteModalState(true)}>리스트 삭제</EachMenuDiv>
             </DropdownWrapper>
 
