@@ -28,15 +28,20 @@ export class ListService extends BaseService {
             .select('MAX(list.position)', 'max_position')
             .where('list.board = :boardId', { boardId })
             .getRawOne();
+
         const maxPosition = listWithMaxPosition.max_position;
-        const list = {
+        const list = this.listRepository.create({
             creator: userId,
             board: boardId,
             position: maxPosition + 1,
             title,
+        });
+        await this.listRepository.save(list);
+        return {
+            listId: list.id,
+            title: list.title,
+            position: list.position,
         };
-        const createList = this.listRepository.create(list);
-        await this.listRepository.save(createList);
     }
 
     @Transactional()

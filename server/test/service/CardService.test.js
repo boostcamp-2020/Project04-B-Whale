@@ -785,6 +785,52 @@ describe('Card Service Test', () => {
         });
     });
 
+    test('카드 삭제 api 서비스 함수 deleteCard 테스트', async () => {
+        await TestTransactionDelegate.transaction(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+            const user = em.create(User, {
+                name: 'dhoon',
+                socialId: '1234',
+                profileImageUrl: 'image',
+            });
+            await em.save(user);
+
+            const board = em.create(Board, {
+                title: 'board of dh',
+                color: '#aa00ff',
+                creator: user.id,
+            });
+            await em.save(board);
+
+            const list = em.create(List, {
+                title: 'dh-list',
+                position: 1,
+                board: board.id,
+                creator: user.id,
+            });
+            await em.save(list);
+
+            const card = em.create(Card, {
+                title: 'dh-list',
+                position: 1,
+                list: list.id,
+                creator: user.id,
+                content: 'list-detail',
+                dueDate: '2020-12-31 00:00:00',
+            });
+            await em.save(card);
+
+            // when
+            const cardService = CardService.getInstance();
+            await cardService.deleteCard({ userId: user.id, cardId: card.id });
+            const deleteCard = await em.findOne(Card, { id: card.id });
+
+            // then
+            expect(deleteCard).toEqual(undefined);
+        });
+    });
+
     test('addMemberToCardByUserIds() : 카드에 member 여러명 추가', async () => {
         const cardService = CardService.getInstance();
         await TestTransactionDelegate.transaction(async () => {

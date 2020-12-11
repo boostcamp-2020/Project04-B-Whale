@@ -85,6 +85,16 @@ export const CardRouter = () => {
         res.status(200).json(card);
     });
 
+    router.delete('/:id', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const config = {
+            userId: req.user.id,
+            cardId: req.params.id,
+        };
+        await cardService.deleteCard(config);
+        res.sendStatus(204);
+    });
+
     router.put('/:cardId/member', async (req, res) => {
         const cardService = CardService.getInstance();
         const { id: userId } = req.user;

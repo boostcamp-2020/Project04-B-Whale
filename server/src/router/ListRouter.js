@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { ListService } from '../service/ListService';
+import { CardService } from '../service/CardService';
+import { CardDto } from '../dto/CardDto';
+import { validator } from '../common/util/validator';
 
 export const ListRouter = () => {
     const router = Router();
@@ -24,6 +27,23 @@ export const ListRouter = () => {
         };
         await listService.deleteList(config);
         res.sendStatus(204);
+    });
+
+    router.post('/:id/card', async (req, res) => {
+        const cardService = CardService.getInstance();
+        const config = {
+            userId: req.user.id,
+            listId: req.params.id,
+            title: req.body.title,
+            dueDate: req.body.dueDate,
+            content: req.body.content,
+        };
+        await validator(CardDto, {
+            dueDate: config.dueDate,
+        });
+
+        const createdCard = await cardService.createCard(config);
+        res.status(201).json(createdCard);
     });
 
     return router;

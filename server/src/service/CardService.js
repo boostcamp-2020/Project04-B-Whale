@@ -4,6 +4,7 @@ import { ConflictError } from '../common/error/ConflictError';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
 import { BaseService } from './BaseService';
+import { BoardService } from './BoardService';
 
 export class CardService extends BaseService {
     static instance = null;
@@ -187,6 +188,55 @@ export class CardService extends BaseService {
     }
 
     @Transactional()
+    async createCard({ userId, listId, title, dueDate, content }) {
+        const list = await this.listRepository
+            .createQueryBuilder('list')
+            .select(['list.id', 'list.board'])
+            .where('list.id = :listId', { listId })
+            .getRawOne();
+        if (!list) throw new EntityNotFoundError();
+        const boardService = BoardService.getInstance();
+        await boardService.checkForbidden(userId, list.board_id);
+
+        const cardWithMaxPosition = await this.cardRepository
+            .createQueryBuilder('card')
+            .select('MAX(card.position)', 'maxPosition')
+            .where('card.list = :listId', { listId })
+            .getRawOne();
+
+        const card = this.cardRepository.create({
+            title,
+            content,
+            position: cardWithMaxPosition.maxPosition + 1,
+            dueDate,
+            list: list.list_id,
+            creator: userId,
+        });
+        await this.cardRepository.save(card);
+        return {
+            cardId: card.id,
+            title: card.title,
+            position: card.position,
+            dueDate: card.dueDate,
+            content: card.content,
+        };
+    }
+
+    @Transactional()
+    async deleteCard({ userId, cardId }) {
+        const card = await this.cardRepository
+            .createQueryBuilder('card')
+            .select('card.list')
+            .innerJoinAndSelect('card.list', 'list')
+            .where('card.id = :cardId', { cardId })
+            .getRawOne();
+        if (!card) throw new EntityNotFoundError();
+
+        const boardService = BoardService.getInstance();
+        await boardService.checkForbidden(userId, card.list_board_id);
+        await this.cardRepository.delete(cardId);
+    }
+
     async addMemberToCardByUserIds({ cardId, userId, userIds }) {
         const card = await this.cardRepository.findOne(cardId);
 
