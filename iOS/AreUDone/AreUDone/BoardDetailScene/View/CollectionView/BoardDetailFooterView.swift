@@ -32,7 +32,7 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
 
     return view
   }()
-  var addHandler: ((String) -> Void)?
+  var listAddHandler: ((String) -> Void)?
   
   
   // MARK: - Initializer
@@ -107,7 +107,7 @@ private extension BoardDetailFooterView {
 extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
   func addButtonTapped(listTitle: String) {
-    addHandler?(listTitle)
+    listAddHandler?(listTitle)
     cancelButtonTapped()
   }
   

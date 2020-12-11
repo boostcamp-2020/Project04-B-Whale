@@ -14,8 +14,8 @@ final class BoardDetailViewController: UIViewController {
   
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
-  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel) { [weak self] listId in
-    self?.coordinator?.presentCardAdd(ofListId: listId)
+  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel) { [weak self] viewModel in
+    self?.coordinator?.presentCardAdd(to: viewModel)
   }
   
   private lazy var titleTextField: UITextField = {
@@ -75,7 +75,7 @@ final class BoardDetailViewController: UIViewController {
     bindUI()
     configure()
     
-    viewModel.updateBoardDetailCollectionView()
+    viewModel.fetchBoardDetail()
   }
   
   override func viewDidAppear(_ animated: Bool) {

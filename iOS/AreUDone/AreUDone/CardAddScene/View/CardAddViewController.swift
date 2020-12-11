@@ -153,7 +153,9 @@ extension CardAddViewController {
     }
     
     viewModel.bindingPop() { [weak self] in
-      self?.coordinator?.dismiss()
+      DispatchQueue.main.async {
+        self?.coordinator?.dismiss()
+      }
     }
   }
 }
