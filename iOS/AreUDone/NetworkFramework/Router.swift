@@ -72,15 +72,3 @@ final public class Router: Routable {
     task?.resume()
   }
 }
-
-
-extension Dictionary {
-  func encode() -> String {
-    return self.map { key, value in
-      "\(key)=\(value)"
-    }.joined(separator: "&")
-  }
-}
-
-
-

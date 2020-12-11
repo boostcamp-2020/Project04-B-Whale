@@ -50,7 +50,14 @@ extension Routable {
       var request = URLRequest(url: url)
 
       request.httpMethod = route.httpMethod?.rawValue
-      request.httpBody = route.bodies?.encode().data(using: String.Encoding.utf8)
+      
+      if let body = route.bodies {
+        if let data = try? JSONSerialization.data(withJSONObject: body, options: .prettyPrinted),
+           let jsonString = String(data: data, encoding: .utf8) {
+          request.httpBody = jsonString.data(using: .utf8)
+        }
+      }
+      
       route.headers?.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
       }
