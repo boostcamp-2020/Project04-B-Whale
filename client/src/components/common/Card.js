@@ -40,7 +40,7 @@ const CardCommentCount = styled.div`
     justify-content: center;
     width: 2rem;
     height: 1.5rem;
-    padding: 0 1rem 0 1rem;
+    padding: 0 1rem;
 `;
 
 const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount }) => {
