@@ -9,6 +9,7 @@ import Foundation
 
 protocol ListViewModelProtocol {
   
+  func bindingUpdateCollectionView(handler: @escaping () -> Void)
   func bindingUpdateListTitle(handler: @escaping (String) -> Void)
   
   func numberOfCards() -> Int
@@ -20,6 +21,7 @@ protocol ListViewModelProtocol {
   func removeCard(at index: Int)
   
   func updateListTitle(to title: String)
+  func updateCollectionView()
   
   func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
 }
@@ -32,8 +34,9 @@ final class ListViewModel: ListViewModelProtocol {
   private let cardService: CardServiceProtocol
   
   private var updateListTitleHandler: ((String) -> Void)?
+  private var updateCollectionViewHandler: (() -> Void)?
   
-  private let list: List
+  private let list: List 
   private var listTitle: String = ""
   
   // MARK: - Initializer
@@ -98,6 +101,10 @@ final class ListViewModel: ListViewModelProtocol {
       }
     }
   }
+  
+  func updateCollectionView() {
+    updateCollectionViewHandler?()
+  }
 }
 
 
@@ -130,6 +137,10 @@ extension ListViewModel {
 // MARK: - Extension bindUI
 
 extension ListViewModel {
+  
+  func bindingUpdateCollectionView(handler: @escaping () -> Void) {
+    updateCollectionViewHandler = handler
+  }
   
   func bindingUpdateListTitle(handler: @escaping (String) -> Void) {
     updateListTitleHandler = handler

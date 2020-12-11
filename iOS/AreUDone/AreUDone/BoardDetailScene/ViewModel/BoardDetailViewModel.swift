@@ -21,7 +21,7 @@ protocol BoardDetailViewModelProtocol {
   
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void))
 
-  func updateBoardDetailCollectionView()
+  func fetchBoardDetail()
   func updateBoardTitle(to title: String)
   func updatePosition(of sourceIndex: Int, to destinationIndex: Int)
   
@@ -98,7 +98,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     return boardDetail?.lists[index]
   }
 
-  func updateBoardDetailCollectionView() {
+  func fetchBoardDetail() {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
@@ -162,8 +162,9 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   func createList(with title: String) {
     listService.createList(withBoardId: boardId, title: title) { result in
       switch result {
-      case .success(()):
-        self.updateBoardDetailCollectionView()
+      case .success(let list):
+        self.boardDetail?.lists.append(list)
+        self.updateBoardDetailCollectionViewHandler?()
         
       case .failure(let error):
         print(error)

@@ -55,8 +55,20 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     self.viewModel = viewModel
     self.dataSource = dataSource
     collectionView.dataSource = dataSource
-    
-    collectionView.reloadData()
+
+    bindUI()
+    viewModel.updateCollectionView()
+  }
+}
+
+private extension BoardDetailCollectionViewCell {
+  
+  func bindUI() {
+    viewModel.bindingUpdateCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadData()
+      }
+    }
   }
 }
 
