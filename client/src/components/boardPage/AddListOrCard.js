@@ -89,37 +89,9 @@ const AddListOrCard = ({ parent, id, history }) => {
         });
     };
 
-    const switchStatus = (status, executeAfterSuccess) => {
-        switch (status) {
-            case 201:
-            case 204:
-                executeAfterSuccess();
-                break;
-            case 401:
-                window.location.href = '/login';
-                break;
-            case 403:
-            case 404:
-                history.goBack();
-                break;
-            default:
-                throw new Error(`Unhandled status type : ${status}`);
-        }
-    };
-
-    const setStateList = () => {
-        setBoardDetail({
-            ...boardDetail,
-            lists: [...boardDetail.lists, { title: input.current.value }],
-        });
-        setState('button');
-    };
-
-    const setStateCard = () => {};
-
     const checkInputHandler = (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return false;
-        const replacedTitle = input.current.value?.replace(/ /g, '');
+        const replacedTitle = input.current.state.value?.replace(/ /g, '');
         if (!replacedTitle) {
             showInvalidTitleModal();
             return false;
@@ -127,26 +99,73 @@ const AddListOrCard = ({ parent, id, history }) => {
         return true;
     };
 
+    const switchStatus = (status, executeAfterSuccess, responseData) => {
+        console.log(status);
+        executeAfterSuccess(responseData);
+
+        // switch (status) {
+        //     case 201:
+        //     case 204:
+        //         executeAfterSuccess(responseData);
+        //         break;
+        //     case 401:
+        //         window.location.href = '/login';
+        //         break;
+        //     case 403:
+        //     case 404:
+        //         history.goBack();
+        //         break;
+        //     default:
+        //         throw new Error(`Unhandled status type : ${status}`);
+        // }
+    };
+
+    const setStateList = (responseData) => {
+        setBoardDetail({
+            ...boardDetail,
+            lists: [
+                ...boardDetail.lists,
+                {
+                    id: responseData.listId,
+                    title: responseData.title,
+                    position: responseData.position,
+                },
+            ],
+        });
+        setState('button');
+    };
+
+    const setStateCard = (responseData) => {
+        const { title, position } = responseData;
+        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
+            id: responseData.cardId,
+            title,
+            dueDate: responseData.dueDate,
+            position,
+            content: '',
+        });
+        setBoardDetail({ ...boardDetail });
+        setState('button');
+    };
+
     const addListHandler = async (evt) => {
         if (!checkInputHandler(evt)) return;
-        const { status } = await createList({
-            title: input.current.value,
+        const { status, data } = await createList({
+            title: input.current.state.value,
             boardId: boardDetail.id,
         });
-        switchStatus(status, setStateList);
+        switchStatus(status, setStateList, data);
     };
 
     const addCardHandler = async (evt) => {
-        // TODO: 카드추가 handler, datetime
-        // status switch
         if (!checkInputHandler(evt)) return;
-        const { status } = await createCard({
+        const { status, data } = await createCard({
             listId: id,
-            title: input.current.value,
+            title: input.current.state.value,
             content: '',
             dueDate,
         });
-        switchStatus(status, setStateCard);
+        switchStatus(status, setStateCard, data);
     };
 
     if (state === 'button') {
