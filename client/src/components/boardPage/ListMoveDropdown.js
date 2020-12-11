@@ -1,13 +1,11 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useEffect, useContext, useState } from 'react';
+import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { BsChevronLeft } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { modifyListPosition } from '../../utils/listRequest';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -15,6 +13,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 99;
 `;
 
 const DropdownWrapper = styled.div`
@@ -54,9 +53,21 @@ const Hr = styled.hr`
 `;
 
 const Select = styled.select`
-    width: 125px; /* 원하는 너비설정 */
+    width: 225px;
     height: auto;
     border: none;
+    background: none;
+    cursor: pointer;
+`;
+
+const SelectWrapper = styled.div`
+    background-color: darkgray;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 6px;
 `;
 
 const MoveBtn = styled(Button)`
@@ -68,16 +79,13 @@ const MoveBtn = styled(Button)`
 
 const ListMoveDropdown = ({
     listId,
-    listMenuState,
     setListMenuState,
     listMoveDropdownState,
     setListMoveDropdownState,
 }) => {
     const wrapper = useRef();
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
-    const lists = new Array(boardDetail.lists.length).fill(0);
-    const currentPos = boardDetail.lists.find((v) => v.id === listId).position;
-    const [selectedPos, setSelectedPos] = useState(currentPos);
+    const currentListInd = boardDetail.lists.findIndex((v) => v.id === listId);
     const selectNode = useRef();
 
     const onClose = (evt) => {
@@ -89,10 +97,36 @@ const ListMoveDropdown = ({
         setListMoveDropdownState({ visible: false });
     };
 
-    const moveListHandler = () => {
-        console.log(selectedPos);
-    };
+    const moveListHandler = async () => {
+        const { selectedIndex } = selectNode.current;
+        const { value } = selectNode.current;
+        const listCount = boardDetail.lists.length;
+        if (currentListInd === selectedIndex) {
+            setListMoveDropdownState({ visible: false });
+            return;
+        }
+        let position = 0;
+        if (selectedIndex === 0) {
+            position = Number(value) / 2;
+        } else if (selectedIndex + 1 === listCount) {
+            position = Number(value) + 1;
+        } else if (selectedIndex < currentListInd) {
+            const prevValue = selectNode.current[selectedIndex - 1].value;
+            position = (Number(value) + Number(prevValue)) / 2;
+        } else {
+            const naxtValue = selectNode.current[selectedIndex + 1].value;
+            position = (Number(value) + Number(naxtValue)) / 2;
+        }
+        await modifyListPosition({ listId, position });
 
+        boardDetail.lists[currentListInd].position = position;
+        boardDetail.lists.sort((a, b) => {
+            // eslint-disable-next-line no-nested-ternary
+            return a.position < b.position ? -1 : a.position > b.position ? 1 : 0;
+        });
+        setBoardDetail({ ...boardDetail });
+        setListMoveDropdownState({ visible: false });
+    };
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper
@@ -105,29 +139,14 @@ const ListMoveDropdown = ({
                     <CloseBtn onClick={() => setListMoveDropdownState({ visible: false })} />
                 </div>
                 <Hr />
-                <div
-                    style={{
-                        backgroundColor: 'darkgray',
-                        width: '100%',
-                        height: '60px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        padding: '5px',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                    }}
-                >
+                <SelectWrapper>
                     <span style={{ marginBottom: '10px' }}>위치</span>
                     <span>
-                        <Select
-                            ref={selectNode}
-                            value={selectedPos}
-                            onChange={(evt) => setSelectedPos(evt.target.value)}
-                        >
-                            {lists.map((value, index) => {
+                        <Select ref={selectNode}>
+                            {boardDetail.lists.map((value, index) => {
                                 return (
-                                    <option value={index + 1} selected={index + 1 === currentPos}>
-                                        {index + 1 === currentPos
+                                    <option value={value.position} key={value.id}>
+                                        {index === currentListInd
                                             ? `${index + 1} (현재 위치)`
                                             : index + 1}
                                     </option>
@@ -135,7 +154,7 @@ const ListMoveDropdown = ({
                             })}
                         </Select>
                     </span>
-                </div>
+                </SelectWrapper>
                 <MoveBtn onClick={moveListHandler}>MoveBtn</MoveBtn>
             </DropdownWrapper>
         </Wrapper>
