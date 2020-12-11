@@ -14,9 +14,8 @@ final class BoardDetailViewController: UIViewController {
   
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
-  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel) { [weak self] cardId in
-    
-    // TODO: 카드 추가 화면으로 가는 로직
+  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel) { [weak self] listId in
+    self?.coordinator?.presentCardAdd(ofListId: listId)
   }
   
   private lazy var titleTextField: UITextField = {

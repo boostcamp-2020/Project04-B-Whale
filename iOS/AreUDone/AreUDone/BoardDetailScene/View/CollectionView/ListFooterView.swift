@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol ListFooterViewDelegate: AnyObject {
+  
+  func baseViewTapped()
+}
+
 final class ListFooterView: UICollectionReusableView, Reusable {
   
   // MARK: - Property
@@ -25,14 +30,15 @@ final class ListFooterView: UICollectionReusableView, Reusable {
     view.translatesAutoresizingMaskIntoConstraints = false
 
     view.layer.cornerRadius = 10
-    
     view.addShadow(offset: .zero, radius: 1, opacity: 1)
-    
     view.backgroundColor = .white
     
     return view
   }()
   
+  private var presentCardAddHandler: ((Int) -> Void)?
+  weak var delegate: ListFooterViewDelegate?
+
   
   // MARK: - Initializer
   
@@ -90,10 +96,10 @@ private extension ListFooterView {
 
 // MARK: - Extension objc
 
-extension ListFooterView {
+private extension ListFooterView {
   
   @objc func baseViewTapped() {
-    
+    delegate?.baseViewTapped()
   }
 }
 

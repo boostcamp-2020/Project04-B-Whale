@@ -12,6 +12,7 @@ import KeychainFramework
 enum CardEndPoint {
   
   case fetchDailyCards(dateString: String, option: FetchDailyCardsOption = .allCard)
+  case createCard(listId: Int, title: String, dueDate: String, content: String)
   case fetchDetailCard(id: Int)
   case updateCard(
         id: Int,
@@ -29,6 +30,9 @@ enum CardEndPoint {
 extension CardEndPoint: EndPointable {
   var environmentBaseURL: String {
     switch self {
+    case .createCard(let listId, _, _, _):
+      return "\(APICredentials.ip)/api/list/\(listId)/card"
+    
     case .fetchDailyCards:
       return "\(APICredentials.ip)/api/card"
       
@@ -64,6 +68,9 @@ extension CardEndPoint: EndPointable {
       }
       
       return ["q": value]
+
+    case .createCard:
+      return nil
       
     case .fetchDetailCard:
       return nil
@@ -84,6 +91,9 @@ extension CardEndPoint: EndPointable {
   
   var httpMethod: HTTPMethod? {
     switch self {
+    case .createCard:
+      return .post
+      
     case .fetchDailyCards:
       return .get
       
@@ -117,6 +127,9 @@ extension CardEndPoint: EndPointable {
   
   var bodies: HTTPBody? {
     switch self {
+    case .createCard(_, let title, let dueDate, let content):
+      return ["title": title, "dueDate": dueDate, "content": content]
+    
     case .updateCard(
           _,
           let listId,

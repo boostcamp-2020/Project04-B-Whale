@@ -71,7 +71,7 @@ final class SideBarViewController: UIViewController {
   ) {
     self.viewModel = viewModel
     self.coordinator = coordinator
-    
+
     super.init(nibName: nibName, bundle: bundle)
   }
   

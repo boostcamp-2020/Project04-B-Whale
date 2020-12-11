@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol BoardTitleTableViewCellDelegate: AnyObject {
+protocol TitleTableViewCellDelegate: AnyObject {
   
-  func textFieldDidChanged(with title: String)
+  func textFieldDidChanged(to title: String)
 }
 
-final class BoardTitleTableViewCell: UITableViewCell, Reusable {
+final class TitleTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Property
   
-  weak var delegate: BoardTitleTableViewCellDelegate?
+  weak var delegate: TitleTableViewCellDelegate?
   
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -24,7 +24,6 @@ final class BoardTitleTableViewCell: UITableViewCell, Reusable {
     
     label.textAlignment = .left
     label.font = UIFont.nanumB(size: 18)
-    label.text = "보드 제목"
     
     return label
   }()
@@ -33,7 +32,6 @@ final class BoardTitleTableViewCell: UITableViewCell, Reusable {
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     textField.font = UIFont.nanumR(size: 18)
-    textField.placeholder = "보드 제목을 입력해주세요"
     
     return textField
   }()
@@ -56,6 +54,11 @@ final class BoardTitleTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Method
   
+  func update(withTitle title: String, placeholder: String) {
+    titleLabel.text = title
+    textField.placeholder = placeholder
+  }
+  
   func boardTitle() -> String {
     return textField.text ?? ""
   }
@@ -64,7 +67,7 @@ final class BoardTitleTableViewCell: UITableViewCell, Reusable {
 
 // MARK: - Extension Configure Method
 
-private extension BoardTitleTableViewCell {
+private extension TitleTableViewCell {
   
   func configure() {
     contentView.addSubview(titleLabel)
@@ -76,9 +79,10 @@ private extension BoardTitleTableViewCell {
   
   func configureTitleLabel() {
     NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
-      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
     ])
   }
   
@@ -94,7 +98,7 @@ private extension BoardTitleTableViewCell {
   }
   
   @objc func textFieldDidChanged() {
-    delegate?.textFieldDidChanged(with: textField.text ?? "")
+    delegate?.textFieldDidChanged(to: textField.text ?? "")
   }
 }
 
