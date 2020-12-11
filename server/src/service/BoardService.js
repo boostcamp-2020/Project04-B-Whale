@@ -85,6 +85,8 @@ export class BoardService extends BaseService {
             ])
             .loadRelationCountAndMap('cards.commentCount', 'cards.comments')
             .where('board.id = :id', { id: boardId })
+            .orderBy('lists.position', 'ASC')
+            .addOrderBy('cards.position', 'ASC')
             .getOne();
         if (Array.isArray(boardDetail?.invitations)) {
             boardDetail.invitedUsers = boardDetail.invitations.map((v) => v.user);
