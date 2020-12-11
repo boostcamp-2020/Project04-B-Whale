@@ -53,8 +53,7 @@ export class CustomCardRepository extends BaseRepository {
             .addSelect('count(1)', 'count')
             .leftJoin('card.members', 'member')
             .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
-            .andWhere('card.creator_id=:userId', { userId })
-            .orWhere('member.user_id=:userId', { userId })
+            .andWhere('(card.creator_id=:userId OR member.user_id=:userId)', { userId })
             .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
             .getRawMany();
 
