@@ -60,23 +60,16 @@ const CloseBtn = styled(GrClose)`
     cursor: pointer;
 `;
 
-const AddListOrCard = ({ parent, id, history }) => {
-    const getFormattedDate = (datetime) => {
-        return `${datetime.getFullYear()}-${`0${datetime.getMonth() + 1}`.slice(
-            -2,
-        )}-${`0${datetime.getDate()}`.slice(-2)} ${`0${datetime.getHours()}`.slice(
-            -2,
-        )}:${`0${datetime.getMinutes()}`.slice(-2)}:${`0${datetime.getSeconds()}`.slice(-2)}`;
-    };
-
+const AddListBtnInput = ({ parent, id, history }) => {
     const [state, setState] = useState('button');
-    const [dueDate, setDueDate] = useState(getFormattedDate(new Date()));
+    let datetime = '';
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
+    const [dueDate, setDueDate] = useState(getFormattedDate(new Date()));
 
     const okHandler = (value) => {
-        setDueDate(getFormattedDate(new Date(value)));
+        datetime = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
     };
 
     const showInvalidTitleModal = () => {
@@ -168,6 +161,24 @@ const AddListOrCard = ({ parent, id, history }) => {
         switchStatus(status, setStateCard, data);
     };
 
+    // const addListHandler = async (evt) => {
+    //     if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
+    //     const replacedTitle = input.current.value?.replace(/ /g, '');
+    //     if (!replacedTitle) {
+    //         showInvalidTitleModal();
+    //         return;
+    //     }
+    //     const { status } = await createList({
+    //         title: input.current.value,
+    //         boardId: boardDetail.id,
+    //     });
+    //     setBoardDetail({
+    //         ...boardDetail,
+    //         lists: [...boardDetail.lists, { title: input.current.value }],
+    //     });
+    //     setState('button');
+    // };
+
     if (state === 'button') {
         return (
             <div>
@@ -216,4 +227,4 @@ const AddListOrCard = ({ parent, id, history }) => {
     );
 };
 
-export default withRouter(AddListOrCard);
+export default withRouter(AddListBtnInput);

@@ -74,15 +74,12 @@ export default function List({ title, id }) {
         offsetY: 0,
         offsetX: 0,
     });
-    const updateContextListTitle = () => {
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
-        setBoardDetail({ ...boardDetail });
-    };
 
     const changeListTitle = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
         await updateListTitle({ listId: id, title: listTitle });
-        updateContextListTitle();
+        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
+        setBoardDetail({ ...boardDetail });
         setTitleInputState(false);
     };
 

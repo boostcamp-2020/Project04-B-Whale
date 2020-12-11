@@ -55,3 +55,14 @@ export const deleteCard = async (cardId) => {
 
     return response;
 };
+
+export const modifyCardPosition = async ({ cardId, listId, position }) => {
+    const config = {
+        url: `/api/card/${cardId}`,
+        method: 'PATCH',
+        data: { listId, position },
+    };
+    const response = await request(config);
+
+    return response;
+};

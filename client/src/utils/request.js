@@ -1,19 +1,20 @@
 /* eslint-disable no-alert */
 import axios from 'axios';
 
-const token = localStorage.getItem('jwt');
-
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
     timeout: 1000,
     headers: {
-        Authorization: token,
         'Content-Type': 'application/json',
     },
 });
 
 instance.interceptors.request.use(
-    (config) => config,
+    (config) => {
+        const newConfig = config;
+        newConfig.headers.Authorization = localStorage.getItem('jwt');
+        return newConfig;
+    },
     (error) => Promise.reject(error),
 );
 
@@ -34,23 +35,23 @@ instance.interceptors.response.use(
     },
 
     (error) => {
-        const { status } = error.response;
+        const { status, data } = error.response;
         switch (status) {
             case 400:
             case 409:
-                alert('입력 값을 확인해주세요.');
+                alert(data.error.message);
                 break;
             case 401:
                 window.location.href = '/login';
                 break;
             case 403:
-                alert('권한이 없습니다.');
+                alert(data.error.message);
                 break;
             case 404:
-                alert('알 수 없는 요청입니다');
+                alert(data.error.message);
                 break;
             default:
-                alert('이유를 알 수 없는 오류입니다.');
+                alert(data.error.message);
         }
     },
 );
