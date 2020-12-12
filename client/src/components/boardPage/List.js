@@ -21,6 +21,7 @@ const ListWrapper = styled.div`
     border-radius: 6px;
     flex-direction: column;
     z-index: 1;
+    max-height: 100%;
 `;
 
 const ListContentWrapper = styled.div`
@@ -48,6 +49,9 @@ const ListTitleInput = styled(Input)`
 
 const CardsWrapper = styled.div`
     margin: auto;
+    margin-top: 5px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 `;
 
 const FooterAddBtnDiv = styled.div`
@@ -114,7 +118,7 @@ export default function List({ title, id }) {
                     )}
                     <AiOutlineMenu onClick={menuClickHandler} style={{ cursor: 'pointer' }} />
                 </ListContentWrapper>
-                <CardsWrapper style={{ marginTop: '5px' }}>
+                <CardsWrapper>
                     {boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards?.map(
                         (v) => (
                             <Card
