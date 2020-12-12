@@ -24,8 +24,9 @@ const AddListButton = styled.button`
     border: none;
     cursor: pointer;
     &:hover {
-        background-color: darkgray;
+        background-color: gray;
         opacity: 0.5;
+        color: white;
     }
 `;
 
@@ -66,7 +67,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
-    const [dueDate, setDueDate] = useState(getFormattedDate(new Date()));
+    const [dueDate, setDueDate] = useState(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
 
     const okHandler = (value) => {
         datetime = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
@@ -90,27 +91,6 @@ const AddListBtnInput = ({ parent, id, history }) => {
             return false;
         }
         return true;
-    };
-
-    const switchStatus = (status, executeAfterSuccess, responseData) => {
-        console.log(status);
-        executeAfterSuccess(responseData);
-
-        // switch (status) {
-        //     case 201:
-        //     case 204:
-        //         executeAfterSuccess(responseData);
-        //         break;
-        //     case 401:
-        //         window.location.href = '/login';
-        //         break;
-        //     case 403:
-        //     case 404:
-        //         history.goBack();
-        //         break;
-        //     default:
-        //         throw new Error(`Unhandled status type : ${status}`);
-        // }
     };
 
     const setStateList = (responseData) => {
@@ -147,7 +127,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
             title: input.current.state.value,
             boardId: boardDetail.id,
         });
-        switchStatus(status, setStateList, data);
+        setStateList(data);
     };
 
     const addCardHandler = async (evt) => {
@@ -158,26 +138,8 @@ const AddListBtnInput = ({ parent, id, history }) => {
             content: '',
             dueDate,
         });
-        switchStatus(status, setStateCard, data);
+        setStateCard(data);
     };
-
-    // const addListHandler = async (evt) => {
-    //     if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-    //     const replacedTitle = input.current.value?.replace(/ /g, '');
-    //     if (!replacedTitle) {
-    //         showInvalidTitleModal();
-    //         return;
-    //     }
-    //     const { status } = await createList({
-    //         title: input.current.value,
-    //         boardId: boardDetail.id,
-    //     });
-    //     setBoardDetail({
-    //         ...boardDetail,
-    //         lists: [...boardDetail.lists, { title: input.current.value }],
-    //     });
-    //     setState('button');
-    // };
 
     if (state === 'button') {
         return (
