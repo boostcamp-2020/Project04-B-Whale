@@ -1,4 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 import styled from 'styled-components';
 import Header from '../common/header';
 import TopMenu from './TopMenu';
@@ -42,6 +46,22 @@ const Board = ({ match }) => {
     });
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
 
+    const moveList = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragList = boardDetail.lists[dragIndex];
+            setBoardDetail({
+                ...boardDetail,
+                lists: update(boardDetail.lists, {
+                    $splice: [
+                        [dragIndex, 1],
+                        [hoverIndex, 0, dragList],
+                    ],
+                }),
+            });
+        },
+        [boardDetail.lists],
+    );
+
     useEffect(async () => {
         const { status, data } = await getDetailBoard(id);
         console.log(status);
@@ -60,11 +80,21 @@ const Board = ({ match }) => {
                 />
                 <Wrapper>
                     {Boolean(boardDetail.lists?.length) && (
-                        <ListWrapper style={{ display: 'flex' }}>
-                            {boardDetail.lists.map((v) => {
-                                return <List key={v.id} id={v.id} title={v.title} />;
-                            })}
-                        </ListWrapper>
+                        <DndProvider backend={HTML5Backend}>
+                            <ListWrapper style={{ display: 'flex' }}>
+                                {boardDetail.lists.map((list, index) => {
+                                    return (
+                                        <List
+                                            key={list.id}
+                                            id={list.id}
+                                            index={index}
+                                            title={list.title}
+                                            moveList={moveList}
+                                        />
+                                    );
+                                })}
+                            </ListWrapper>
+                        </DndProvider>
                     )}
                     <AddListOrCard parent="list" />
                 </Wrapper>

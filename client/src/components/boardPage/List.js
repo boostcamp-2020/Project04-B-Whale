@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useDrag, useDrop } from 'react-dnd';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Input } from 'antd';
 import AddListOrCard from './AddListOrCard';
@@ -21,6 +24,8 @@ const ListWrapper = styled.div`
     border-radius: 6px;
     flex-direction: column;
     z-index: 1;
+    opacity: ${(props) => props.opacity};
+    cursor: ${(props) => props.cursor};
 `;
 
 const ListContentWrapper = styled.div`
@@ -65,7 +70,7 @@ const DimmedForInput = styled.div`
     cursor: default;
 `;
 
-export default function List({ title, id }) {
+export default function List({ title, id, index, moveList }) {
     const [titleInputState, setTitleInputState] = useState(false);
     const [listTitle, setListTitle] = useState(title);
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
@@ -105,9 +110,52 @@ export default function List({ title, id }) {
         });
     };
 
+    const ref = useRef();
+    const [, drop] = useDrop({
+        accept: 'list',
+        hover(item, monitor) {
+            if (!ref.current) {
+                return;
+            }
+            const dragIndex = item.index;
+            const hoverIndex = index;
+            if (dragIndex === hoverIndex) {
+                return;
+            }
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const clientOffset = monitor.getClientOffset();
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+            moveList(dragIndex, hoverIndex);
+            item.index = hoverIndex;
+        },
+        async drop(item) {
+            // TODO: 리스트 위치 수정 api 호출
+            console.log(1);
+            console.log(item);
+        },
+    });
+
+    const [{ isDragging }, drag] = useDrag({
+        item: { type: 'list', id, index },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+    const opacity = isDragging ? 0.5 : 1;
+    const cursor = isDragging ? '-webkit-grabbing' : 'pointer';
+    drag(drop(ref));
+
     return (
         <>
-            <ListWrapper>
+            <ListWrapper ref={ref} opacity={opacity} cursor={cursor}>
                 <ListContentWrapper>
                     {!titleInputState && (
                         <TitleDiv onClick={() => setTitleInputState(true)}>{title}</TitleDiv>
