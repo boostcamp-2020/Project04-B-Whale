@@ -30,6 +30,7 @@ const DropdownWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `;
+
 const ContentWrapper = styled.div`
     max-height: 400px;
     overflow: scroll;
@@ -45,6 +46,12 @@ const SearchInput = styled.input.attrs({
     &:focus {
         outline: 1px solid blue;
     }
+`;
+
+const SearchResultDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 10px;
 `;
 
 const LoadingSvg = styled(ReactLoading).attrs({
@@ -84,12 +91,20 @@ const AskOverDropdown = (props) => {
             }
         }, 1000);
     }, [inputContent]);
+
     const handleChange = async (evt) => {
         setInputContent(evt.target.value);
         setNoUserState(false);
         setSearchedUsers([]);
         clearTimeout(time);
     };
+
+    const searchEscHandler = (evt) => {
+        if (evt.keyCode === 27) {
+            props.setAskoverDropdownDisplay(false);
+        }
+    };
+
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
             <DropdownWrapper
@@ -100,6 +115,7 @@ const AskOverDropdown = (props) => {
                     autoFocus="autoFocus"
                     value={inputContent}
                     onChange={handleChange}
+                    onKeyDown={searchEscHandler}
                     ref={input}
                 />
                 <ContentWrapper>
@@ -108,15 +124,9 @@ const AskOverDropdown = (props) => {
                         (!noUserState ? (
                             <LoadingSvg type="bars" />
                         ) : (
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    margin: '10px',
-                                }}
-                            >
+                            <SearchResultDiv>
                                 <span>검색된 유저가 없습니다😩</span>
-                            </div>
+                            </SearchResultDiv>
                         ))}
                     {searchedUsers.map(({ profileImageUrl, name, id }) => (
                         <UserDetailForDropdown

@@ -161,7 +161,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
                     }
                     autoFocus="autoFocus"
                     type="text"
-                    onKeyDown={addListHandler}
+                    onKeyDown={parent === 'list' ? addListHandler : addCardHandler}
                 />
                 {parent === 'card' && (
                     <DatePicker
