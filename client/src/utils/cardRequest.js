@@ -45,7 +45,18 @@ export const createCard = async ({ listId, title, content, dueDate }) => {
 
     return response;
 };
+      
+export const addMemberToCard = async ({ cardId, userIds }) => {
+    const config = {
+        url: `/api/card/${cardId}/member`,
+        method: 'PUT',
+        data: { userIds },
+    };
+    const response = await request(config);
 
+    return response;
+};
+  
 export const deleteCard = async (cardId) => {
     const config = {
         url: `/api/card/${cardId}`,
