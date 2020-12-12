@@ -123,6 +123,7 @@ export default function List({ title, id }) {
                                 fontSize={{ titleSize: '1rem', dueDateSize: '11px' }}
                                 cardTitle={v.title}
                                 cardDueDate={v.dueDate}
+                                cardCommentCount={v.commentCount}
                             />
                         ),
                     )}
