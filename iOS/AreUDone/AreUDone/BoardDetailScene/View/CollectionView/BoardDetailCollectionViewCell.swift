@@ -113,10 +113,8 @@ private extension BoardDetailCollectionViewCell {
 extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // TODO: 카드 id 얻어서 카드 상세화면으로 넘어가는 로직 필요(viewmodel에게 물어보면 될듯함)
     let cardId = viewModel.fetchCard(at: indexPath.item).id
     presentCardDetailHandler?(cardId)
-    
   }
 }
 
