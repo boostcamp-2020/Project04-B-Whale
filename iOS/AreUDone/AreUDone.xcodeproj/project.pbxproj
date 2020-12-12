@@ -321,10 +321,8 @@
 		BDD18AE625660E77005DF00A /* KeychainFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = BDD18AE425660E77005DF00A /* KeychainFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BDD18AE925660E77005DF00A /* KeychainFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD18AE225660E77005DF00A /* KeychainFramework.framework */; };
 		BDD18AEB25660E77005DF00A /* KeychainFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDD18AE225660E77005DF00A /* KeychainFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BDD18AF725660E8D005DF00A /* InternetAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF225660E8D005DF00A /* InternetAuthenticationType.swift */; };
 		BDD18AF825660E8D005DF00A /* SecureStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF325660E8D005DF00A /* SecureStoreError.swift */; };
 		BDD18AF925660E8D005DF00A /* SecureStoreQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF425660E8D005DF00A /* SecureStoreQueryable.swift */; };
-		BDD18AFA25660E8D005DF00A /* InternetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF525660E8D005DF00A /* InternetProtocol.swift */; };
 		BDD18AFB25660E8D005DF00A /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18AF625660E8D005DF00A /* SecureStore.swift */; };
 		BDD18B0625660F56005DF00A /* Signin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDD18B0525660F56005DF00A /* Signin.storyboard */; };
 		BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD18B0A2566132A005DF00A /* Keychain.swift */; };
@@ -567,10 +565,8 @@
 		BDD18AE225660E77005DF00A /* KeychainFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeychainFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD18AE425660E77005DF00A /* KeychainFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeychainFramework.h; sourceTree = "<group>"; };
 		BDD18AE525660E77005DF00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDD18AF225660E8D005DF00A /* InternetAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetAuthenticationType.swift; sourceTree = "<group>"; };
 		BDD18AF325660E8D005DF00A /* SecureStoreError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStoreError.swift; sourceTree = "<group>"; };
 		BDD18AF425660E8D005DF00A /* SecureStoreQueryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStoreQueryable.swift; sourceTree = "<group>"; };
-		BDD18AF525660E8D005DF00A /* InternetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetProtocol.swift; sourceTree = "<group>"; };
 		BDD18AF625660E8D005DF00A /* SecureStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		BDD18B0525660F56005DF00A /* Signin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Signin.storyboard; sourceTree = "<group>"; };
 		BDD18B0A2566132A005DF00A /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -1468,8 +1464,6 @@
 			children = (
 				BDD18AE425660E77005DF00A /* KeychainFramework.h */,
 				BDD18AE525660E77005DF00A /* Info.plist */,
-				BDD18AF225660E8D005DF00A /* InternetAuthenticationType.swift */,
-				BDD18AF525660E8D005DF00A /* InternetProtocol.swift */,
 				BDD18AF625660E8D005DF00A /* SecureStore.swift */,
 				BDD18AF325660E8D005DF00A /* SecureStoreError.swift */,
 				BDD18AF425660E8D005DF00A /* SecureStoreQueryable.swift */,
@@ -2091,8 +2085,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDD18AFA25660E8D005DF00A /* InternetProtocol.swift in Sources */,
-				BDD18AF725660E8D005DF00A /* InternetAuthenticationType.swift in Sources */,
 				BDD18AF825660E8D005DF00A /* SecureStoreError.swift in Sources */,
 				BDD18AF925660E8D005DF00A /* SecureStoreQueryable.swift in Sources */,
 				BDD18AFB25660E8D005DF00A /* SecureStore.swift in Sources */,
