@@ -91,7 +91,7 @@ final class BoardListViewController: UIViewController {
     super.viewWillAppear(animated)
     navigationController?.isNavigationBarHidden = true
     
-    viewModel.fetchMyBoard()
+    viewModel.fetchBoard()
   }
 }
 
@@ -186,10 +186,10 @@ extension BoardListViewController: CustomSegmentedControlDelegate {
     
     switch segmented {
     case BoardSegment.myBoard:
-      viewModel.fetchMyBoard()
+      viewModel.changeBoardOption(option: .myBoards)
       
     case BoardSegment.invitedBoard:
-      viewModel.fetchInvitedBoard()
+      viewModel.changeBoardOption(option: .invitedBoards)
     default:
       break
     }
