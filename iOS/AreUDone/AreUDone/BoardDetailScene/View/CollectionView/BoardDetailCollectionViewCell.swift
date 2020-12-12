@@ -55,7 +55,7 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     self.viewModel = viewModel
     self.dataSource = dataSource
     collectionView.dataSource = dataSource
-    
+
     bindUI()
     viewModel.updateCollectionView()
   }
