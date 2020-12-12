@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import ReactLoading from 'react-loading';
 import UserDetailForDropdown from './UserDetailForDropdown';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { searchUsersByName } from '../../utils/userRequest';
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: ${(props) => props.offsetX + 55}px;
+    top: ${(props) => props.offsetX + 45}px;
     left: ${(props) => props.offsetY}px;
     width: 300px;
     height: auto;
@@ -29,6 +30,7 @@ const DropdownWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `;
+
 const ContentWrapper = styled.div`
     max-height: 400px;
     overflow: scroll;
@@ -46,6 +48,20 @@ const SearchInput = styled.input.attrs({
     }
 `;
 
+const SearchResultDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+`;
+
+const LoadingSvg = styled(ReactLoading).attrs({
+    width: '32px',
+    height: '32px',
+    color: 'darkgray',
+})`
+    margin: auto;
+`;
+
 const AskOverDropdown = (props) => {
     const wrapper = useRef();
     const input = useRef();
@@ -54,6 +70,7 @@ const AskOverDropdown = (props) => {
     const [searchedUsers, setSearchedUsers] = useState([]);
     const [checkUsers, setCheckUsers] = useState([]);
     const { boardDetail } = useContext(BoardDetailContext);
+    const [noUserState, setNoUserState] = useState(false);
 
     const onClose = (evt) => {
         if (evt.target === wrapper.current) props.setAskoverDropdownDisplay(false);
@@ -67,13 +84,25 @@ const AskOverDropdown = (props) => {
                 return;
             }
             const { data } = await searchUsersByName(input.current?.value);
-            setSearchedUsers([...data]);
+            if (!data.length) setNoUserState(true);
+            else {
+                setNoUserState(false);
+                setSearchedUsers([...data]);
+            }
         }, 1000);
     }, [inputContent]);
 
     const handleChange = async (evt) => {
         setInputContent(evt.target.value);
+        setNoUserState(false);
+        setSearchedUsers([]);
         clearTimeout(time);
+    };
+
+    const searchEscHandler = (evt) => {
+        if (evt.keyCode === 27) {
+            props.setAskoverDropdownDisplay(false);
+        }
     };
 
     return (
@@ -86,9 +115,19 @@ const AskOverDropdown = (props) => {
                     autoFocus="autoFocus"
                     value={inputContent}
                     onChange={handleChange}
+                    onKeyDown={searchEscHandler}
                     ref={input}
                 />
                 <ContentWrapper>
+                    {!searchedUsers.length &&
+                        inputContent &&
+                        (!noUserState ? (
+                            <LoadingSvg type="bars" />
+                        ) : (
+                            <SearchResultDiv>
+                                <span>검색된 유저가 없습니다😩</span>
+                            </SearchResultDiv>
+                        ))}
                     {searchedUsers.map(({ profileImageUrl, name, id }) => (
                         <UserDetailForDropdown
                             profileImageUrl={profileImageUrl}
@@ -98,9 +137,11 @@ const AskOverDropdown = (props) => {
                             parent="invite"
                             checkUsers={checkUsers}
                             setCheckUsers={setCheckUsers}
-                            already={boardDetail.invitedUsers.some((v) => {
-                                return v.id === id;
-                            })}
+                            already={
+                                boardDetail.invitedUsers.some((v) => {
+                                    return v.id === id;
+                                }) || id === boardDetail.creator.id
+                            }
                             setAskoverDropdownDisplay={props.setAskoverDropdownDisplay}
                         />
                     ))}

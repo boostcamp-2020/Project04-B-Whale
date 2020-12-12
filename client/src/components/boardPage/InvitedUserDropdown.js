@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: ${(props) => props.offsetX + 55}px;
+    top: ${(props) => props.offsetX + 45}px;
     left: ${(props) => props.offsetY}px;
     width: 250px;
     height: auto;
@@ -40,7 +40,12 @@ const InvitedUserDropdown = (props) => {
                 offsetY={invitedDropdownDisplay.offsetY}
                 offsetX={invitedDropdownDisplay.offsetX}
             >
-                {boardDetail.invitedUsers.length === 0 && <span>초대된 유저가 없습니다🥺</span>}
+                <UserDetailForDropdown
+                    profileImageUrl={boardDetail.creator.profileImageUrl}
+                    host
+                    name={boardDetail.creator.name}
+                    key={boardDetail.creator.id}
+                />
                 {boardDetail.invitedUsers.map(({ profileImageUrl, name, id }) => (
                     <UserDetailForDropdown profileImageUrl={profileImageUrl} name={name} key={id} />
                 ))}

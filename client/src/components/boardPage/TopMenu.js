@@ -7,9 +7,11 @@ const MenuDiv = styled.div`
     display: flex;
     position: relative;
     justify-content: space-between;
-    line-height: 40px;
+    line-height: 30px;
+    align-items: center;
     width: 100%;
     min-height: 30px;
+    padding: 5px 0;
 `;
 
 const BoardTitle = styled.span`
@@ -22,8 +24,9 @@ const BoardTitle = styled.span`
         props.state === 'span' &&
         `&:hover {
             cursor: pointer;
-            opacity: 0.3;
+            opacity: 0.4;
             background-color: gray;
+            color: white;
         }`};
 `;
 
@@ -41,25 +44,40 @@ const BoardInput = styled.input`
 `;
 
 const ButtonForGettingInvitedUser = styled.button`
-    opacity: 0.3;
     border-radius: 4px;
     padding: 5px 10px;
     margin-right: 2%;
+    background-color: rgba(20, 197, 247, 0.17);
+    &:hover {
+        background-color: gray;
+        opacity: 0.5;
+        color: white;
+    }
 `;
 
 const InviteButton = styled.button`
-    opacity: 0.3;
     border-radius: 4px;
     padding: 5px 10px;
     z-index: 9999;
+    background-color: rgba(20, 197, 247, 0.17);
+    &:hover {
+        background-color: gray;
+        opacity: 0.5;
+        color: white;
+    }
 `;
 
 const MenuButton = styled.button`
     display: ${(props) => (props.sidebarDisplay ? 'none' : 'block')};
     margin-right: 5%;
-    opacity: 0.3;
     border-radius: 4px;
     padding: 5px 10px;
+    background-color: rgba(20, 197, 247, 0.17);
+    &:hover {
+        background-color: gray;
+        opacity: 0.5;
+        color: white;
+    }
 `;
 
 const DimmedForInput = styled.div`

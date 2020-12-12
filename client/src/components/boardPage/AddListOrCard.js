@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
-import moment from 'moment';
 import { DatePicker, Modal, Input } from 'antd';
 import 'antd/dist/antd.css';
+import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { createCard } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: flex;
@@ -23,8 +24,9 @@ const AddListButton = styled.button`
     border: none;
     cursor: pointer;
     &:hover {
-        background-color: darkgray;
+        background-color: gray;
         opacity: 0.5;
+        color: white;
     }
 `;
 
@@ -59,46 +61,84 @@ const CloseBtn = styled(GrClose)`
     cursor: pointer;
 `;
 
-const AddListBtnInput = ({ parent, history }) => {
+const AddListBtnInput = ({ parent, id, history }) => {
     const [state, setState] = useState('button');
     let datetime = '';
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
+    const [dueDate, setDueDate] = useState(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
+
     const okHandler = (value) => {
         datetime = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
     };
 
     const showInvalidTitleModal = () => {
         Modal.info({
-            title: '잘못된 형식입니다.',
-            content: <p>리스트 제목을 입력해주세요😩</p>,
-            onOk() {},
-            onCancel() {},
+            title: `${parent === 'list' ? '리스트 ' : '카드 '} 제목을 입력해주세요😩`,
+            onOk() {
+                input.current.focus();
+            },
             style: { top: '40%' },
         });
     };
 
-    const addListHandler = async (evt) => {
-        if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
-        const replacedTitle = input.current.value?.replace(/ /g, '');
+    const checkInputHandler = (evt) => {
+        if (evt.keyCode !== undefined && evt.keyCode !== 13) return false;
+        const replacedTitle = input.current.state.value?.replace(/ /g, '');
         if (!replacedTitle) {
             showInvalidTitleModal();
-            return;
+            return false;
         }
-        const { status } = await createList({
-            title: input.current.value,
-            boardId: boardDetail.id,
-        });
+        return true;
+    };
+
+    const setStateList = (responseData) => {
         setBoardDetail({
             ...boardDetail,
-            lists: [...boardDetail.lists, { title: input.current.value }],
+            lists: [
+                ...boardDetail.lists,
+                {
+                    id: responseData.listId,
+                    title: responseData.title,
+                    position: responseData.position,
+                },
+            ],
         });
         setState('button');
     };
 
-    const addCardHandler = () => {
-        // TODO: 카드추가 handler, datetime
+    const setStateCard = (responseData) => {
+        const { title, position } = responseData;
+        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
+            id: responseData.cardId,
+            title,
+            dueDate: responseData.dueDate,
+            position,
+            content: '',
+        });
+        setBoardDetail({ ...boardDetail });
+        setState('button');
+    };
+
+    const addListHandler = async (evt) => {
+        if (!checkInputHandler(evt)) return;
+        const { status, data } = await createList({
+            title: input.current.state.value,
+            boardId: boardDetail.id,
+        });
+        setStateList(data);
+    };
+
+    const addCardHandler = async (evt) => {
+        if (!checkInputHandler(evt)) return;
+        const { status, data } = await createCard({
+            listId: id,
+            title: input.current.state.value,
+            content: '',
+            dueDate,
+        });
+        setStateCard(data);
     };
 
     if (state === 'button') {
@@ -121,7 +161,7 @@ const AddListBtnInput = ({ parent, history }) => {
                     }
                     autoFocus="autoFocus"
                     type="text"
-                    onKeyDown={addListHandler}
+                    onKeyDown={parent === 'list' ? addListHandler : addCardHandler}
                 />
                 {parent === 'card' && (
                     <DatePicker
