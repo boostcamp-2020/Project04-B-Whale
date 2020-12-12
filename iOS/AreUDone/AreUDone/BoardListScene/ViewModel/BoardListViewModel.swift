@@ -28,8 +28,6 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var didBoardTappedHandler: ((Int) -> Void)?
   
-  private var boards: [[Board]] = Array(repeating: [], count: 2)
-  
   private var fetchBoardOption: FetchBoardOption = .myBoards {
     didSet {
       fetchBoard()
@@ -58,9 +56,6 @@ final class BoardListViewModel: BoardListViewModelProtocol {
     boardService.fetchAllBoards() { result in
       switch result {
       case .success(let boards):
-        self.boards[0] = boards.myBoards
-        self.boards[1] = boards.invitedBoards
-        
         if self.fetchBoardOption == .myBoards {
           self.updateBoardListCollectionViewHandler?(boards.myBoards)
         } else {
