@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 13%;
+    top: ${(props) => props.offsetX + 55}px;
     left: ${(props) => props.offsetY}px;
     width: 300px;
     height: auto;
@@ -22,12 +22,16 @@ const DropdownWrapper = styled.div`
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
     overflow: auto;
-    z-index: 2;
+    z-index: 9999;
     max-height: 500px;
     overflow: scroll;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+`;
+const ContentWrapper = styled.div`
+    max-height: 400px;
+    overflow: scroll;
 `;
 
 const SearchInput = styled.input.attrs({
@@ -74,9 +78,17 @@ const AskOverDropdown = (props) => {
 
     return (
         <Wrapper onClick={onClose} ref={wrapper}>
-            <DropdownWrapper offsetY={askoverDropdownDisplay.offsetY}>
-                <SearchInput value={inputContent} onChange={handleChange} ref={input} />
-                <div style={{ maxHeight: '400px', overflow: 'scroll' }}>
+            <DropdownWrapper
+                offsetY={askoverDropdownDisplay.offsetY}
+                offsetX={askoverDropdownDisplay.offsetX}
+            >
+                <SearchInput
+                    autoFocus="autoFocus"
+                    value={inputContent}
+                    onChange={handleChange}
+                    ref={input}
+                />
+                <ContentWrapper>
                     {searchedUsers.map(({ profileImageUrl, name, id }) => (
                         <UserDetailForDropdown
                             profileImageUrl={profileImageUrl}
@@ -92,7 +104,7 @@ const AskOverDropdown = (props) => {
                             setAskoverDropdownDisplay={props.setAskoverDropdownDisplay}
                         />
                     ))}
-                </div>
+                </ContentWrapper>
             </DropdownWrapper>
         </Wrapper>
     );

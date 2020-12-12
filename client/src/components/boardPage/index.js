@@ -7,6 +7,8 @@ import InvitedDropdown from './InvitedUserDropdown';
 import { getDetailBoard } from '../../utils/boardRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import AskOverDropdown from './AskOverDropdown';
+import AddListOrCard from './AddListOrCard';
+import List from './List';
 
 const MainContents = styled.div`
     height: 92%;
@@ -14,21 +16,35 @@ const MainContents = styled.div`
     background-color: ${(props) => props.backgroundColor};
 `;
 
+const Wrapper = styled.div`
+    display: flex;
+    margin-left: 10px;
+    max-width: 100%;
+    overflow-x: scroll;
+    height: 90%;
+`;
+
+const ListWrapper = styled.div``;
+
 const Board = ({ match }) => {
     const { id } = match.params;
     const [sidebarDisplay, setSidebarDisplay] = useState(false);
     const [invitedDropdownDisplay, setInvitedDropdownDisplay] = useState({
         visible: false,
         offsetY: 0,
+        offsetX: 0,
     });
+
     const [askoverDropdownDisplay, setAskoverDropdownDisplay] = useState({
         visible: false,
         offsetY: 0,
+        offsetX: 0,
     });
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
 
     useEffect(async () => {
-        const { data } = await getDetailBoard(id);
+        const { status, data } = await getDetailBoard(id);
+        console.log(status);
         setBoardDetail(data);
     }, []);
 
@@ -42,6 +58,16 @@ const Board = ({ match }) => {
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
+                <Wrapper>
+                    {Boolean(boardDetail.lists?.length) && (
+                        <ListWrapper style={{ display: 'flex' }}>
+                            {boardDetail.lists.map((v) => {
+                                return <List key={v.id} id={v.id} title={v.title} />;
+                            })}
+                        </ListWrapper>
+                    )}
+                    <AddListOrCard parent="list" />
+                </Wrapper>
                 <ActivitySidebar
                     sidebarDisplay={sidebarDisplay}
                     setSidebarDisplay={setSidebarDisplay}

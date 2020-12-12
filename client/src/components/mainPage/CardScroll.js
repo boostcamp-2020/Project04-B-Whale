@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import moment from 'moment-timezone';
 import styled from 'styled-components';
 import { CardScrollStatusContext } from '../../context/CardScrollContext';
 import Card from '../common/Card';
@@ -8,14 +9,19 @@ const CardScrollWrapper = styled.div`
     width: 100%;
     height: 20rem;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 200px;
-    overflow: scroll;
+    grid-auto-rows: 10rem;
+    grid-row-gap: 0.6rem;
+    grid-column-gap: 0.6rem;
+    overflow-y: scroll;
+    background-color: #ebecf0;
+    border-radius: 1rem;
+    padding: 0.5rem;
 `;
 
 const CardScroll = () => {
     const { loading, data, error } = useContext(CardScrollStatusContext);
 
-    if (loading || error !== undefined) {
+    if (loading || error !== null) {
         return null;
     }
 
@@ -24,12 +30,11 @@ const CardScroll = () => {
             {data?.cards?.map((card) => {
                 return (
                     <Card
-                        width="10rem"
-                        height="1rem"
                         key={card?.id}
-                        id={card?.id}
                         cardTitle={card?.title}
-                        cardDueDate={card?.dueDate}
+                        cardDueDate={moment
+                            .tz(card?.dueDate, 'Asia/Seoul')
+                            .format('YYYY-MM-DD HH:mm:ss')}
                         cardCommentCount={card?.commentCount}
                     />
                 );
