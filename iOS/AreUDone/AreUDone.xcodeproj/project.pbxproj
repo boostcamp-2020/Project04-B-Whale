@@ -268,6 +268,7 @@
 		33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */; };
 		33F2D6CA257F838D008F1E06 /* ListCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */; };
 		33F66CE92567A17C00959401 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F66CE82567A17C00959401 /* UIViewController+.swift */; };
+		BD088A952583A8840056E95D /* FetchBoardOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088A942583A8840056E95D /* FetchBoardOption.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -515,6 +516,7 @@
 		33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F2D6C9257F838D008F1E06 /* ListCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		33F66CE82567A17C00959401 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		BD088A942583A8840056E95D /* FetchBoardOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBoardOption.swift; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -1502,6 +1504,7 @@
 				BD59A7112580D97F00BF8928 /* Week.swift */,
 				BD59A744258209BD00BF8928 /* TitleChangeable.swift */,
 				BD59A749258212A700BF8928 /* FetchDailyCardsOption.swift */,
+				BD088A942583A8840056E95D /* FetchBoardOption.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1928,6 +1931,7 @@
 				BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */,
 				338317402581E21E0040A467 /* CardAddCalendarTableViewCell.swift in Sources */,
 				336010CD256B7B2B009580A1 /* APICredentials.swift in Sources */,
+				BD088A952583A8840056E95D /* FetchBoardOption.swift in Sources */,
 				BDD18B462566408F005DF00A /* ActivityService.swift in Sources */,
 				BDD18B0B2566132A005DF00A /* Keychain.swift in Sources */,
 				3373A4952578DC7200D92CC0 /* UIView+.swift in Sources */,
