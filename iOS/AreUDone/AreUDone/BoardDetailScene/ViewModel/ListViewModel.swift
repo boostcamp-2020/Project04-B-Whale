@@ -42,6 +42,7 @@ final class ListViewModel: ListViewModelProtocol {
   private let list: List
   private var listTitle: String = "" {
     didSet {
+      list.title = listTitle
       updateListTitleHandler?(listTitle)
     }
   }
