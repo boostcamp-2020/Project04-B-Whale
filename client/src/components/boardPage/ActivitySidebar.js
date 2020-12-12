@@ -5,7 +5,7 @@ import ActivityDetail from './ActivityDetail';
 
 const boxOpen = keyframes`
   to {
-    margin-left: 80%;
+    margin-left: 85%;
   }
 `;
 
@@ -20,13 +20,14 @@ const Sidebar = styled.div`
     position: absolute;
     flex-direction: column;
     top: 80px;
-    width: 20%;
+    width: 15%;
     height: 92%;
     margin-left: 100%;
     animation: ${(props) => (props.sidebarDisplay ? boxOpen : boxClose)} ease;
     animation-fill-mode: forwards;
     animation-duration: 0.2s;
     background-color: white;
+    z-index: 9999;
 `;
 
 const SidebarTopMenu = styled.div`

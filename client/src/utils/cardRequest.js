@@ -35,6 +35,17 @@ export const modifyCardDueDate = async ({ cardId, dueDate }) => {
     return response;
 };
 
+export const createCard = async ({ listId, title, content, dueDate }) => {
+    const config = {
+        url: `/api/list/${listId}/card`,
+        method: 'POST',
+        data: { title, content, dueDate },
+    };
+    const response = await request(config);
+
+    return response;
+};
+      
 export const addMemberToCard = async ({ cardId, userIds }) => {
     const config = {
         url: `/api/card/${cardId}/member`,
@@ -45,7 +56,17 @@ export const addMemberToCard = async ({ cardId, userIds }) => {
 
     return response;
 };
-      
+  
+export const deleteCard = async (cardId) => {
+    const config = {
+        url: `/api/card/${cardId}`,
+        method: 'DELETE',
+    };
+    const response = await request(config);
+
+    return response;
+};
+
 export const modifyCardPosition = async ({ cardId, listId, position }) => {
     const config = {
         url: `/api/card/${cardId}`,

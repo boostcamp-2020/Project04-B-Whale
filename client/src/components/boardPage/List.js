@@ -8,6 +8,7 @@ import AddListOrCard from './AddListOrCard';
 import ListMenuDropdown from './ListMenuDropdown';
 import { updateListTitle } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import Card from '../common/Card';
 
 const ListWrapper = styled.div`
     background-color: lightgray;
@@ -20,6 +21,7 @@ const ListWrapper = styled.div`
     border-radius: 6px;
     flex-direction: column;
     z-index: 1;
+    max-height: 100%;
 `;
 
 const ListContentWrapper = styled.div`
@@ -47,6 +49,9 @@ const ListTitleInput = styled(Input)`
 
 const CardsWrapper = styled.div`
     margin: auto;
+    margin-top: 5px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 `;
 
 const FooterAddBtnDiv = styled.div`
@@ -74,20 +79,12 @@ export default function List({ title, id }) {
         offsetX: 0,
     });
 
-    const updateContextListTitle = () => {
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
-        setBoardDetail({ ...boardDetail });
-    };
-
-    const changeTitleHandler = () => {
-        updateContextListTitle();
-        setTitleInputState(false);
-    };
-
     const changeListTitle = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
         await updateListTitle({ listId: id, title: listTitle });
-        changeTitleHandler();
+        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
+        setBoardDetail({ ...boardDetail });
+        setTitleInputState(false);
     };
 
     const menuClickHandler = (evt) => {
@@ -121,9 +118,22 @@ export default function List({ title, id }) {
                     )}
                     <AiOutlineMenu onClick={menuClickHandler} style={{ cursor: 'pointer' }} />
                 </ListContentWrapper>
-                <CardsWrapper style={{ marginTop: '5px' }}>카드들</CardsWrapper>
+                <CardsWrapper>
+                    {boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards?.map(
+                        (v) => (
+                            <Card
+                                width="230px"
+                                height="60px"
+                                fontSize={{ titleSize: '1rem', dueDateSize: '11px' }}
+                                cardTitle={v.title}
+                                cardDueDate={v.dueDate}
+                                cardCommentCount={v.commentCount}
+                            />
+                        ),
+                    )}
+                </CardsWrapper>
                 <FooterAddBtnDiv>
-                    <AddListOrCard parent="card" />
+                    <AddListOrCard parent="card" id={id} />
                 </FooterAddBtnDiv>
             </ListWrapper>
             {listMenuState.visible && (

@@ -26,7 +26,7 @@ instance.interceptors.response.use(
             case 204:
                 break;
             case 201:
-                alert('정상적으로 생성되었습니다.');
+                // alert('정상적으로 생성되었습니다.');
                 break;
             default:
                 break;
