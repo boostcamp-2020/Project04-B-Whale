@@ -14,8 +14,11 @@ final class BoardDetailViewController: UIViewController {
   
   private let viewModel: BoardDetailViewModelProtocol
   weak var coordinator: BoardDetailCoordinator?
-  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel) { [weak self] viewModel in
+  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel, presentCardAddHandler: { [weak self] viewModel in
     self?.coordinator?.presentCardAdd(to: viewModel)
+    
+  }) { [weak self] cardId in
+    self?.coordinator?.pushToCardDetail(of: cardId)
   }
   
   private lazy var titleTextField: UITextField = {

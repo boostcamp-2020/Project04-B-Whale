@@ -14,13 +14,19 @@ final class BoardDetailCollectionViewDataSource: NSObject, UICollectionViewDataS
   
   private let viewModel: BoardDetailViewModelProtocol
   private var presentCardAddHandler: ((ListViewModelProtocol) -> Void)?
+  private var presentCardDetailHandler: ((Int) -> Void)?
   
   
   // MARK: - Initializer
   
-  init(viewModel: BoardDetailViewModelProtocol, presentCardAddHandler: ((ListViewModelProtocol) -> Void)? = nil) {
+  init(
+    viewModel: BoardDetailViewModelProtocol,
+    presentCardAddHandler: ((ListViewModelProtocol) -> Void)? = nil,
+    presentCardDetailHandler: ((Int) -> Void)? = nil
+  ) {
     self.viewModel = viewModel
     self.presentCardAddHandler = presentCardAddHandler
+    self.presentCardDetailHandler = presentCardDetailHandler
     
     super.init()
   }
@@ -37,7 +43,7 @@ final class BoardDetailCollectionViewDataSource: NSObject, UICollectionViewDataS
     
     viewModel.fetchListViewModel(at: indexPath.item) { viewModel in
       let dataSource = ListCollectionViewDataSource(viewModel: viewModel, presentCardAddHandler: presentCardAddHandler)
-      cell.update(with: viewModel, dataSource: dataSource)
+      cell.update(with: viewModel, dataSource: dataSource, presentCardDetailHandler: presentCardDetailHandler)
     }
   
     return cell
