@@ -14,6 +14,7 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   
   private var viewModel: ListViewModelProtocol!
   private var dataSource: UICollectionViewDataSource!
+  private var presentCardDetailHandler: ((Int) -> Void)?
   
   private lazy var collectionView: ListCollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
@@ -50,12 +51,14 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   
   func update(
     with viewModel: ListViewModelProtocol,
-    dataSource: UICollectionViewDataSource
+    dataSource: UICollectionViewDataSource,
+    presentCardDetailHandler: ((Int) -> Void)?
   ) {
     self.viewModel = viewModel
     self.dataSource = dataSource
+    self.presentCardDetailHandler = presentCardDetailHandler
     collectionView.dataSource = dataSource
-
+    
     bindUI()
     viewModel.updateCollectionView()
   }
@@ -66,7 +69,7 @@ private extension BoardDetailCollectionViewCell {
   func bindUI() {
     viewModel.bindingUpdateCollectionView { [weak self] in
       DispatchQueue.main.async {
-        self?.collectionView.reloadData()
+        self?.collectionView.reloadSections(IndexSet(integer: 0))
       }
     }
   }
@@ -110,8 +113,8 @@ private extension BoardDetailCollectionViewCell {
 extension BoardDetailCollectionViewCell: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // TODO: 카드 id 얻어서 카드 상세화면으로 넘어가는 로직 필요(viewmodel에게 물어보면 될듯함)
-    
+    let cardId = viewModel.fetchCard(at: indexPath.item).id
+    presentCardDetailHandler?(cardId)
   }
 }
 
@@ -138,8 +141,6 @@ extension BoardDetailCollectionViewCell: UICollectionViewDragDelegate {
 extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   
   func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-    
-    
     return isDroppable
   }
   

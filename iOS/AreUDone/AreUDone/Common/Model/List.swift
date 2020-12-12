@@ -10,7 +10,7 @@ import MobileCoreServices
 
 class List: NSObject, Codable {
   let id: Int
-  let title: String
+  var title: String
   var position: Double
   var cards: [Card]
   

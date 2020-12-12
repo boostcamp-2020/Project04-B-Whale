@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 카드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuB-J3-HwS">
-                                <rect key="frame" x="20" y="64" width="112.5" height="55"/>
+                                <rect key="frame" x="20" y="64" width="102" height="55"/>
                                 <fontDescription key="fontDescription" name="NanumBarunpen-Bold" family="NanumBarunpen" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -62,7 +62,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JjI-Mb-dZ4" customClass="DateStepper" customModule="AreUDone" customModuleProvider="target">
-                                <rect key="frame" x="152.5" y="64.5" width="241.5" height="54"/>
+                                <rect key="frame" x="162" y="64.5" width="247" height="54"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -77,9 +77,9 @@
                             <constraint firstItem="ZuB-J3-HwS" firstAttribute="top" secondItem="9a7-qQ-npf" secondAttribute="top" constant="20" id="dMk-1h-TeY"/>
                             <constraint firstItem="ZuB-J3-HwS" firstAttribute="height" secondItem="2ij-hR-TD9" secondAttribute="height" multiplier="0.06" constant="1" id="eEy-W7-9O3"/>
                             <constraint firstItem="26k-J8-FJY" firstAttribute="top" secondItem="ZuB-J3-HwS" secondAttribute="bottom" constant="10" id="jYP-xz-pZn"/>
-                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="trailing" secondItem="9a7-qQ-npf" secondAttribute="trailing" constant="-20" id="v7Q-WL-13h"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="trailing" secondItem="9a7-qQ-npf" secondAttribute="trailing" constant="-5" id="v7Q-WL-13h"/>
                             <constraint firstItem="ZuB-J3-HwS" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" constant="10" id="wub-IU-qdU"/>
-                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="leading" secondItem="ZuB-J3-HwS" secondAttribute="trailing" constant="20" id="xFn-8Z-XUD"/>
+                            <constraint firstItem="JjI-Mb-dZ4" firstAttribute="leading" secondItem="ZuB-J3-HwS" secondAttribute="trailing" constant="40" id="xFn-8Z-XUD"/>
                         </constraints>
                     </view>
                     <connections>

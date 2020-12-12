@@ -17,9 +17,9 @@ final class TabbarItemContentsFactory {
   func load(order: Int) -> (String, String) {
     switch order {
     case 0:
-      return ("캘린더", "circle")
+      return ("캘린더", "calendar")
     case 1:
-      return ("보드", "circle")
+      return ("보드", "list.bullet.rectangle")
     default:
       return ("없음", "")
     }
