@@ -24,8 +24,8 @@ const Wrapper = styled.div`
     display: flex;
     margin-left: 10px;
     max-width: 100%;
-    overflow-x: scroll;
-    height: 90%;
+    overflow-x: auto;
+    height: 93%;
 `;
 
 const ListWrapper = styled.div``;
@@ -90,6 +90,7 @@ const Board = ({ match }) => {
                                             index={index}
                                             title={list.title}
                                             moveList={moveList}
+                                            position={list.position}
                                         />
                                     );
                                 })}

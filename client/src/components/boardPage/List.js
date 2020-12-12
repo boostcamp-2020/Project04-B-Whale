@@ -9,7 +9,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { Input } from 'antd';
 import AddListOrCard from './AddListOrCard';
 import ListMenuDropdown from './ListMenuDropdown';
-import { updateListTitle } from '../../utils/listRequest';
+import { updateListTitle, modifyListPosition } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import ListMoveDropdown from './ListMoveDropdown';
 
@@ -70,10 +70,11 @@ const DimmedForInput = styled.div`
     cursor: default;
 `;
 
-export default function List({ title, id, index, moveList }) {
+export default function List({ title, id, index, moveList, position }) {
     const [titleInputState, setTitleInputState] = useState(false);
     const [listTitle, setListTitle] = useState(title);
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
+    const { lists } = boardDetail;
     const [listMenuState, setListMenuState] = useState({
         visible: false,
         offsetY: 0,
@@ -137,14 +138,23 @@ export default function List({ title, id, index, moveList }) {
             item.index = hoverIndex;
         },
         async drop(item) {
-            // TODO: 리스트 위치 수정 api 호출
-            console.log(1);
-            console.log(item);
+            let updatedPosition;
+            const listLength = boardDetail.lists.length;
+            if (item.index === 0) {
+                updatedPosition = lists[1].position / 2;
+            } else if (item.index === listLength - 1) {
+                updatedPosition = lists[listLength - 1].position + 1;
+            } else {
+                updatedPosition = (lists[index - 1].position + lists[index + 1].position) / 2;
+            }
+            await modifyListPosition({ listId: item.id, position: updatedPosition });
+            lists[index].position = updatedPosition;
+            setBoardDetail({ ...boardDetail, lists });
         },
     });
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: 'list', id, index },
+        item: { type: 'list', id, index, position, title },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
