@@ -15,6 +15,7 @@ final class BoardDetailCollectionViewDataSource: NSObject, UICollectionViewDataS
   private let viewModel: BoardDetailViewModelProtocol
   private var presentCardAddHandler: ((ListViewModelProtocol) -> Void)?
   private var presentCardDetailHandler: ((Int) -> Void)?
+
   
   
   // MARK: - Initializer

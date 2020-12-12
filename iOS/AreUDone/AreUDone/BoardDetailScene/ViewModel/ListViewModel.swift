@@ -22,6 +22,7 @@ protocol ListViewModelProtocol {
   func removeCard(at index: Int)
   
   func updateListTitle(to title: String)
+
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping (Int) -> Void)
@@ -46,6 +47,7 @@ final class ListViewModel: ListViewModelProtocol {
       updateListTitleHandler?(listTitle)
     }
   }
+
   
   // MARK: - Initializer
   
@@ -107,7 +109,7 @@ final class ListViewModel: ListViewModelProtocol {
       }
     }
   }
-  
+
   func updateCardPosition(
     from sourceIndex: Int,
     to destinationIndex: Int,
