@@ -13,6 +13,7 @@ protocol CalendarViewModelProtocol {
   func bindingUpdateDate(handler: @escaping (String) -> Void)
   
   func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption)
+  func fetchDailyCards()
   func changeDate(to date: String, direction: Direction?)
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
 }
@@ -83,7 +84,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     fetchDailyCardOption = option
   }
   
-  private func fetchDailyCards() {
+  func fetchDailyCards() {
     cardService.fetchDailyCards(dateString: selectedDate.toString(), option: fetchDailyCardOption) { result in
       switch result {
       case .success(let cards):

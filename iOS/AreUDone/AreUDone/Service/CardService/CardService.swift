@@ -18,7 +18,7 @@ protocol CardServiceProtocol {
     listId: Int?,
     title: String?,
     content: String?,
-    position: String?,
+    position: Double?,
     dueDate: String?,
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   )
@@ -37,7 +37,7 @@ extension CardServiceProtocol {
     listId: Int? = nil,
     title: String? = nil,
     content: String? = nil,
-    position: String? = nil,
+    position: Double? = nil,
     dueDate: String? = nil,
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   ) {
@@ -92,7 +92,7 @@ class CardService: CardServiceProtocol {
     listId: Int? = nil,
     title: String? = nil,
     content: String? = nil,
-    position: String? = nil,
+    position: Double? = nil,
     dueDate: String? = nil,
     completionHandler: @escaping ((Result<Void, APIError>) -> Void)
   ) {
