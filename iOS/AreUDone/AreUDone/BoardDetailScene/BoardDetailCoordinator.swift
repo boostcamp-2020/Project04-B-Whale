@@ -111,8 +111,8 @@ extension BoardDetailCoordinator {
     navigationController?.pushViewController(cardDetailViewController, animated: true)
   }
   
-  func presentCardAdd(ofListId listId: Int) {
-    cardAddCoordinator = CardAddCoordinator(router: router, listId: listId)
+  func presentCardAdd(to viewModel: ListViewModelProtocol) {
+    cardAddCoordinator = CardAddCoordinator(router: router, viewModel: viewModel)
     
     let viewController = cardAddCoordinator.start()
     let subNavigationController = UINavigationController()

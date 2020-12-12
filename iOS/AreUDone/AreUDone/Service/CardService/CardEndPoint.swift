@@ -19,7 +19,7 @@ enum CardEndPoint {
         listId: Int?,
         title: String?,
         content: String?,
-        position: String?,
+        position: Double?,
         dueDate: String?
        )
   case updateCardMember(id: Int, userIds: [Int])
@@ -138,9 +138,9 @@ extension CardEndPoint: EndPointable {
       let position,
       let dueDate
     ):
-      var body = [String: String]()
+      var body = [String: Any]()
       if let listId = listId {
-        body["listId"] = "\(listId)"
+        body["listId"] = listId
       }
       
       if let title = title {

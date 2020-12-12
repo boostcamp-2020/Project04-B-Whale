@@ -17,7 +17,7 @@ final class CardAddCoordinator: NavigationCoordinator {
   private var contentInputCoordinator: NavigationCoordinator!
 
   private let router: Routable
-  private let listId: Int
+  private let viewModel: ListViewModelProtocol
   
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .cardAdd)
@@ -27,9 +27,9 @@ final class CardAddCoordinator: NavigationCoordinator {
   
   // MARK: - Initializer
   
-  init(router: Routable, listId: Int) {
+  init(router: Routable, viewModel: ListViewModelProtocol) {
     self.router = router
-    self.listId = listId
+    self.viewModel = viewModel
   }
   
   
@@ -42,7 +42,7 @@ final class CardAddCoordinator: NavigationCoordinator {
               guard let self = self else { return UIViewController() }
               
               let cardService = CardService(router: self.router)
-              let viewModel = CardAddViewModel(cardService: cardService, listId: self.listId)
+              let viewModel = CardAddViewModel(cardService: cardService, viewModel: self.viewModel)
               return CardAddViewController(coder: coder, viewModel: viewModel)
             }) as? CardAddViewController else { return UIViewController() }
     

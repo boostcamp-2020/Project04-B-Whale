@@ -34,7 +34,7 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   // MARK: - Property
   
   private let cardService: CardServiceProtocol
-  private let listId: Int
+  private let viewModel: ListViewModelProtocol
   
   private var popHandler: (() -> Void)?
   private var isCreateEnableHandler: ((Bool) -> Void)?
@@ -53,9 +53,9 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   
   // MARK: - Initializer
   
-  init(cardService: CardServiceProtocol, listId: Int) {
+  init(cardService: CardServiceProtocol, viewModel: ListViewModelProtocol) {
     self.cardService = cardService
-    self.listId = listId
+    self.viewModel = viewModel
   }
   
   
@@ -94,6 +94,7 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   
   func createCard() {
     let dateString = selectedDate.toStringWithTime()
+    let listId = viewModel.fetchListId()
     cardService.createCard(
       listId: listId,
       title: listTitle,
@@ -101,7 +102,9 @@ final class CardAddViewModel: CardAddViewModelProtocol {
       content: content
     ) { result in
       switch result {
-      case .success(()):
+      case .success(let card):
+        self.viewModel.append(card: card)
+        self.viewModel.updateCollectionView()
         self.popHandler?()
         
       case .failure(let error):

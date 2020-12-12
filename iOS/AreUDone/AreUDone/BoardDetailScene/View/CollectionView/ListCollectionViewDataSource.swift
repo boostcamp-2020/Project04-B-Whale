@@ -13,12 +13,12 @@ final class ListCollectionViewDataSource: NSObject, UICollectionViewDataSource {
   // MARK: - Property
   
   private let viewModel: ListViewModelProtocol
-  private var presentCardAddHandler: ((Int) -> Void)?
+  private var presentCardAddHandler: ((ListViewModelProtocol) -> Void)?
   
   
   // MARK: - Initializer
   
-  init(viewModel: ListViewModelProtocol, presentCardAddHandler: ((Int) -> Void)?) {
+  init(viewModel: ListViewModelProtocol, presentCardAddHandler: ((ListViewModelProtocol) -> Void)?) {
     self.viewModel = viewModel
     self.presentCardAddHandler = presentCardAddHandler
 
@@ -50,8 +50,6 @@ final class ListCollectionViewDataSource: NSObject, UICollectionViewDataSource {
       return headerView
       
     case UICollectionView.elementKindSectionFooter:
-      // TODO: 여기서 카드 추가화면 띄우는 로직 필요
-      // viewmodel.createCard(리스트id) 핸들러? footerview에게 넘겨주기
       let footerView: ListFooterView = collectionView.dequeReusableFooterView(forIndexPath: indexPath)
       footerView.delegate = self
       
@@ -69,7 +67,6 @@ final class ListCollectionViewDataSource: NSObject, UICollectionViewDataSource {
 extension ListCollectionViewDataSource: ListFooterViewDelegate {
   
   func baseViewTapped() {
-    let listId = viewModel.fetchListId()
-    presentCardAddHandler?(listId)
+    presentCardAddHandler?(viewModel)
   }
 }

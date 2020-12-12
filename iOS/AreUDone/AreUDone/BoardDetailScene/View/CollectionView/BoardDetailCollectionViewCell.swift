@@ -45,9 +45,9 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     
     collectionView.reloadData()
   }
- 
+  
   // MARK: - Method
-
+  
   func update(
     with viewModel: ListViewModelProtocol,
     dataSource: UICollectionViewDataSource
@@ -56,7 +56,19 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     self.dataSource = dataSource
     collectionView.dataSource = dataSource
     
-    collectionView.reloadData()
+    bindUI()
+    viewModel.updateCollectionView()
+  }
+}
+
+private extension BoardDetailCollectionViewCell {
+  
+  func bindUI() {
+    viewModel.bindingUpdateCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadData()
+      }
+    }
   }
 }
 
@@ -67,7 +79,7 @@ private extension BoardDetailCollectionViewCell {
   
   func configure() {
     addSubview(collectionView)
-
+    
     configureCollectionView()
     configureNotification()
   }
@@ -133,7 +145,7 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
   
   // 2. 드래깅 중
   func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-    return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+    return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
   }
   
   // 3. 드래깅 끝
@@ -153,77 +165,67 @@ extension BoardDetailCollectionViewCell: UICollectionViewDropDelegate {
       
       let source = coordinator.items.first?.sourceIndexPath
       let destination = coordinator.destinationIndexPath
-            
+      
       switch (source, destination) {
       ///  ** 1. 같은 컬렉션뷰**
       case (.some(let sourceIndexPath), .some(let destinationIndexPath)):
-        changeData(inSame: collectionView, about: card, by: sourceIndexPath, and: destinationIndexPath)
-                
-      /// **2. 다른 컬렉션뷰: cell 이 있는 테이블뷰에 삽입할 때(insert)**
-      case (nil, .some(let destinationIndexPath)):
-        let localContext = coordinator.session.localDragSession?.localContext
         
-        insertData(with: localContext) {
-          viewModel.insert(card: card, at: destinationIndexPath.item)
-          
-          let item = destinationIndexPath.item
-          collectionView.insertItems(at: [IndexPath(item: item, section: 0)])
+        viewModel.updateCardPosition(from: sourceIndexPath.item, to: destinationIndexPath.item, by: card) {
+          DispatchQueue.main.async {
+            collectionView.performBatchUpdates {
+              collectionView.deleteItems(at: [IndexPath(item: sourceIndexPath.item, section: 0)])
+              collectionView.insertItems(at: [IndexPath(item: destinationIndexPath.item, section: 0)])
+            }
+          }
         }
-                
-      /// **3. 다른 컬렉션뷰: cell 이 없는 컬렉션뷰에 삽입할 때(append)**
+        
+      /// **2. 다른 컬렉션뷰: cell 을 밀어내고 삽입할 때**
+      case (nil, .some(let destinationIndexPath)):
+        guard let (
+                sourceViewModel,
+                sourceIndexPath,
+                sourceCollectionView) = coordinator.session.localDragSession?.localContext
+                as? (
+                  ListViewModelProtocol,
+                  IndexPath,
+                  UICollectionView
+                ) else { return }
+        
+        viewModel.updateCardPosition(from: sourceIndexPath.item, to: destinationIndexPath.item, by: card, in: sourceViewModel) {
+          DispatchQueue.main.async {
+            sourceCollectionView.deleteItems(at: [IndexPath(item: sourceIndexPath.item, section: 0)])
+            
+            let index = destinationIndexPath.item
+            collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+          }
+        }
+        
+      /// **3. 다른 컬렉션뷰: cell 을 밀어내지 않고 삽입할 때**
       case (.some(_), nil):
         fallthrough
-      case (nil, nil):
-        let localContext = coordinator.session.localDragSession?.localContext
         
-        insertData(with: localContext) {
-          viewModel.append(card: card)
-          
-          let item = viewModel.numberOfCards()-1
-          collectionView.insertItems(at: [IndexPath(item: item, section: 0)])
+      case (nil, nil):
+        guard let (
+                sourceViewModel,
+                sourceIndexPath,
+                sourceCollectionView) = coordinator.session.localDragSession?.localContext
+                as? (
+                  ListViewModelProtocol,
+                  IndexPath,
+                  UICollectionView
+                ) else { return }
+        
+        viewModel.updateCardPosition(from: sourceIndexPath.item, by: card, in: sourceViewModel) { lastIndex in
+          DispatchQueue.main.async {
+            sourceCollectionView.deleteItems(at: [IndexPath(item: sourceIndexPath.item, section: 0)])
+            
+            collectionView.insertItems(at: [IndexPath(item: lastIndex, section: 0)])
+          }
         }
+        
+        break
       }
     }
-  }
-  
-  private func changeData(
-    inSame collectionView: UICollectionView,
-    about card: Card,
-    by sourceIndexPath: IndexPath,
-    and destinationIndexPath: IndexPath
-  ) {
-    let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
-    
-    viewModel.removeCard(at: sourceIndexPath.item)
-    viewModel.insert(card: card, at: destinationIndexPath.item)
-    
-    collectionView.reloadItems(at: updatedIndexPaths)
-  }
-  
-  private func insertData(
-    with localContext: Any?,
-    _ insertDestinationTableViewDataHandler: () -> Void
-  ) {
-    removeSourceTableViewData(localContext: localContext)
-    
-    insertDestinationTableViewDataHandler()
-  }
-  
-  private func removeSourceTableViewData(localContext: Any?) {
-    guard let (
-            sourceViewModel,
-            sourceIndexPath,
-            collectionView) = localContext
-            as? (
-              ListViewModelProtocol,
-              IndexPath,
-              UICollectionView
-            ) else { return }
-    
-    sourceViewModel.removeCard(at: sourceIndexPath.item)
-    // sourceViewModel 로부터 카드 id 얻어온 다음 list, position 정보 서버로 전송
-    
-    collectionView.reloadSections(IndexSet(integer: 0))
   }
 }
 
