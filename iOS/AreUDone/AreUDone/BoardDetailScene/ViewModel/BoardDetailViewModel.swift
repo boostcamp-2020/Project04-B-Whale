@@ -23,12 +23,9 @@ protocol BoardDetailViewModelProtocol {
 
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, handler: @escaping (Double) -> Void)
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: List, handler: @escaping () -> Void)
 
   func createList(with title: String)
-  
-  func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath]
-
 }
 
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
@@ -50,7 +47,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       self.updateBoardDetailCollectionViewHandler?()
     }
   }
-  private var boardTitle: String = ""
+  private var boardTitle: String = "" {
+    didSet {
+      updateBoardTitleHandler?(boardTitle)
+    }
+  }
   
   // MARK: - Initializer
   
@@ -119,17 +120,15 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardService.updateBoard(withBoardId: boardId, title: title) { result in
       switch result {
       case .success(()):
-        self.updateBoardTitleHandler?(title)
         self.boardTitle = title
         
       case .failure(let error):
-        self.updateBoardTitleHandler?(self.boardTitle)
         print(error)
       }
     }
   }
   
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, handler: @escaping (Double) -> Void) {
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: List, handler: @escaping () -> Void) {
     guard let lists = boardDetail?.lists else { return }
     
     let listId = lists[sourceIndex].id
@@ -150,7 +149,12 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     listService.updateList(withListId: listId, position: position, title: nil) { result in
       switch result {
       case .success(_):
-        handler(position)
+        
+        self.remove(at: sourceIndex)
+        list.position = position
+        self.insert(list: list, at: destinationIndex)
+        
+        handler()
 
       case .failure(let error):
         print(error)
@@ -169,26 +173,6 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
         print(error)
       }
     }
-  }
-  
-  func makeUpdatedIndexPaths(by firstIndexPath: IndexPath, and secondIndexPath: IndexPath) -> [IndexPath] {
-    var updatedIndexPaths: [IndexPath]
-    
-    if firstIndexPath.item < secondIndexPath.item {
-      updatedIndexPaths =
-        (firstIndexPath.item...secondIndexPath.item)
-        .map { IndexPath(row: $0, section: 0) }
-      
-    } else if firstIndexPath.item > secondIndexPath.item {
-      updatedIndexPaths =
-        (secondIndexPath.item...firstIndexPath.item)
-        .map { IndexPath(row: $0, section: 0) }
-      
-    } else {
-      updatedIndexPaths = []
-    }
-    
-    return updatedIndexPaths
   }
 }
 

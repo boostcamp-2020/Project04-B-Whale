@@ -286,28 +286,17 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
             let destination = coordinator.destinationIndexPath
       else { return }
      
-      viewModel.updatePosition(of: source.item, to: destination.item) { position in
+      viewModel.updatePosition(of: source.item, to: destination.item, list: list) {
         DispatchQueue.main.async {
-          changeData(inSame: collectionView, about: list, to: position, of: source, and: destination)
+            DispatchQueue.main.async {
+              collectionView.performBatchUpdates {
+                collectionView.deleteItems(at: [IndexPath(item: source.item, section: 0)])
+                collectionView.insertItems(at: [IndexPath(item: destination.item, section: 0)])
+              }
+            }
         }
       }
     }
-  }
-  
-  private func changeData(
-    inSame collectionView: UICollectionView,
-    about list: List,
-    to position: Double,
-    of sourceIndexPath: IndexPath,
-    and destinationIndexPath: IndexPath
-  ) {
-    let updatedIndexPaths = viewModel.makeUpdatedIndexPaths(by: sourceIndexPath, and: destinationIndexPath)
-
-    list.position = position
-    viewModel.remove(at: sourceIndexPath.row)
-    viewModel.insert(list: list, at: destinationIndexPath.row)
-    
-    collectionView.reloadItems(at: updatedIndexPaths)
   }
 }
 
