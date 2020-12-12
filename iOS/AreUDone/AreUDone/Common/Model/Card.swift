@@ -15,7 +15,7 @@ struct Cards: Codable {
 class Card: NSObject, Codable {
   let id: Int
   let title, dueDate: String
-  let position: Double
+  var position: Double
   let commentCount: Int
   
   init(
