@@ -58,12 +58,14 @@ class CardService: CardServiceProtocol {
   // MARK: - Property
   
   private let router: Routable
+  private let localDataSource: CardLocalDataSourceable?
   
   
   // MARK: - Initializer
   
-  init(router: Routable) {
+  init(router: Routable, localDataSource: CardLocalDataSourceable? = nil) {
     self.router = router
+    self.localDataSource = localDataSource
   }
   
   
@@ -71,7 +73,22 @@ class CardService: CardServiceProtocol {
   
   func fetchDailyCards(dateString: String, option: FetchDailyCardsOption, completionHandler: @escaping (Result<Cards, APIError>) -> Void) {
     router.request(route: CardEndPoint.fetchDailyCards(dateString: dateString, option: option)) { (result: Result<Cards, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(let cards):
+        completionHandler(.success(cards))
+        DispatchQueue.main.async {
+          cards.date = dateString
+          self.localDataSource?.save(cards: cards)
+        }
+      case .failure(_):
+        DispatchQueue.main.async {
+          if let cards = self.localDataSource?.loadCards(at: dateString) {
+            completionHandler(.success(cards))
+          } else {
+            completionHandler(.failure(.data))
+          }
+        }
+      }
     }
   }
   
