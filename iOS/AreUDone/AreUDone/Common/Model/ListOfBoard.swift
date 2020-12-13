@@ -14,14 +14,7 @@ class ListOfBoard: Object, Codable {
   @objc dynamic var title: String = ""
   @objc dynamic var position: Double = 0.0
   var cards = List<Card>()
-//
-//  init(id: Int, title: String, position: Double, cards: [Card]) {
-//    self.id = id
-//    self.title = title
-//    self.position = position
-//    self.cards = cards
-//  }
-//
+
   required convenience init(from decoder: Decoder) throws {
     self.init()
     
@@ -29,10 +22,9 @@ class ListOfBoard: Object, Codable {
     self.id = try container.decode(Int.self, forKey: .id)
     self.title = try container.decode(String.self, forKey: .title)
     self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
-//    self.cards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
     
     let decodedCards =
-      try container.decodeIfPresent([Card].self, forKey: .cards) ?? [Card()]
+      try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
     cards.append(objectsIn: decodedCards)
     
   }

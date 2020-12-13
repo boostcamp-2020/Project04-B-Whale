@@ -16,6 +16,10 @@ class BoardDetail: Object, Codable {
   var invitedUsers = List<User>()
   var lists = List<ListOfBoard>()
   
+  override class func primaryKey() -> String? {
+    return "id"
+  }
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -26,11 +30,11 @@ class BoardDetail: Object, Codable {
     self.color = try container.decode(String.self, forKey: .color)
     
     let decodedInvitedUsers =
-      try container.decodeIfPresent([User].self, forKey: .invitedUsers) ?? [User()]
+      try container.decodeIfPresent([User].self, forKey: .invitedUsers) ?? []
     invitedUsers.append(objectsIn: decodedInvitedUsers)
     
     let decodedLists =
-      try container.decodeIfPresent([ListOfBoard].self, forKey: .lists) ?? [ListOfBoard()]
+      try container.decodeIfPresent([ListOfBoard].self, forKey: .lists) ?? []
     lists.append(objectsIn: decodedLists)
   }
   

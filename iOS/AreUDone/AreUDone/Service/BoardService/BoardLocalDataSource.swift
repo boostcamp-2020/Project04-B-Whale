@@ -8,65 +8,45 @@
 import Foundation
 import RealmSwift
 
-
 protocol BoardLocalDataSourceable {
-  func save(boards: Boards)
-  func save(boardDetail: BoardDetail)
-  
-  func loadBoards() -> Boards
+  func save(object: Object, policy: Realm.UpdatePolicy?) // 보드 목록 / 상세화면 저장
+  func updateBoard(title: String, ofId id: Int) // 보드 제목 변경 저장
+
+  func loadBoards() -> Boards?
   func loadBoardDetail(ofId id: Int) -> BoardDetail?
 }
 
-// 해야할 것. 백그라운드에서 해도 되는거같은데.. 같은 스레드이기만 하면 되는건지?
 
 final class BoardLocalDataSource: BoardLocalDataSourceable {
   
-  let realm = try! Realm() // 이 객체가 main thread 에서 만들어지기 때문에 write 도 같은 메인스레드에서.
+  let realm = try! Realm()
   
-  func save(boards: Boards) {
-    DispatchQueue.main.async {
-      try! self.realm.write {
-        self.realm.add(boards)
-      }
+  
+  func save(object: Object, policy: Realm.UpdatePolicy?) {
+    realm.writeOnMain(object: object) { object in
+      if let policy = policy { self.realm.add(object, update: policy) }
+      else { self.realm.add(object) }
     }
   }
   
-  // 그냥 Object 를 넘겨도 되지 않을까 싶은데..
-  func save(boardDetail: BoardDetail) {
-    DispatchQueue.main.async {
-      try! self.realm.write {
-        self.realm.add(boardDetail)
-      }
-    }
+  func updateBoard(title: String, ofId id: Int) {
+    guard let boardDetail =
+            realm.objects(BoardDetail.self).filter("id == \(id)").first
+    else { return }
     
+    realm.writeOnMain(object: boardDetail) { object in
+      boardDetail.title = title
+      self.realm.add(object)
+    }
   }
   
-  func loadBoards() -> Boards {
+  func loadBoards() -> Boards? {
     let boards = realm.objects(Boards.self).first
-
-    return boards ?? Boards()
+    return boards
   }
   
   func loadBoardDetail(ofId id: Int) -> BoardDetail? {
-//    let boardDetail = realm.objects(BoardDetail.self)
-    
     let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first
-
     return boardDetail
   }
 }
-
-
-
-//    let objects = List<Board>()
-//    let objects2 = List<Board>()
-//
-//    zip(boards.myBoards, boards.invitedBoards).forEach {
-//      objects.append($0.0)
-//      objects2.append($0.1)
-//    }
-//
-//    let realmBoards = RealmBoards(value: ["myBoards": objects, "invitedBoards": objects2])
-//
-    
-

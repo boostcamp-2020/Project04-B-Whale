@@ -19,21 +19,7 @@ class Card: Object, Codable {
   @objc dynamic var dueDate: String = ""
   @objc dynamic var position: Double = 0.0
   @objc dynamic var commentCount: Int = 0
-  
-//  init(
-//    id: Int,
-//    title: String,
-//    dueDate: String,
-//    position: Double,
-//    commentCount: Int
-//  ) {
-//    self.id = id
-//    self.title = title
-//    self.dueDate = dueDate
-//    self.position = position
-//    self.commentCount = commentCount
-//  }
-  
+
   required convenience init(from decoder: Decoder) throws {
     self.init()
     

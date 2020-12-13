@@ -47,11 +47,11 @@ class Boards: Object, Codable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     let decodedMyBoards =
-      try container.decodeIfPresent([Board].self, forKey: .myBoards) ?? [Board()]
+      try container.decodeIfPresent([Board].self, forKey: .myBoards) ?? []
     myBoards.append(objectsIn: decodedMyBoards)
     
     let decodedInvitedBoards =
-      try container.decodeIfPresent([Board].self, forKey: .invitedBoards) ?? [Board()]
+      try container.decodeIfPresent([Board].self, forKey: .invitedBoards) ?? []
     invitedBoards.append(objectsIn: decodedInvitedBoards)
   }
   
