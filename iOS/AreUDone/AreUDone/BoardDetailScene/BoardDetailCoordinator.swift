@@ -40,7 +40,7 @@ final class BoardDetailCoordinator: NavigationCoordinator {
             identifier: BoardDetailViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController()}
               
-              let boardService = BoardService(router: self.router)
+              let boardService = BoardService(router: self.router, localDataSource: BoardLocalDataSource())
               let listService = ListService(router: self.router)
               let cardService = CardService(router: self.router)
               let activityService = ActivityService(router: MockRouter(jsonFactory: ActivityTrueJsonFactory()))

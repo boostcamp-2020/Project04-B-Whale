@@ -89,8 +89,8 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
-        var invitedUsers = boardDetail.invitedUsers
-        invitedUsers.insert(boardDetail.creator, at: 0)
+        var invitedUsers = boardDetail.fetchInvitedUsers()
+        invitedUsers.insert(boardDetail.creator!, at: 0)
         
         self.boardMembers = invitedUsers
         

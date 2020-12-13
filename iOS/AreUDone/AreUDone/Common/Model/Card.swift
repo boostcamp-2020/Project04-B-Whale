@@ -7,32 +7,36 @@
 
 import Foundation
 import MobileCoreServices
+import RealmSwift
 
 struct Cards: Codable {
     let cards: [Card]?
 }
 
-class Card: NSObject, Codable {
-  let id: Int
-  let title, dueDate: String
-  var position: Double
-  let commentCount: Int
+class Card: Object, Codable {
+  @objc dynamic var id: Int = 0
+  @objc dynamic var title: String = ""
+  @objc dynamic var dueDate: String = ""
+  @objc dynamic var position: Double = 0.0
+  @objc dynamic var commentCount: Int = 0
   
-  init(
-    id: Int,
-    title: String,
-    dueDate: String,
-    position: Double,
-    commentCount: Int
-  ) {
-    self.id = id
-    self.title = title
-    self.dueDate = dueDate
-    self.position = position
-    self.commentCount = commentCount
-  }
+//  init(
+//    id: Int,
+//    title: String,
+//    dueDate: String,
+//    position: Double,
+//    commentCount: Int
+//  ) {
+//    self.id = id
+//    self.title = title
+//    self.dueDate = dueDate
+//    self.position = position
+//    self.commentCount = commentCount
+//  }
   
-  required init(from decoder: Decoder) throws {
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.id = try container.decode(Int.self, forKey: .id)
     self.title = try container.decode(String.self, forKey: .title)

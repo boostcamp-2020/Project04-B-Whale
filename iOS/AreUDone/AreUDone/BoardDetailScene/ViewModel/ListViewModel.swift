@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol ListViewModelProtocol {
   
@@ -34,16 +35,22 @@ final class ListViewModel: ListViewModelProtocol {
   
   // MARK: - Property
   
+  let realm = try! Realm()
+
+  
   private let listService: ListServiceProtocol
   private let cardService: CardServiceProtocol
   
   private var updateListTitleHandler: ((String) -> Void)?
   private var updateCollectionViewHandler: (() -> Void)?
   
-  private let list: List
+  private let list: ListOfBoard
   private var listTitle: String = "" {
     didSet {
-      list.title = listTitle
+      
+      try! realm.write {
+        list.title = listTitle
+      }
       updateListTitleHandler?(listTitle)
     }
   }
@@ -54,7 +61,7 @@ final class ListViewModel: ListViewModelProtocol {
   init(
     listService: ListServiceProtocol,
     cardService: CardServiceProtocol,
-    list: List
+    list: ListOfBoard
   ) {
     self.listService = listService
     self.cardService = cardService
@@ -105,6 +112,7 @@ final class ListViewModel: ListViewModelProtocol {
         self.listTitle = title
         
       case .failure(let error):
+        self.updateListTitleHandler?(self.listTitle)
         print(error)
       }
     }

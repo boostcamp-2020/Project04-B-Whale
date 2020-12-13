@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct User: Codable, Hashable {
-  let id: Int
-  let name: String
-  let profileImageUrl: String
+class User: Object, Codable {
+  @objc dynamic var id: Int = 0
+  @objc dynamic var name: String = ""
+  @objc dynamic var profileImageUrl: String = ""
 }

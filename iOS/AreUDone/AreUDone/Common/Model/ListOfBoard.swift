@@ -7,30 +7,38 @@
 
 import Foundation
 import MobileCoreServices
+import RealmSwift
 
-class List: NSObject, Codable {
-  let id: Int
-  var title: String
-  var position: Double
-  var cards: [Card]
-  
-  init(id: Int, title: String, position: Double, cards: [Card]) {
-    self.id = id
-    self.title = title
-    self.position = position
-    self.cards = cards
-  }
-  
-  required init(from decoder: Decoder) throws {
+class ListOfBoard: Object, Codable {
+  @objc dynamic var id: Int = 0
+  @objc dynamic var title: String = ""
+  @objc dynamic var position: Double = 0.0
+  var cards = List<Card>()
+//
+//  init(id: Int, title: String, position: Double, cards: [Card]) {
+//    self.id = id
+//    self.title = title
+//    self.position = position
+//    self.cards = cards
+//  }
+//
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.id = try container.decode(Int.self, forKey: .id)
     self.title = try container.decode(String.self, forKey: .title)
     self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
-    self.cards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
+//    self.cards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
+    
+    let decodedCards =
+      try container.decodeIfPresent([Card].self, forKey: .cards) ?? [Card()]
+    cards.append(objectsIn: decodedCards)
+    
   }
 }
 
-extension List: NSItemProviderWriting {
+extension ListOfBoard: NSItemProviderWriting {
   static var writableTypeIdentifiersForItemProvider: [String] {
     
     return [kUTTypeData as String]
@@ -54,7 +62,7 @@ extension List: NSItemProviderWriting {
   }
 }
 
-extension List: NSItemProviderReading {
+extension ListOfBoard: NSItemProviderReading {
   static var readableTypeIdentifiersForItemProvider: [String] {
     return [kUTTypeData as String]
   }
@@ -62,7 +70,7 @@ extension List: NSItemProviderReading {
   static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
     let decoder = JSONDecoder()
     do {
-      let myJSON = try decoder.decode(List.self, from: data)
+      let myJSON = try decoder.decode(ListOfBoard.self, from: data)
       return myJSON as! Self
     } catch {
       fatalError("Err")
