@@ -5,7 +5,7 @@ import { JwtUtil } from '../../src/common/util/JwtUtil';
 import { Board } from '../../src/model/Board';
 import { List } from '../../src/model/List';
 import { User } from '../../src/model/User';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 
 describe('Board API Test', () => {
     let app = null;
@@ -23,7 +23,7 @@ describe('Board API Test', () => {
     });
 
     test('PATCH /api/list/:id 리스트 수정api 호출할 때, 리스트 미존재시 404을 리턴한다.', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -46,7 +46,7 @@ describe('Board API Test', () => {
     });
 
     test('PATCH /api/list/:id 리스트 수정api 호출할 때, 정상요청 시 204을 리턴한다.', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dh', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -87,7 +87,7 @@ describe('Board API Test', () => {
     });
 
     test('DELETE /api/list/:id 리스트 삭제api 호출할 때, 리스트 미존재시 404을 리턴한다.', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'user', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -110,7 +110,7 @@ describe('Board API Test', () => {
     });
 
     test('DELETE /api/list/:id 리스트 삭제api 호출할 때, 정상호출 시 204을 리턴한다.', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dh', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -150,7 +150,7 @@ describe('Board API Test', () => {
     });
 
     test('POST /api/list/{listId}/card 카드 추가 api 호출 시, 리스트 존재하지 않을 때, 404 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dhoon', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -174,7 +174,7 @@ describe('Board API Test', () => {
     });
 
     test('POST /api/list/{listId}/card 카드 추가 api 호출 시, 정상호출 시, 201 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dhoon', socialId: '1234', profileImageUrl: 'image' };
             const userRepository = getRepository(User);

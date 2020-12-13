@@ -11,7 +11,7 @@ import { Invitation } from '../../../src/model/Invitation';
 import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
 import { CommentService } from '../../../src/service/CommentService';
-import { TestTransactionDelegate } from '../../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
 describe('CommentService.modifyComment() Test', () => {
     const app = new Application();
@@ -28,7 +28,7 @@ describe('CommentService.modifyComment() Test', () => {
 
     test('존재하지 않는 댓글을 수정할 때 EntityNotFoundError 발생', async () => {
         const commentService = CommentService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -55,7 +55,7 @@ describe('CommentService.modifyComment() Test', () => {
 
     test('댓글을 수정하려고 하지만 본인 댓글이 아니라서 ForBiddenError 발생', async () => {
         const commentService = CommentService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -124,7 +124,7 @@ describe('CommentService.modifyComment() Test', () => {
 
     test('본인이 작성한 댓글 수정', async () => {
         const commentService = CommentService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 

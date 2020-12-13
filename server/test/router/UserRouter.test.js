@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import { Application } from '../../src/Application';
 import { JwtUtil } from '../../src/common/util/JwtUtil';
 import { User } from '../../src/model/User';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 
 describe('UserRouter Test', () => {
     const app = new Application();
@@ -21,7 +21,7 @@ describe('UserRouter Test', () => {
     });
 
     test('GET /api/user/me: user0을 조회했을 때 user0 반환 상태 코드 200', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -52,7 +52,7 @@ describe('UserRouter Test', () => {
     });
 
     test('GET /api/user?username= 유저 검색 라우터 정상호출 시 상태코드 200 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dhoon', socialId: 'naver', profileImageUrl: 'image' };
             const userRepository = getRepository(User);

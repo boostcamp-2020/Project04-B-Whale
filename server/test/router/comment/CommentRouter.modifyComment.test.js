@@ -9,7 +9,7 @@ import { Comment } from '../../../src/model/Comment';
 import { Invitation } from '../../../src/model/Invitation';
 import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
-import { TestTransactionDelegate } from '../../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
 describe('PATCH /api/comment/{commentId}', () => {
     const app = new Application();
@@ -26,7 +26,7 @@ describe('PATCH /api/comment/{commentId}', () => {
     });
 
     test('존재하지 않는 댓글을 수정할 때 404 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -49,7 +49,7 @@ describe('PATCH /api/comment/{commentId}', () => {
     });
 
     test('commentId가 문자열일 때 호출 시 400 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -72,7 +72,7 @@ describe('PATCH /api/comment/{commentId}', () => {
     });
 
     test('본인 댓글이 아닌 댓글을 수정할 때 403 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -139,7 +139,7 @@ describe('PATCH /api/comment/{commentId}', () => {
     });
 
     test('본인이 작성한 댓글 삭제 성공 시 204 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 

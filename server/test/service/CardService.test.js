@@ -8,7 +8,7 @@ import { List } from '../../src/model/List';
 import { Member } from '../../src/model/Member';
 import { User } from '../../src/model/User';
 import { CardService } from '../../src/service/CardService';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 
 describe('Card Service Test', () => {
     const app = new Application();
@@ -26,7 +26,7 @@ describe('Card Service Test', () => {
     beforeEach(async () => {});
 
     test('getAllCardCountByPeriod() : 정상적인 사용자가 카드를 조회할 때, 보드가 없으면 빈 배열 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user1 = em.create(User, {
@@ -51,7 +51,7 @@ describe('Card Service Test', () => {
     });
 
     test('getAllCardCountByPeriod() : 정상적인 사용자가 startDate, endDate 기간동안의 모든 카드 조회', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user1 = em.create(User, {
@@ -137,7 +137,7 @@ describe('Card Service Test', () => {
     });
 
     test('getMyCardCountByPeriod() : 로그인 중인 정상적인 사용자가 startDate, endDate 기간동안의 member에 속하거나 생성한 카드 조회', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user1 = em.create(User, {
@@ -232,7 +232,7 @@ describe('Card Service Test', () => {
 
     test('getMyCardsByDueDate(): user0이 생성한 카드와 멤버로 할당된 카드 중 dueDate가 2020-12-03인 카드 목록 조회', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -308,7 +308,7 @@ describe('Card Service Test', () => {
 
     test('getMyCardsByDueDate(): user0이 생성한 카드와 멤버로 할당된 카드가 없을 때 빈 배열 반환', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -332,7 +332,7 @@ describe('Card Service Test', () => {
 
     test('getAllCardsByDueDate(): user0이 생성한 보드와 초대된 보드의 카드 중 dueDate가 2020-12-03인 카드 조회', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -453,7 +453,7 @@ describe('Card Service Test', () => {
 
     test('getMyCardsByDueDate(): user0이 생성한 카드와 멤버로 할당된 카드 중 dueDate가 2020-12-03인 카드 목록 조회', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -529,7 +529,7 @@ describe('Card Service Test', () => {
 
     test('getMyCardsByDueDate(): user0이 생성한 카드와 멤버로 할당된 카드가 없을 때 빈 배열 반환', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -553,7 +553,7 @@ describe('Card Service Test', () => {
 
     test('getAllCardsByDueDate(): user0이 생성한 보드와 초대된 보드의 카드 중 dueDate가 2020-12-03인 카드 조회', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -674,7 +674,7 @@ describe('Card Service Test', () => {
 
     test('modifyCardById(): 일부 데이터만 변경', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -744,7 +744,7 @@ describe('Card Service Test', () => {
 
     test('modifyCardById(): 전체 데이터 변경', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -819,7 +819,7 @@ describe('Card Service Test', () => {
     });
 
     test('카드 삭제 api 서비스 함수 deleteCard 테스트', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user = em.create(User, {
@@ -866,7 +866,7 @@ describe('Card Service Test', () => {
 
     test('addMemberToCardByUserIds() : 카드에 member 여러명 추가', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -942,7 +942,7 @@ describe('Card Service Test', () => {
 
     test('addMemberToCardByUserIds() : 카드에 member 추가 및 삭제', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -1021,7 +1021,7 @@ describe('Card Service Test', () => {
 
     test('addMemberToCardByUserIds() : 카드에 모든 member 삭제', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 

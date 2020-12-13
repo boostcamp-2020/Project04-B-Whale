@@ -9,7 +9,7 @@ import { Invitation } from '../../src/model/Invitation';
 import { List } from '../../src/model/List';
 import { Member } from '../../src/model/Member';
 import { User } from '../../src/model/User';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 
 describe('CustomCardRepository', () => {
     const app = new Application();
@@ -25,7 +25,7 @@ describe('CustomCardRepository', () => {
 
     test('findByDueDateAndCreatorId(): dueDate가 2020년 1월 1일인 카드 조회', async () => {
         const repo = getCustomRepository(CustomCardRepository);
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -90,7 +90,7 @@ describe('CustomCardRepository', () => {
 
     test('findByDueDateAndMemberUserId(): dueDate가 2020년 1월 1일이고, user1에게 할당된 카드 조회', async () => {
         const repo = getCustomRepository(CustomCardRepository);
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -173,7 +173,7 @@ describe('CustomCardRepository', () => {
 
     test('findByDueDateAndBoardIds(): board0과 board1에 있는 카드 중 dueDate가 2020년 1월 1일인 카드 조회', async () => {
         const repo = getCustomRepository(CustomCardRepository);
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 

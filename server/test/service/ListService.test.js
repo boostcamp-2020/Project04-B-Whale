@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 import { Application } from '../../src/Application';
 import { Board } from '../../src/model/Board';
 import { List } from '../../src/model/List';
@@ -20,7 +20,7 @@ describe('Board Service Test', () => {
     });
 
     test('리스트 수정 서비스 함수 updateList 테스트', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dhoon', socialId: '1234111', profileImageUrl: 'dh-image' };
             const userRepository = getRepository(User);
@@ -60,7 +60,7 @@ describe('Board Service Test', () => {
     });
 
     test('리스트 삭제 서비스 함수 deleteList 테스트', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const user = { name: 'dhoon', socialId: '1234111', profileImageUrl: 'dh-image' };
             const userRepository = getRepository(User);
