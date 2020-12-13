@@ -123,8 +123,19 @@ private extension BoardListViewController {
 private extension BoardListViewController {
   
   func bindUI() {
-    viewModel.bindingUpdateBoardListCollectionView { boards in
-      self.updateSnapshot(with: boards)
+    bindingUpdateBoarListCollectionView()
+    bindingDidBoardTapped()
+  }
+  
+  func bindingUpdateBoarListCollectionView() {
+    viewModel.bindingUpdateBoardListCollectionView { [weak self] boards in
+      self?.updateSnapshot(with: boards)
+    }
+  }
+  
+  func bindingDidBoardTapped() {
+    viewModel.bindingDidBoardTapped { [weak self] boardId in
+      self?.coordinator?.pushToBoardDetail(boardId: boardId)
     }
   }
 }
@@ -163,10 +174,8 @@ private extension BoardListViewController {
 extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-    viewModel.fetchBoardId(at: indexPath) { boardId in
-      coordinator?.pushToBoardDetail(boardId: boardId)
-    }
+    guard let board = dataSource.itemIdentifier(for: indexPath) else { return }
+    viewModel.fetchBoardId(for: board)
   }
 }
 

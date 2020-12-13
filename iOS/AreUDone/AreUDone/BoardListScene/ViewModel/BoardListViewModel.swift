@@ -11,8 +11,9 @@ protocol BoardListViewModelProtocol {
   
   func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
+  func bindingDidBoardTapped(handler: @escaping (Int) -> Void)
   
-  func fetchBoardId(at indexPath: IndexPath, handler: (Int) -> Void)
+  func fetchBoardId(for board: Board)
   func changeBoardOption(option: FetchBoardOption)
   func fetchBoard()
 }
@@ -25,8 +26,7 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   private var initializeBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
-  
-  private var boards: [[Board]] = Array(repeating: [], count: 2)
+  private var didBoardTappedHandler: ((Int) -> Void)?
   
   private var fetchBoardOption: FetchBoardOption = .myBoards {
     didSet {
@@ -44,9 +44,8 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Method
   
-  func fetchBoardId(at indexPath: IndexPath, handler: (Int) -> Void) {
-    let board = boards[indexPath.section][indexPath.item]
-    handler(board.id)
+  func fetchBoardId(for board: Board) {
+    didBoardTappedHandler?(board.id)
   }
   
   func changeBoardOption(option: FetchBoardOption) {
@@ -57,16 +56,11 @@ final class BoardListViewModel: BoardListViewModelProtocol {
     boardService.fetchAllBoards() { result in
       switch result {
       case .success(let boards):
-        self.boards[0] = boards.myBoards
-        self.boards[1] = boards.invitedBoards
-        
         if self.fetchBoardOption == .myBoards {
           self.updateBoardListCollectionViewHandler?(boards.myBoards)
         } else {
           self.updateBoardListCollectionViewHandler?(boards.invitedBoards)
         }
-        
-        
         
       case .failure(let error):
         print(error)
@@ -86,5 +80,9 @@ extension BoardListViewModel {
   
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void) {
     updateBoardListCollectionViewHandler = handler
+  }
+  
+  func bindingDidBoardTapped(handler: @escaping (Int) -> Void) {
+    didBoardTappedHandler = handler
   }
 }
