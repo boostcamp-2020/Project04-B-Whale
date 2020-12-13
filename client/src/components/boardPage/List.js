@@ -28,7 +28,7 @@ const ListWrapper = styled.div`
     z-index: 1;
     opacity: ${(props) => props.opacity};
     cursor: ${(props) => props.cursor};
-    max-height: 100%;
+    max-height: 98%;
 `;
 
 const ListContentWrapper = styled.div`
@@ -131,6 +131,8 @@ export default function List({ title, id, index, moveList, position }) {
             if (dragListId !== hoverListId) {
                 const dragCard = boardDetail.lists[dragListIndex].cards[dragIndex];
                 boardDetail.lists[dragListIndex].cards.splice(dragIndex, 1);
+                if (!boardDetail.lists[dragListIndex].cards.length)
+                    boardDetail.lists[dragListIndex].cards.splice(0, 0, { id: 0 });
                 if (!boardDetail.lists[hoverListIndex].cards.length) {
                     boardDetail.lists[hoverListIndex].cards.splice(0, 0, dragCard);
                 } else {

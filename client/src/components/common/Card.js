@@ -143,7 +143,7 @@ const Card = ({
     if (draggable) {
         drag(drop(cardRef));
     }
-    if (!id) {
+    if (id === 0) {
         height = '1px';
         opacity = 0;
     }
