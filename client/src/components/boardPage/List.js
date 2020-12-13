@@ -2,11 +2,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Input } from 'antd';
+import update from 'immutability-helper';
 import AddListOrCard from './AddListOrCard';
 import ListMenuDropdown from './ListMenuDropdown';
 import { updateListTitle, modifyListPosition } from '../../utils/listRequest';
@@ -56,7 +57,7 @@ const ListTitleInput = styled(Input)`
 const CardsWrapper = styled.div`
     margin: auto;
     margin-top: 5px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 `;
 
@@ -92,8 +93,10 @@ export default function List({ title, id, index, moveList, position }) {
         offsetX: 0,
     });
 
+    const { cards } = boardDetail.lists[index];
+
     const updateContextListTitle = () => {
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
+        boardDetail.lists[index].title = listTitle;
         setBoardDetail({ ...boardDetail });
     };
 
@@ -105,7 +108,7 @@ export default function List({ title, id, index, moveList, position }) {
     const changeListTitle = async (evt) => {
         if (evt.keyCode !== undefined && evt.keyCode !== 13) return;
         await updateListTitle({ listId: id, title: listTitle });
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].title = listTitle;
+        boardDetail.lists[index].title = listTitle;
         setBoardDetail({ ...boardDetail });
         setTitleInputState(false);
     };
@@ -117,6 +120,39 @@ export default function List({ title, id, index, moveList, position }) {
             offsetY: evt.target.getBoundingClientRect().left,
         });
     };
+    const moveCard = useCallback(
+        (dragIndex, hoverIndex, dragListId, hoverListId) => {
+            const dragListIndex = boardDetail.lists.findIndex((list) => {
+                return list.id === dragListId;
+            });
+            const hoverListIndex = boardDetail.lists.findIndex((list) => {
+                return list.id === hoverListId;
+            });
+            if (dragListId !== hoverListId) {
+                const dragCard = boardDetail.lists[dragListIndex].cards[dragIndex];
+                boardDetail.lists[dragListIndex].cards.splice(dragIndex, 1);
+                if (!boardDetail.lists[hoverListIndex].cards.length) {
+                    boardDetail.lists[hoverListIndex].cards.splice(0, 0, dragCard);
+                } else {
+                    boardDetail.lists[hoverListIndex].cards.splice(hoverIndex, 0, dragCard);
+                }
+                setBoardDetail({ ...boardDetail });
+            } else {
+                const dragCard = boardDetail.lists[index].cards[dragIndex];
+                boardDetail.lists[index].cards = update(boardDetail.lists[index].cards, {
+                    $splice: [
+                        [dragIndex, 1],
+                        [hoverIndex, 0, dragCard],
+                    ],
+                });
+
+                setBoardDetail({
+                    ...boardDetail,
+                });
+            }
+        },
+        [boardDetail.lists],
+    );
 
     const ref = useRef();
     const [, drop] = useDrop({
@@ -131,14 +167,14 @@ export default function List({ title, id, index, moveList, position }) {
                 return;
             }
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientX = clientOffset.X - hoverBoundingRect.left;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
                 return;
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
             moveList(dragIndex, hoverIndex);
@@ -156,7 +192,6 @@ export default function List({ title, id, index, moveList, position }) {
             }
             await modifyListPosition({ listId: item.id, position: updatedPosition });
             lists[index].position = updatedPosition;
-            setBoardDetail({ ...boardDetail, lists });
         },
     });
 
@@ -194,18 +229,22 @@ export default function List({ title, id, index, moveList, position }) {
                     <AiOutlineMenu onClick={menuClickHandler} style={{ cursor: 'pointer' }} />
                 </ListContentWrapper>
                 <CardsWrapper>
-                    {boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards?.map(
-                        (v) => (
-                            <Card
-                                width="230px"
-                                height="60px"
-                                fontSize={{ titleSize: '1rem', dueDateSize: '11px' }}
-                                cardTitle={v.title}
-                                cardDueDate={v.dueDate}
-                                cardCommentCount={v.commentCount}
-                            />
-                        ),
-                    )}
+                    {boardDetail.lists[index].cards.map((v, cardInd) => (
+                        <Card
+                            width="230px"
+                            height="60px"
+                            id={v.id}
+                            key={v.id}
+                            index={cardInd}
+                            listId={boardDetail.lists[index].id}
+                            fontSize={{ titleSize: '1rem', dueDateSize: '11px' }}
+                            cardTitle={v.title}
+                            cardDueDate={v.dueDate}
+                            cardCommentCount={v.commentCount}
+                            moveCard={moveCard}
+                            draggable
+                        />
+                    ))}
                 </CardsWrapper>
                 <FooterAddBtnDiv>
                     <AddListOrCard parent="card" id={id} />
