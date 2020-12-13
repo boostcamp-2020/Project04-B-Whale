@@ -65,6 +65,11 @@ const Board = ({ match }) => {
     useEffect(async () => {
         const { status, data } = await getDetailBoard(id);
         console.log(status);
+        data.lists.forEach((element) => {
+            if (!element.cards.length) {
+                element.cards.splice(0, 0, { id: 0, title: '' });
+            }
+        });
         setBoardDetail(data);
     }, []);
 
