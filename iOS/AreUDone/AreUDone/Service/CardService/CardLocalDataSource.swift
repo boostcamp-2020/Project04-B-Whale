@@ -20,7 +20,7 @@ final class CardLocalDataSource: CardLocalDataSourceable {
   
   func save(cards: Cards) {
     try! realm.write {
-      realm.add(cards)
+      realm.add(cards, update: .modified)
     }
   }
   
