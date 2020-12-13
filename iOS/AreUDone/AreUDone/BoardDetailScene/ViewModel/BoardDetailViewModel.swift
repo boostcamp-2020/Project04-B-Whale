@@ -53,9 +53,12 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   private var boardTitle: String = "" {
     didSet {
-      try! realm.write {
-        boardDetail?.title = boardTitle
+      DispatchQueue.main.async {
+        try! self.realm.write {
+          self.boardDetail?.title = self.boardTitle
+        }
       }
+      
 
       updateBoardTitleHandler?(boardTitle)
     }

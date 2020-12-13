@@ -16,10 +16,6 @@ class BoardDetail: Object, Codable {
   var invitedUsers = List<User>()
   var lists = List<ListOfBoard>()
   
-  override class func primaryKey() -> String? {
-    return "id"
-  }
-  
   required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)

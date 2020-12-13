@@ -21,20 +21,24 @@ protocol BoardLocalDataSourceable {
 
 final class BoardLocalDataSource: BoardLocalDataSourceable {
   
-  let realm = try! Realm()
+  let realm = try! Realm() // 이 객체가 main thread 에서 만들어지기 때문에 write 도 같은 메인스레드에서.
   
   func save(boards: Boards) {
-
-    try! realm.write {
-      realm.add(boards)
+    DispatchQueue.main.async {
+      try! self.realm.write {
+        self.realm.add(boards)
+      }
     }
   }
   
   // 그냥 Object 를 넘겨도 되지 않을까 싶은데..
   func save(boardDetail: BoardDetail) {
-    try! realm.write {
-      realm.add(boardDetail, update: .all)
+    DispatchQueue.main.async {
+      try! self.realm.write {
+        self.realm.add(boardDetail)
+      }
     }
+    
   }
   
   func loadBoards() -> Boards {

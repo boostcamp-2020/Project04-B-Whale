@@ -47,10 +47,12 @@ final class ListViewModel: ListViewModelProtocol {
   private let list: ListOfBoard
   private var listTitle: String = "" {
     didSet {
-      
-      try! realm.write {
-        list.title = listTitle
+      DispatchQueue.main.async {
+        try! self.realm.write {
+          self.list.title = self.listTitle
+        }
       }
+      
       updateListTitleHandler?(listTitle)
     }
   }

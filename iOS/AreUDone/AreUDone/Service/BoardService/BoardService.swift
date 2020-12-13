@@ -48,18 +48,14 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boards):
         completionHandler(.success(boards))
-        DispatchQueue.main.async {
           self.localDataSource?.save(boards: boards) // 같은 쓰레드??? 에서 돌려야한다고함
-        }
         
       case .failure(_):
-        DispatchQueue.main.async {
           if let boards = self.localDataSource?.loadBoards() {
             completionHandler(.success(boards))
           } else {
             completionHandler(.failure(.data))
           }
-        }
         break
       }
     }
@@ -88,17 +84,14 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boardDetail):
         completionHandler(.success(boardDetail))
-        DispatchQueue.main.async {
           self.localDataSource?.save(boardDetail: boardDetail)
-        }
+        
       case .failure(_):
-        DispatchQueue.main.async {
           if let boardDetail = self.localDataSource?.loadBoardDetail(ofId: boardId) {
             completionHandler(.success(boardDetail))
           } else {
             completionHandler(.failure(.data))
           }
-        }
       }
     }
   }
