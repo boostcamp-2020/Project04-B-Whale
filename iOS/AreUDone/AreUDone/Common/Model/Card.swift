@@ -9,8 +9,32 @@ import Foundation
 import MobileCoreServices
 import RealmSwift
 
-struct Cards: Codable {
-    let cards: [Card]?
+class Cards: Object, Codable {
+  
+  var cards = List<Card>()
+  @objc dynamic var date = ""
+  
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+    let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? [Card()]
+    let decodedDate = try container.decodeIfPresent(String.self, forKey: .date) ?? ""
+    
+    cards.append(objectsIn: decodedCards)
+    date = decodedDate
+  }
+  
+  func fetchCards() -> [Card] {
+    var fetchedCards = [Card]()
+    fetchedCards.append(contentsOf: cards)
+    
+    return fetchedCards
+  }
+  
+  override class func primaryKey() -> String? {
+    return "date"
+  }
 }
 
 class Card: Object, Codable {
