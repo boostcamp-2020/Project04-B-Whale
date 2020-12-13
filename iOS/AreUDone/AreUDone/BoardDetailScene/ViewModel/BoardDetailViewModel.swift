@@ -101,6 +101,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     let viewModel = ListViewModel(
       listService: listService,
       cardService: cardService,
+      boardId: boardId,
       list: list
     )
     handler(viewModel)
@@ -159,7 +160,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
     }
     
-    listService.updateList(withListId: listId, position: position, title: nil) { result in
+    listService.updateList(withBoardId: boardId, listId: listId, position: position, title: nil) { result in
       switch result {
       case .success(_):
         
@@ -179,7 +180,9 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     listService.createList(withBoardId: boardId, title: title) { result in
       switch result {
       case .success(let list):
-        self.boardDetail?.lists.append(list)
+        self.realm.writeOnMain {
+          self.boardDetail?.lists.append(list)
+        }
         self.updateBoardDetailCollectionViewHandler?()
         
       case .failure(let error):

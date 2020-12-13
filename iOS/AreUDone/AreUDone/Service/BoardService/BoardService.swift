@@ -48,14 +48,17 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boards):
         completionHandler(.success(boards))
-          self.localDataSource?.save(boards: boards) // 같은 쓰레드??? 에서 돌려야한다고함
-        
+        self.localDataSource?.save(object: boards, policy: nil) // 같은 쓰레드??? 에서 돌려야한다고함
+      
       case .failure(_):
+        DispatchQueue.main.async {
           if let boards = self.localDataSource?.loadBoards() {
             completionHandler(.success(boards))
           } else {
             completionHandler(.failure(.data))
           }
+        }
+      
         break
       }
     }
@@ -69,7 +72,18 @@ final class BoardService: BoardServiceProtocol {
   
   func updateBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: BoardEndPoint.updateBoard(boardId: boardId, title: title)) { result in
-      completionHandler(result)
+      switch result {
+      case .success(_):
+        completionHandler(.success(()))
+        DispatchQueue.main.async {
+          self.localDataSource?.updateBoard(title: title, ofId: boardId)
+        }
+        
+      case .failure(_):
+        completionHandler(result)
+        
+        break
+      }
     }
   }
   
@@ -84,14 +98,16 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boardDetail):
         completionHandler(.success(boardDetail))
-          self.localDataSource?.save(boardDetail: boardDetail)
+        self.localDataSource?.save(object: boardDetail, policy: .all)
         
       case .failure(_):
+        DispatchQueue.main.async {
           if let boardDetail = self.localDataSource?.loadBoardDetail(ofId: boardId) {
             completionHandler(.success(boardDetail))
           } else {
             completionHandler(.failure(.data))
           }
+        }
       }
     }
   }
