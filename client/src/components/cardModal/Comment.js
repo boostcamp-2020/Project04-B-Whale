@@ -8,6 +8,18 @@ const CommentWrapper = styled.div`
     grid-template-columns: 1fr 10fr;
     align-items: auto;
     width: 100%;
+    margin: 1rem 0rem;
+`;
+
+const CommentUserProfileImage = styled.img`
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 70%;
+    overflow: hidden;
 `;
 
 const CommentRightContainer = styled.div`
@@ -75,7 +87,7 @@ const CommentSaveCloseButtonContainer = styled.div`
     align-items: center;
 `;
 
-const Comment = ({ userName, commentCreatedAt, commentContent }) => {
+const Comment = ({ userName, commentCreatedAt, commentContent, profileImageUrl }) => {
     const [editOpen, setEditOpen] = useState(false);
 
     const inverseEditOpen = () => {
@@ -84,6 +96,7 @@ const Comment = ({ userName, commentCreatedAt, commentContent }) => {
 
     return (
         <CommentWrapper>
+            <CommentUserProfileImage src={profileImageUrl} />
             <CommentRightContainer>
                 <CommentTitleContainer>
                     <CommentUserName>{userName}</CommentUserName>

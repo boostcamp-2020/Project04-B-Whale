@@ -42,6 +42,7 @@ const ModalInner = styled.div`
     transform: translate(-50%, -50%);
     padding: 1rem;
     border-radius: 0.2rem;
+    overflow-y: scroll;
 `;
 
 const CardModalLeftSideBar = styled.div`
@@ -132,7 +133,7 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                         />
                         <CardDueDateContainer dueDate={card.dueDate} />
                         <CardDescriptionContainer cardContent={card.content} />
-                        <CommentContainer />
+                        <CommentContainer comments={card.comments} />
                     </CardModalLeftSideBar>
                     <CardModalRightSideBar>
                         <ButtonList>

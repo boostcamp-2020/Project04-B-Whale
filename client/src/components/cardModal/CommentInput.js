@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     grid-auto-rows: auto;
     align-items: center;
     width: 100%;
+    margin-bottom: 2rem;
 `;
 
 const CommentInputTextAreaWrapper = styled.div`
