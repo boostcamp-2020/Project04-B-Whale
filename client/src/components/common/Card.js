@@ -46,9 +46,9 @@ const CardCommentCount = styled.div`
     padding: 0 1rem;
 `;
 
-const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount, fontSize }) => {
+const Card = ({ width, height, cardTitle, cardDueDate, cardCommentCount, fontSize, onClick }) => {
     return (
-        <CardWrapper width={width} height={height}>
+        <CardWrapper width={width} height={height} onClick={onClick}>
             <CardTitle fontSize={fontSize}>{cardTitle}</CardTitle>
             <CardDueDateCommentCountFlexBox>
                 <CardDueDate fontSize={fontSize}>{cardDueDate}</CardDueDate>

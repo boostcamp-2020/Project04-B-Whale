@@ -117,7 +117,7 @@ const CardDescriptionContainer = ({ cardContent }) => {
                 {cardContent}
             </CardDescription>
             <CardDescriptionInputWrapper visible={visible}>
-                <CardDescriptionInput ref={cardDescriptionInput} />
+                <CardDescriptionInput ref={cardDescriptionInput} defaultValue={cardContent} />
                 <CardDescriptionInputSaveButton width="3.5rem" height="2rem">
                     저장
                 </CardDescriptionInputSaveButton>

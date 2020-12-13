@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import CardDescriptionContainer from './CardDescriptionContainer';
 import CardDueDateContainer from './CardDueDateContainer';
 import CardModalButton from './CardModalButton';
 import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
+import { getCard } from '../../utils/cardRequest';
 
 const DimmedModal = styled.div`
     display: ${(props) => (props.visible ? 'block' : 'none')};
@@ -66,7 +67,54 @@ const ButtonList = styled.div`
     margin-top: 5rem;
 `;
 
-const CardModal = ({ visible, closeModal }) => {
+const cardReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOADING':
+            return {
+                loading: true,
+                data: null,
+                error: null,
+            };
+        case 'SUCCESS':
+            return {
+                loading: false,
+                data: action.data,
+                error: null,
+            };
+        case 'ERROR':
+            return {
+                loading: false,
+                data: null,
+                error: action.error,
+            };
+        default:
+            throw new Error(`Unhandled action type: ${action.type}`);
+    }
+};
+
+const CardModal = ({ visible, closeModal, cardId }) => {
+    const [cardState, cardDispatch] = useReducer(cardReducer, {
+        loading: false,
+        data: null,
+        error: null,
+    });
+
+    useEffect(async () => {
+        cardDispatch({ type: 'LOADING' });
+        try {
+            const response = await getCard({ cardId });
+            cardDispatch({ type: 'SUCCESS', data: response?.data });
+        } catch (error) {
+            cardDispatch({ type: 'ERROR', error });
+        }
+    }, []);
+
+    if (cardState.loading || cardState.error !== null || cardState.data === null) {
+        return null;
+    }
+
+    const card = cardState.data;
+
     const onDimmedClick = (e) => {
         if (e.target === e.currentTarget) {
             closeModal();
@@ -78,9 +126,12 @@ const CardModal = ({ visible, closeModal }) => {
             <ModalWrapper onClick={onDimmedClick} visible={visible}>
                 <ModalInner>
                     <CardModalLeftSideBar>
-                        <CardTitleContainer cardTitle="카드 타이틀" cardListTitle="리스트 타이틀" />
-                        <CardDueDateContainer dueDate="2020-12-25 00:00:00" />
-                        <CardDescriptionContainer />
+                        <CardTitleContainer
+                            cardTitle={card.title}
+                            cardListTitle={card.list.title}
+                        />
+                        <CardDueDateContainer dueDate={card.dueDate} />
+                        <CardDescriptionContainer cardContent={card.content} />
                         <CommentContainer />
                     </CardModalLeftSideBar>
                     <CardModalRightSideBar>
