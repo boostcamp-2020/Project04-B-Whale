@@ -5,7 +5,7 @@ import { CustomBoardRepository } from '../../src/dao/CustomBoardRepository';
 import { Board } from '../../src/model/Board';
 import { Invitation } from '../../src/model/Invitation';
 import { User } from '../../src/model/User';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
 
 describe('CustomBoardRepository', () => {
     const app = new Application();
@@ -21,7 +21,7 @@ describe('CustomBoardRepository', () => {
 
     test('findByCreatorId(): user0이 만든 board 조회', async () => {
         const repo = getCustomRepository(CustomBoardRepository);
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -47,7 +47,7 @@ describe('CustomBoardRepository', () => {
 
     test('findInvitedBoardsByUserId(): user0의 초대된 board 조회', async () => {
         const repo = getCustomRepository(CustomBoardRepository);
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
