@@ -1,17 +1,17 @@
 import moment from 'moment';
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
-import { Application } from '../../src/Application';
-import { EntityNotFoundError } from '../../src/common/error/EntityNotFoundError';
-import { ForbiddenError } from '../../src/common/error/ForbiddenError';
-import { Board } from '../../src/model/Board';
-import { Card } from '../../src/model/Card';
-import { Comment } from '../../src/model/Comment';
-import { Invitation } from '../../src/model/Invitation';
-import { List } from '../../src/model/List';
-import { Member } from '../../src/model/Member';
-import { User } from '../../src/model/User';
-import { CardService } from '../../src/service/CardService';
-import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
+import { Application } from '../../../src/Application';
+import { EntityNotFoundError } from '../../../src/common/error/EntityNotFoundError';
+import { ForbiddenError } from '../../../src/common/error/ForbiddenError';
+import { Board } from '../../../src/model/Board';
+import { Card } from '../../../src/model/Card';
+import { Comment } from '../../../src/model/Comment';
+import { Invitation } from '../../../src/model/Invitation';
+import { List } from '../../../src/model/List';
+import { Member } from '../../../src/model/Member';
+import { User } from '../../../src/model/User';
+import { CardService } from '../../../src/service/CardService';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
 describe('CardService.getCard() Test', () => {
     const app = new Application();

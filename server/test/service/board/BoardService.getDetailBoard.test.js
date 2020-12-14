@@ -1,14 +1,14 @@
 import { getRepository } from 'typeorm';
-import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
-import { Application } from '../../src/Application';
-import { Board } from '../../src/model/Board';
-import { Card } from '../../src/model/Card';
-import { Invitation } from '../../src/model/Invitation';
-import { List } from '../../src/model/List';
-import { User } from '../../src/model/User';
-import { BoardService } from '../../src/service/BoardService';
+import { Application } from '../../../src/Application';
+import { Board } from '../../../src/model/Board';
+import { Card } from '../../../src/model/Card';
+import { Invitation } from '../../../src/model/Invitation';
+import { List } from '../../../src/model/List';
+import { User } from '../../../src/model/User';
+import { BoardService } from '../../../src/service/BoardService';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
-describe('Board Service Test', () => {
+describe('BoardService.getDetailBoard() Test', () => {
     const app = new Application();
 
     beforeAll(async () => {
@@ -22,6 +22,7 @@ describe('Board Service Test', () => {
     });
 
     test('보드 상세 조회 서비스 정상 호출', async () => {
+        const boardService = BoardService.getInstance();
         await TransactionRollbackExecutor.rollback(async () => {
             const user = { name: 'user', socialId: '1234111', profileImageUrl: 'image' };
             const userRepository = getRepository(User);
@@ -59,8 +60,7 @@ describe('Board Service Test', () => {
             const cardRepository = getRepository(Card);
             const createCard = cardRepository.create(card);
             await cardRepository.save([createCard]);
-            const BoardService1 = BoardService.getInstance();
-            const detailBoard = await BoardService1.getDetailBoard(createUser.id, createBoard.id);
+            const detailBoard = await boardService.getDetailBoard(createUser.id, createBoard.id);
             const compareData = {
                 id: createBoard.id,
                 title: 'board title',
@@ -95,29 +95,6 @@ describe('Board Service Test', () => {
                 ],
             };
             expect(JSON.stringify(compareData)).toEqual(JSON.stringify(detailBoard));
-        });
-    });
-
-    test('보드 타이틀 수정 서비스 함수 정상 테스트', async () => {
-        await TransactionRollbackExecutor.rollback(async () => {
-            // given
-            const user = { name: 'dhoon', socialId: '1234111', profileImageUrl: 'dh-image' };
-            const userRepository = getRepository(User);
-            const createUser = userRepository.create(user);
-            await userRepository.save([createUser]);
-
-            const board = { title: 'board of dh', color: '#aa00ff', creator: createUser.id };
-            const boardRepository = getRepository(Board);
-            const createBoard = boardRepository.create(board);
-            await boardRepository.save([createBoard]);
-
-            // when
-            const boardService = BoardService.getInstance();
-            await boardService.updateBoard(createUser.id, createBoard.id, 'board of youngxpepp');
-            const updatedBoard = await boardRepository.findOne(createBoard.id);
-
-            // then
-            expect(updatedBoard.title).toEqual('board of youngxpepp');
         });
     });
 });

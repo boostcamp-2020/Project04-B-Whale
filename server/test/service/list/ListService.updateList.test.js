@@ -1,12 +1,12 @@
 import { getRepository } from 'typeorm';
-import { TransactionRollbackExecutor } from '../TransactionRollbackExecutor';
-import { Application } from '../../src/Application';
-import { Board } from '../../src/model/Board';
-import { List } from '../../src/model/List';
-import { User } from '../../src/model/User';
-import { ListService } from '../../src/service/ListService';
+import { Application } from '../../../src/Application';
+import { Board } from '../../../src/model/Board';
+import { List } from '../../../src/model/List';
+import { User } from '../../../src/model/User';
+import { ListService } from '../../../src/service/ListService';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
-describe('Board Service Test', () => {
+describe('ListService.updateList() Test', () => {
     const app = new Application();
 
     beforeAll(async () => {
