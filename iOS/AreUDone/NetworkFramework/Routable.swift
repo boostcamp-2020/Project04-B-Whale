@@ -20,6 +20,8 @@ public protocol Routable {
   
   func request<T: Decodable>(route: EndPointable, completionHandler: @escaping ((Result<T,APIError>) -> Void))
   func request(route: EndPointable, completionHandler: @escaping ((Result<Void,APIError>) -> Void))
+  
+  func request(route: EndPointable, imageName: String, completionHandler: @escaping ((Result<Data,APIError>) -> Void))
 }
 
 extension Routable {
