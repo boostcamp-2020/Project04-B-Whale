@@ -123,7 +123,7 @@ private extension CardDetailMemberView {
     ) { [weak self] collectionView, indexPath, member -> UICollectionViewCell? in
       let cell: CardDetailMemberCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
-      self?.viewModel.fetchProfileImage(with: member.profileImageUrl) { data in
+      self?.viewModel.fetchProfileImage(with: member.profileImageUrl, userName: member.name) { data in
         let image = UIImage(data: data)
         cell.update(with: image)
       }

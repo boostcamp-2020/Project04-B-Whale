@@ -39,7 +39,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
               let cardService = CardService(router: self.router)
-              let imageService = ImageService(router: self.router)
+              let imageService = ImageService(router: self.router, cacheManager: CacheManager())
               let userService = UserService(router: self.router)
               let commentService = CommentService(router: self.router)
               let viewModel = CardDetailViewModel(

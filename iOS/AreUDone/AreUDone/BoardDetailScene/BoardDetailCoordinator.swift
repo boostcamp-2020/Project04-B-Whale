@@ -44,7 +44,7 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               let listService = ListService(router: self.router)
               let cardService = CardService(router: self.router)
               let activityService = ActivityService(router: MockRouter(jsonFactory: ActivityTrueJsonFactory()))
-              let imageService = ImageService(router: self.router)
+              let imageService = ImageService(router: self.router, cacheManager: CacheManager())
               
               let boardDetailViewModel = BoardDetailViewModel(
                 boardService: boardService,

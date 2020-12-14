@@ -26,15 +26,11 @@ class Boards: Object, Codable {
   }
   
   func fetchMyBoard() -> [Board] {
-    var boards = [Board]()
-    boards.append(contentsOf: myBoards)
-    return boards
+    return Array(myBoards)
   }
   
   func fetchInvitedBoard() -> [Board] {
-    var boards = [Board]()
-    boards.append(contentsOf: invitedBoards)
-    return boards
+    return Array(invitedBoards)
   }
 }
 
