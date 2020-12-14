@@ -5,6 +5,7 @@ import CardDueDateContainer from './CardDueDateContainer';
 import CardModalButton from './CardModalButton';
 import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
+import CardMemberContainer from './CardMemberContainer';
 import { getCard } from '../../utils/cardRequest';
 
 const DimmedModal = styled.div`
@@ -42,7 +43,6 @@ const ModalInner = styled.div`
     transform: translate(-50%, -50%);
     padding: 1rem;
     border-radius: 0.2rem;
-    overflow-y: scroll;
 `;
 
 const CardModalLeftSideBar = styled.div`
@@ -131,6 +131,7 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                             cardTitle={card.title}
                             cardListTitle={card.list.title}
                         />
+                        <CardMemberContainer members={card.members} />
                         <CardDueDateContainer dueDate={card.dueDate} />
                         <CardDescriptionContainer cardContent={card.content} />
                         <CommentContainer comments={card.comments} />
