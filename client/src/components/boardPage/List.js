@@ -9,6 +9,7 @@ import ListMenuDropdown from './ListMenuDropdown';
 import { updateListTitle } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import Card from '../common/Card';
+import CardModal from '../cardModal/CardModal';
 
 const ListWrapper = styled.div`
     background-color: lightgray;
@@ -72,6 +73,8 @@ const DimmedForInput = styled.div`
 export default function List({ title, id }) {
     const [titleInputState, setTitleInputState] = useState(false);
     const [listTitle, setListTitle] = useState(title);
+    const [cardModalVisible, setCardModalVisible] = useState(false);
+    const [cardId, setCardId] = useState(-1);
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [listMenuState, setListMenuState] = useState({
         visible: false,
@@ -128,6 +131,12 @@ export default function List({ title, id }) {
                                 cardTitle={v.title}
                                 cardDueDate={v.dueDate}
                                 cardCommentCount={v.commentCount}
+                                onClick={(e) =>
+                                    ((_e, _cardId) => {
+                                        setCardId(_cardId);
+                                        setCardModalVisible(true);
+                                    })(e, v.id)
+                                }
                             />
                         ),
                     )}
@@ -141,6 +150,15 @@ export default function List({ title, id }) {
                     listId={id}
                     listMenuState={listMenuState}
                     setListMenuState={setListMenuState}
+                />
+            )}
+            {cardModalVisible && (
+                <CardModal
+                    visible={cardModalVisible}
+                    closeModal={() => {
+                        setCardModalVisible(false);
+                    }}
+                    cardId={cardId}
                 />
             )}
         </>

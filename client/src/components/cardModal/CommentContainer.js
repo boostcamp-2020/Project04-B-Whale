@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Comment from './Comment';
 import CommentInput from './CommentInput';
 
 const CardCommentHeaderContainer = styled.div`
@@ -20,13 +21,23 @@ const CardCommentHeader = styled.div`
     font-weight: bold;
 `;
 
-const CommentContainer = () => {
+const CommentContainer = ({ comments }) => {
     return (
         <>
             <CardCommentHeaderContainer>
                 <CardCommentHeader>댓글</CardCommentHeader>
             </CardCommentHeaderContainer>
             <CommentInput />
+            {comments.map((comment) => {
+                return (
+                    <Comment
+                        key={comment.id}
+                        userName={comment.user.name}
+                        commentCreatedAt={comment.createdAt}
+                        commentContent={comment.content}
+                    />
+                );
+            })}
         </>
     );
 };
