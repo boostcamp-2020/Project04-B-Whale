@@ -112,7 +112,7 @@ const Card = ({
                       updatedPosition = boardDetail.lists[listInd].cards[1].position / 2;
                   } else if (item.index === cardLength - 1) {
                       updatedPosition =
-                          boardDetail.lists[listInd].cards[cardLength - 1].position + 1;
+                          boardDetail.lists[listInd].cards[cardLength - 2].position + 1;
                   } else {
                       updatedPosition =
                           (boardDetail.lists[listInd].cards[item.index - 1].position +
@@ -138,13 +138,13 @@ const Card = ({
           })
         : [{ isDragging: null }, null];
 
-    let opacity = isDragging ? 0.2 : 1;
+    let opacity = isDragging ? 0.3 : 1;
     const cursor = isDragging ? '-webkit-grabbing' : 'pointer';
     if (draggable) {
         drag(drop(cardRef));
     }
     if (id === 0) {
-        height = '1px';
+        height = '5px';
         opacity = 0;
     }
     return (

@@ -131,8 +131,10 @@ export default function List({ title, id, index, moveList, position }) {
             if (dragListId !== hoverListId) {
                 const dragCard = boardDetail.lists[dragListIndex].cards[dragIndex];
                 boardDetail.lists[dragListIndex].cards.splice(dragIndex, 1);
-                if (!boardDetail.lists[dragListIndex].cards.length)
+                if (!boardDetail.lists[dragListIndex].cards.length) {
                     boardDetail.lists[dragListIndex].cards.splice(0, 0, { id: 0 });
+                }
+
                 if (!boardDetail.lists[hoverListIndex].cards.length) {
                     boardDetail.lists[hoverListIndex].cards.splice(0, 0, dragCard);
                 } else {
@@ -188,7 +190,7 @@ export default function List({ title, id, index, moveList, position }) {
             if (item.index === 0) {
                 updatedPosition = lists[1].position / 2;
             } else if (item.index === listLength - 1) {
-                updatedPosition = lists[listLength - 1].position + 1;
+                updatedPosition = lists[listLength - 2].position + 1;
             } else {
                 updatedPosition = (lists[index - 1].position + lists[index + 1].position) / 2;
             }
@@ -203,7 +205,7 @@ export default function List({ title, id, index, moveList, position }) {
             isDragging: monitor.isDragging(),
         }),
     });
-    const opacity = isDragging ? 0.5 : 1;
+    const opacity = isDragging ? 0.3 : 1;
     const cursor = isDragging ? '-webkit-grabbing' : 'pointer';
     drag(drop(ref));
 
