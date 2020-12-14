@@ -5,6 +5,7 @@ import moment from 'moment';
 import CardModalButton from './CardModalButton';
 import CloseButton from './CloseButton';
 import CardContext from '../../context/CardContext';
+import { modifyCardDueDate } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: grid;
@@ -57,8 +58,11 @@ const CardDueDateContainer = ({ dueDate }) => {
     const card = cardState.data;
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
-    const onClickChangeDueDate = (value) => {
+    const onClickChangeDueDate = async (value) => {
+        const cardId = card.id;
         const newDueDate = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
+        await modifyCardDueDate({ cardId, dueDate: newDueDate });
+
         const data = { ...card, dueDate: newDueDate };
         cardDispatch({ type: 'CHANGE_DUEDATE', data });
         setIsDisplay(false);
