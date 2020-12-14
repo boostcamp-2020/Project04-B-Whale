@@ -170,8 +170,15 @@ describe('CommentService.addComment() Test', () => {
             });
 
             // then
-            expect(comment.id).toEqual(expect.any(Number));
-            expect(comment.content).toEqual(`edited card content 0`);
+            expect(comment).toEqual({
+                id: expect.any(Number),
+                content: `edited card content 0`,
+                user: {
+                    id: user0.id,
+                    name: user0.name,
+                    profileImageUrl: user0.profileImageUrl,
+                },
+            });
         });
     });
 });

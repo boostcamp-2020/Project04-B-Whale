@@ -192,7 +192,16 @@ describe('PATCH /api/comment/:commentId', () => {
                 .send({ content: expectedContent });
 
             // then
-            expect(response.status).toEqual(204);
+            expect(response.status).toEqual(200);
+            expect(response.body).toEqual({
+                id: comment0.id,
+                content: expectedContent,
+                user: {
+                    id: user0.id,
+                    name: user0.name,
+                    profileImageUrl: user0.profileImageUrl,
+                },
+            });
         });
     });
 });
