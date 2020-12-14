@@ -17,6 +17,7 @@ const CardScrollWrapper = styled.div`
     background-color: #ebecf0;
     border-radius: 1rem;
     padding: 0.5rem;
+    margin: 10px 0;
 `;
 
 const CardScroll = () => {
