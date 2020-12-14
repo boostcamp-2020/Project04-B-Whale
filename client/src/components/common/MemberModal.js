@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import Member from './Member';
 import CardContext from '../../context/CardContext';
 import { addMemberToCard } from '../../utils/cardRequest';
-import Member from './Member';
 
 const Wrapper = styled.div`
     position: fixed;
@@ -56,18 +56,16 @@ const SearchInput = styled.input.attrs({
 const MemberModal = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { creator, invitedUsers } = boardDetail;
-    const { cardState, cardDispatch } = useContext(CardContext);
+    const { cardState } = useContext(CardContext);
     const card = cardState.data;
-    const [members, setMembers] = useState(card.members);
     const allInvitedUsers = [creator, ...invitedUsers];
     const [searchedUsers, setSearchedUsers] = useState(allInvitedUsers);
 
     const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
             const cardId = card.id;
-            const userIds = members.map((member) => member.id);
+            const userIds = card.members.map((member) => member.id);
             await addMemberToCard({ cardId, userIds });
-            cardDispatch({ type: 'CHANGE_MEMBER', data: { ...card, members } });
             onClose();
         }
     };
@@ -96,15 +94,7 @@ const MemberModal = ({ onClose }) => {
                 </ModalHeader>
                 <SearchInput onChange={onChangeUserSearch} />
                 {searchedUsers.map(({ id, profileImageUrl, name }) => (
-                    <Member
-                        key={id}
-                        memberId={id}
-                        profileImageUrl={profileImageUrl}
-                        name={name}
-                        checked={members.some((member) => member.id === id)}
-                        selectedMember={members}
-                        changeMember={setMembers}
-                    />
+                    <Member key={id} memberId={id} profileImageUrl={profileImageUrl} name={name} />
                 ))}
             </ModalWrapper>
         </>
