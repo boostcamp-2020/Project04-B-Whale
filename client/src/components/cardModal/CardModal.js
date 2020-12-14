@@ -6,7 +6,9 @@ import CardModalButton from './CardModalButton';
 import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
+import MemberButton from '../common/MemberButton';
 import { getCard } from '../../utils/cardRequest';
+import CardContext from '../../context/CardContext';
 
 const DimmedModal = styled.div`
     display: ${(props) => (props.visible ? 'block' : 'none')};
@@ -82,6 +84,11 @@ const cardReducer = (state, action) => {
                 data: action.data,
                 error: null,
             };
+        case 'CHANGE_MEMBER':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'ERROR':
             return {
                 loading: false,
@@ -123,34 +130,34 @@ const CardModal = ({ visible, closeModal, cardId }) => {
     };
     return (
         <>
-            <DimmedModal visible={visible} />
-            <ModalWrapper onClick={onDimmedClick} visible={visible}>
-                <ModalInner>
-                    <CardModalLeftSideBar>
-                        <CardTitleContainer
-                            cardTitle={card.title}
-                            cardListTitle={card.list.title}
-                        />
-                        <CardMemberContainer members={card.members} />
-                        <CardDueDateContainer dueDate={card.dueDate} />
-                        <CardDescriptionContainer cardContent={card.content} />
-                        <CommentContainer comments={card.comments} />
-                    </CardModalLeftSideBar>
-                    <CardModalRightSideBar>
-                        <ButtonList>
-                            <CardModalButton width="10rem" height="2rem">
-                                멤버 추가
-                            </CardModalButton>
-                            <CardModalButton width="10rem" height="2rem">
-                                마감 기한
-                            </CardModalButton>
-                            <CardModalButton width="10rem" height="2rem">
-                                카드 이동
-                            </CardModalButton>
-                        </ButtonList>
-                    </CardModalRightSideBar>
-                </ModalInner>
-            </ModalWrapper>
+            <CardContext.Provider value={{ cardState, cardDispatch }}>
+                <DimmedModal visible={visible} />
+                <ModalWrapper onClick={onDimmedClick} visible={visible}>
+                    <ModalInner>
+                        <CardModalLeftSideBar>
+                            <CardTitleContainer
+                                cardTitle={card.title}
+                                cardListTitle={card.list.title}
+                            />
+                            <CardMemberContainer members={card.members} />
+                            <CardDueDateContainer dueDate={card.dueDate} />
+                            <CardDescriptionContainer cardContent={card.content} />
+                            <CommentContainer comments={card.comments} />
+                        </CardModalLeftSideBar>
+                        <CardModalRightSideBar>
+                            <ButtonList>
+                                <MemberButton />
+                                <CardModalButton width="10rem" height="2rem">
+                                    마감 기한
+                                </CardModalButton>
+                                <CardModalButton width="10rem" height="2rem">
+                                    카드 이동
+                                </CardModalButton>
+                            </ButtonList>
+                        </CardModalRightSideBar>
+                    </ModalInner>
+                </ModalWrapper>
+            </CardContext.Provider>
         </>
     );
 };

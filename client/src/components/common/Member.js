@@ -39,11 +39,13 @@ const NameDiv = styled.div`
 const Member = ({ memberId, profileImageUrl, name, checked, selectedMember, changeMember }) => {
     const onClickMember = (id) => {
         if (checked) {
-            const index = selectedMember.findIndex((member) => member === id);
+            const index = selectedMember.findIndex((member) => member.id === id);
             selectedMember.splice(index, 1);
             return changeMember([...selectedMember]);
         }
-        return changeMember([...selectedMember, id]);
+        const newMember = { id, profileImageUrl, name };
+
+        return changeMember([...selectedMember, newMember]);
     };
 
     return (
