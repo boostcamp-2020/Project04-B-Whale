@@ -48,10 +48,8 @@ final class ListViewModel: ListViewModelProtocol {
   private let list: ListOfBoard
   private var listTitle: String = "" {
     didSet {
-      DispatchQueue.main.async {
-        try! self.realm.write {
-          self.list.title = self.listTitle
-        }
+      realm.writeOnMain {
+        self.list.title = self.listTitle
       }
       
       updateListTitleHandler?(listTitle)
@@ -104,13 +102,12 @@ final class ListViewModel: ListViewModelProtocol {
   
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
-    list.cards.remove(at: index)
+    self.realm.delete(self.list.cards[index])
   }
   
   func updateListTitle(to title: String) {
     listService.updateList(
-      withBoardId: boardId,
-      listId: list.id,
+      ofId: list.id,
       position: nil,
       title: title) { result in
       switch result {
@@ -150,12 +147,13 @@ final class ListViewModel: ListViewModelProtocol {
     ) { result in
       switch result {
       case .success(_):
-        self.removeCard(at: sourceIndex)
-        card.position = position
-        self.insert(card: card, at: destinationIndex)
-        
-        handler()
-
+        self.realm.writeOnMain {
+          self.removeCard(at: sourceIndex)
+          card.position = position
+          self.insert(card: card, at: destinationIndex)
+          
+          handler()
+        }
       case .failure(let error):
         print(error)
       }
@@ -187,11 +185,14 @@ final class ListViewModel: ListViewModelProtocol {
       ) { result in
       switch result {
       case .success(_):
+        self.realm.writeOnMain {
+
         sourceViewModel.removeCard(at: sourceIndex)
         card.position = position
         self.insert(card: card, at: destinationIndex)
 
         handler()
+        }
         
       case .failure(let error):
         print(error)
@@ -219,12 +220,16 @@ final class ListViewModel: ListViewModelProtocol {
     ) { result in
       switch result {
       case .success(_):
+        self.realm.writeOnMain {
+
+        
         sourceViewModel.removeCard(at: sourceIndex)
         card.position = position
         self.append(card: card)
         
         let lastIndex = self.numberOfCards() - 1
         handler(lastIndex)
+        }
 
       case .failure(let error):
         print(error)

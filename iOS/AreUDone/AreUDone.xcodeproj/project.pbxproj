@@ -160,7 +160,6 @@
 		33C3FB9D258525AE006DB60B /* RealmBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FB9C258525AE006DB60B /* RealmBoardTests.swift */; };
 		33C3FBAE2585F681006DB60B /* BoardLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FBAD2585F681006DB60B /* BoardLocalDataSource.swift */; };
 		33C3FBB325862F01006DB60B /* Realm+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FBB225862F01006DB60B /* Realm+.swift */; };
-		33C3FBB825864867006DB60B /* ListLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FBB725864867006DB60B /* ListLocalDataSource.swift */; };
 		33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE1B256B51CE008E3969 /* MockRouter.swift */; };
 		33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE20256B5210008E3969 /* JsonFactory.swift */; };
 		33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */; };
@@ -493,7 +492,6 @@
 		33C3FB9C258525AE006DB60B /* RealmBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBoardTests.swift; sourceTree = "<group>"; };
 		33C3FBAD2585F681006DB60B /* BoardLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLocalDataSource.swift; sourceTree = "<group>"; };
 		33C3FBB225862F01006DB60B /* Realm+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+.swift"; sourceTree = "<group>"; };
-		33C3FBB725864867006DB60B /* ListLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLocalDataSource.swift; sourceTree = "<group>"; };
 		33D2DE1B256B51CE008E3969 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		33D2DE20256B5210008E3969 /* JsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFactory.swift; sourceTree = "<group>"; };
 		33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
@@ -864,7 +862,6 @@
 			children = (
 				33F2D6A9257F56C8008F1E06 /* ListEndPoint.swift */,
 				BDD18B3925664057005DF00A /* ListService.swift */,
-				33C3FBB725864867006DB60B /* ListLocalDataSource.swift */,
 			);
 			path = ListService;
 			sourceTree = "<group>";
@@ -2043,7 +2040,6 @@
 				33F2D53D257DDD42008F1E06 /* BoardAddViewModel.swift in Sources */,
 				33638DFE2573C660006033CF /* UIEdgeInsets+.swift in Sources */,
 				338317162581DD850040A467 /* CardAddCoordinator.swift in Sources */,
-				33C3FBB825864867006DB60B /* ListLocalDataSource.swift in Sources */,
 				BD59A65A257DCE9C00BF8928 /* CardDetailMemberView.swift in Sources */,
 				33F2D55F257DF349008F1E06 /* BoardColorTableViewCell.swift in Sources */,
 				33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */,
