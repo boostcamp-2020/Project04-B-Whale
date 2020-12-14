@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import CardDescriptionContainer from './CardDescriptionContainer';
 import CardDueDateContainer from './CardDueDateContainer';
-import CardModalButton from './CardModalButton';
 import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
@@ -153,12 +152,6 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                         <CardModalRightSideBar>
                             <ButtonList>
                                 <MemberButton />
-                                <CardModalButton width="10rem" height="2rem">
-                                    마감 기한
-                                </CardModalButton>
-                                <CardModalButton width="10rem" height="2rem">
-                                    카드 이동
-                                </CardModalButton>
                                 <MoveButton />
                             </ButtonList>
                         </CardModalRightSideBar>
