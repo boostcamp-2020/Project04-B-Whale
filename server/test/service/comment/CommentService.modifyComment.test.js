@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getRepository } from 'typeorm';
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
 import { Application } from '../../../src/Application';
 import { EntityNotFoundError } from '../../../src/common/error/EntityNotFoundError';
@@ -122,6 +123,71 @@ describe('CommentService.modifyComment() Test', () => {
         });
     });
 
+    test('댓글 내용이 같아서 데이터베이스에 접근하지 않음', async () => {
+        const commentService = CommentService.getInstance();
+        await TransactionRollbackExecutor.rollback(async () => {
+            // given
+            const em = getEntityManagerOrTransactionManager('default');
+
+            const user0 = em.create(User, {
+                socialId: 0,
+                name: 'youngxpepp',
+                profileImageUrl: 'http://',
+            });
+            await em.save(user0);
+
+            const board0 = em.create(Board, {
+                title: 'board title 0',
+                color: '#FFFFFF',
+                creator: user0,
+            });
+            await em.save(board0);
+
+            const list0 = em.create(List, {
+                title: 'list title 0',
+                position: 0,
+                board: board0,
+                creator: user0,
+            });
+            await em.save(list0);
+
+            const card0 = em.create(Card, {
+                title: 'card title 0',
+                content: 'card content 0',
+                position: 0,
+                dueDate: moment.tz('2020-12-03T09:37:00', 'Asia/Seoul').format(),
+                list: list0,
+                creator: user0,
+            });
+            await em.save(card0);
+
+            const comment0 = em.create(Comment, {
+                content: 'comment content 0',
+                card: card0,
+                user: user0,
+            });
+            await em.save(comment0);
+
+            const commentRequestDto = new CommentDto(comment0.id, 'comment content 0');
+            const commentRepositorySpy = jest.spyOn(getRepository(Comment), 'save');
+
+            // when
+            const commentResponseDto = await commentService.modifyComment({
+                userId: user0.id,
+                commentDto: commentRequestDto,
+            });
+
+            // then
+            expect(commentResponseDto).toEqual({
+                id: commentRequestDto.id,
+                content: commentRequestDto.content,
+            });
+            expect(commentRepositorySpy).not.toHaveBeenCalled();
+
+            commentRepositorySpy.mockRestore();
+        });
+    });
+
     test('본인이 작성한 댓글 수정', async () => {
         const commentService = CommentService.getInstance();
         await TransactionRollbackExecutor.rollback(async () => {
@@ -167,17 +233,24 @@ describe('CommentService.modifyComment() Test', () => {
             });
             await em.save(comment0);
 
-            const commentDto = new CommentDto(comment0.id, 'edited content');
+            const commentRequestDto = new CommentDto(comment0.id, 'edited content');
 
             // when
-            await commentService.modifyComment({
+            const commentResponseDto = await commentService.modifyComment({
                 userId: user0.id,
-                commentDto,
+                commentDto: commentRequestDto,
             });
 
             // then
-            const deletedComment0 = await em.findOne(Comment, comment0.id);
-            expect(deletedComment0.content).toEqual(commentDto.content);
+            expect(commentResponseDto).toEqual({
+                id: commentRequestDto.id,
+                content: commentRequestDto.content,
+                user: {
+                    id: user0.id,
+                    name: user0.name,
+                    profileImageUrl: user0.profileImageUrl,
+                },
+            });
         });
     });
 });

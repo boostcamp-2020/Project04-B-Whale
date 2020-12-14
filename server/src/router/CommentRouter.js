@@ -25,18 +25,22 @@ export const CommentRouter = () => {
 
     router.patch('/:commentId', async (req, res) => {
         const userId = req.user.id;
-        const commentDto = plainToClass(CommentDto, {
-            id: req.params.commentId,
-            ...req.body,
-        });
+        const commentDto = plainToClass(
+            CommentDto,
+            {
+                id: req.params.commentId,
+                ...req.body,
+            },
+            { excludeExtraneousValues: true },
+        );
+
         await validateOrReject(commentDto, { groups: ['MODIFY_COMMENT'] });
 
-        await commentService.modifyComment({
+        const responseBody = await commentService.modifyComment({
             userId,
             commentDto,
         });
-
-        res.status(204).end();
+        res.status(200).json(responseBody);
     });
 
     return router;
