@@ -12,17 +12,14 @@ import RealmSwift
 class Cards: Object, Codable {
   
   var cards = List<Card>()
-  @objc dynamic var date = ""
   
   required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
-    let decodedDate = try container.decodeIfPresent(String.self, forKey: .date) ?? ""
     
     cards.append(objectsIn: decodedCards)
-    date = decodedDate
   }
   
   func fetchCards() -> [Card] {
@@ -30,10 +27,6 @@ class Cards: Object, Codable {
     fetchedCards.append(contentsOf: cards)
     
     return fetchedCards
-  }
-  
-  override class func primaryKey() -> String? {
-    return "date"
   }
 }
 
@@ -53,6 +46,10 @@ class Card: Object, Codable {
     self.dueDate = try container.decode(String.self, forKey: .dueDate)
     self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
     self.commentCount = try container.decodeIfPresent(Int.self, forKey: .commentCount) ?? 0
+  }
+  
+  override class func primaryKey() -> String? {
+    return "id"
   }
 }
 

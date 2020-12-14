@@ -77,9 +77,9 @@ class CardService: CardServiceProtocol {
       case .success(let cards):
         completionHandler(.success(cards))
         DispatchQueue.main.async {
-          cards.date = dateString
-          self.localDataSource?.save(cards: cards)
+          self.localDataSource?.save(cards: (cards.fetchCards()))
         }
+        
       case .failure(_):
         DispatchQueue.main.async {
           if let cards = self.localDataSource?.loadCards(at: dateString) {
