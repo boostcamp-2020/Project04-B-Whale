@@ -8,10 +8,10 @@ import { addMemberToCard } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -30%;
+    left: -30%;
+    width: 200%;
+    height: 200%;
 `;
 
 const ModalWrapper = styled.div`

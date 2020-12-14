@@ -7,8 +7,9 @@ const Wrapper = styled.div`
 `;
 
 const Button = styled.button`
-    margin: 5px 10px;
     padding: 5px 10px;
+    width: 10em;
+    border: ${(props) => props.theme.border};
 `;
 
 const MemberButton = () => {
