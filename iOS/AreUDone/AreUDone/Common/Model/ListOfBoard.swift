@@ -15,6 +15,10 @@ class ListOfBoard: Object, Codable {
   @objc dynamic var position: Double = 0.0
   var cards = List<Card>()
 
+  override class func primaryKey() -> String? {
+    return "id"
+  }
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
     
