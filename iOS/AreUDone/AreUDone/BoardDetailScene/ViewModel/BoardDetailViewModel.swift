@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol BoardDetailViewModelProtocol {
   
@@ -15,15 +16,15 @@ protocol BoardDetailViewModelProtocol {
   func bindingUpdateControlPageCounts(handler: @escaping (Int) -> Void)
   
   func numberOfLists() -> Int
-  func fetchList(at index: Int) -> List?
+  func fetchList(at index: Int) -> ListOfBoard?
   func remove(at index: Int)
-  func insert(list: List, at index: Int)
+  func insert(list: ListOfBoard, at index: Int)
   
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void))
 
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: List, handler: @escaping () -> Void)
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void)
 
   func createList(with title: String)
 }
@@ -31,6 +32,9 @@ protocol BoardDetailViewModelProtocol {
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   
   // MARK: - Property
+  
+  let realm = try! Realm()
+
   
   private let boardService: BoardServiceProtocol
   private let listService: ListServiceProtocol
@@ -49,6 +53,13 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   private var boardTitle: String = "" {
     didSet {
+      DispatchQueue.main.async {
+        try! self.realm.write {
+          self.boardDetail?.title = self.boardTitle
+        }
+      }
+      
+
       updateBoardTitleHandler?(boardTitle)
     }
   }
@@ -80,7 +91,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     boardDetail?.lists.remove(at: index)
   }
   
-  func insert(list: List, at index: Int) {
+  func insert(list: ListOfBoard, at index: Int) {
     boardDetail?.lists.insert(list, at: index)
   }
   
@@ -90,12 +101,13 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     let viewModel = ListViewModel(
       listService: listService,
       cardService: cardService,
+      boardId: boardId,
       list: list
     )
     handler(viewModel)
   }
   
-  func fetchList(at index: Int) -> List? {
+  func fetchList(at index: Int) -> ListOfBoard? {
     return boardDetail?.lists[index]
   }
 
@@ -123,12 +135,14 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
         self.boardTitle = title
         
       case .failure(let error):
+        self.updateBoardTitleHandler?(self.boardTitle)
+
         print(error)
       }
     }
   }
   
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: List, handler: @escaping () -> Void) {
+  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void) {
     guard let lists = boardDetail?.lists else { return }
     
     let listId = lists[sourceIndex].id
@@ -146,7 +160,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       position = (lists[destinationIndex-1].position + lists[destinationIndex].position) / 2
     }
     
-    listService.updateList(withListId: listId, position: position, title: nil) { result in
+    listService.updateList(withBoardId: boardId, listId: listId, position: position, title: nil) { result in
       switch result {
       case .success(_):
         
@@ -166,7 +180,9 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     listService.createList(withBoardId: boardId, title: title) { result in
       switch result {
       case .success(let list):
-        self.boardDetail?.lists.append(list)
+        self.realm.writeOnMain {
+          self.boardDetail?.lists.append(list)
+        }
         self.updateBoardDetailCollectionViewHandler?()
         
       case .failure(let error):

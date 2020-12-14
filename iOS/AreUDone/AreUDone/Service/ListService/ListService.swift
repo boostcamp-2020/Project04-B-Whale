@@ -9,15 +9,15 @@ import Foundation
 import NetworkFramework
 
 protocol ListServiceProtocol {
-  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<List, APIError>) -> Void)
+  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void)
   func deleteList(withListId listId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
-  func updateList(withListId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  func updateList(withBoardId boardId: Int, listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
 }
 
 extension ListServiceProtocol {
 
-  func updateList(withListId listId: Int, position: Double? = nil, title: String? = nil, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-    updateList(withListId: listId, position: position, title: title, completionHandler: completionHandler)
+  func updateList(withBoardId boardId: Int, listId: Int, position: Double? = nil, title: String? = nil, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    updateList(withBoardId: boardId, listId: listId, position: position, title: title, completionHandler: completionHandler)
   }
 }
 
@@ -26,20 +26,24 @@ class ListService: ListServiceProtocol {
   // MARK: - Property
   
   private let router: Routable
+  private let localDataSource: ListLocalDataSourceable? // local (realm)
   
   
   // MARK: - Initializer
   
-  init(router: Routable) {
+  init(router: Routable, localDataSource: ListLocalDataSourceable? = nil) {
     self.router = router
+    self.localDataSource = localDataSource
   }
   
   
   // MARK: - Method
   
-  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<List, APIError>) -> Void) {
+  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void) {
     router.request(route: ListEndPoint.createList(boardId: boardId, title: title)) { result in
-      completionHandler(result)
+      DispatchQueue.main.async {
+        completionHandler(result)
+      }
     }
   }
   
@@ -49,9 +53,21 @@ class ListService: ListServiceProtocol {
     }
   }
   
-  func updateList(withListId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+  func updateList(withBoardId boardId: Int, listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: ListEndPoint.updateList(listId: listId, position: position, title: title)) { result in
-      completionHandler(result)
+      switch result {
+      case .success(_):
+        completionHandler(.success(()))
+        DispatchQueue.main.async {
+          self.localDataSource?.updateList(ofBoardId: boardId, title: title, position: position, listId: listId)
+        }
+        
+      case .failure(_):
+        completionHandler(result)
+        
+        break
+      }
     }
   }
 }
+

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol ListViewModelProtocol {
   
@@ -34,16 +35,25 @@ final class ListViewModel: ListViewModelProtocol {
   
   // MARK: - Property
   
+  let realm = try! Realm()
+
+  
   private let listService: ListServiceProtocol
   private let cardService: CardServiceProtocol
+  private let boardId: Int
   
   private var updateListTitleHandler: ((String) -> Void)?
   private var updateCollectionViewHandler: (() -> Void)?
   
-  private let list: List
+  private let list: ListOfBoard
   private var listTitle: String = "" {
     didSet {
-      list.title = listTitle
+      DispatchQueue.main.async {
+        try! self.realm.write {
+          self.list.title = self.listTitle
+        }
+      }
+      
       updateListTitleHandler?(listTitle)
     }
   }
@@ -54,10 +64,12 @@ final class ListViewModel: ListViewModelProtocol {
   init(
     listService: ListServiceProtocol,
     cardService: CardServiceProtocol,
-    list: List
+    boardId: Int,
+    list: ListOfBoard
   ) {
     self.listService = listService
     self.cardService = cardService
+    self.boardId = boardId
     self.list = list
     
     self.listTitle = list.title
@@ -79,7 +91,7 @@ final class ListViewModel: ListViewModelProtocol {
   }
   
   func append(card: Card) {
-    list.cards.append(card)
+    self.list.cards.append(card)
   }
   
   func insert(card: Card, at index: Int) {
@@ -97,7 +109,8 @@ final class ListViewModel: ListViewModelProtocol {
   
   func updateListTitle(to title: String) {
     listService.updateList(
-      withListId: list.id,
+      withBoardId: boardId,
+      listId: list.id,
       position: nil,
       title: title) { result in
       switch result {
@@ -105,6 +118,7 @@ final class ListViewModel: ListViewModelProtocol {
         self.listTitle = title
         
       case .failure(let error):
+        self.updateListTitleHandler?(self.listTitle)
         print(error)
       }
     }

@@ -7,7 +7,7 @@
 
 import NetworkFramework
 import UIKit
-
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
@@ -29,12 +29,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let items = tokenParser.decode(jwtToken: decodedToken)
     
     UserIdStore.saveUserId(with: items)
-    
+
     sceneCoordinator.start()
   }
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-   
+    print(Realm.Configuration.defaultConfiguration.fileURL)
+
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
     

@@ -57,9 +57,9 @@ final class BoardListViewModel: BoardListViewModelProtocol {
       switch result {
       case .success(let boards):
         if self.fetchBoardOption == .myBoards {
-          self.updateBoardListCollectionViewHandler?(boards.myBoards)
+          self.updateBoardListCollectionViewHandler?(boards.fetchMyBoard())
         } else {
-          self.updateBoardListCollectionViewHandler?(boards.invitedBoards)
+          self.updateBoardListCollectionViewHandler?(boards.fetchInvitedBoard())
         }
         
       case .failure(let error):

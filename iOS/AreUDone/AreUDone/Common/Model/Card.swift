@@ -7,32 +7,46 @@
 
 import Foundation
 import MobileCoreServices
+import RealmSwift
 
-struct Cards: Codable {
-    let cards: [Card]?
-}
-
-class Card: NSObject, Codable {
-  let id: Int
-  let title, dueDate: String
-  var position: Double
-  let commentCount: Int
+class Cards: Object, Codable {
   
-  init(
-    id: Int,
-    title: String,
-    dueDate: String,
-    position: Double,
-    commentCount: Int
-  ) {
-    self.id = id
-    self.title = title
-    self.dueDate = dueDate
-    self.position = position
-    self.commentCount = commentCount
+  var cards = List<Card>()
+  @objc dynamic var date = ""
+  
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+    let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
+    let decodedDate = try container.decodeIfPresent(String.self, forKey: .date) ?? ""
+    
+    cards.append(objectsIn: decodedCards)
+    date = decodedDate
   }
   
-  required init(from decoder: Decoder) throws {
+  func fetchCards() -> [Card] {
+    var fetchedCards = [Card]()
+    fetchedCards.append(contentsOf: cards)
+    
+    return fetchedCards
+  }
+  
+  override class func primaryKey() -> String? {
+    return "date"
+  }
+}
+
+class Card: Object, Codable {
+  @objc dynamic var id: Int = 0
+  @objc dynamic var title: String = ""
+  @objc dynamic var dueDate: String = ""
+  @objc dynamic var position: Double = 0.0
+  @objc dynamic var commentCount: Int = 0
+
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.id = try container.decode(Int.self, forKey: .id)
     self.title = try container.decode(String.self, forKey: .title)

@@ -282,8 +282,8 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
   
   private func processDraggedItem(by collectionView: UICollectionView, and coordinator: UICollectionViewDropCoordinator) {
     
-    coordinator.session.loadObjects(ofClass: List.self) { [self] item in
-      guard let list = item.first as? List else { return }
+    coordinator.session.loadObjects(ofClass: ListOfBoard.self) { [self] item in
+      guard let list = item.first as? ListOfBoard else { return }
       
       guard let source = coordinator.items.first?.sourceIndexPath,
             let destination = coordinator.destinationIndexPath

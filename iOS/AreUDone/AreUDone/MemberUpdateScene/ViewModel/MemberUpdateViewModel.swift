@@ -50,8 +50,8 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
-        var boardMember = boardDetail.invitedUsers
-        boardMember.append(boardDetail.creator)
+        var boardMember = boardDetail.fetchInvitedUsers()
+        boardMember.append(boardDetail.creator!)
         guard let cardMember = self.cardMember else {
           completionHandler(boardMember, nil)
           return

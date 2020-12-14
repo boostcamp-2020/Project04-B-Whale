@@ -56,6 +56,11 @@ final public class Router: Routable {
     guard let request = configureRequest(from: route) else { return }
     
     task = session.dataTask(with: request) { (data, response, error) in
+      guard let _ = data else {
+        completionHandler(.failure(.data))
+        return
+      }
+      
       if let response = response as? HTTPURLResponse {
         let responseError = self.handleNetworkResponseError(response)
         
