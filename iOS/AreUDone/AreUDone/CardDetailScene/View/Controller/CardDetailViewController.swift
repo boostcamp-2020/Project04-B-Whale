@@ -474,8 +474,8 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
       alertStyle: .actionSheet,
       confirmAction: { [weak self] in
         self?.viewModel.deleteComment(with: comment.id) {
-          snapshot.deleteItems([comment])
           DispatchQueue.main.async {
+            snapshot.deleteItems([comment])
             self?.dataSource.apply(snapshot)
           }
         }

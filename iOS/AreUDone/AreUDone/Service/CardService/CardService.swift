@@ -136,7 +136,17 @@ class CardService: CardServiceProtocol {
       position: position,
       dueDate: dueDate
     )) { (result: Result<Void, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(()):
+        completionHandler(result)
+        
+        DispatchQueue.main.async {
+          self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
+        }
+        
+      case .failure(_):
+        completionHandler(.failure(.data))
+      }
     }
   }
   

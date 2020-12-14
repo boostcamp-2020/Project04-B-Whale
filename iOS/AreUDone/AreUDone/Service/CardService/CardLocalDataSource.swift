@@ -13,6 +13,8 @@ protocol CardLocalDataSourceable {
   func save(cards: [Card])
   func save(cardDetail: CardDetail)
   
+  func updateCardDetail(for id: Int, content: String?, dueDate: String?)
+  
   func loadCards(at dateString: String) -> Cards?
   func loadCardDetail(for cardId: Int) -> CardDetail?
 }
@@ -33,6 +35,25 @@ final class CardLocalDataSource: CardLocalDataSourceable {
     do {
       try realm.write {
         realm.add(cardDetail, update: .all)
+      }
+    } catch {
+      
+    }
+  }
+  
+  func updateCardDetail(for id: Int, content: String?, dueDate: String?) {
+    do {
+      guard let cardDetail = realm.objects(CardDetail.self).filter("id == \(id)").first else { return }
+      guard let card = realm.objects(Card.self).filter("id == \(id)").first else { return }
+      try realm.write {
+        if let content = content {
+          cardDetail.content = content
+        }
+        
+        if let dueDate = dueDate {
+          card.dueDate = dueDate
+          cardDetail.dueDate = dueDate
+        }
       }
     } catch {
       
