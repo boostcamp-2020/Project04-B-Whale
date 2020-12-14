@@ -145,7 +145,7 @@ const Card = ({
         drag(drop(cardRef));
     }
     if (id === 0) {
-        height = '5px';
+        height = '1px';
         opacity = 0;
     }
     return (
