@@ -14,6 +14,7 @@ import { updateListTitle, modifyListPosition } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import ListMoveDropdown from './ListMoveDropdown';
 import Card from '../common/Card';
+import CardModal from '../cardModal/CardModal';
 
 const ListWrapper = styled.div`
     background-color: lightgray;
@@ -79,6 +80,8 @@ const DimmedForInput = styled.div`
 export default function List({ title, id, index, moveList, position }) {
     const [titleInputState, setTitleInputState] = useState(false);
     const [listTitle, setListTitle] = useState(title);
+    const [cardModalVisible, setCardModalVisible] = useState(false);
+    const [cardId, setCardId] = useState(-1);
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const { lists } = boardDetail;
     const [listMenuState, setListMenuState] = useState({
@@ -246,6 +249,12 @@ export default function List({ title, id, index, moveList, position }) {
                             cardDueDate={v.dueDate}
                             cardCommentCount={v.commentCount}
                             moveCard={moveCard}
+                            onClick={(e) =>
+                                ((_e, _cardId) => {
+                                    setCardId(_cardId);
+                                    setCardModalVisible(true);
+                                })(e, v.id)
+                            }
                             draggable
                         />
                     ))}
@@ -270,6 +279,15 @@ export default function List({ title, id, index, moveList, position }) {
                     setListMenuState={setListMenuState}
                     listMoveDropdownState={listMoveDropdownState}
                     setListMoveDropdownState={setListMoveDropdownState}
+                />
+            )}
+            {cardModalVisible && (
+                <CardModal
+                    visible={cardModalVisible}
+                    closeModal={() => {
+                        setCardModalVisible(false);
+                    }}
+                    cardId={cardId}
                 />
             )}
         </>

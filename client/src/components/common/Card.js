@@ -63,6 +63,7 @@ const Card = ({
     cardDueDate,
     cardCommentCount,
     fontSize,
+    onClick,
     draggable,
 }) => {
     const { boardDetail } = useContext(BoardDetailContext);
@@ -154,6 +155,7 @@ const Card = ({
             cursor={cursor}
             width={width}
             height={height}
+            onClick={onClick}
         >
             <CardTitle fontSize={fontSize}>{cardTitle}</CardTitle>
             <CardDueDateCommentCountFlexBox>

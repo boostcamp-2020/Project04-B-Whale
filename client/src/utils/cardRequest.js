@@ -77,3 +77,8 @@ export const modifyCardPosition = async ({ cardId, listId, position }) => {
 
     return response;
 };
+
+export const getCard = async ({ cardId }) => {
+    const response = await request({ url: `/api/card/${cardId}`, method: 'GET' });
+    return response;
+};
