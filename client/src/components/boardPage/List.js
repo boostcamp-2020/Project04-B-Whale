@@ -236,7 +236,7 @@ export default function List({ title, id, index, moveList, position }) {
                     <AiOutlineMenu onClick={menuClickHandler} style={{ cursor: 'pointer' }} />
                 </ListContentWrapper>
                 <CardsWrapper>
-                    {boardDetail.lists[index].cards.map((v, cardInd) => (
+                    {boardDetail.lists[index].cards?.map((v, cardInd) => (
                         <Card
                             width="230px"
                             height="60px"

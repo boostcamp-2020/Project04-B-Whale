@@ -24,7 +24,8 @@ const CardMemberContainer = ({ members }) => {
         <Wrapper>
             <CardMemberHeader>멤버</CardMemberHeader>
             <CardMemberWrapper>
-                {members !== [] && members.map((member) => <Member member={member} />)}
+                {members !== [] &&
+                    members.map((member) => <Member key={member.id} member={member} />)}
             </CardMemberWrapper>
         </Wrapper>
     );
