@@ -8,9 +8,9 @@ import { Card } from '../../../src/model/Card';
 import { Invitation } from '../../../src/model/Invitation';
 import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
-import { TestTransactionDelegate } from '../../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
-describe('GET /api/card/:cardId/comment', () => {
+describe('POST /api/card/:cardId/comment', () => {
     const app = new Application();
     let jwtUtil = null;
 
@@ -25,7 +25,7 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('존재하지 않는 카드 id로 API 호출 시 404 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -58,7 +58,7 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('user0이 카드에 댓글을 남기려 하지만 보드에 초대되지 않아서 ForBiddenError 발생', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -121,7 +121,7 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('잘못된 형식의 카드 id로 요청했을 때 400 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -154,7 +154,7 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('Request body에 아무것도 없으면 400 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -185,7 +185,7 @@ describe('GET /api/card/:cardId/comment', () => {
     });
 
     test('user0이 card0에 대해 댓글 작성 201 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -228,16 +228,27 @@ describe('GET /api/card/:cardId/comment', () => {
 
             await em.save(em.create(Invitation, { user: user0, board: board0 }));
 
+            const content = 'this is a comment';
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
 
             // when
             const response = await agent(app.httpServer)
                 .post(`/api/card/${card0.id}/comment`)
                 .set('Authorization', accessToken)
-                .send({ content: 'this is a comment' });
+                .send({ content });
 
             // then
             expect(response.status).toEqual(201);
+            expect(response.body).toEqual(
+                expect.objectContaining({
+                    content,
+                    user: {
+                        id: user0.id,
+                        name: user0.name,
+                        profileImageUrl: user0.profileImageUrl,
+                    },
+                }),
+            );
         });
     });
 });

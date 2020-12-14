@@ -1,17 +1,17 @@
 import moment from 'moment';
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
-import { Application } from '../../src/Application';
-import { EntityNotFoundError } from '../../src/common/error/EntityNotFoundError';
-import { ForbiddenError } from '../../src/common/error/ForbiddenError';
-import { Board } from '../../src/model/Board';
-import { Card } from '../../src/model/Card';
-import { Comment } from '../../src/model/Comment';
-import { Invitation } from '../../src/model/Invitation';
-import { List } from '../../src/model/List';
-import { Member } from '../../src/model/Member';
-import { User } from '../../src/model/User';
-import { CardService } from '../../src/service/CardService';
-import { TestTransactionDelegate } from '../TestTransactionDelegate';
+import { Application } from '../../../src/Application';
+import { EntityNotFoundError } from '../../../src/common/error/EntityNotFoundError';
+import { ForbiddenError } from '../../../src/common/error/ForbiddenError';
+import { Board } from '../../../src/model/Board';
+import { Card } from '../../../src/model/Card';
+import { Comment } from '../../../src/model/Comment';
+import { Invitation } from '../../../src/model/Invitation';
+import { List } from '../../../src/model/List';
+import { Member } from '../../../src/model/Member';
+import { User } from '../../../src/model/User';
+import { CardService } from '../../../src/service/CardService';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
 describe('CardService.getCard() Test', () => {
     const app = new Application();
@@ -28,7 +28,7 @@ describe('CardService.getCard() Test', () => {
 
     test('존재하지 않는 카드 id로 getCard 호출 시 EntityNotFoundError 발생', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -52,7 +52,7 @@ describe('CardService.getCard() Test', () => {
 
     test('초대되지 않은 보드의 카드를 조회했을 때 ForbiddenError 발생', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -106,7 +106,7 @@ describe('CardService.getCard() Test', () => {
 
     test('user0이 만든 본인이 만든 card0 조회', async () => {
         const cardService = CardService.getInstance();
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 

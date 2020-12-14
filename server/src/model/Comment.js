@@ -29,6 +29,10 @@ export class Comment {
     card;
 
     updateContent(content) {
+        if (this.content === content) {
+            return false;
+        }
         this.content = content;
+        return true;
     }
 }

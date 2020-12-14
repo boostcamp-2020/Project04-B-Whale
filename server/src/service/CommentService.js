@@ -16,7 +16,10 @@ export class CommentService extends BaseService {
 
     @Transactional()
     async addComment({ userId, cardId, content }) {
-        const card = await this.customCardRepository.findWithListAndBoardById(cardId);
+        const [user, card] = await Promise.all([
+            this.userRepository.findOne(userId),
+            this.customCardRepository.findWithListAndBoardById(cardId),
+        ]);
 
         if (card === undefined) {
             throw new EntityNotFoundError('Not found card');
@@ -45,7 +48,15 @@ export class CommentService extends BaseService {
         });
         await this.commentRepository.save(comment);
 
-        return comment;
+        return {
+            id: comment.id,
+            content: comment.content,
+            user: {
+                id: user.id,
+                name: user.name,
+                profileImageUrl: user.profileImageUrl,
+            },
+        };
     }
 
     @Transactional()
@@ -69,25 +80,41 @@ export class CommentService extends BaseService {
 
     @Transactional()
     async modifyComment({ userId, commentDto }) {
-        const comment = await this.commentRepository.findOne(commentDto.id, {
-            loadRelationIds: {
-                relations: ['user'],
-                disableMixedMap: true,
-            },
-        });
+        const [user, comment] = await Promise.all([
+            this.userRepository.findOne(userId),
+            this.commentRepository.findOne(commentDto.id, {
+                loadRelationIds: {
+                    relations: ['user'],
+                    disableMixedMap: true,
+                },
+            }),
+        ]);
 
         if (comment === undefined) {
             throw new EntityNotFoundError('Not found comment');
         }
+
         if (userId !== comment.user.id) {
             throw new ForbiddenError('Not your comment');
         }
 
-        if (comment.content === commentDto.content) {
-            return;
+        if (!comment.updateContent(commentDto.content)) {
+            return {
+                id: comment.id,
+                content: comment.content,
+            };
         }
 
-        comment.updateContent(commentDto.content);
         await this.commentRepository.save(comment);
+
+        return {
+            id: comment.id,
+            content: comment.content,
+            user: {
+                id: user.id,
+                name: user.name,
+                profileImageUrl: user.profileImageUrl,
+            },
+        };
     }
 }

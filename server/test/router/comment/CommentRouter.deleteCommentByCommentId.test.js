@@ -9,9 +9,9 @@ import { Comment } from '../../../src/model/Comment';
 import { Invitation } from '../../../src/model/Invitation';
 import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
-import { TestTransactionDelegate } from '../../TestTransactionDelegate';
+import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
-describe('PATCH /api/comment/{commentId}', () => {
+describe('DELETE /api/comment/:commentId', () => {
     const app = new Application();
     let jwtUtil = null;
 
@@ -25,8 +25,8 @@ describe('PATCH /api/comment/{commentId}', () => {
         done();
     });
 
-    test('존재하지 않는 댓글을 수정할 때 404 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+    test('존재하지 않는 댓글을 삭제할 때 404 반환', async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -38,18 +38,16 @@ describe('PATCH /api/comment/{commentId}', () => {
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
             // when
             const response = await agent(app.httpServer)
-                .patch(`/api/comment/1`)
+                .delete(`/api/comment/1`)
                 .set('Authorization', accessToken)
-                .send({
-                    content: 'edited content',
-                });
+                .send();
             // then
             expect(response.status).toEqual(404);
         });
     });
 
     test('commentId가 문자열일 때 호출 시 400 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
             const user0 = em.create(User, {
@@ -59,20 +57,18 @@ describe('PATCH /api/comment/{commentId}', () => {
             });
             await em.save(user0);
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
-
             // when
             const response = await agent(app.httpServer)
-                .patch(`/api/comment/dd`)
+                .delete(`/api/comment/dd`)
                 .set('Authorization', accessToken)
                 .send();
-
             // then
             expect(response.status).toEqual(400);
         });
     });
 
-    test('본인 댓글이 아닌 댓글을 수정할 때 403 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+    test('본인 댓글이 아닌 댓글을 삭제할 때 403 반환', async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -123,15 +119,12 @@ describe('PATCH /api/comment/{commentId}', () => {
             await em.save(comment0);
 
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
-            const expectedContent = 'edited content';
 
             // when
             const response = await agent(app.httpServer)
-                .patch(`/api/comment/${comment0.id}`)
+                .delete(`/api/comment/${comment0.id}`)
                 .set('Authorization', accessToken)
-                .send({
-                    content: expectedContent,
-                });
+                .send();
 
             // then
             expect(response.status).toEqual(403);
@@ -139,7 +132,7 @@ describe('PATCH /api/comment/{commentId}', () => {
     });
 
     test('본인이 작성한 댓글 삭제 성공 시 204 반환', async () => {
-        await TestTransactionDelegate.transaction(async () => {
+        await TransactionRollbackExecutor.rollback(async () => {
             // given
             const em = getEntityManagerOrTransactionManager('default');
 
@@ -183,13 +176,12 @@ describe('PATCH /api/comment/{commentId}', () => {
             await em.save(comment0);
 
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
-            const expectedContent = 'edited content';
 
             // when
             const response = await agent(app.httpServer)
-                .patch(`/api/comment/${comment0.id}`)
+                .delete(`/api/comment/${comment0.id}`)
                 .set('Authorization', accessToken)
-                .send({ content: expectedContent });
+                .send();
 
             // then
             expect(response.status).toEqual(204);
