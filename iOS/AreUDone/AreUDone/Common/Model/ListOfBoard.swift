@@ -12,11 +12,15 @@ import RealmSwift
 class ListOfBoard: Object, Codable {
   @objc dynamic var id: Int = 0
   @objc dynamic var title: String = ""
-  @objc dynamic var position: Double = 0.0
+  @objc dynamic var position: Double = 0
   var cards = List<Card>()
-
+  
   override class func primaryKey() -> String? {
     return "id"
+  }
+  
+  private enum CodingKeys: String, CodingKey {
+    case id, title, position, cards
   }
   
   required convenience init(from decoder: Decoder) throws {
@@ -30,7 +34,16 @@ class ListOfBoard: Object, Codable {
     let decodedCards =
       try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
     cards.append(objectsIn: decodedCards)
+  }
+  
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.id, forKey: .id)
+    try container.encode(self.title, forKey: .title)
+    try container.encode(self.position, forKey: .position)
     
+    let encodedCards = Array(cards)
+    try container.encode(encodedCards, forKey: .cards)
   }
 }
 
@@ -41,17 +54,15 @@ extension ListOfBoard: NSItemProviderWriting {
   }
   
   func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Swift.Void) -> Progress? {
-    
-    do {
-      let encoder = JSONEncoder()
-      encoder.outputFormatting = .prettyPrinted
-      let data = try encoder.encode(self)
-      
-      completionHandler(data, nil)
-      print("성공")
-    } catch {
-      print("에러")
-      completionHandler(nil, error)
+    DispatchQueue.main.async { // TODO: 수정필요
+      do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(self)
+        completionHandler(data, nil)
+      } catch {
+        completionHandler(nil, error)
+      }
     }
     
     return nil

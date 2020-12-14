@@ -41,9 +41,13 @@ class Card: Object, Codable {
   @objc dynamic var id: Int = 0
   @objc dynamic var title: String = ""
   @objc dynamic var dueDate: String = ""
-  @objc dynamic var position: Double = 0.0
+  @objc dynamic var position: Double = 0
   @objc dynamic var commentCount: Int = 0
 
+  private enum CodingKeys: String, CodingKey {
+    case id, title, dueDate, position, commentCount
+  }
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
     
@@ -54,9 +58,17 @@ class Card: Object, Codable {
     self.position = try container.decodeIfPresent(Double.self, forKey: .position) ?? 0
     self.commentCount = try container.decodeIfPresent(Int.self, forKey: .commentCount) ?? 0
   }
+  
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.id, forKey: .id)
+    try container.encode(self.title, forKey: .title)
+    try container.encode(self.dueDate, forKey: .dueDate)
+    try container.encode(self.position, forKey: .position)
+    try container.encode(self.commentCount, forKey: .commentCount)
+  }
 }
 
-// NSObject 채택시 자동으로 Hashable 채택
 extension Card: NSItemProviderWriting {
   static var writableTypeIdentifiersForItemProvider: [String] {
     
@@ -64,17 +76,19 @@ extension Card: NSItemProviderWriting {
   }
   
   func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Swift.Void) -> Progress? {
-    
-    do {
-      let encoder = JSONEncoder()
-      encoder.outputFormatting = .prettyPrinted
-      let data = try encoder.encode(self)
+    DispatchQueue.main.async {
       
-      completionHandler(data, nil)
-      
-    } catch {
-      
-      completionHandler(nil, error)
+      do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(self)
+        
+        completionHandler(data, nil)
+        
+      } catch {
+        print(error)
+        completionHandler(nil, error)
+      }
     }
     
     return nil
@@ -92,6 +106,7 @@ extension Card: NSItemProviderReading {
       let myJSON = try decoder.decode(Card.self, from: data)
       return myJSON as! Self
     } catch {
+      print(error)
       fatalError("Err")
     }
   }
