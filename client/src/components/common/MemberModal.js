@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
-import { addMemberToCard } from '../../utils/cardRequest';
 import Member from './Member';
+import CardContext from '../../context/CardContext';
+import { addMemberToCard } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     position: fixed;
@@ -55,16 +56,15 @@ const SearchInput = styled.input.attrs({
 const MemberModal = ({ onClose }) => {
     const { boardDetail } = useContext(BoardDetailContext);
     const { creator, invitedUsers } = boardDetail;
-    // TODO: 카드에 members 정보를 default 값으로 변경
-    const [userIds, setUserIds] = useState([1, 2]);
+    const { cardState } = useContext(CardContext);
+    const card = cardState.data;
     const allInvitedUsers = [creator, ...invitedUsers];
     const [searchedUsers, setSearchedUsers] = useState(allInvitedUsers);
-    allInvitedUsers.sort((a) => (userIds.includes(a.id) ? -1 : 1));
 
     const onClickClose = async (e) => {
         if (e.target === e.currentTarget) {
-            // TODO: context에 저장된 카드 id 가져오도록 변경할 것
-            const cardId = 1;
+            const cardId = card.id;
+            const userIds = card.members.map((member) => member.id);
             await addMemberToCard({ cardId, userIds });
             onClose();
         }
@@ -80,7 +80,6 @@ const MemberModal = ({ onClose }) => {
 
         const regex = new RegExp(`^${text}`);
         const newSearchUsers = allInvitedUsers.filter((user) => user.name.search(regex) !== -1);
-        newSearchUsers.sort((a) => (userIds.includes(a.id) ? -1 : 1));
         setSearchedUsers(newSearchUsers);
     };
 
@@ -91,19 +90,11 @@ const MemberModal = ({ onClose }) => {
                 <ModalHeader>
                     <div />
                     <ModalTitle>멤버</ModalTitle>
-                    <IoIosClose size={24} cursor="pointer" onClick={onClose} />
+                    <IoIosClose size={24} cursor="pointer" onClick={onClickClose} />
                 </ModalHeader>
                 <SearchInput onChange={onChangeUserSearch} />
                 {searchedUsers.map(({ id, profileImageUrl, name }) => (
-                    <Member
-                        key={id}
-                        memberId={id}
-                        profileImageUrl={profileImageUrl}
-                        name={name}
-                        checked={userIds.includes(id)}
-                        selectedMember={userIds}
-                        changeMember={setUserIds}
-                    />
+                    <Member key={id} memberId={id} profileImageUrl={profileImageUrl} name={name} />
                 ))}
             </ModalWrapper>
         </>

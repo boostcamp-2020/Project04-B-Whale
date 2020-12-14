@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FcCheckmark } from 'react-icons/fc';
+import CardContext from '../../context/CardContext';
 
 const UserDiv = styled.div`
     display: flex;
@@ -36,14 +37,21 @@ const NameDiv = styled.div`
     margin: auto 10px;
 `;
 
-const Member = ({ memberId, profileImageUrl, name, checked, selectedMember, changeMember }) => {
-    const onClickMember = (id) => {
+const Member = ({ memberId, profileImageUrl, name }) => {
+    const { cardState, cardDispatch } = useContext(CardContext);
+    const card = cardState.data;
+    const { members } = card;
+    const checked = members.some((member) => member.id === memberId);
+
+    const onClickMember = async (id) => {
+        let newMembers = members;
         if (checked) {
-            const index = selectedMember.findIndex((member) => member === id);
-            selectedMember.splice(index, 1);
-            return changeMember([...selectedMember]);
+            newMembers = members.filter((member) => member.id !== id);
+        } else {
+            const newMember = { id, profileImageUrl, name };
+            newMembers = [...members, newMember];
         }
-        return changeMember([...selectedMember, id]);
+        cardDispatch({ type: 'CHANGE_MEMBER', data: { ...card, members: newMembers } });
     };
 
     return (
