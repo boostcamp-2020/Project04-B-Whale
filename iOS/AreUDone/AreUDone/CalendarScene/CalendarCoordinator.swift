@@ -37,7 +37,7 @@ final class CalendarCoordinator: NavigationCoordinator {
             identifier: CalendarViewController.identifier,
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
-              let cardService = CardService(router: self.router)
+              let cardService = CardService(router: self.router, localDataSource: CardLocalDataSource())
               let viewModel = CalendarViewModel(cardService: cardService)
               return CalendarViewController(coder: coder, viewModel: viewModel)
             }) as? CalendarViewController
