@@ -76,18 +76,16 @@ class CardService: CardServiceProtocol {
       switch result {
       case .success(let cards):
         completionHandler(.success(cards))
-        DispatchQueue.main.async {
-          self.localDataSource?.save(cards: (cards.fetchCards()))
-        }
+        self.localDataSource?.save(cards: (cards.fetchCards()))
         
       case .failure(_):
-        DispatchQueue.main.async {
-          if let cards = self.localDataSource?.loadCards(at: dateString) {
-            completionHandler(.success(cards))
-          } else {
+        self.localDataSource?.loadCards(at: dateString, completionHandler: { cards in
+          guard let cards = cards else {
             completionHandler(.failure(.data))
+            return
           }
-        }
+          completionHandler(.success(cards))
+        })
       }
     }
   }
@@ -103,17 +101,13 @@ class CardService: CardServiceProtocol {
       switch result {
       case .success(let cardDetail):
         completionHandler(.success(cardDetail))
-        DispatchQueue.main.async {
-          self.localDataSource?.save(cardDetail: cardDetail)
-        }
+        self.localDataSource?.save(cardDetail: cardDetail)
         
       case .failure(_):
-        DispatchQueue.main.async {
-          if let cardDetail = self.localDataSource?.loadCardDetail(for: id) {
-            completionHandler(.success(cardDetail))
-          } else {
-            completionHandler(.failure(.data))
-          }
+        if let cardDetail = self.localDataSource?.loadCardDetail(for: id) {
+          completionHandler(.success(cardDetail))
+        } else {
+          completionHandler(.failure(.data))
         }
       }
     }
@@ -139,10 +133,7 @@ class CardService: CardServiceProtocol {
       switch result {
       case .success(()):
         completionHandler(result)
-        
-        DispatchQueue.main.async {
-          self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
-        }
+        self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
         
       case .failure(_):
         completionHandler(.failure(.data))
@@ -171,7 +162,14 @@ class CardService: CardServiceProtocol {
   
   func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
     router.request(route: CardEndPoint.deleteCard(id: cardId)) { (result: Result<Void, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(()):
+        completionHandler(.success(()))
+        self.localDataSource?.deleteCard(for: cardId)
+        
+      case .failure(_):
+        completionHandler(.failure(.data))
+      }
     }
   }
 }
