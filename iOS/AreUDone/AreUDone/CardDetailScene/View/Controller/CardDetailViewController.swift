@@ -13,8 +13,8 @@ enum CommentSection {
 
 final class CardDetailViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, CardDetail.Comment>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, CardDetail.Comment>
+  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, CardDetailComment>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, CardDetailComment>
   
   // MARK:- Property
   
@@ -112,12 +112,12 @@ private extension CardDetailViewController {
       cell.update(with: comment)
       
       self?.viewModel.prepareUpdateCell { userId in
-        guard comment.user.id == userId else { return }
+        guard comment.user?.id == userId else { return }
         cell.confirmEditOption()
         cell.delegate = self
       }
       
-      self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl) { data in
+      self?.viewModel.fetchProfileImage(with: comment.user?.profileImageUrl) { data in
         let image = UIImage(data: data)
         DispatchQueue.main.async {
           cell.update(with: image)
@@ -136,7 +136,7 @@ private extension CardDetailViewController {
     return dataSource
   }
   
-  func updateSnapshot(with item: [CardDetail.Comment]?, animatingDifferences: Bool = true) {
+  func updateSnapshot(with item: [CardDetailComment]?, animatingDifferences: Bool = true) {
     // TODO:- item이 nil일 경우 처리해줄 화면 만들기
     guard let item = item else { return }
     var snapshot = Snapshot()
@@ -474,8 +474,8 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
       alertStyle: .actionSheet,
       confirmAction: { [weak self] in
         self?.viewModel.deleteComment(with: comment.id) {
-          snapshot.deleteItems([comment])
           DispatchQueue.main.async {
+            snapshot.deleteItems([comment])
             self?.dataSource.apply(snapshot)
           }
         }

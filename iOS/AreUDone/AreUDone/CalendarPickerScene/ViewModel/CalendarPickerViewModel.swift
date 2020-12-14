@@ -113,6 +113,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
         completionHandler()
         
       case .failure(let error):
+        completionHandler()
         print(error)
       }
     }

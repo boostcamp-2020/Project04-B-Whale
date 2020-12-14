@@ -10,24 +10,81 @@ import RealmSwift
 
 protocol CardLocalDataSourceable {
   
-  func save(cards: Cards)
-  func loadCards(at dateString: String) -> Cards?
+  func save(cards: [Card])
+  func save(cardDetail: CardDetail)
+  
+  func updateCardDetail(for id: Int, content: String?, dueDate: String?)
+  
+//  func loadCards(at dateString: String) -> Cards?
+  func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void))
+  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void))
+  
+  func deleteCard(for cardId: Int)
 }
 
 final class CardLocalDataSource: CardLocalDataSourceable {
   
   let realm = try! Realm()
   
-  func save(cards: Cards) {
-    try! realm.write {
-      realm.add(cards, update: .modified)
+  func save(cards: [Card]) {
+    realm.writeOnMain {
+      cards.forEach {
+        self.realm.add($0, update: .all)
+      }
     }
   }
   
-  
-  func loadCards(at dateString: String) -> Cards? {
-    let result = realm.objects(Cards.self).filter("date == '\(dateString)'")
+  func save(cardDetail: CardDetail) {
     
-    return result.first
+    realm.writeOnMain {
+      self.realm.add(cardDetail, update: .all)
+    }
+    
+  }
+  
+  func updateCardDetail(for id: Int, content: String?, dueDate: String?) {
+    realm.writeOnMain {
+      guard let cardDetail = self.realm.objects(CardDetail.self).filter("id == \(id)").first else { return }
+      guard let card = self.realm.objects(Card.self).filter("id == \(id)").first else { return }
+      if let content = content {
+        cardDetail.content = content
+      }
+      
+      if let dueDate = dueDate {
+        card.dueDate = dueDate
+        cardDetail.dueDate = dueDate
+      }
+    }
+    
+  }
+  
+  func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void)) {
+    realm.writeOnMain {
+      let result = self.realm.objects(Card.self).filter("dueDate CONTAINS %@", "\(dateString)")
+      let loadedCard = Array(result)
+      if loadedCard.isEmpty {
+        completionHandler(nil)
+      } else {
+        let cards = Cards()
+        
+        cards.cards.append(objectsIn: loadedCard)
+        completionHandler(cards)
+      }
+    }
+  }
+  
+  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void)) {
+    realm.writeOnMain {
+      let result = self.realm.objects(CardDetail.self).filter("id == \(cardId)")
+      
+      completionHandler(result.first)
+    }
+  }
+  
+  func deleteCard(for cardId: Int) {
+    realm.writeOnMain {
+      let card = self.realm.objects(Card.self).filter("id == \(cardId)")
+      self.realm.delete(card)
+    }
   }
 }
