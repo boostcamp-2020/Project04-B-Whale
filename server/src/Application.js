@@ -17,6 +17,7 @@ import { EnvType } from './common/env/EnvType';
 import { IndexRouter } from './router';
 import { errorHandler } from './common/middleware/errorHandler';
 import { NaverStrategy } from './common/config/passport/NaverStrategy';
+import { GitHubStrategy } from './common/config/passport/GitHubStrategy';
 import { JwtStrategy } from './common/config/passport/JwtStrategy';
 
 export class Application {
@@ -71,6 +72,7 @@ export class Application {
 
     initPassport() {
         passport.use(new NaverStrategy());
+        passport.use(new GitHubStrategy());
         passport.use(new JwtStrategy());
     }
 
