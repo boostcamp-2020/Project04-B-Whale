@@ -104,11 +104,13 @@ class CardService: CardServiceProtocol {
         self.localDataSource?.save(cardDetail: cardDetail)
         
       case .failure(_):
-        if let cardDetail = self.localDataSource?.loadCardDetail(for: id) {
+        self.localDataSource?.loadCardDetail(for: id, completionHandler: { cardDetail in
+          guard let cardDetail = cardDetail else {
+            completionHandler(.failure(.data))
+            return
+          }
           completionHandler(.success(cardDetail))
-        } else {
-          completionHandler(.failure(.data))
-        }
+        })
       }
     }
   }

@@ -17,7 +17,7 @@ protocol CardLocalDataSourceable {
   
 //  func loadCards(at dateString: String) -> Cards?
   func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void))
-  func loadCardDetail(for cardId: Int) -> CardDetail?
+  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void))
   
   func deleteCard(for cardId: Int)
 }
@@ -73,15 +73,17 @@ final class CardLocalDataSource: CardLocalDataSourceable {
     }
   }
   
-  func loadCardDetail(for cardId: Int) -> CardDetail? {
-    let result = realm.objects(CardDetail.self).filter("id == \(cardId)")
-    
-    return result.first
+  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void)) {
+    realm.writeOnMain {
+      let result = self.realm.objects(CardDetail.self).filter("id == \(cardId)")
+      
+      completionHandler(result.first)
+    }
   }
   
   func deleteCard(for cardId: Int) {
-    let card = realm.objects(Card.self).filter("id == \(cardId)")
     realm.writeOnMain {
+      let card = self.realm.objects(Card.self).filter("id == \(cardId)")
       self.realm.delete(card)
     }
   }
