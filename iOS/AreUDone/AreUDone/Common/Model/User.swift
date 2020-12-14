@@ -18,4 +18,8 @@ class User: Object, Codable {
     
     return self.id == other.id
   }
+  
+  override class func primaryKey() -> String? {
+    return "id"
+  }
 }
