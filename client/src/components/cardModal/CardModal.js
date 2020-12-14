@@ -2,11 +2,11 @@ import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import CardDescriptionContainer from './CardDescriptionContainer';
 import CardDueDateContainer from './CardDueDateContainer';
-import CardModalButton from './CardModalButton';
 import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
 import MemberButton from '../common/MemberButton';
+import MoveButton from '../common/MoveButton';
 import { getCard } from '../../utils/cardRequest';
 import CardContext from '../../context/CardContext';
 
@@ -89,6 +89,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'CHANGE_POSITION':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'ERROR':
             return {
                 loading: false,
@@ -147,12 +152,7 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                         <CardModalRightSideBar>
                             <ButtonList>
                                 <MemberButton />
-                                <CardModalButton width="10rem" height="2rem">
-                                    마감 기한
-                                </CardModalButton>
-                                <CardModalButton width="10rem" height="2rem">
-                                    카드 이동
-                                </CardModalButton>
+                                <MoveButton />
                             </ButtonList>
                         </CardModalRightSideBar>
                     </ModalInner>

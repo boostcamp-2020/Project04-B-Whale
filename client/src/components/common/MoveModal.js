@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import CardContext from '../../context/CardContext';
 import { modifyCardPosition } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
@@ -72,15 +73,18 @@ const Button = styled.button.attrs({ type: 'button' })`
 `;
 
 const MoveModal = ({ onClose }) => {
-    const { boardDetail } = useContext(BoardDetailContext);
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const { lists } = boardDetail;
-    // TODO: context에 저장된 현재 카드 id로 변경할 것
-    const cardId = 5;
-    // TODO: 현재 카드의 리스트 아이디, 카드 위치로 변경할 것
-    const currentListId = 1;
-    const currentCardPosition = 1.8125;
+    const { cardState, cardDispatch } = useContext(CardContext);
+    const cardInfo = cardState.data;
+    const currentListId = cardInfo.list.id;
     const currentListIndex = lists.findIndex((list) => list.id === currentListId);
+    const cardId = cardInfo.id;
+    const currentCardIndex = lists[currentListIndex].cards.findIndex((card) => card.id === cardId);
+    const currentCard = lists[currentListIndex].cards[currentCardIndex];
+    const currentCardPosition = cardInfo.position;
     const [selectedList, setSelectedList] = useState(lists[currentListIndex]);
+    const listElement = useRef();
     const positionElement = useRef();
 
     const onClickClose = (e) => {
@@ -96,7 +100,8 @@ const MoveModal = ({ onClose }) => {
 
     const onClickMoveCard = async () => {
         const listId = selectedList.id;
-        const { selectedIndex } = positionElement.current;
+        const selectedListIndex = listElement.current.selectedIndex;
+        const selectedCardIndex = positionElement.current.selectedIndex;
         const value = Number(positionElement.current.value);
         const cardCount = selectedList.cards.length;
         let position = 0;
@@ -106,18 +111,28 @@ const MoveModal = ({ onClose }) => {
             return;
         }
 
-        if (selectedIndex === 0) {
+        if (selectedCardIndex === 0) {
             position = value / 2;
-        } else if (selectedIndex === cardCount) {
+        } else if (selectedCardIndex === cardCount) {
             position = value;
-        } else if (selectedList.id === currentListId && selectedIndex + 1 === cardCount) {
+        } else if (selectedList.id === currentListId && selectedCardIndex + 1 === cardCount) {
             position = value + 1;
         } else {
-            const preValue = Number(positionElement.current[selectedIndex - 1].value);
+            const preValue = Number(positionElement.current[selectedCardIndex - 1].value);
             position = (value + preValue) / 2;
         }
 
         await modifyCardPosition({ cardId, listId, position });
+        const newList = { id: selectedList.id, title: selectedList.title };
+        const data = { ...cardInfo, position, list: newList };
+        cardDispatch({ type: 'CHANGE_POSITION', data });
+
+        const newCard = { ...currentCard, position };
+        const newLists = [...lists];
+        newLists[currentListIndex].cards.splice(currentCardIndex, 1);
+        newLists[selectedListIndex].cards.splice(selectedCardIndex, 0, newCard);
+        setBoardDetail({ ...boardDetail, lists: newLists });
+
         onClose();
     };
 
@@ -135,6 +150,7 @@ const MoveModal = ({ onClose }) => {
                     <SelectWrapper>
                         <SelectLabel htmlFor="list-select">리스트</SelectLabel>
                         <Select
+                            ref={listElement}
                             id="list-select"
                             defaultValue={currentListId}
                             onChange={onChangeList}
