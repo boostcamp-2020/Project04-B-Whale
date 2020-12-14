@@ -18,7 +18,7 @@ class Cards: Object, Codable {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
-    let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? [Card()]
+    let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
     let decodedDate = try container.decodeIfPresent(String.self, forKey: .date) ?? ""
     
     cards.append(objectsIn: decodedCards)
