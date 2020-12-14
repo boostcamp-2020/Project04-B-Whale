@@ -228,16 +228,27 @@ describe('POST /api/card/:cardId/comment', () => {
 
             await em.save(em.create(Invitation, { user: user0, board: board0 }));
 
+            const content = 'this is a comment';
             const accessToken = await jwtUtil.generateAccessToken({ userId: user0.id });
 
             // when
             const response = await agent(app.httpServer)
                 .post(`/api/card/${card0.id}/comment`)
                 .set('Authorization', accessToken)
-                .send({ content: 'this is a comment' });
+                .send({ content });
 
             // then
             expect(response.status).toEqual(201);
+            expect(response.body).toEqual(
+                expect.objectContaining({
+                    content,
+                    user: {
+                        id: user0.id,
+                        name: user0.name,
+                        profileImageUrl: user0.profileImageUrl,
+                    },
+                }),
+            );
         });
     });
 });

@@ -120,9 +120,9 @@ export const CardRouter = () => {
             throw new BadRequestError('Empty content');
         }
 
-        await commentService.addComment({ userId, cardId, content });
+        const responseBody = await commentService.addComment({ userId, cardId, content });
 
-        res.status(201).end();
+        res.status(201).json(responseBody);
     });
 
     return router;
