@@ -50,15 +50,20 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
-        var boardMember = boardDetail.fetchInvitedUsers()
-        boardMember.append(boardDetail.creator!)
-        guard let cardMember = self.cardMember else {
-          completionHandler(boardMember, nil)
-          return
+        DispatchQueue.main.async {
+          var boardMember = boardDetail.fetchInvitedUsers()
+          boardMember.append(boardDetail.creator!)
+          
+          guard let cardMember = self.cardMember else {
+            completionHandler(boardMember, nil)
+            return
+          }
+          
+          let notCardMember = Set(boardMember).subtracting(cardMember).sorted { $0.id < $1.id }
+          completionHandler(notCardMember, cardMember)
         }
         
-        let notCardMember = Set(boardMember).subtracting(cardMember).sorted { $0.id < $1.id }
-        completionHandler(notCardMember, cardMember)
+        
       case .failure(let error):
         print(error)
       }
