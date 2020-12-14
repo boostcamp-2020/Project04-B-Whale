@@ -84,6 +84,7 @@ const MoveModal = ({ onClose }) => {
     const currentCard = lists[currentListIndex].cards[currentCardIndex];
     const currentCardPosition = cardInfo.position;
     const [selectedList, setSelectedList] = useState(lists[currentListIndex]);
+    const isEmptyList = selectedList.cards[0].id === 0;
     const listElement = useRef();
     const positionElement = useRef();
 
@@ -171,14 +172,23 @@ const MoveModal = ({ onClose }) => {
                             id="position-select"
                             defaultValue={currentCardPosition}
                         >
-                            {selectedList.cards.map((card, index) => (
-                                <option key={card.id} value={card.position}>
-                                    {card.id === cardId ? `${index + 1} (current)` : index + 1}
-                                </option>
-                            ))}
+                            {!isEmptyList &&
+                                selectedList.cards.map((card, index) => (
+                                    <option key={card.id} value={card.position}>
+                                        {card.id === cardId ? `${index + 1} (current)` : index + 1}
+                                    </option>
+                                ))}
                             {currentListId !== selectedList.id && (
-                                <option value={selectedList.cards.length + 1}>
-                                    {selectedList.cards.length + 1}
+                                <option
+                                    value={
+                                        isEmptyList
+                                            ? selectedList.cards.length
+                                            : selectedList.cards.length + 1
+                                    }
+                                >
+                                    {isEmptyList
+                                        ? selectedList.cards.length
+                                        : selectedList.cards.length + 1}
                                 </option>
                             )}
                         </Select>
