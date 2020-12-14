@@ -92,8 +92,8 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
       return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 0))
   }
   
-  func update(with comment: CardDetail.Comment) {
-    nameLabel.text = comment.user.name
+  func update(with comment: CardDetailComment) {
+    nameLabel.text = comment.user?.name
     contentLabel.text = comment.content
     createdAtLabel.text = comment.createdAt
   }

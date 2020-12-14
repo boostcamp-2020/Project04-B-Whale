@@ -100,7 +100,22 @@ class CardService: CardServiceProtocol {
   
   func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void)) {
     router.request(route: CardEndPoint.fetchDetailCard(id: id)) { (result: Result<CardDetail, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(let cardDetail):
+        completionHandler(.success(cardDetail))
+        DispatchQueue.main.async {
+          self.localDataSource?.save(cardDetail: cardDetail)
+        }
+        
+      case .failure(_):
+        DispatchQueue.main.async {
+          if let cardDetail = self.localDataSource?.loadCardDetail(for: id) {
+            completionHandler(.success(cardDetail))
+          } else {
+            completionHandler(.failure(.data))
+          }
+        }
+      }
     }
   }
   
