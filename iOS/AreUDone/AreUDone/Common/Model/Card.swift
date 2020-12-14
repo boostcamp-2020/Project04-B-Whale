@@ -23,10 +23,7 @@ class Cards: Object, Codable {
   }
   
   func fetchCards() -> [Card] {
-    var fetchedCards = [Card]()
-    fetchedCards.append(contentsOf: cards)
-    
-    return fetchedCards
+    return Array(cards)
   }
 }
 
@@ -93,26 +90,3 @@ extension Card: NSItemProviderReading {
     }
   }
 }
-
-
-
-
-
-//
-//struct Card: Codable {
-//    let id: Int
-//    let title, dueDate: String
-//    let commentCount: Int
-//}
-//
-//extension Card: Hashable {
-//
-//  static func == (lhs: Card, rhs: Card) -> Bool {
-//    return lhs.id == rhs.id
-//  }
-//
-//  func hash(into hasher: inout Hasher) {
-//    hasher.combine(id)
-//  }
-//}
-//

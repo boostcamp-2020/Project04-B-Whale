@@ -29,25 +29,19 @@ class CardDetail: Object, Codable {
     self.dueDate = try container.decode(String.self, forKey: .dueDate)
     self.board = try container.decode(CardDetailBoard.self, forKey: .board)
     self.list = try container.decode(CardDetailList.self, forKey: .list)
-    let decodedMembers = try container.decodeIfPresent([User].self, forKey: .members) ?? [User]()
-    let decodedComments = try container.decodeIfPresent([CardDetailComment].self, forKey: .comments) ?? [CardDetailComment]()
+    let decodedMembers = try container.decodeIfPresent([User].self, forKey: .members) ?? []
+    let decodedComments = try container.decodeIfPresent([CardDetailComment].self, forKey: .comments) ?? []
     
     self.members.append(objectsIn: decodedMembers)
     self.comments.append(objectsIn: decodedComments)
   }
   
   func fetchMembers() -> [User] {
-    var fetchedUsers = [User]()
-    fetchedUsers.append(contentsOf: members)
-    
-    return fetchedUsers
+    return Array(members)
   }
   
   func fetchComment() -> [CardDetailComment] {
-    var fetchedComments = [CardDetailComment]()
-    fetchedComments.append(contentsOf: comments)
-    
-    return fetchedComments
+    return Array(comments)
   }
   
   override class func primaryKey() -> String? {
