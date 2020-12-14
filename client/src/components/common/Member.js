@@ -46,7 +46,6 @@ const Member = ({ memberId, profileImageUrl, name }) => {
     const onClickMember = async (id) => {
         let newMembers = members;
         if (checked) {
-            // const index = members.findIndex((member) => member.id === id);
             newMembers = members.filter((member) => member.id !== id);
         } else {
             const newMember = { id, profileImageUrl, name };
