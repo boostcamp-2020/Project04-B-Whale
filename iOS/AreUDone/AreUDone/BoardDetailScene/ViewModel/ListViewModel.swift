@@ -23,11 +23,11 @@ protocol ListViewModelProtocol {
   func removeCard(at index: Int)
   
   func updateListTitle(to title: String)
-
+  
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping (Int) -> Void)
-
+  
   func updateCollectionView()
 }
 
@@ -36,7 +36,7 @@ final class ListViewModel: ListViewModelProtocol {
   // MARK: - Property
   
   let realm = try! Realm()
-
+  
   
   private let listService: ListServiceProtocol
   private let cardService: CardServiceProtocol
@@ -55,7 +55,7 @@ final class ListViewModel: ListViewModelProtocol {
       updateListTitleHandler?(listTitle)
     }
   }
-
+  
   
   // MARK: - Initializer
   
@@ -120,7 +120,7 @@ final class ListViewModel: ListViewModelProtocol {
       }
     }
   }
-
+  
   func updateCardPosition(
     from sourceIndex: Int,
     to destinationIndex: Int,
@@ -182,16 +182,16 @@ final class ListViewModel: ListViewModelProtocol {
       id: card.id,
       listId: fetchListId(),
       position: position
-      ) { result in
+    ) { result in
       switch result {
       case .success(_):
         self.realm.writeOnMain {
-
-        sourceViewModel.removeCard(at: sourceIndex)
-        card.position = position
-        self.insert(card: card, at: destinationIndex)
-
-        handler()
+          
+          sourceViewModel.removeCard(at: sourceIndex)
+          card.position = position
+          self.insert(card: card, at: destinationIndex)
+          
+          handler()
         }
         
       case .failure(let error):
@@ -221,16 +221,14 @@ final class ListViewModel: ListViewModelProtocol {
       switch result {
       case .success(_):
         self.realm.writeOnMain {
-
-        
-        sourceViewModel.removeCard(at: sourceIndex)
-        card.position = position
-        self.append(card: card)
-        
-        let lastIndex = self.numberOfCards() - 1
-        handler(lastIndex)
+          sourceViewModel.removeCard(at: sourceIndex)
+          card.position = position
+          self.append(card: card)
+          
+          let lastIndex = self.numberOfCards() - 1
+          handler(lastIndex)
         }
-
+        
       case .failure(let error):
         print(error)
       }
