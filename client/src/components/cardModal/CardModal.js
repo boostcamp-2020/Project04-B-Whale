@@ -7,6 +7,7 @@ import CardTitleContainer from './CardTitleContainer';
 import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
 import MemberButton from '../common/MemberButton';
+import MoveButton from '../common/MoveButton';
 import { getCard } from '../../utils/cardRequest';
 import CardContext from '../../context/CardContext';
 
@@ -89,6 +90,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'CHANGE_DUEDATE':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'ERROR':
             return {
                 loading: false,
@@ -153,6 +159,7 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                                 <CardModalButton width="10rem" height="2rem">
                                     카드 이동
                                 </CardModalButton>
+                                <MoveButton />
                             </ButtonList>
                         </CardModalRightSideBar>
                     </ModalInner>
