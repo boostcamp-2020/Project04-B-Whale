@@ -9,7 +9,8 @@ import Foundation
 import RealmSwift
 
 protocol BoardLocalDataSourceable {
-  func save(object: Object, policy: Realm.UpdatePolicy?) // 보드 목록 / 상세화면 저장
+  func save(boards: Boards) // 보드 목록
+  func save(boardDetail: BoardDetail) // 상세화면 저장
   func updateBoard(title: String, ofId id: Int) // 보드 제목 변경 저장
 
   func loadBoards() -> Boards?
@@ -18,14 +19,19 @@ protocol BoardLocalDataSourceable {
 
 
 final class BoardLocalDataSource: BoardLocalDataSourceable {
-  
+
   let realm = try! Realm()
   
   
-  func save(object: Object, policy: Realm.UpdatePolicy?) {
-    realm.writeOnMain(object: object) { object in
-      if let policy = policy { self.realm.add(object, update: policy) }
-      else { self.realm.add(object) }
+  func save(boards: Boards) {
+    realm.writeOnMain(object: boards) { object in
+      self.realm.add(object)
+    }
+  }
+  
+  func save(boardDetail: BoardDetail) {
+    realm.writeOnMain(object: boardDetail) { object in
+      self.realm.add(object, update: .all)
     }
   }
   
