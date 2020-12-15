@@ -16,4 +16,8 @@ extension UIFont {
   static func nanumR(size: CGFloat) -> UIFont {
     return UIFont(name: Font.nanumR.rawValue, size: size) ?? UIFont.systemFont(ofSize: size)
   }
+  
+  static func nanumSquareB(size: CGFloat) -> UIFont {
+    return UIFont(name: Font.nanumSquareB.rawValue, size: size) ?? UIFont.systemFont(ofSize: size)
+  }
 }

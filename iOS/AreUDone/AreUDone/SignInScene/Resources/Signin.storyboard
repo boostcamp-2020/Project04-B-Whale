@@ -21,6 +21,28 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQL-Dk-c5z" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
+                                <rect key="frame" x="71" y="689" width="272" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="ZI7-Hu-OLc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                <state key="normal" title="Github 아이디로 로그인">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="githubSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="TgT-Ro-C0u"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="github_logo" translatesAutoresizingMaskIntoConstraints="NO" id="MN7-0q-2sK">
+                                <rect key="frame" x="85" y="703" width="28" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="B6J-MU-7jJ"/>
+                                    <constraint firstAttribute="width" secondItem="MN7-0q-2sK" secondAttribute="height" multiplier="1:1" id="BLn-pN-1vq"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="760" width="272" height="56"/>
                                 <constraints>
@@ -47,13 +69,20 @@
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="BDf-1e-AQO"/>
                             <constraint firstAttribute="bottom" secondItem="9fa-mg-n8R" secondAttribute="bottom" id="Djt-5s-7Lt"/>
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="bottom" secondItem="xOx-i5-aaB" secondAttribute="bottom" constant="-46" id="HaI-rx-41r"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="leading" secondItem="ZQL-Dk-c5z" secondAttribute="leading" constant="14" id="HrV-F6-eJt"/>
                             <constraint firstItem="ioi-B4-9Bj" firstAttribute="top" secondItem="xOx-i5-aaB" secondAttribute="top" constant="50" id="WWz-2P-qQh"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="top" secondItem="ZQL-Dk-c5z" secondAttribute="top" constant="14" id="Z2l-gZ-aBu"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="leading" secondItem="GJ3-vA-RKX" secondAttribute="leading" id="bpV-Sm-Lf9"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="bottom" secondItem="ZQL-Dk-c5z" secondAttribute="bottom" constant="-14" id="dbl-uu-kOI"/>
                             <constraint firstItem="xOx-i5-aaB" firstAttribute="trailing" secondItem="9fa-mg-n8R" secondAttribute="trailing" id="lLk-GV-1cj"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="trailing" secondItem="GJ3-vA-RKX" secondAttribute="trailing" id="m0C-35-tMW"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="top" secondItem="ZQL-Dk-c5z" secondAttribute="bottom" constant="15" id="ot4-r8-xqS"/>
                             <constraint firstItem="9fa-mg-n8R" firstAttribute="leading" secondItem="xOx-i5-aaB" secondAttribute="leading" id="otQ-79-Cbn"/>
                             <constraint firstItem="9fa-mg-n8R" firstAttribute="top" secondItem="KP1-hl-g3i" secondAttribute="top" id="tm6-8a-KQY"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="githubSigninButton" destination="ZQL-Dk-c5z" id="gRe-Gl-6Pv"/>
                         <outlet property="videoBackgroundView" destination="9fa-mg-n8R" id="u12-1v-8W1"/>
                     </connections>
                 </viewController>
@@ -65,6 +94,7 @@
     <resources>
         <image name="NaverSignInIcon" width="578" height="125"/>
         <image name="app_logo" width="405" height="154"/>
+        <image name="github_logo" width="225" height="225"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

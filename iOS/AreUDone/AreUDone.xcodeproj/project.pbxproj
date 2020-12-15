@@ -152,7 +152,6 @@
 		338364C925665CDF00F92EE4 /* NanumSquareOTF_acEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C725665CD900F92EE4 /* NanumSquareOTF_acEB.otf */; };
 		338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C525665CD900F92EE4 /* NanumSquareLight.ttf */; };
 		338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */; };
-		338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
 		338364D725666C1200F92EE4 /* SigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338364D625666C1200F92EE4 /* SigninButton.swift */; };
 		33B87E1A2565071C00354880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E192565071C00354880 /* AppDelegate.swift */; };
 		33B87E1C2565071C00354880 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B87E1B2565071C00354880 /* SceneDelegate.swift */; };
@@ -280,6 +279,7 @@
 		A84FC84E41C57DD915168344 /* Pods_AreUDoneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C7872B0622973BAF08CBBF /* Pods_AreUDoneTests.framework */; };
 		BD088A952583A8840056E95D /* FetchBoardOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088A942583A8840056E95D /* FetchBoardOption.swift */; };
 		BD088AB2258629690056E95D /* CardLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AB1258629690056E95D /* CardLocalDataSource.swift */; };
+		BD088AD82588677C0056E95D /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -1782,13 +1782,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				33601215256E40F1009580A1 /* NanumBarunpenR.ttf in Resources */,
-				338364CC25665CDF00F92EE4 /* NanumSquareBold.ttf in Resources */,
 				335AC4FB256F8BD1006A5C4A /* BoardDetail.storyboard in Resources */,
 				33601216256E40F1009580A1 /* NanumBarunpenB.ttf in Resources */,
 				336011F3256D48FA009580A1 /* DateStepper.xib in Resources */,
 				33B87E262565071F00354880 /* LaunchScreen.storyboard in Resources */,
 				33F2D538257DDCC4008F1E06 /* BoardAdd.storyboard in Resources */,
 				BDD18B9F2567B432005DF00A /* background.mp4 in Resources */,
+				BD088AD82588677C0056E95D /* NanumSquareBold.ttf in Resources */,
 				338364CA25665CDF00F92EE4 /* NanumSquareLight.ttf in Resources */,
 				338364CB25665CDF00F92EE4 /* NanumSquareRegular.ttf in Resources */,
 				BDEA7BD32576244900CF6B11 /* ContentInput.storyboard in Resources */,

@@ -10,6 +10,7 @@ import NetworkFramework
 
 enum LoginPlatform: String {
   case naver
+  case github
 }
 
 enum UserEndPoint {
