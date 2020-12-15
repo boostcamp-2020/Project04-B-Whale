@@ -43,8 +43,8 @@ final class BoardDetailCollectionViewDataSource: NSObject, UICollectionViewDataS
     let cell: BoardDetailCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
     
     viewModel.fetchListViewModel(at: indexPath.item) { viewModel in
-      let dataSource = ListCollectionViewDataSource(viewModel: viewModel, presentCardAddHandler: presentCardAddHandler)
-      cell.update(with: viewModel, dataSource: dataSource, presentCardDetailHandler: presentCardDetailHandler)
+      let dataSource = ListTableViewDataSource(viewModel: viewModel)
+      cell.update(with: viewModel, dataSource: dataSource, presentCardDetailHandler: presentCardDetailHandler, presentCardAddHandler: presentCardAddHandler)
     }
   
     return cell

@@ -14,11 +14,12 @@ class ListOfBoard: Object, Codable {
   @objc dynamic var title: String = ""
   @objc dynamic var position: Double = 0
   var cards = List<Card>()
-  
+
   override class func primaryKey() -> String? {
     return "id"
   }
   
+
   private enum CodingKeys: String, CodingKey {
     case id, title, position, cards
   }
@@ -50,7 +51,7 @@ class ListOfBoard: Object, Codable {
 extension ListOfBoard: NSItemProviderWriting {
   static var writableTypeIdentifiersForItemProvider: [String] {
     
-    return [kUTTypeData as String]
+    return [kUTTypeDirectory as String]
   }
   
   func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Swift.Void) -> Progress? {
@@ -71,7 +72,7 @@ extension ListOfBoard: NSItemProviderWriting {
 
 extension ListOfBoard: NSItemProviderReading {
   static var readableTypeIdentifiersForItemProvider: [String] {
-    return [kUTTypeData as String]
+    return [kUTTypeDirectory as String]
   }
   
   static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {

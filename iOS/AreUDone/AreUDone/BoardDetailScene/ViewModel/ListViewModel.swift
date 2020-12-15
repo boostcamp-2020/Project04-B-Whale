@@ -28,7 +28,7 @@ protocol ListViewModelProtocol {
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping (Int) -> Void)
   
-  func updateCollectionView()
+  func updateTableView()
 }
 
 final class ListViewModel: ListViewModelProtocol {
@@ -78,6 +78,7 @@ final class ListViewModel: ListViewModelProtocol {
   
   func numberOfCards() -> Int {
     return list.cards.count
+
   }
   
   func fetchListId() -> Int {
@@ -97,12 +98,12 @@ final class ListViewModel: ListViewModelProtocol {
   }
   
   func fetchCard(at index: Int) -> Card {
-    list.cards[index]
+    return list.cards[index]
   }
   
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
-    self.realm.delete(self.list.cards[index])
+    self.list.cards.remove(at: index)
   }
   
   func updateListTitle(to title: String) {
@@ -170,7 +171,8 @@ final class ListViewModel: ListViewModelProtocol {
     var position: Double
     if destinationIndex == 0 {
       // 맨 앞에 넣는 경우
-      position = list.cards[destinationIndex].position / 2
+      if list.cards.isEmpty { position = 1 }
+      else { position = list.cards[destinationIndex].position / 2 }
     } else if destinationIndex == (list.cards.count) {
       // 맨 마지막에 넣는 경우
       position = list.cards[destinationIndex-1].position + 1
@@ -186,11 +188,10 @@ final class ListViewModel: ListViewModelProtocol {
       switch result {
       case .success(_):
         self.realm.writeOnMain {
-          
           sourceViewModel.removeCard(at: sourceIndex)
           card.position = position
           self.insert(card: card, at: destinationIndex)
-          
+
           handler()
         }
         
@@ -235,7 +236,7 @@ final class ListViewModel: ListViewModelProtocol {
     }
   }
   
-  func updateCollectionView() {
+  func updateTableView() {
     updateCollectionViewHandler?()
   }
 }

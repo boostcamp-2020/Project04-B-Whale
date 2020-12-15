@@ -12,20 +12,11 @@ protocol ListFooterViewDelegate: AnyObject {
   func baseViewTapped()
 }
 
-final class ListFooterView: UICollectionReusableView, Reusable {
+final class ListFooterView: UIView {
   
   // MARK: - Property
-    
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    titleLabel.text = "카드 추가"
-    titleLabel.font = UIFont.nanumB(size: 18)
-    
-    return titleLabel
-  }()
-  private let baseView: UIView = {
+  private let buttonView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -35,6 +26,17 @@ final class ListFooterView: UICollectionReusableView, Reusable {
     
     return view
   }()
+  
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    titleLabel.text = "카드 추가"
+    titleLabel.font = UIFont.nanumB(size: 18)
+    
+    return titleLabel
+  }()
+  
   
   private var presentCardAddHandler: ((Int) -> Void)?
   weak var delegate: ListFooterViewDelegate?
@@ -61,8 +63,8 @@ final class ListFooterView: UICollectionReusableView, Reusable {
 private extension ListFooterView {
     
   private func configure() {
-    addSubview(baseView)
-    baseView.addSubview(titleLabel)
+    addSubview(buttonView)
+    buttonView.addSubview(titleLabel)
     
     configureView()
     configureBaseView()
@@ -75,20 +77,21 @@ private extension ListFooterView {
   
   func configureBaseView() {
     let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
-    baseView.addGestureRecognizer(gestureRecognizer)
+    buttonView.addGestureRecognizer(gestureRecognizer)
+
     
     NSLayoutConstraint.activate([
-      baseView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-      baseView.centerXAnchor.constraint(equalTo: centerXAnchor),
-      baseView.widthAnchor.constraint(equalToConstant: bounds.width/3),
-      baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2),
+      buttonView.centerXAnchor.constraint(equalTo: centerXAnchor),
+      buttonView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      buttonView.widthAnchor.constraint(equalToConstant: 100),
+      buttonView.bottomAnchor.constraint(equalTo: bottomAnchor),
     ])
   }
   
   func configureTitle() {
     NSLayoutConstraint.activate([
-      titleLabel.centerXAnchor.constraint(equalTo: baseView.centerXAnchor),
-      titleLabel.centerYAnchor.constraint(equalTo: baseView.centerYAnchor),
+      titleLabel.centerXAnchor.constraint(equalTo: buttonView.centerXAnchor),
+      titleLabel.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
     ])
   }
 }

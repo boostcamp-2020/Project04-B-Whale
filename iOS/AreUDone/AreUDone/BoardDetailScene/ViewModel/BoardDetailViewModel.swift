@@ -25,7 +25,8 @@ protocol BoardDetailViewModelProtocol {
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
   func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void)
-  
+
+  func save()
   func createList(with title: String)
 }
 
@@ -78,23 +79,24 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   
   // MARK: - Method
   
+  func save() {
+    realm.writeOnMain(object: boardDetail!) { object in
+      self.realm.create(BoardDetail.self, value: object, update: .all)
+    }
+  }
+  
   func numberOfLists() -> Int {
     return boardDetail?.lists.count ?? 0
   }
   
   func remove(at index: Int) {
-    try! realm.write {
-      guard let lists = self.boardDetail?.lists,
-            lists.indices.contains(index) else { return }
-      
-      realm.delete(lists[index])
-    }
+    guard let boardDetail = self.boardDetail,
+          boardDetail.lists.indices.contains(index) else { return }
+    boardDetail.lists.remove(at: index)
   }
   
   func insert(list: ListOfBoard, at index: Int) {
-    try! realm.write {
-      self.boardDetail?.lists.insert(list, at: index)
-    }
+    self.boardDetail?.lists.insert(list, at: index)
   }
   
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
@@ -164,14 +166,14 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     listService.updateList(ofId: listId, position: position, title: nil) { result in
       switch result {
       case .success(_):
-        DispatchQueue.main.async {
+        self.realm.writeOnMain {
           self.remove(at: sourceIndex)
           list.position = position
           self.insert(list: list, at: destinationIndex)
           
           handler()
         }
-        
+
       case .failure(let error):
         print(error)
       }
