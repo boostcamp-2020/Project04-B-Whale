@@ -102,6 +102,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
                     id: responseData.listId,
                     title: responseData.title,
                     position: responseData.position,
+                    cards: [{ id: 0 }],
                 },
             ],
         });

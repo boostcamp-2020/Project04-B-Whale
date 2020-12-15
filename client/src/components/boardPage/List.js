@@ -60,6 +60,7 @@ const CardsWrapper = styled.div`
     margin-top: 5px;
     overflow-y: auto;
     overflow-x: hidden;
+    min-height: 20px;
 `;
 
 const FooterAddBtnDiv = styled.div`
@@ -251,6 +252,7 @@ export default function List({ title, id, index, moveList, position }) {
                             moveCard={moveCard}
                             onClick={(e) =>
                                 ((_e, _cardId) => {
+                                    if (_cardId === 0) return;
                                     setCardId(_cardId);
                                     setCardModalVisible(true);
                                 })(e, v.id)
