@@ -1,4 +1,5 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { createNamespace, getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -6,6 +7,8 @@ import { BadRequestError } from '../common/error/BadRequestError';
 
 export class BoardService extends BaseService {
     static instance = null;
+
+    static boardSpace = createNamespace('Board');
 
     static getInstance() {
         if (BoardService.instance === null) {
@@ -118,6 +121,10 @@ export class BoardService extends BaseService {
         const board = await this.boardRepository.findOne(boardId);
         if (!board) throw new EntityNotFoundError();
         await this.checkForbidden(hostId, boardId);
+
+        const boardNamespace = getNamespace('Board');
+        boardNamespace.userId = hostId;
+
         board.title = title;
         await this.boardRepository.save(board);
     }
