@@ -196,6 +196,7 @@ describe('PATCH /api/comment/:commentId', () => {
             expect(response.body).toEqual({
                 id: comment0.id,
                 content: expectedContent,
+                createdAt: expect.anything(),
                 user: {
                     id: user0.id,
                     name: user0.name,

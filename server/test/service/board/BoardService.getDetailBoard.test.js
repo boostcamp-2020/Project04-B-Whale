@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { getRepository } from 'typeorm';
 import { Application } from '../../../src/Application';
 import { Board } from '../../../src/model/Board';
@@ -53,7 +54,7 @@ describe('BoardService.getDetailBoard() Test', () => {
                 title: 'test card',
                 content: 'test content',
                 position: 1,
-                dueDate: '2020-01-01',
+                dueDate: moment.tz('2020-01-01', 'Asia/Seoul').format(),
                 list: createList.id,
                 creator: createUser.id,
             };
@@ -80,7 +81,7 @@ describe('BoardService.getDetailBoard() Test', () => {
                                 id: createCard.id,
                                 title: 'test card',
                                 position: 1,
-                                dueDate: '2020-01-01T00:00:00.000Z',
+                                dueDate: '2020-01-01 00:00:00',
                                 commentCount: 0,
                             },
                         ],

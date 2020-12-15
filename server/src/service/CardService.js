@@ -72,7 +72,7 @@ export class CardService extends BaseService {
             .map((card) => ({
                 id: card.id,
                 title: card.title,
-                dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+                dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
                 commentCount: card.commentCount,
             }));
     }
@@ -101,7 +101,7 @@ export class CardService extends BaseService {
         return cards.map((card) => ({
             id: card.id,
             title: card.title,
-            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             commentCount: card.commentCount,
         }));
     }
@@ -133,6 +133,7 @@ export class CardService extends BaseService {
         await this.cardRepository.save(card);
     }
 
+    @Transactional()
     async getCard({ userId, cardId }) {
         const card = await this.customCardRepository.findWithListAndBoardById(cardId);
 
@@ -143,12 +144,12 @@ export class CardService extends BaseService {
         const { list } = card;
         const { board } = list;
 
-        const boardExisted = await this.customBoardRepository.existUserByBoardId({
+        const isAuthorized = await this.customBoardRepository.existUserByBoardId({
             boardId: board.id,
             userId,
         });
 
-        if (!boardExisted) {
+        if (!isAuthorized) {
             throw new ForbiddenError(`You're not invited`);
         }
 
@@ -160,7 +161,7 @@ export class CardService extends BaseService {
             id: card.id,
             title: card.title,
             content: card.content,
-            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             position: card.position,
             list: {
                 id: list.id,
@@ -178,7 +179,7 @@ export class CardService extends BaseService {
             comments: cardWithCommentsAndMembers.comments.map((comment) => ({
                 id: comment.id,
                 content: comment.content,
-                createdAt: moment(comment.createdAt).tz('Asia/Seoul').format(),
+                createdAt: moment(comment.createdAt).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
                 user: {
                     id: comment.user.id,
                     name: comment.user.name,
@@ -214,11 +215,12 @@ export class CardService extends BaseService {
             creator: userId,
         });
         await this.cardRepository.save(card);
+
         return {
             id: card.id,
             title: card.title,
             position: card.position,
-            dueDate: card.dueDate,
+            dueDate: moment.tz(card.dueDate, 'Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             content: card.content,
         };
     }

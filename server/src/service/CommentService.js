@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -51,6 +52,7 @@ export class CommentService extends BaseService {
         return {
             id: comment.id,
             content: comment.content,
+            createdAt: moment(comment.createdAt).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             user: {
                 id: user.id,
                 name: user.name,
@@ -110,6 +112,7 @@ export class CommentService extends BaseService {
         return {
             id: comment.id,
             content: comment.content,
+            createdAt: moment(comment.createdAt).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             user: {
                 id: user.id,
                 name: user.name,
