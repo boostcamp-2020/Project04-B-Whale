@@ -64,7 +64,7 @@ const CloseBtn = styled(GrClose)`
 
 const AddListBtnInput = ({ parent, id, history }) => {
     const [state, setState] = useState('button');
-    let datetime = '';
+    let datetime = moment().format('YYYY-MM-DD HH:mm:ss');
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
@@ -170,12 +170,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
                     <DatePicker
                         showTime
                         style={{ marginTop: '5px' }}
-                        defaultValue={moment(
-                            `${new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-                                .toISOString()
-                                .slice(0, -1)}`,
-                            dateFormat,
-                        )}
+                        defaultValue={moment(datetime, dateFormat)}
                         format={dateFormat}
                         onOk={okHandler}
                         clearIcon={false}
