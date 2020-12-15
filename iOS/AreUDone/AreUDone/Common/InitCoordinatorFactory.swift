@@ -19,7 +19,8 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
     case .isSigned:
       let coordinators: [NavigationCoordinator] = [
         CalendarCoordinator(router: router),
-        BoardListCoordinator(router: router)
+        BoardListCoordinator(router: router),
+        SettingCoordinator(router: router)
       ]
       return TabbarCoordinator(
         router: router,
