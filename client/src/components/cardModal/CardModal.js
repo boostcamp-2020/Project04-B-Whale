@@ -94,6 +94,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'CHANGE_DUEDATE':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'ERROR':
             return {
                 loading: false,
