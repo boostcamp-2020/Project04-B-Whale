@@ -6,6 +6,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>NanumSquareBold.ttf</string>
 		<string>NanumBarunpenR.ttf</string>
 		<string>NanumBarunpenB.ttf</string>
 	</array>

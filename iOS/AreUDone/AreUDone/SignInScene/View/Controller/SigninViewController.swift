@@ -20,6 +20,12 @@ final class SigninViewController: UIViewController {
     }
   }
   
+  @IBOutlet weak var githubSigninButton: SigninButton! {
+    didSet {
+      githubSigninButton.titleLabel?.font = UIFont.nanumSquareB(size: 18)
+    }
+  }
+  
   // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
@@ -51,6 +57,10 @@ final class SigninViewController: UIViewController {
   
   @IBAction func naverSigninButtonTapped(_ sender: Any) {
     signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .naver))
+  }
+  
+  @IBAction func githubSigninButtonTapped(_ sender: Any) {
+    signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .github))
   }
   
   private func backgroundPlay() {
