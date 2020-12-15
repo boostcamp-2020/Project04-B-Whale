@@ -89,6 +89,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'CHANGE_POSITION':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'CHANGE_DUEDATE':
             return {
                 ...state,
