@@ -62,7 +62,7 @@ describe('CardService.getMyCardsByDueDate() Test', () => {
                 title: 'card title 0',
                 content: 'card content 0',
                 position: 0,
-                dueDate: moment('2020-12-03T21:00:00').format(),
+                dueDate: moment.tz('2020-12-03T21:00:00', 'Asia/Seoul').format(),
                 list: list0,
                 creator: user0,
             });
@@ -70,7 +70,7 @@ describe('CardService.getMyCardsByDueDate() Test', () => {
                 title: 'card title 1',
                 content: 'card content 1',
                 position: 10,
-                dueDate: moment('2020-12-03T22:00:00').format(),
+                dueDate: moment.tz('2020-12-03T22:00:00', 'Asia/Seoul').format(),
                 list: list0,
                 creator: user1,
             });
@@ -78,7 +78,7 @@ describe('CardService.getMyCardsByDueDate() Test', () => {
                 title: 'card title 2',
                 content: 'card content 2',
                 position: 20,
-                dueDate: moment('2020-12-03T23:00:00').format(),
+                dueDate: moment.tz('2020-12-03T23:00:00', 'Asia/Seoul').format(),
                 list: list0,
                 creator: user1,
             });

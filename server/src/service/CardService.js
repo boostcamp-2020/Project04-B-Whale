@@ -72,7 +72,7 @@ export class CardService extends BaseService {
             .map((card) => ({
                 id: card.id,
                 title: card.title,
-                dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+                dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
                 commentCount: card.commentCount,
             }));
     }
@@ -101,7 +101,7 @@ export class CardService extends BaseService {
         return cards.map((card) => ({
             id: card.id,
             title: card.title,
-            dueDate: moment(card.dueDate).tz('Asia/Seoul').format(),
+            dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             commentCount: card.commentCount,
         }));
     }
