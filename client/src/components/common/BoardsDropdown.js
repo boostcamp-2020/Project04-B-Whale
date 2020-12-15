@@ -21,6 +21,7 @@ const DropdownWrapper = styled.div`
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
     overflow: auto;
+    z-index: 2;
 `;
 
 const BoardTitle = styled.div`

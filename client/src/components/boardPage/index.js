@@ -13,6 +13,7 @@ import BoardDetailContext from '../../context/BoardDetailContext';
 import AskOverDropdown from './AskOverDropdown';
 import AddListOrCard from './AddListOrCard';
 import List from './List';
+import BoardsProvider from '../provider/BoardsProvider';
 
 const MainContents = styled.div`
     height: 92%;
@@ -74,7 +75,9 @@ const Board = ({ match }) => {
 
     return (
         <>
-            <Header />
+            <BoardsProvider>
+                <Header />
+            </BoardsProvider>
             <MainContents backgroundColor={boardDetail.color}>
                 <TopMenu
                     sidebarDisplay={sidebarDisplay}
