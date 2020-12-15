@@ -54,7 +54,7 @@ final class SigninViewController: UIViewController {
   }
   
   @IBAction func githubSigninButtonTapped(_ sender: Any) {
-    
+    signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .github))
   }
   
   private func backgroundPlay() {
