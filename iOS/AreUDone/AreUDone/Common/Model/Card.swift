@@ -12,28 +12,18 @@ import RealmSwift
 class Cards: Object, Codable {
   
   var cards = List<Card>()
-  @objc dynamic var date = ""
   
   required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     let decodedCards = try container.decodeIfPresent([Card].self, forKey: .cards) ?? []
-    let decodedDate = try container.decodeIfPresent(String.self, forKey: .date) ?? ""
     
     cards.append(objectsIn: decodedCards)
-    date = decodedDate
   }
   
   func fetchCards() -> [Card] {
-    var fetchedCards = [Card]()
-    fetchedCards.append(contentsOf: cards)
-    
-    return fetchedCards
-  }
-  
-  override class func primaryKey() -> String? {
-    return "date"
+    return Array(cards)
   }
 }
 
@@ -66,6 +56,10 @@ class Card: Object, Codable {
     try container.encode(self.dueDate, forKey: .dueDate)
     try container.encode(self.position, forKey: .position)
     try container.encode(self.commentCount, forKey: .commentCount)
+  }
+
+  override class func primaryKey() -> String? {
+    return "id"
   }
 }
 
@@ -111,26 +105,3 @@ extension Card: NSItemProviderReading {
     }
   }
 }
-
-
-
-
-
-//
-//struct Card: Codable {
-//    let id: Int
-//    let title, dueDate: String
-//    let commentCount: Int
-//}
-//
-//extension Card: Hashable {
-//
-//  static func == (lhs: Card, rhs: Card) -> Bool {
-//    return lhs.id == rhs.id
-//  }
-//
-//  func hash(into hasher: inout Hasher) {
-//    hasher.combine(id)
-//  }
-//}
-//

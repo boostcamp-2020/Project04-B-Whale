@@ -76,18 +76,16 @@ class CardService: CardServiceProtocol {
       switch result {
       case .success(let cards):
         completionHandler(.success(cards))
-        DispatchQueue.main.async {
-          cards.date = dateString
-          self.localDataSource?.save(cards: cards)
-        }
+        self.localDataSource?.save(cards: (cards.fetchCards()))
+        
       case .failure(_):
-        DispatchQueue.main.async {
-          if let cards = self.localDataSource?.loadCards(at: dateString) {
-            completionHandler(.success(cards))
-          } else {
+        self.localDataSource?.loadCards(at: dateString, completionHandler: { cards in
+          guard let cards = cards else {
             completionHandler(.failure(.data))
+            return
           }
-        }
+          completionHandler(.success(cards))
+        })
       }
     }
   }
@@ -100,7 +98,20 @@ class CardService: CardServiceProtocol {
   
   func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void)) {
     router.request(route: CardEndPoint.fetchDetailCard(id: id)) { (result: Result<CardDetail, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(let cardDetail):
+        completionHandler(.success(cardDetail))
+        self.localDataSource?.save(cardDetail: cardDetail)
+        
+      case .failure(_):
+        self.localDataSource?.loadCardDetail(for: id, completionHandler: { cardDetail in
+          guard let cardDetail = cardDetail else {
+            completionHandler(.failure(.data))
+            return
+          }
+          completionHandler(.success(cardDetail))
+        })
+      }
     }
   }
   
@@ -121,7 +132,14 @@ class CardService: CardServiceProtocol {
       position: position,
       dueDate: dueDate
     )) { (result: Result<Void, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(()):
+        completionHandler(result)
+        self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
+        
+      case .failure(_):
+        completionHandler(.failure(.data))
+      }
     }
   }
   
@@ -146,7 +164,14 @@ class CardService: CardServiceProtocol {
   
   func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
     router.request(route: CardEndPoint.deleteCard(id: cardId)) { (result: Result<Void, APIError>) in
-      completionHandler(result)
+      switch result {
+      case .success(()):
+        completionHandler(.success(()))
+        self.localDataSource?.deleteCard(for: cardId)
+        
+      case .failure(_):
+        completionHandler(.failure(.data))
+      }
     }
   }
 }

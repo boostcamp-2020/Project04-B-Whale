@@ -10,7 +10,7 @@ import Foundation
 protocol CardDetailViewModelProtocol {
   func bindingCardDetailContentView(handler: @escaping ((String?) -> Void))
   func bindingCardDetailDueDateView(handler: @escaping ((String) -> Void))
-  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetail.Comment]?) -> Void))
+  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetailComment]?) -> Void))
   func bindingCardDetailNavigationBarTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailListTitle(handler: @escaping ((String) -> Void))
   func bindingCardDetailBoardTitle(handler: @escaping ((String) -> Void))
@@ -42,7 +42,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
-  private var cardDetailCommentsViewHandler: (([CardDetail.Comment]?) -> Void)?
+  private var cardDetailCommentsViewHandler: (([CardDetailComment]?) -> Void)?
   private var cardDetailNavigationBarTitleHandler: ((String) -> Void)?
   private var cardDetailListTitleHandler: ((String) -> Void)?
   private var cardDetailBoardTitleHandler: ((String) -> Void)?
@@ -80,16 +80,16 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     cardService.fetchDetailCard(id: id) { [weak self] result in
       switch result {
       case .success(let detailCard):
-        self?.boardId = detailCard.board.id
-        self?.cardMembers = detailCard.members
+        self?.boardId = detailCard.board!.id
+        self?.cardMembers = detailCard.fetchMembers()
         
         self?.cardDetailContentViewHandler?(detailCard.content)
         self?.cardDetailDueDateViewHandler?(detailCard.dueDate)
-        self?.cardDetailCommentsViewHandler?(detailCard.comments)
+        self?.cardDetailCommentsViewHandler?(detailCard.fetchComment())
         self?.cardDetailNavigationBarTitleHandler?(detailCard.title)
-        self?.cardDetailListTitleHandler?(detailCard.list.title)
-        self?.cardDetailBoardTitleHandler?(detailCard.board.title)
-        self?.cardDetailMemberViewHandler?(detailCard.members)
+        self?.cardDetailListTitleHandler?(detailCard.list!.title)
+        self?.cardDetailBoardTitleHandler?(detailCard.board!.title)
+        self?.cardDetailMemberViewHandler?(detailCard.fetchMembers())
         self?.fetchUserData()
         
       case .failure(let error):
@@ -206,7 +206,7 @@ extension CardDetailViewModel {
     cardDetailDueDateViewHandler = handler
   }
   
-  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetail.Comment]?) -> Void)) {
+  func bindingCardDetailCommentCollectionView(handler: @escaping (([CardDetailComment]?) -> Void)) {
     cardDetailCommentsViewHandler = handler
   }
   
