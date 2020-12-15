@@ -12,6 +12,7 @@ final class SceneCoordinator: Coordinator {
   
   // MARK: - Property
   
+  var parentCoordinator: Coordinator?
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
@@ -42,6 +43,7 @@ final class SceneCoordinator: Coordinator {
       by: signinCheckResult,
       with: router
     )
+    initCoordinator.parentCoordinator = self
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
