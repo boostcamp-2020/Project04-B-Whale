@@ -17,7 +17,7 @@ final class SettingCoordinator: NavigationCoordinator {
   }
   private let router: Routable
   var navigationController: UINavigationController?
-  var sceneCoordinator: Coordinator?
+  
   
   // MARK:- Initializer
   
@@ -40,14 +40,5 @@ final class SettingCoordinator: NavigationCoordinator {
     settingViewController.coordinator = self
     
     return settingViewController
-  }
-}
-
-
-extension SettingCoordinator {
-  
-  func logout() {
-    Keychain.shared.removeValue(forKey: "token")
-    sceneCoordinator?.start()
   }
 }
