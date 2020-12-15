@@ -35,6 +35,7 @@ jobs:
           echo DATABASE_SYNCHRONIZE=true >> .env.test
           echo JWT_SECRET=sjfklajslfjaslfjals >> .env.test
           echo OAUTH_NAVER_CLIENT_ID=vdEhOcPIbq3NUryKWnDh >> .env.test
+          echo OAUTH_GITHUB_CLIENT_ID=d3fcbc6215c7a37893f1 >> .env.test
           cat .env.test
       - run: npm run test
     services:
