@@ -162,6 +162,7 @@ export class CardService extends BaseService {
             title: card.title,
             content: card.content,
             dueDate: moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
+            position: card.position,
             list: {
                 id: list.id,
                 title: list.title,

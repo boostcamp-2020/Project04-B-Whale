@@ -173,6 +173,7 @@ describe('CommentService.addComment() Test', () => {
             expect(comment).toEqual({
                 id: expect.any(Number),
                 content: `edited card content 0`,
+                createdAt: expect.anything(),
                 user: {
                     id: user0.id,
                     name: user0.name,
