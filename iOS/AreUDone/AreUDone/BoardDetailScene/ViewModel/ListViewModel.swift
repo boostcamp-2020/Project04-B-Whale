@@ -191,7 +191,7 @@ final class ListViewModel: ListViewModelProtocol {
           sourceViewModel.removeCard(at: sourceIndex)
           card.position = position
           self.insert(card: card, at: destinationIndex)
-    
+
           handler()
         }
         

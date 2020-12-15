@@ -109,6 +109,7 @@ final class CardAddViewModel: CardAddViewModelProtocol {
         self.realm.writeOnMain {
           self.viewModel.append(card: card)
           self.viewModel.updateTableView()
+
           self.popHandler?()
         }
         

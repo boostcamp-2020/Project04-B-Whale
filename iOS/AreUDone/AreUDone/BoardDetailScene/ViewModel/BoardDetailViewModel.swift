@@ -25,7 +25,8 @@ protocol BoardDetailViewModelProtocol {
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
   func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void)
-  func save() 
+
+  func save()
   func createList(with title: String)
 }
 
@@ -172,7 +173,7 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
           
           handler()
         }
-      
+
       case .failure(let error):
         print(error)
       }

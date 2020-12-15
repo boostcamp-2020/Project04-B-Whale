@@ -22,7 +22,6 @@ protocol BoardLocalDataSourceable {
 
 final class BoardLocalDataSource: BoardLocalDataSourceable {
 
-
   // MARK: - Property
   
   let realm = try! Realm()
