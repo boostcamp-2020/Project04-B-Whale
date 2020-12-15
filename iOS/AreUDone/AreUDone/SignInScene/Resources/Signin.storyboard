@@ -19,7 +19,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fa-mg-n8R">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQL-Dk-c5z" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
+                                        <rect key="frame" x="71" y="689" width="272" height="56"/>
+                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="ZI7-Hu-OLc"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="githubSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="TgT-Ro-C0u"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="ZQL-Dk-c5z" firstAttribute="centerX" secondItem="9fa-mg-n8R" secondAttribute="centerX" id="59l-jd-3qB"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
                                 <rect key="frame" x="71" y="760" width="272" height="56"/>
@@ -44,10 +60,13 @@
                         <constraints>
                             <constraint firstItem="ioi-B4-9Bj" firstAttribute="height" secondItem="KP1-hl-g3i" secondAttribute="height" multiplier="0.2" id="2Qn-9U-a4B"/>
                             <constraint firstItem="ioi-B4-9Bj" firstAttribute="centerX" secondItem="KP1-hl-g3i" secondAttribute="centerX" id="44j-5D-Qw1"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="top" secondItem="ZQL-Dk-c5z" secondAttribute="bottom" constant="15" id="7cd-Ab-NUo"/>
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="BDf-1e-AQO"/>
                             <constraint firstAttribute="bottom" secondItem="9fa-mg-n8R" secondAttribute="bottom" id="Djt-5s-7Lt"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="leading" secondItem="GJ3-vA-RKX" secondAttribute="leading" id="Emv-pw-iil"/>
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="bottom" secondItem="xOx-i5-aaB" secondAttribute="bottom" constant="-46" id="HaI-rx-41r"/>
                             <constraint firstItem="ioi-B4-9Bj" firstAttribute="top" secondItem="xOx-i5-aaB" secondAttribute="top" constant="50" id="WWz-2P-qQh"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="trailing" secondItem="GJ3-vA-RKX" secondAttribute="trailing" id="fqQ-vU-Ied"/>
                             <constraint firstItem="xOx-i5-aaB" firstAttribute="trailing" secondItem="9fa-mg-n8R" secondAttribute="trailing" id="lLk-GV-1cj"/>
                             <constraint firstItem="9fa-mg-n8R" firstAttribute="leading" secondItem="xOx-i5-aaB" secondAttribute="leading" id="otQ-79-Cbn"/>
                             <constraint firstItem="9fa-mg-n8R" firstAttribute="top" secondItem="KP1-hl-g3i" secondAttribute="top" id="tm6-8a-KQY"/>

@@ -53,6 +53,10 @@ final class SigninViewController: UIViewController {
     signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .naver))
   }
   
+  @IBAction func githubSigninButtonTapped(_ sender: Any) {
+    
+  }
+  
   private func backgroundPlay() {
     viewModel.videoPlay()
   }
