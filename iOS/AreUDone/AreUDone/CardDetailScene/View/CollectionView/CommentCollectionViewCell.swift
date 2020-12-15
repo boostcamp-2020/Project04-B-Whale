@@ -83,6 +83,12 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK:- Method
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    editButton.isHidden = true
+  }
+  
   override func systemLayoutSizeFitting(
     _ targetSize: CGSize,
     withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
