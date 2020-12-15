@@ -14,17 +14,14 @@ export class CardSubscriber {
     async afterInsert(event) {
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
-        const listRepository = getRepository(List);
-        const list = await listRepository.findOne(event.entity.list, {
-            loadRelationIds: {
-                relations: ['board'],
-                disableMixedMap: true,
-            },
-        });
         const user = await userService.getUserById(event.entity.creator);
+
+        const namespace = getNamespace('localstorage');
         await activityService.createActivity(
-            list.board.id,
-            `${user.name}님이 카드 ${event.entity.title}을 ${list.title} 리스트에 생성하였습니다.`,
+            namespace.get('boardId'),
+            `${user.name}님이 카드 ${event.entity.title}을 ${namespace.get(
+                'listTitle',
+            )} 리스트에 생성하였습니다.`,
         );
     }
 
@@ -46,8 +43,9 @@ export class CardSubscriber {
                 disableMixedMap: true,
             },
         });
-        const cardNamespace = getNamespace('Card');
-        const user = await userService.getUserById(cardNamespace.userId);
+        const namespace = getNamespace('localstorage');
+        const user = await userService.getUserById(namespace.get('userId'));
+
         await activityService.createActivity(
             currentList.board.id,
             `${user.name}님이 카드 ${event.entity.title}을 ${prevList.title} 리스트에서 ${currentList.title} 리스트로 이동하였습니다.`,
@@ -55,12 +53,12 @@ export class CardSubscriber {
     }
 
     async afterRemove(event) {
-        const cardNamespace = getNamespace('Card');
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
-        const user = await userService.getUserById(cardNamespace.userId);
+        const namespace = getNamespace('localstorage');
+        const user = await userService.getUserById(namespace.get('userId'));
         await activityService.createActivity(
-            cardNamespace.boardId,
+            namespace.get('boardId'),
             `${user.name}님이 카드 ${event.databaseEntity.title}을 삭제하였습니다.`,
         );
     }

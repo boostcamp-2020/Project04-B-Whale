@@ -10,8 +10,6 @@ import { BoardService } from './BoardService';
 export class CardService extends BaseService {
     static instance = null;
 
-    static cardSpace = createNamespace('Card');
-
     static getInstance() {
         if (CardService.instance === null) {
             CardService.instance = new CardService();
@@ -127,8 +125,8 @@ export class CardService extends BaseService {
             throw new ConflictError(`can't move this card to list`);
         }
 
-        const cardNamespace = getNamespace('Card');
-        cardNamespace.userId = userId;
+        const namespace = getNamespace('localstorage');
+        namespace.set('userId', userId);
 
         card.list = listId;
         card.title = title;
@@ -199,12 +197,16 @@ export class CardService extends BaseService {
     async createCard({ userId, listId, title, dueDate, content }) {
         const list = await this.listRepository
             .createQueryBuilder('list')
-            .select(['list.id', 'list.board'])
+            .select(['list.id', 'list.title', 'list.board'])
             .where('list.id = :listId', { listId })
             .getRawOne();
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, list.board_id);
+
+        const namespace = getNamespace('localstorage');
+        namespace.set('boardId', list.board_id);
+        namespace.set('listTitle', list.list_title);
 
         const cardWithMaxPosition = await this.cardRepository
             .createQueryBuilder('card')
@@ -241,9 +243,9 @@ export class CardService extends BaseService {
             .getRawOne();
         if (!card) throw new EntityNotFoundError();
 
-        const cardNamespace = getNamespace('Card');
-        cardNamespace.userId = userId;
-        cardNamespace.boardId = card.list_board_id;
+        const namespace = getNamespace('localstorage');
+        namespace.set('userId', userId);
+        namespace.set('boardId', card.list_board_id);
 
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, card.list_board_id);
