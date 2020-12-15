@@ -86,6 +86,12 @@ final class BoardDetailViewController: UIViewController {
     
     configureSideBarView()
   }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    
+    viewModel.save()
+  }
 }
 
 
@@ -269,12 +275,12 @@ extension BoardDetailViewController: UICollectionViewDragDelegate {
 extension BoardDetailViewController: UICollectionViewDropDelegate {
   
   func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-    return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+    return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
   }
   
   func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
     guard coordinator.session.hasItemsConforming(
-            toTypeIdentifiers: [kUTTypeData as String])
+            toTypeIdentifiers: [kUTTypeDirectory as String])
     else { return }
     
     processDraggedItem(by: collectionView, and: coordinator)

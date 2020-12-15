@@ -51,7 +51,7 @@ class ListOfBoard: Object, Codable {
 extension ListOfBoard: NSItemProviderWriting {
   static var writableTypeIdentifiersForItemProvider: [String] {
     
-    return [kUTTypeData as String]
+    return [kUTTypeDirectory as String]
   }
   
   func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Swift.Void) -> Progress? {
@@ -72,7 +72,7 @@ extension ListOfBoard: NSItemProviderWriting {
 
 extension ListOfBoard: NSItemProviderReading {
   static var readableTypeIdentifiersForItemProvider: [String] {
-    return [kUTTypeData as String]
+    return [kUTTypeDirectory as String]
   }
   
   static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {

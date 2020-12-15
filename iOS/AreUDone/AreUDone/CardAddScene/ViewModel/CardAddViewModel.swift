@@ -108,7 +108,7 @@ final class CardAddViewModel: CardAddViewModelProtocol {
       case .success(let card):
         self.realm.writeOnMain {
           self.viewModel.append(card: card)
-          self.viewModel.updateCollectionView()
+          self.viewModel.updateTableView()
           self.popHandler?()
         }
         
