@@ -137,8 +137,8 @@ private extension CommentView {
   
   @objc func commentTextFieldEditting() {
     guard let comment = commentTextField.text else { return }
-    
-    commentSaveButton.isEnabled = !comment.isEmpty ? true : false
+    let beforeTrimmedComment = comment.trimmingCharacters(in: .whitespacesAndNewlines)
+    commentSaveButton.isEnabled = !beforeTrimmedComment.isEmpty ? true : false
   }
   
   @objc func commentSaveButtonTapped() {
