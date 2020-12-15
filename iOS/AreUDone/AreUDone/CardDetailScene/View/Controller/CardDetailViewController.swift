@@ -259,6 +259,7 @@ private extension CardDetailViewController {
     bindingUpdateDueDateView()
     bindingUpdateContentView()
     bindingPrepareForUpdateMemberView()
+    bindingCreateComment()
   }
   
   func bindingCardDetailContentView() {
@@ -349,6 +350,18 @@ private extension CardDetailViewController {
       self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
     }
   }
+  
+  func bindingCreateComment() {
+    viewModel.bindingCreateComment { [weak self] updatedComment in
+      guard let self = self else { return }
+      var snapshot = self.dataSource.snapshot()
+      
+      DispatchQueue.main.async {
+        snapshot.appendItems([updatedComment])
+        self.dataSource.apply(snapshot)
+      }
+    }
+  }
 }
 
 
@@ -383,9 +396,7 @@ private extension CardDetailViewController {
 extension CardDetailViewController: CommentViewDelegate {
   
   func commentSaveButtonTapped(with comment: String) {
-    viewModel.addComment(with: comment) { [weak self] in
-      self?.viewModel.fetchDetailCard()
-    }
+    viewModel.addComment(with: comment)
   }
 }
 
