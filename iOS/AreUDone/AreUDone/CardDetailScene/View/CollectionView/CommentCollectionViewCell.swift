@@ -80,6 +80,11 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     configure()
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    editButton.isHidden = true
+  }
   
   // MARK:- Method
   
