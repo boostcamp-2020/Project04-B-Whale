@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { DatePicker } from 'antd';
+import moment from 'moment';
 import CardModalButton from './CardModalButton';
+import CloseButton from './CloseButton';
+import CardContext from '../../context/CardContext';
+import { modifyCardDueDate } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: grid;
@@ -31,11 +36,59 @@ const CardDueDate = styled(CardModalButton)`
     grid-row-end: 3;
 `;
 
+const DatePickerWrapper = styled.div`
+    height: 2rem;
+    font-size: 0.9rem;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+`;
+
+const CardCloseButton = styled(CloseButton)`
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+`;
+
 const CardDueDateContainer = ({ dueDate }) => {
+    const [isDisplay, setIsDisplay] = useState(false);
+    const { cardState, cardDispatch } = useContext(CardContext);
+    const card = cardState.data;
+    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+
+    const onClickChangeDueDate = async (value) => {
+        const cardId = card.id;
+        const newDueDate = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
+        await modifyCardDueDate({ cardId, dueDate: newDueDate });
+
+        const data = { ...card, dueDate: newDueDate };
+        cardDispatch({ type: 'CHANGE_DUEDATE', data });
+        setIsDisplay(false);
+    };
+
     return (
         <Wrapper>
             <CardDueDateHeader>마감 기한</CardDueDateHeader>
-            <CardDueDate>{dueDate}</CardDueDate>
+            <CardDueDate onClick={() => setIsDisplay(true)}>{dueDate}</CardDueDate>
+            {isDisplay && (
+                <DatePickerWrapper>
+                    <DatePicker
+                        showTime
+                        defaultValue={moment(
+                            `${new Date(dueDate).toISOString().slice(0, -1)}`,
+                            dateFormat,
+                        )}
+                        format={dateFormat}
+                        onOk={onClickChangeDueDate}
+                        clearIcon={false}
+                    />
+                    <CardCloseButton width="2rem" onClick={() => setIsDisplay(false)}>
+                        X
+                    </CardCloseButton>
+                </DatePickerWrapper>
+            )}
         </Wrapper>
     );
 };
