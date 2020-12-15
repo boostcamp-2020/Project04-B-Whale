@@ -30,7 +30,9 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   private var fetchBoardOption: FetchBoardOption = .myBoards {
     didSet {
-      fetchBoard()
+      if oldValue != fetchBoardOption {
+        fetchBoard()
+      }
     }
   }
 
