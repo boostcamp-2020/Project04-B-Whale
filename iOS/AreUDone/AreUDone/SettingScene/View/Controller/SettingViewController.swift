@@ -40,6 +40,7 @@ final class SettingViewController: UIViewController {
     super.viewDidLoad()
     
     configure()
+    bindUI()
   }
 }
 
@@ -48,6 +49,7 @@ private extension SettingViewController {
   
   func configure() {
     settingTableView.dataSource = self
+    settingTableView.delegate = self
     
     configureView()
     configureSettingTableView()
@@ -70,6 +72,21 @@ private extension SettingViewController {
 }
 
 
+// MARK:- Extension bindUI
+
+private extension SettingViewController {
+  
+  func bindUI() {
+    bindingLogout()
+  }
+  
+  func bindingLogout() {
+    viewModel.bindingLogoutHandler { [weak self] in
+      self?.coordinator?.logout()
+    }
+  }
+}
+
 extension SettingViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,5 +99,26 @@ extension SettingViewController: UITableViewDataSource {
     cell.update(with: "로그아웃")
     
     return cell
+  }
+}
+
+extension SettingViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    switch indexPath.section {
+    case 0:
+      let alert = UIAlertController(
+        alertType: .logout,
+        alertStyle: .actionSheet,
+        confirmAction: {
+          self.viewModel.logout()
+        })
+      
+      present(alert, animated: true)
+    break
+    
+    default:
+      break
+    }
   }
 }
