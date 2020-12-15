@@ -118,6 +118,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
             dueDate: responseData.dueDate,
             position,
             content: '',
+            commentCount: 0,
         });
         setBoardDetail({ ...boardDetail });
         setState('button');
