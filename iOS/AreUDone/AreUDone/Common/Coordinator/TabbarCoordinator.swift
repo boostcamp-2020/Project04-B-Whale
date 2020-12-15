@@ -12,6 +12,8 @@ import NetworkFramework
 final class TabbarCoordinator: Coordinator {
   
   // MARK: - Property
+  var parentCoordinator: Coordinator?
+  
   private let router: Routable
   
   private let signInCoordinator: SigninCoordinator
@@ -56,6 +58,11 @@ final class TabbarCoordinator: Coordinator {
   ) {
 
     var coordinator = coordinator
+    
+    if let settingCoordinator = coordinator as? SettingCoordinator {
+      settingCoordinator.sceneCoordinator = parentCoordinator
+    }
+    
     let navigationController = UINavigationController()
     
     let viewController = coordinator.start()

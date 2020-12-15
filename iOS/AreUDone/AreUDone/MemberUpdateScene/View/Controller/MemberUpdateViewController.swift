@@ -125,7 +125,7 @@ private extension MemberUpdateViewController {
       
       cell.update(with: member.name)
       
-      self?.viewModel.fetchProfileImage(with: member.profileImageUrl, completionHandler: { data in
+      self?.viewModel.fetchProfileImage(with: member.profileImageUrl, userName: member.name, completionHandler: { data in
         let image = UIImage(data: data)
         cell.update(with: image)
       })

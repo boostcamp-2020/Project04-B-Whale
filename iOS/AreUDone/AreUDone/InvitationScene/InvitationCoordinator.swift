@@ -46,7 +46,7 @@ final class InvitationCoordinator: NavigationCoordinator {
               
               let userService = UserService(router: self.router)
               let boardService = BoardService(router: self.router)
-              let imageSerivce = ImageService(router: self.router)
+              let imageSerivce = ImageService(router: self.router, cacheManager: CacheManager())
               
               let viewModel = InvitationViewModel(
                 userService: userService,

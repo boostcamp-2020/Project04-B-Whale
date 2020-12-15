@@ -189,10 +189,11 @@ extension CalendarViewController: CardCellDelegate {
     
     viewModel.deleteCard(for: item.id) { [weak self] in
       guard let self = self else { return }
-      var snapshot = self.dataSource.snapshot()
-      snapshot.deleteItems([item])
       
       DispatchQueue.main.async {
+        var snapshot = self.dataSource.snapshot()
+        
+        snapshot.deleteItems([item])
         self.dataSource.apply(snapshot)
       }
     }

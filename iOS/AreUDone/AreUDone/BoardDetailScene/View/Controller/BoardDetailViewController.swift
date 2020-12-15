@@ -247,7 +247,7 @@ extension BoardDetailViewController: UICollectionViewDragDelegate {
     guard let list = viewModel.fetchList(at: indexPath.item) else { return [] }
     
     let itemProvider = NSItemProvider(object: list)
-    
+
     let dragItem = UIDragItem(itemProvider: itemProvider)
         
     return [dragItem]
@@ -288,15 +288,13 @@ extension BoardDetailViewController: UICollectionViewDropDelegate {
       guard let source = coordinator.items.first?.sourceIndexPath,
             let destination = coordinator.destinationIndexPath
       else { return }
-     
+      
       viewModel.updatePosition(of: source.item, to: destination.item, list: list) {
         DispatchQueue.main.async {
-            DispatchQueue.main.async {
-              collectionView.performBatchUpdates {
-                collectionView.deleteItems(at: [IndexPath(item: source.item, section: 0)])
-                collectionView.insertItems(at: [IndexPath(item: destination.item, section: 0)])
-              }
-            }
+          collectionView.performBatchUpdates {
+            collectionView.deleteItems(at: [IndexPath(item: source.item, section: 0)])
+            collectionView.insertItems(at: [IndexPath(item: destination.item, section: 0)])
+          }
         }
       }
     }

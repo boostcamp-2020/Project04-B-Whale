@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol CardAddViewModelProtocol {
   
@@ -32,6 +33,8 @@ protocol CardAddViewModelProtocol {
 final class CardAddViewModel: CardAddViewModelProtocol {
   
   // MARK: - Property
+  
+  private let realm = try! Realm()
   
   private let cardService: CardServiceProtocol
   private let viewModel: ListViewModelProtocol
@@ -103,9 +106,11 @@ final class CardAddViewModel: CardAddViewModelProtocol {
     ) { result in
       switch result {
       case .success(let card):
-        self.viewModel.append(card: card)
-        self.viewModel.updateCollectionView()
-        self.popHandler?()
+        self.realm.writeOnMain {
+          self.viewModel.append(card: card)
+          self.viewModel.updateCollectionView()
+          self.popHandler?()
+        }
         
       case .failure(let error):
         print(error)

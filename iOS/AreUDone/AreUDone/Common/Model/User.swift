@@ -12,4 +12,14 @@ class User: Object, Codable {
   @objc dynamic var id: Int = 0
   @objc dynamic var name: String = ""
   @objc dynamic var profileImageUrl: String = ""
+  
+  override func isEqual(_ object: Any?) -> Bool {
+    guard let other = object as? User else { return false }
+    
+    return self.id == other.id
+  }
+  
+  override class func primaryKey() -> String? {
+    return "id"
+  }
 }
