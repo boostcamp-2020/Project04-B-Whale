@@ -37,6 +37,8 @@ final class SettingCoordinator: NavigationCoordinator {
     ) as? SettingViewController
     else { return UIViewController() }
     
+    settingViewController.coordinator = self
+    
     return settingViewController
   }
 }
