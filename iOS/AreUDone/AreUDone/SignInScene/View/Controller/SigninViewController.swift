@@ -20,6 +20,12 @@ final class SigninViewController: UIViewController {
     }
   }
   
+  @IBOutlet weak var githubSigninButton: SigninButton! {
+    didSet {
+      githubSigninButton.titleLabel?.font = UIFont.nanumSquareB(size: 18)
+    }
+  }
+  
   // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
