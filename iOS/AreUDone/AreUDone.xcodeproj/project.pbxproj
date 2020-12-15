@@ -762,6 +762,18 @@
 			path = ImageService;
 			sourceTree = "<group>";
 		};
+		334437622588F63C0077DEC7 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				3344375A2588F53C0077DEC7 /* ListTableView.swift */,
+				33F2D6C9257F838D008F1E06 /* ListTableViewDataSource.swift */,
+				335AC52D256FE7C7006A5C4A /* ListTableViewCell.swift */,
+				33638DE52573958A006033CF /* ListHeaderView.swift */,
+				33638DE02573956F006033CF /* ListFooterView.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		335AC4C3256EA2CF006A5C4A /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +816,7 @@
 				333BA5132574D06C0057ACA4 /* AddOrCancelView.swift */,
 				335AC505256F8BFA006A5C4A /* Controller */,
 				335AC512256FDC91006A5C4A /* CollectionView */,
+				334437622588F63C0077DEC7 /* TableView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -832,11 +845,6 @@
 				33F2D6C4257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift */,
 				333BA4FF2574ABA80057ACA4 /* BoardDetailFooterView.swift */,
 				335AC51B256FDDAB006A5C4A /* BoardDetailCollectionViewCell.swift */,
-				3344375A2588F53C0077DEC7 /* ListTableView.swift */,
-				33F2D6C9257F838D008F1E06 /* ListTableViewDataSource.swift */,
-				335AC52D256FE7C7006A5C4A /* ListTableViewCell.swift */,
-				33638DE52573958A006033CF /* ListHeaderView.swift */,
-				33638DE02573956F006033CF /* ListFooterView.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
