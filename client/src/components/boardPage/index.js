@@ -71,7 +71,7 @@ const Board = ({ match }) => {
             }
         });
         setBoardDetail(data);
-    }, []);
+    }, [id]);
 
     return (
         <>
