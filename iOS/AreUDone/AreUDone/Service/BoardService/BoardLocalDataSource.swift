@@ -32,13 +32,13 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   
   func save(boards: Boards) {
     realm.writeOnMain(object: boards) { object in
-      self.realm.add(object)
+      self.realm.create(Boards.self, value: object)
     }
   }
   
   func save(boardDetail: BoardDetail) {
     realm.writeOnMain(object: boardDetail) { object in
-      self.realm.add(object, update: .all)
+      self.realm.create(BoardDetail.self, value: object, update: .all)
     }
   }
   
@@ -52,11 +52,11 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   
   func loadBoards() -> Boards? {
     let boards = realm.objects(Boards.self).first
-    return boards
+    return Boards(value: boards!)
   }
   
   func loadBoardDetail(ofId id: Int) -> BoardDetail? {
     let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first
-    return boardDetail
+    return BoardDetail(value: boardDetail!)
   }
 }
