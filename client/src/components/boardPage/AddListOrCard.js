@@ -10,6 +10,7 @@ import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { createCard } from '../../utils/cardRequest';
+import { addNotification } from '../../utils/contentScript';
 
 const Wrapper = styled.div`
     display: flex;
@@ -139,6 +140,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
             content: '',
             dueDate: datetime,
         });
+        addNotification(data);
         setStateCard(data);
     };
 

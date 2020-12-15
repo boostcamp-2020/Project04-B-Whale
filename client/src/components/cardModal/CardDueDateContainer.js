@@ -6,6 +6,7 @@ import CardModalButton from './CardModalButton';
 import CloseButton from './CloseButton';
 import CardContext from '../../context/CardContext';
 import { modifyCardDueDate } from '../../utils/cardRequest';
+import { addNotification, removeNotification } from '../../utils/contentScript';
 
 const Wrapper = styled.div`
     display: grid;
@@ -63,8 +64,11 @@ const CardDueDateContainer = ({ dueDate }) => {
         const newDueDate = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
         await modifyCardDueDate({ cardId, dueDate: newDueDate });
 
+        removeNotification(cardId);
+
         const data = { ...card, dueDate: newDueDate };
         cardDispatch({ type: 'CHANGE_DUEDATE', data });
+        addNotification(data);
         setIsDisplay(false);
     };
 

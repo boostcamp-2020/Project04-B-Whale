@@ -8,3 +8,17 @@ export const initNotification = ({ cards, todayCardCount }) => {
         todayCardCount,
     });
 };
+
+export const addNotification = (card) => {
+    chrome.runtime.sendMessage(extensionId, {
+        action: 'add_notification',
+        card,
+    });
+};
+
+export const removeNotification = (cardId) => {
+    chrome.runtime.sendMessage(extensionId, {
+        action: 'remove_notification',
+        cardId,
+    });
+};
