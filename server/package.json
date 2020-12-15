@@ -18,6 +18,7 @@
   "dependencies": {
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
+    "cls-hooked": "^4.2.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
