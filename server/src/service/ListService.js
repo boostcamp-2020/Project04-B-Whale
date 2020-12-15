@@ -3,11 +3,10 @@ import { createNamespace, getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { BoardService } from './BoardService';
+import { UserRouter } from '../router/UserRouter';
 
 export class ListService extends BaseService {
     static instance = null;
-
-    static listSpace = createNamespace('List');
 
     static getInstance() {
         if (ListService.instance === null) {
@@ -49,8 +48,6 @@ export class ListService extends BaseService {
 
     @Transactional()
     async updateList({ userId, listId, position, title }) {
-        const listNamespace = getNamespace('List');
-        listNamespace.userId = userId;
         const list = await this.listRepository.findOne(listId, {
             loadRelationIds: {
                 relations: ['board'],
@@ -61,6 +58,10 @@ export class ListService extends BaseService {
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, list.board.id);
+
+        const namespace = getNamespace('localstorage');
+        namespace.set('userId', userId);
+
         list.title = title || list.list_title;
         list.position = position || list.list_position;
         await this.listRepository.save(list);
@@ -77,9 +78,9 @@ export class ListService extends BaseService {
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, list.board_id);
 
-        const listNamespace = getNamespace('List');
-        listNamespace.userId = userId;
-        listNamespace.boardId = list.board_id;
+        const namespace = getNamespace('localstorage');
+        namespace.set('userId', userId);
+        namespace.set('boardId', list.board_id);
 
         await this.listRepository.remove(await this.listRepository.findOne(listId));
     }
