@@ -6,17 +6,24 @@
 //
 
 import UIKit
+import NetworkFramework
 
 final class SettingCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
   private var storyboard: UIStoryboard {
-    return UIStoryboard.load(storyboard: .signin)
+    return UIStoryboard.load(storyboard: .setting)
   }
-  
+  private let router: Routable
   var navigationController: UINavigationController?
   
+  
+  // MARK:- Initializer
+  
+  init(router: Routable) {
+    self.router = router
+  }
   
   // MARK:- Method
   

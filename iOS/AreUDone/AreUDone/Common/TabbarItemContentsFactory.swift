@@ -20,7 +20,7 @@ final class TabbarItemContentsFactory {
       return ("캘린더", "calendar")
     case 1:
       return ("보드", "list.bullet.rectangle")
-    case 3:
+    case 2:
       return ("설정", "gear")
     default:
       return ("없음", "")
