@@ -84,7 +84,7 @@ const MoveModal = ({ onClose }) => {
     const currentCard = lists[currentListIndex].cards[currentCardIndex];
     const currentCardPosition = cardInfo.position;
     const [selectedList, setSelectedList] = useState(lists[currentListIndex]);
-    const isEmptyList = selectedList.cards[0].id === 0;
+    const isEmptyList = selectedList.cards.length !== 0 && selectedList.cards[0].id === 0;
     const listElement = useRef();
     const positionElement = useRef();
 

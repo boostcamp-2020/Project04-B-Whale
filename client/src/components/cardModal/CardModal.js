@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import CardDescriptionContainer from './CardDescriptionContainer';
 import CardDueDateContainer from './CardDueDateContainer';
@@ -9,6 +9,8 @@ import MemberButton from '../common/MemberButton';
 import MoveButton from '../common/MoveButton';
 import { getCard } from '../../utils/cardRequest';
 import CardContext from '../../context/CardContext';
+import BoardDetailContext from '../../context/BoardDetailContext';
+import { getDetailBoard } from '../../utils/boardRequest';
 
 const DimmedModal = styled.div`
     display: ${(props) => (props.visible ? 'block' : 'none')};
@@ -111,6 +113,7 @@ const cardReducer = (state, action) => {
 };
 
 const CardModal = ({ visible, closeModal, cardId }) => {
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [cardState, cardDispatch] = useReducer(cardReducer, {
         loading: false,
         data: null,
@@ -122,6 +125,10 @@ const CardModal = ({ visible, closeModal, cardId }) => {
         try {
             const response = await getCard({ cardId });
             cardDispatch({ type: 'SUCCESS', data: response?.data });
+            if (Object.keys(boardDetail).length === 0) {
+                const { data } = await getDetailBoard(response.data.board.id);
+                setBoardDetail(data);
+            }
         } catch (error) {
             cardDispatch({ type: 'ERROR', error });
         }
