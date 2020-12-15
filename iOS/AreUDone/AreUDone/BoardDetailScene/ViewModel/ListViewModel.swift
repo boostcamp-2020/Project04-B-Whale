@@ -23,11 +23,11 @@ protocol ListViewModelProtocol {
   func removeCard(at index: Int)
   
   func updateListTitle(to title: String)
-
+  
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping () -> Void)
   func updateCardPosition(from sourceIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping (Int) -> Void)
-
+  
   func updateCollectionView()
 }
 
@@ -36,7 +36,7 @@ final class ListViewModel: ListViewModelProtocol {
   // MARK: - Property
   
   let realm = try! Realm()
-
+  
   
   private let listService: ListServiceProtocol
   private let cardService: CardServiceProtocol
@@ -48,16 +48,14 @@ final class ListViewModel: ListViewModelProtocol {
   private let list: ListOfBoard
   private var listTitle: String = "" {
     didSet {
-      DispatchQueue.main.async {
-        try! self.realm.write {
-          self.list.title = self.listTitle
-        }
+      realm.writeOnMain {
+        self.list.title = self.listTitle
       }
       
       updateListTitleHandler?(listTitle)
     }
   }
-
+  
   
   // MARK: - Initializer
   
@@ -104,13 +102,12 @@ final class ListViewModel: ListViewModelProtocol {
   
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
-    list.cards.remove(at: index)
+    self.realm.delete(self.list.cards[index])
   }
   
   func updateListTitle(to title: String) {
     listService.updateList(
-      withBoardId: boardId,
-      listId: list.id,
+      ofId: list.id,
       position: nil,
       title: title) { result in
       switch result {
@@ -123,7 +120,7 @@ final class ListViewModel: ListViewModelProtocol {
       }
     }
   }
-
+  
   func updateCardPosition(
     from sourceIndex: Int,
     to destinationIndex: Int,
@@ -150,12 +147,13 @@ final class ListViewModel: ListViewModelProtocol {
     ) { result in
       switch result {
       case .success(_):
-        self.removeCard(at: sourceIndex)
-        card.position = position
-        self.insert(card: card, at: destinationIndex)
-        
-        handler()
-
+        self.realm.writeOnMain {
+          self.removeCard(at: sourceIndex)
+          card.position = position
+          self.insert(card: card, at: destinationIndex)
+          
+          handler()
+        }
       case .failure(let error):
         print(error)
       }
@@ -184,14 +182,17 @@ final class ListViewModel: ListViewModelProtocol {
       id: card.id,
       listId: fetchListId(),
       position: position
-      ) { result in
+    ) { result in
       switch result {
       case .success(_):
-        sourceViewModel.removeCard(at: sourceIndex)
-        card.position = position
-        self.insert(card: card, at: destinationIndex)
-
-        handler()
+        self.realm.writeOnMain {
+          
+          sourceViewModel.removeCard(at: sourceIndex)
+          card.position = position
+          self.insert(card: card, at: destinationIndex)
+          
+          handler()
+        }
         
       case .failure(let error):
         print(error)
@@ -219,13 +220,15 @@ final class ListViewModel: ListViewModelProtocol {
     ) { result in
       switch result {
       case .success(_):
-        sourceViewModel.removeCard(at: sourceIndex)
-        card.position = position
-        self.append(card: card)
+        self.realm.writeOnMain {
+          sourceViewModel.removeCard(at: sourceIndex)
+          card.position = position
+          self.append(card: card)
+          
+          let lastIndex = self.numberOfCards() - 1
+          handler(lastIndex)
+        }
         
-        let lastIndex = self.numberOfCards() - 1
-        handler(lastIndex)
-
       case .failure(let error):
         print(error)
       }

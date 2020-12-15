@@ -48,7 +48,7 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boards):
         completionHandler(.success(boards))
-        self.localDataSource?.save(object: boards, policy: nil) // 같은 쓰레드??? 에서 돌려야한다고함
+        self.localDataSource?.save(boards: boards) // 같은 쓰레드??? 에서 돌려야한다고함
       
       case .failure(_):
         DispatchQueue.main.async {
@@ -98,7 +98,7 @@ final class BoardService: BoardServiceProtocol {
       switch result {
       case .success(let boardDetail):
         completionHandler(.success(boardDetail))
-        self.localDataSource?.save(object: boardDetail, policy: .all)
+        self.localDataSource?.save(boardDetail: boardDetail)
         
       case .failure(_):
         DispatchQueue.main.async {

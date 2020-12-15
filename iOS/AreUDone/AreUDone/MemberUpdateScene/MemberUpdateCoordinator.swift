@@ -41,7 +41,7 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
               guard let self = self else { return UIViewController() }
               let cardService = CardService(router: self.router)
               let boardService = BoardService(router: self.router)
-              let imageService = ImageService(router: self.router)
+              let imageService = ImageService(router: self.router, cacheManager: CacheManager())
               let viewModel = MemberUpdateViewModel(
                 cardId: self.cardId,
                 boardId: self.boardId,

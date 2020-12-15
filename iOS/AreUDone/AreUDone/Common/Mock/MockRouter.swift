@@ -50,4 +50,11 @@ final class MockRouter: Routable {
       completionHandler(.success(()))
     }
   }
+  
+  func request(route: EndPointable, imageName: String, completionHandler: @escaping ((Result<Data,APIError>) -> Void)) {
+    urlRequest = configureRequest(from: route)
+    DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+      completionHandler(.success(Data()))
+    }
+  }
 }

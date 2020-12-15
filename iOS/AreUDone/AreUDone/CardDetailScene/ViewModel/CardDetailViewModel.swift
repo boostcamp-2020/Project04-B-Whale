@@ -27,7 +27,7 @@ protocol CardDetailViewModelProtocol {
   func prepareUpdateMemberView()
   func prepareUpdateCell(handler: (Int) -> Void)
   func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
-  func fetchProfileImage(with urlAsString: String?, completionHandler: @escaping ((Data) -> Void))
+  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void))
 }
 
 final class CardDetailViewModel: CardDetailViewModelProtocol {
@@ -134,13 +134,12 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func fetchProfileImage(with urlAsString: String?, completionHandler: @escaping ((Data) -> Void)) {
-    guard let urlAsString = urlAsString else { return }
+  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void)) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
       completionHandler(cachedData as Data)
       
     } else {
-      imageService.fetchImage(with: urlAsString) { result in
+      imageService.fetchImage(with: urlAsString, imageName: userName) { result in
         switch result {
         case .success(let data):
           completionHandler(data)
@@ -182,7 +181,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         if let cachedData = self?.cache.object(forKey: user.profileImageUrl as NSString) {
           self?.commentViewProfileImageHandler?(cachedData as Data)
         } else {
-          self?.fetchProfileImage(with: user.profileImageUrl) { data in
+          self?.fetchProfileImage(with: user.profileImageUrl, userName: user.name) { data in
             self?.commentViewProfileImageHandler?(data)
           }
         }

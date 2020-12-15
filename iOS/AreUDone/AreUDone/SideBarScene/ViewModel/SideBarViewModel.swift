@@ -22,7 +22,7 @@ protocol SideBarViewModelProtocol {
   func fetchMember(at index: Int) -> User?
   func fetchActivity(at index: Int) -> Activity?
   func fetchSectionHeader(at index: Int) -> (image: String, title: String)
-  func fetchProfileImage(with url: String, handler: @escaping (Data) -> Void)
+  func fetchProfileImage(with urlAsString: String, userName: String, handler: @escaping ((Data) -> Void))
 }
 
 final class SideBarViewModel: SideBarViewModelProtocol {
@@ -135,12 +135,12 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     return sideBarHeaderContentsFactory.load(order: index)
   }
   
-  func fetchProfileImage(with urlAsString: String, handler: @escaping ((Data) -> Void)) {
+  func fetchProfileImage(with urlAsString: String, userName: String, handler: @escaping ((Data) -> Void)) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
       handler(cachedData as Data)
       
     } else {
-      imageService.fetchImage(with: urlAsString) { result in
+      imageService.fetchImage(with: urlAsString, imageName: userName) { result in
         switch result {
         case .success(let data):
           self.cache.setObject(data as NSData, forKey: urlAsString as NSString)

@@ -10,7 +10,7 @@ import Foundation
 protocol MemberUpdateViewModelProtocol {
   
   func fetchMemberData(completionHandler: @escaping (([User], [User]?) -> Void))
-  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void))
+  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void))
   func updateCardMember(with member: [User], completionHandler: @escaping () -> Void)
 }
 
@@ -70,11 +70,11 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     }
   }
   
-  func fetchProfileImage(with urlAsString: String, completionHandler: @escaping ((Data) -> Void)) {
+  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void)) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
       completionHandler(cachedData as Data)
     } else {
-      imageService.fetchImage(with: urlAsString) { result in
+      imageService.fetchImage(with: urlAsString, imageName: userName) { result in
         switch result {
         case .success(let data):
           completionHandler(data)

@@ -8,36 +8,6 @@
 import Foundation
 import RealmSwift
 
-//class RealmBoards: Object {
-//  let myBoards = List<Board>()
-//  let invitedBoards = List<Board>()
-//}
-
-//class Dog: Object, Codable {
-//  @objc dynamic var name: String = ""
-//  @objc dynamic var age: Int = 0
-//
-//  private enum CodingKeys: String, CodingKey {
-//    case name
-//    case age
-//  }
-//}
-
-//class Dod: Object, Codable {
-//  @objc dynamic var name: String = ""
-//  @objc dynamic var text: String = ""
-//  @objc dynamic var bucketNo: Int = 0
-//
-//}
-
-//class Person: Object {
-//  dynamic var name = ""
-//  let dogs = List<Dog>()
-//}
-
-
-// @objc dynamic var
-
 class Boards: Object, Codable {
   var myBoards = List<Board>()
   var invitedBoards = List<Board>()
@@ -56,15 +26,11 @@ class Boards: Object, Codable {
   }
   
   func fetchMyBoard() -> [Board] {
-    var boards = [Board]()
-    boards.append(contentsOf: myBoards)
-    return boards
+    return Array(myBoards)
   }
   
   func fetchInvitedBoard() -> [Board] {
-    var boards = [Board]()
-    boards.append(contentsOf: invitedBoards)
-    return boards
+    return Array(invitedBoards)
   }
 }
 
@@ -74,14 +40,4 @@ class Board: Object, Codable {
   @objc dynamic var color: String = ""
 }
 
-//extension Board: Hashable {
-//  static func == (lhs: Board, rhs: Board) -> Bool {
-//    return lhs.id == rhs.id && lhs.title == rhs.title
-//  }
-//
-//  func hash(into hasher: inout Hasher) {
-//    hasher.combine(id)
-//    hasher.combine(title)
-//  }
-//}
 
