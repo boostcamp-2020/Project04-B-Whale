@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NaverLoginButton from './NaverLoginButton';
+import GitHubLoginButton from './GitHubLoginButton';
 import backgroundVideo from '../../image/background.mp4';
 import logo from '../../image/app_logo.png';
 
@@ -28,6 +29,7 @@ const Login = () => {
                 </video>
                 <LogoImg src={logo} alt="naver login" />
                 <NaverLoginButton />
+                <GitHubLoginButton />
             </LoginPageWrapper>
         </>
     );
