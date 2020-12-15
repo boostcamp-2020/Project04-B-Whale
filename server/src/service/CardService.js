@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { createNamespace, getNamespace } from 'cls-hooked';
 import { ConflictError } from '../common/error/ConflictError';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -8,6 +9,8 @@ import { BoardService } from './BoardService';
 
 export class CardService extends BaseService {
     static instance = null;
+
+    static cardSpace = createNamespace('Card');
 
     static getInstance() {
         if (CardService.instance === null) {
@@ -124,6 +127,9 @@ export class CardService extends BaseService {
             throw new ConflictError(`can't move this card to list`);
         }
 
+        const cardNamespace = getNamespace('Card');
+        cardNamespace.userId = userId;
+
         card.list = listId;
         card.title = title;
         card.content = content;
@@ -232,9 +238,13 @@ export class CardService extends BaseService {
             .getRawOne();
         if (!card) throw new EntityNotFoundError();
 
+        const cardNamespace = getNamespace('Card');
+        cardNamespace.userId = userId;
+        cardNamespace.boardId = card.list_board_id;
+
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, card.list_board_id);
-        await this.cardRepository.delete(cardId);
+        await this.cardRepository.remove(await this.cardRepository.findOne(cardId));
     }
 
     async addMemberToCardByUserIds({ cardId, userId, userIds }) {
