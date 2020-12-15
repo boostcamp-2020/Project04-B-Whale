@@ -14,32 +14,23 @@ export class BoardSubscriber {
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
         const user = await userService.getUserById(event.entity.creator);
+
         await activityService.createActivity(
-            +event.entity.id,
+            event.entity.id,
             `${user.name}님이 보드 ${event.entity.title}을 생성하였습니다.`,
         );
     }
 
     async afterUpdate(event) {
         if (event.entity.position) return;
-        const boardNamespace = getNamespace('Board');
+        const namespace = getNamespace('localstorage');
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
-        const user = await userService.getUserById(boardNamespace.userId);
+        const user = await userService.getUserById(namespace.get('userId'));
+
         await activityService.createActivity(
             event.entity.id,
             `${user.name}님이 보드 타이틀을 변경하였습니다.(${event.databaseEntity.title} -> ${event.entity.title})`,
-        );
-    }
-
-    async afterRemove(event) {
-        const boardNamespace = getNamespace('Board');
-        const activityService = ActivityService.getInstance();
-        const userService = UserService.getInstance();
-        const user = await userService.getUserById(boardNamespace.userId);
-        await activityService.createActivity(
-            event.databaseEntity.id,
-            `${user.name}님이 보드 ${event.databaseEntity.title}을 삭제하였습니다.`,
         );
     }
 }

@@ -9,8 +9,6 @@ import { BadRequestError } from '../common/error/BadRequestError';
 export class BoardService extends BaseService {
     static instance = null;
 
-    static boardSpace = createNamespace('Board');
-
     static getInstance() {
         if (BoardService.instance === null) {
             BoardService.instance = new BoardService();
@@ -129,8 +127,8 @@ export class BoardService extends BaseService {
         if (!board) throw new EntityNotFoundError();
         await this.checkForbidden(hostId, boardId);
 
-        const boardNamespace = getNamespace('Board');
-        boardNamespace.userId = hostId;
+        const namespace = getNamespace('localstorage');
+        namespace.set('userId', hostId);
 
         board.title = title;
         await this.boardRepository.save(board);
