@@ -162,6 +162,7 @@ extension CalendarViewController: DateStepperDelegate {
   }
   
   func dateLabelDidTapped(of dateString: String) {
+    tabBarController?.tabBar.isUserInteractionEnabled = false
     calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(withDividerFormat: .dot), delegate: self)
   }
 }
@@ -172,6 +173,7 @@ extension CalendarViewController: DateStepperDelegate {
 extension CalendarViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
+    tabBarController?.tabBar.isUserInteractionEnabled = true
     viewModel.changeDate(to: selectedDate, direction: nil)
   }
 }
