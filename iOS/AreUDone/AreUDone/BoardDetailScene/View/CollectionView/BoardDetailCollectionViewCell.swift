@@ -17,15 +17,8 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
   private var presentCardDetailHandler: ((Int) -> Void)?
   private var presentCardAddHandler: ((ListViewModelProtocol) -> Void)?
     
-  private lazy var tableView: UITableView = {
-    let tableView = UITableView(frame: bounds, style: .plain)
-    
-    tableView.backgroundColor = .clear
-    tableView.register(ListTableViewCell.self)
-    tableView.rowHeight = 55
-    tableView.sectionHeaderHeight = 60
-    tableView.sectionFooterHeight = 60
-    
+  private lazy var tableView: ListTableView = {
+    let tableView = ListTableView(frame: bounds, style: .plain)
     tableView.delegate = self
     
     return tableView

@@ -13,8 +13,8 @@ final class ListTableViewDataSource: NSObject, UITableViewDataSource {
   // MARK: - Property
 
   private let viewModel: ListViewModelProtocol
-  private var reset: Bool = true
 
+  
   // MARK: - Initializer
 
   init(viewModel: ListViewModelProtocol) {
@@ -27,10 +27,6 @@ final class ListTableViewDataSource: NSObject, UITableViewDataSource {
   // MARK: - Method
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if reset {
-      reset = !reset
-      return 0
-    }
     return viewModel.numberOfCards()
   }
   
