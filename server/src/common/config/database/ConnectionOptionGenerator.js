@@ -14,6 +14,7 @@ class ConnectionOptionGenerator {
             dropSchema: this.databaseEnv.getDatabaseDropSchema(),
             synchronize: this.databaseEnv.getDatabaseSynchronize(),
             subscribers: [path.resolve(`${__dirname}/../../../subscriber/*.js`)],
+            timezone: '+09:00',
             extra: {},
         };
 

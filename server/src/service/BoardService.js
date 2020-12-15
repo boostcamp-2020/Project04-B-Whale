@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { createNamespace, getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
@@ -96,6 +97,12 @@ export class BoardService extends BaseService {
             boardDetail.invitedUsers = boardDetail.invitations.map((v) => v.user);
             delete boardDetail.invitations;
         }
+        boardDetail.lists.forEach((list) => {
+            list.cards.forEach((card) => {
+                // eslint-disable-next-line no-param-reassign
+                card.dueDate = moment(card.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss');
+            });
+        });
         return boardDetail;
     }
 

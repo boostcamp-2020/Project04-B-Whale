@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { Router } from 'express';
 import { ListService } from '../service/ListService';
 import { CardService } from '../service/CardService';
@@ -42,7 +43,10 @@ export const ListRouter = () => {
             dueDate: config.dueDate,
         });
 
-        const createdCard = await cardService.createCard(config);
+        const createdCard = await cardService.createCard({
+            ...config,
+            dueDate: moment.tz(config.dueDate, 'Asia/Seoul').format(),
+        });
         res.status(201).json(createdCard);
     });
 
