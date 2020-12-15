@@ -121,4 +121,21 @@ export class BoardService extends BaseService {
         board.title = title;
         await this.boardRepository.save(board);
     }
+
+    @Transactional()
+    async deleteBoard({ userId, boardId }) {
+        const board = await this.boardRepository.findOne(boardId, {
+            loadRelationIds: {
+                relations: ['creator'],
+                disableMixedMap: true,
+            },
+        });
+        if (!board) throw new EntityNotFoundError();
+
+        if (userId !== board.creator.id) {
+            throw new ForbiddenError('Not your board');
+        }
+
+        await this.boardRepository.delete(boardId);
+    }
 }
