@@ -112,7 +112,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
     const setStateCard = (responseData) => {
         const { title, position } = responseData;
         boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
-            id: responseData.cardId,
+            id: responseData.id,
             title,
             dueDate: responseData.dueDate,
             position,
@@ -137,7 +137,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
             listId: id,
             title: input.current.state.value,
             content: '',
-            dueDate,
+            dueDate: datetime,
         });
         setStateCard(data);
     };
