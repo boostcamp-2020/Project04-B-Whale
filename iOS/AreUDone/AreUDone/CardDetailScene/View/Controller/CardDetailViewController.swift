@@ -117,10 +117,12 @@ private extension CardDetailViewController {
         cell.delegate = self
       }
       
-      self?.viewModel.fetchProfileImage(with: comment.user.profileImageUrl, userName: comment.user.name) { data in
-        let image = UIImage(data: data)
-        DispatchQueue.main.async {
-          cell.update(with: image)
+      if let user = comment.user {
+        self?.viewModel.fetchProfileImage(with: user.profileImageUrl, userName: user.name) { data in
+          let image = UIImage(data: data)
+          DispatchQueue.main.async {
+            cell.update(with: image)
+          }
         }
       }
       
