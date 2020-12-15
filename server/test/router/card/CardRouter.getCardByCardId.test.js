@@ -190,6 +190,7 @@ describe('GET /api/card/:cardId', () => {
                 title: card0.title,
                 content: card0.content,
                 dueDate: card0.dueDate,
+                position: card0.position,
                 list: {
                     id: list0.id,
                     title: list0.title,
