@@ -20,6 +20,7 @@ extension UIStoryboard {
     case invitation
     case memberUpdate
     case cardAdd
+    case setting
     
     var fileName: String {
       return (String(rawValue.first?.uppercased() ?? "")) + String(rawValue.dropFirst())
