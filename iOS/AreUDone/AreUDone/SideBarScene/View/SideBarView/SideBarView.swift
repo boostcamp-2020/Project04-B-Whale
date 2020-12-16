@@ -39,6 +39,7 @@ final class SideBarView: UIView {
     button.translatesAutoresizingMaskIntoConstraints = false
     let image = UIImage(systemName: "trash.fill")
     button.setImage(image, for: .normal)
+    button.tintColor = .red
     
     return button
   }()
