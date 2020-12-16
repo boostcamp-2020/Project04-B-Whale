@@ -10,6 +10,7 @@ import moment from 'moment';
 import { createList } from '../../utils/listRequest';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { createCard } from '../../utils/cardRequest';
+import { addNotification } from '../../utils/contentScript';
 
 const Wrapper = styled.div`
     display: flex;
@@ -63,7 +64,7 @@ const CloseBtn = styled(GrClose)`
 
 const AddListBtnInput = ({ parent, id, history }) => {
     const [state, setState] = useState('button');
-    let datetime = '';
+    let datetime = moment().format('YYYY-MM-DD HH:mm:ss');
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const input = useRef();
@@ -112,11 +113,12 @@ const AddListBtnInput = ({ parent, id, history }) => {
     const setStateCard = (responseData) => {
         const { title, position } = responseData;
         boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
-            id: responseData.cardId,
+            id: responseData.id,
             title,
             dueDate: responseData.dueDate,
             position,
             content: '',
+            commentCount: 0,
         });
         setBoardDetail({ ...boardDetail });
         setState('button');
@@ -137,8 +139,9 @@ const AddListBtnInput = ({ parent, id, history }) => {
             listId: id,
             title: input.current.state.value,
             content: '',
-            dueDate,
+            dueDate: datetime,
         });
+        addNotification(data);
         setStateCard(data);
     };
 
@@ -168,12 +171,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
                     <DatePicker
                         showTime
                         style={{ marginTop: '5px' }}
-                        defaultValue={moment(
-                            `${new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-                                .toISOString()
-                                .slice(0, -1)}`,
-                            dateFormat,
-                        )}
+                        defaultValue={moment(datetime, dateFormat)}
                         format={dateFormat}
                         onOk={okHandler}
                         clearIcon={false}

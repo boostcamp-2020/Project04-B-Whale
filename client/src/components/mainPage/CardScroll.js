@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CardScrollStatusContext } from '../../context/CardScrollContext';
 import Card from '../common/Card';
 import CardModal from '../cardModal/CardModal';
+import BoardDetailProvider from '../provider/BoardDetailProvider';
 
 const CardScrollWrapper = styled.div`
     display: grid;
@@ -52,13 +53,15 @@ const CardScroll = () => {
                 })}
             </CardScrollWrapper>
             {cardModalVisible && (
-                <CardModal
-                    visible={cardModalVisible}
-                    closeModal={() => {
-                        setCardModalVisible(false);
-                    }}
-                    cardId={cardId}
-                />
+                <BoardDetailProvider>
+                    <CardModal
+                        visible={cardModalVisible}
+                        closeModal={() => {
+                            setCardModalVisible(false);
+                        }}
+                        cardId={cardId}
+                    />
+                </BoardDetailProvider>
             )}
         </>
     );

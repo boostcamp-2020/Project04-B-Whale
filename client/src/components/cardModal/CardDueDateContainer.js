@@ -5,7 +5,9 @@ import moment from 'moment';
 import CardModalButton from './CardModalButton';
 import CloseButton from './CloseButton';
 import CardContext from '../../context/CardContext';
+import BoardDetailContext from '../../context/BoardDetailContext';
 import { modifyCardDueDate } from '../../utils/cardRequest';
+import { addNotification, removeNotification } from '../../utils/contentScript';
 
 const Wrapper = styled.div`
     display: grid;
@@ -54,8 +56,12 @@ const CardCloseButton = styled(CloseButton)`
 
 const CardDueDateContainer = ({ dueDate }) => {
     const [isDisplay, setIsDisplay] = useState(false);
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
+    const { lists } = boardDetail;
     const { cardState, cardDispatch } = useContext(CardContext);
     const card = cardState.data;
+    const listId = card.list.id;
+
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
     const onClickChangeDueDate = async (value) => {
@@ -63,8 +69,19 @@ const CardDueDateContainer = ({ dueDate }) => {
         const newDueDate = moment(new Date(value)).format('YYYY-MM-DD HH:mm:ss');
         await modifyCardDueDate({ cardId, dueDate: newDueDate });
 
+        removeNotification(cardId);
+
         const data = { ...card, dueDate: newDueDate };
+        const newBoardDetail = { ...boardDetail };
+        const listIndex = lists.findIndex((list) => list.id === listId);
+        const cardIndex = lists[listIndex].cards.findIndex((cardInfo) => cardInfo.id === card.id);
+        const currentCard = lists[listIndex].cards[cardIndex];
+        const newCard = { ...currentCard, dueDate: newDueDate };
+        newBoardDetail.lists[listIndex].cards[cardIndex] = newCard;
+
+        setBoardDetail(newBoardDetail);
         cardDispatch({ type: 'CHANGE_DUEDATE', data });
+        addNotification(data);
         setIsDisplay(false);
     };
 
@@ -76,10 +93,7 @@ const CardDueDateContainer = ({ dueDate }) => {
                 <DatePickerWrapper>
                     <DatePicker
                         showTime
-                        defaultValue={moment(
-                            `${new Date(dueDate).toISOString().slice(0, -1)}`,
-                            dateFormat,
-                        )}
+                        defaultValue={moment(dueDate, dateFormat)}
                         format={dateFormat}
                         onOk={onClickChangeDueDate}
                         clearIcon={false}

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { CalendarStatusContext } from '../../context/CalendarContext';
 import { CardScrollStatusContext } from '../../context/CardScrollContext';
 import { getCardsByDueDate } from '../../utils/cardRequest';
+import { initNotification } from '../../utils/contentScript';
 
 const cardScrollReducer = (state, action) => {
     switch (action.type) {
@@ -36,6 +37,20 @@ const CardScrollProvider = ({ children }) => {
         data: null,
         error: null,
     });
+
+    useEffect(async () => {
+        const { data: today } = await getCardsByDueDate({
+            dueDate: moment(calendarStatus.selectedDate).format('YYYY-MM-DD'),
+            member: calendarStatus.member,
+        });
+        const { data: tomorrow } = await getCardsByDueDate({
+            dueDate: moment(calendarStatus.selectedDate).add(1, 'day').format('YYYY-MM-DD'),
+            member: calendarStatus.member,
+        });
+        const cards = [...today.cards, ...tomorrow.cards];
+        const todayCardCount = today.cards.length;
+        initNotification({ cards, todayCardCount });
+    }, []);
 
     useEffect(async () => {
         cardScrollDispatch({ type: 'LOADING' });
