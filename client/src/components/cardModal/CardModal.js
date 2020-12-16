@@ -99,6 +99,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'CHANGE_CARD_STATE':
+            return {
+                ...state,
+                data: action.data,
+            };
         case 'ERROR':
             return {
                 loading: false,
