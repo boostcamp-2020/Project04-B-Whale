@@ -20,6 +20,7 @@ const BoardTitle = styled.span`
     padding: 5px 5px;
     resize: none;
     margin-left: 2em;
+    font-weight: 900;
     ${(props) =>
         props.state === 'span' &&
         `&:hover {
