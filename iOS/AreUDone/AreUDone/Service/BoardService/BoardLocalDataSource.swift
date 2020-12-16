@@ -55,7 +55,7 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
    }
   
    func loadBoardDetail(ofId id: Int) -> BoardDetail? {
-    guard let boardDetail = realm.objects(BoardDetail.self).filter(“id == \(id)“).first else { return nil }
+    guard let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first else { return nil }
     return BoardDetail(value: boardDetail)
    }
 }
