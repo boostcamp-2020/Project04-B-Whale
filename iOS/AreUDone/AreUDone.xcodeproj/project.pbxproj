@@ -286,6 +286,7 @@
 		BD088AFC258875510056E95D /* SettingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AFB258875510056E95D /* SettingTableView.swift */; };
 		BD088B01258875FA0056E95D /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B00258875FA0056E95D /* SettingTableViewCell.swift */; };
 		BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B232588A4900056E95D /* UIScrollView+.swift */; };
+		BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */; };
 		BD088B462589CEDE0056E95D /* CommentLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
@@ -557,6 +558,7 @@
 		BD088AFB258875510056E95D /* SettingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableView.swift; sourceTree = "<group>"; };
 		BD088B00258875FA0056E95D /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		BD088B232588A4900056E95D /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyIndicatorView.swift; sourceTree = "<group>"; };
 		BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentLocalDataSource.swift; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -682,6 +684,7 @@
 				333BA4F0257496B10057ACA4 /* CustomBarButtonItem.swift */,
 				BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */,
 				33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */,
+				BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2054,6 +2057,7 @@
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				33F2D6CA257F838D008F1E06 /* ListTableViewDataSource.swift in Sources */,
+				BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */,
 				338317332581E0340040A467 /* CardAddTableView.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
