@@ -11,4 +11,5 @@ extension Notification.Name {
   
   static let listWillDragged = Notification.Name("ListWillDragged")
   static let listDidDragged = Notification.Name("ListDidDragged")
+  static let networkChanged = Notification.Name("networkChanged")
 }

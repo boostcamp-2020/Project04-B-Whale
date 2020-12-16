@@ -65,8 +65,26 @@ final class BoardService: BoardServiceProtocol {
   }
   
   func createBoard(withTitle title: String, color: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-    router.request(route: BoardEndPoint.createBoard(title: title, color: color)) { result in
-      completionHandler(result)
+    let endPoint = BoardEndPoint.createBoard(title: title, color: color)
+    
+    router.request(route: endPoint) { result in
+      switch result {
+      case .success(_):
+        completionHandler(.success(()))
+        
+      case .failure(_):
+        if let localDataSource = self.localDataSource {
+          // 실패 시 endpoint save
+          let orderedEndpoint = OrderedEndPoint(value: endPoint.toDictionary())
+          localDataSource.save(orderedEndPoint: orderedEndpoint)
+          
+          completionHandler(.success(()))
+        } else {
+          completionHandler(result)
+        }
+      }
+      
+      
     }
   }
   
@@ -118,4 +136,5 @@ final class BoardService: BoardServiceProtocol {
     }
   }
 }
+
 

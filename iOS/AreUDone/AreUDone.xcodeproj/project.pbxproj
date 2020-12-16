@@ -32,6 +32,7 @@
 		3344375B2588F53C0077DEC7 /* ListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344375A2588F53C0077DEC7 /* ListTableView.swift */; };
 		334437732589CD010077DEC7 /* EndPointable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334437722589CD010077DEC7 /* EndPointable+.swift */; };
 		334437782589CEFA0077DEC7 /* OrderedEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334437772589CEFA0077DEC7 /* OrderedEndPoint.swift */; };
+		3344377D2589D1D70077DEC7 /* NWMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344377C2589D1D70077DEC7 /* NWMonitor.swift */; };
 		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
 		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
 		335AC4B9256EA1EA006A5C4A /* BoardListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */; };
@@ -163,6 +164,8 @@
 		33C3FB9D258525AE006DB60B /* RealmBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FB9C258525AE006DB60B /* RealmBoardTests.swift */; };
 		33C3FBAE2585F681006DB60B /* BoardLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FBAD2585F681006DB60B /* BoardLocalDataSource.swift */; };
 		33C3FBB325862F01006DB60B /* Realm+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3FBB225862F01006DB60B /* Realm+.swift */; };
+		33C494AB2589FF5A0095DE39 /* BorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C494AA2589FF5A0095DE39 /* BorderLayer.swift */; };
+		33C494B0258A01650095DE39 /* ScreenBorderLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C494AF258A01650095DE39 /* ScreenBorderLayerAnimator.swift */; };
 		33D2DE1C256B51CE008E3969 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE1B256B51CE008E3969 /* MockRouter.swift */; };
 		33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2DE20256B5210008E3969 /* JsonFactory.swift */; };
 		33EE01662568DFF6003D3221 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */; };
@@ -424,6 +427,7 @@
 		3344375A2588F53C0077DEC7 /* ListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableView.swift; sourceTree = "<group>"; };
 		334437722589CD010077DEC7 /* EndPointable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EndPointable+.swift"; sourceTree = "<group>"; };
 		334437772589CEFA0077DEC7 /* OrderedEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedEndPoint.swift; sourceTree = "<group>"; };
+		3344377C2589D1D70077DEC7 /* NWMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWMonitor.swift; sourceTree = "<group>"; };
 		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		335AC4B8256EA1EA006A5C4A /* BoardListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionView.swift; sourceTree = "<group>"; };
@@ -506,6 +510,8 @@
 		33C3FB9C258525AE006DB60B /* RealmBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBoardTests.swift; sourceTree = "<group>"; };
 		33C3FBAD2585F681006DB60B /* BoardLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLocalDataSource.swift; sourceTree = "<group>"; };
 		33C3FBB225862F01006DB60B /* Realm+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+.swift"; sourceTree = "<group>"; };
+		33C494AA2589FF5A0095DE39 /* BorderLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderLayer.swift; sourceTree = "<group>"; };
+		33C494AF258A01650095DE39 /* ScreenBorderLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenBorderLayerAnimator.swift; sourceTree = "<group>"; };
 		33D2DE1B256B51CE008E3969 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		33D2DE20256B5210008E3969 /* JsonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFactory.swift; sourceTree = "<group>"; };
 		33EE01652568DFF6003D3221 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
@@ -682,6 +688,7 @@
 				333BA4F0257496B10057ACA4 /* CustomBarButtonItem.swift */,
 				BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */,
 				33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */,
+				33C494AA2589FF5A0095DE39 /* BorderLayer.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1164,6 +1171,8 @@
 				3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */,
 				BDD18B0A2566132A005DF00A /* Keychain.swift */,
 				BDEA7BEA2576385000CF6B11 /* AlertFactory.swift */,
+				3344377C2589D1D70077DEC7 /* NWMonitor.swift */,
+				33C494AF258A01650095DE39 /* ScreenBorderLayerAnimator.swift */,
 				BDE27E30256B9335002308B9 /* Protocol */,
 				336010DC256B8E34009580A1 /* Mock */,
 				BDD18BB22568D636005DF00A /* Constants */,
@@ -2057,6 +2066,7 @@
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
 				BD2AA7A1256DF8E400EA8791 /* CardDetailViewController.swift in Sources */,
+				3344377D2589D1D70077DEC7 /* NWMonitor.swift in Sources */,
 				BD2AA7C3256E3D3600EA8791 /* CardDetail.swift in Sources */,
 				3373A49A2578DEC300D92CC0 /* MemberFooterView.swift in Sources */,
 				335AC4E6256F7988006A5C4A /* BoardListJsonFactory.swift in Sources */,
@@ -2179,12 +2189,14 @@
 				BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */,
 				333BA53B2575FFCC0057ACA4 /* SideBarViewController.swift in Sources */,
 				BD088AF325886D4D0056E95D /* SettingViewModel.swift in Sources */,
+				33C494AB2589FF5A0095DE39 /* BorderLayer.swift in Sources */,
 				BD59A701257F7A2A00BF8928 /* MonthCardCount.swift in Sources */,
 				335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */,
 				333BA5CF25787F290057ACA4 /* ImageService.swift in Sources */,
 				33F2D508257B6AFE008F1E06 /* InvitationTableViewDataSource.swift in Sources */,
 				333BA5D825787FC40057ACA4 /* ImageEndPoint.swift in Sources */,
 				BD088AE125886B350056E95D /* SettingCoordinator.swift in Sources */,
+				33C494B0258A01650095DE39 /* ScreenBorderLayerAnimator.swift in Sources */,
 				BDEA7BE3257627E100CF6B11 /* ContentInputCoordinator.swift in Sources */,
 				BD2AA8D82575FFB500EA8791 /* CardDetailLocationView.swift in Sources */,
 				338317402581E21E0040A467 /* CardAddCalendarTableViewCell.swift in Sources */,
