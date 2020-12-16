@@ -259,6 +259,7 @@ private extension CardDetailViewController {
     bindingUpdateDueDateView()
     bindingUpdateContentView()
     bindingPrepareForUpdateMemberView()
+    bindingCreateComment()
     bindingCompleteAddComment()
   }
   
@@ -351,6 +352,15 @@ private extension CardDetailViewController {
     }
   }
   
+  func bindingCreateComment() {
+    viewModel.bindingCreateComment { [weak self] updatedComment in
+      guard let self = self else { return }
+      var snapshot = self.dataSource.snapshot()
+      
+      DispatchQueue.main.async {
+        snapshot.appendItems([updatedComment])
+        self.dataSource.apply(snapshot)
+
   func bindingCompleteAddComment() {
     viewModel.bindingCompleteAddComment { [weak self] in
       guard let self = self else { return }
