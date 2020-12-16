@@ -35,7 +35,7 @@ final class BoardAddCoordinator: NavigationCoordinator {
             identifier: BoardAddViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
               
-              let boardService = BoardService(router: self.router)
+              let boardService = BoardService(router: self.router, localDataSource: BoardLocalDataSource())
               let viewModel = BoardAddViewModel(boardService: boardService)
               return BoardAddViewController(coder: coder, viewModel: viewModel)
             }) as? BoardAddViewController else { return UIViewController() }
