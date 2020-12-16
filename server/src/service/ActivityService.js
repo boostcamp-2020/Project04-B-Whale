@@ -37,7 +37,7 @@ export class ActivityService extends BaseService {
                 boardId,
                 createdAt: moment(activity.createdAt)
                     .tz('Asia/Seoul')
-                    .format('YYYY-MM-DD hh:mm:ss'),
+                    .format('YYYY-MM-DD HH:mm:ss'),
             };
         });
     }
