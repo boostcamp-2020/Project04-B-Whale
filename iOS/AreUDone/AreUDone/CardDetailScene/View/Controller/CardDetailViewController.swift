@@ -360,7 +360,10 @@ private extension CardDetailViewController {
       DispatchQueue.main.async {
         snapshot.appendItems([updatedComment])
         self.dataSource.apply(snapshot)
-
+      }
+    }
+  }
+  
   func bindingCompleteAddComment() {
     viewModel.bindingCompleteAddComment { [weak self] in
       guard let self = self else { return }
