@@ -177,7 +177,7 @@ private extension CommentCollectionViewCell {
     NSLayoutConstraint.activate([
       editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       editButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
-      editButton.heightAnchor.constraint(equalToConstant: 15)
+      editButton.heightAnchor.constraint(equalToConstant: 20)
     ])
   }
   

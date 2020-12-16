@@ -35,7 +35,9 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   private let cardService: CardServiceProtocol
   private var fetchDailyCardOption: FetchDailyCardsOption = .allCard {
     didSet {
-      fetchDailyCards()
+      if oldValue != fetchDailyCardOption {
+        fetchDailyCards()
+      }
     }
   }
   private var selectedDate: Date = Date() {
