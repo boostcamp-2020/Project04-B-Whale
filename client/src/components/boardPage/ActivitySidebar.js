@@ -4,6 +4,7 @@ import { IoIosClose } from 'react-icons/io';
 import ActivityDetail from './ActivityDetail';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { getMyInfo } from '../../utils/userRequest';
+import { removeBoard, exitBoard } from '../../utils/boardRequest';
 
 const boxOpen = keyframes`
   to {
@@ -57,6 +58,12 @@ const BoardExitButton = styled.button`
     background-color: red;
 `;
 
+const BoardRemoveButton = styled.button`
+    width: 100px;
+    height: 40px;
+    background-color: red;
+`;
+
 const Hr = styled.hr`
     height: 1px;
     margin-bottom: 10px;
@@ -84,6 +91,18 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
         { id: 2, boardId: 1, content: '이건홍님이 현재 보드를 생성하였습니다.' },
     ];
 
+    const removeBoardHandler = async () => {
+        const { status } = await removeBoard(boardDetail.id);
+        console.log(status);
+        document.location = '/';
+    };
+
+    const exitBoardHandler = async () => {
+        const { status } = await exitBoard(boardDetail.id);
+        console.log(status);
+        document.location = '/';
+    };
+
     return (
         <Sidebar sidebarDisplay={sidebarDisplay}>
             <SidebarTopMenu>
@@ -98,9 +117,11 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
                 })}
             </ActivitiesWrapper>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <BoardExitButton>
-                    {myId === boardDetail?.creator?.id ? '보드 지우기' : '보드 나가기'}
-                </BoardExitButton>
+                {myId === boardDetail?.creator?.id ? (
+                    <BoardRemoveButton onClick={removeBoardHandler}>보드 지우기</BoardRemoveButton>
+                ) : (
+                    <BoardExitButton onClick={exitBoardHandler}>보드 나가기</BoardExitButton>
+                )}
             </div>
         </Sidebar>
     );
