@@ -2,7 +2,7 @@ import { ValidationError } from 'class-validator';
 import { BusinessError } from '../error/BusinessError';
 import { ErrorCode } from '../error/ErrorCode';
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
     if (err instanceof BusinessError) {
         res.status(err.errorCode.httpStatusCode).json({
             error: {
