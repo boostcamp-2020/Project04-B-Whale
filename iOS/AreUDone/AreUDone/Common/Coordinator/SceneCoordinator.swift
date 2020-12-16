@@ -16,14 +16,15 @@ final class SceneCoordinator: Coordinator {
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
-  private let router: Router
+  private let router: Routable
   private var initCoordinator: Coordinator!
+  
   
   // MARK: - Initializer
   
   init(
     window: UIWindow?,
-    router: Router,
+    router: Routable,
     factory: CoordinatorFactoryable,
     signinChecker: SigninCheckable
   ) {
@@ -37,6 +38,7 @@ final class SceneCoordinator: Coordinator {
   // MARK: - Method
   
   func start() -> UIViewController {
+    
     let signinCheckResult = signinChecker.check()
     
     initCoordinator = initCoordinatorFactory.coordinator(

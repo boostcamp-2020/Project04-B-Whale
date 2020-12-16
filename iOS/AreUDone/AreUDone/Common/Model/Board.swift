@@ -9,8 +9,13 @@ import Foundation
 import RealmSwift
 
 class Boards: Object, Codable {
+  @objc dynamic var id: Int = 0
   var myBoards = List<Board>()
   var invitedBoards = List<Board>()
+  
+  override class func primaryKey() -> String? {
+    return "id"
+  }
   
   required convenience init(from decoder: Decoder) throws {
     self.init()
@@ -35,9 +40,13 @@ class Boards: Object, Codable {
 }
 
 class Board: Object, Codable {
-  @objc dynamic var id: Int = 0
+  @objc dynamic var id: Int = UUID().hashValue
   @objc dynamic var title: String = ""
   @objc dynamic var color: String = ""
+  
+  override class func primaryKey() -> String? {
+    return "id"
+  }
 }
 
 

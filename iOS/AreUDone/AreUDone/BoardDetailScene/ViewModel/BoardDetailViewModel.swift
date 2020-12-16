@@ -80,7 +80,8 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   // MARK: - Method
   
   func save() {
-    realm.writeOnMain(object: boardDetail!) { object in
+    guard let boardDetail = boardDetail else { return }
+    realm.writeOnMain(object: boardDetail) { object in
       self.realm.create(BoardDetail.self, value: object, update: .all)
     }
   }
