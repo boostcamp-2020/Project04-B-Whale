@@ -51,7 +51,7 @@ export class CustomCardRepository extends BaseRepository {
         const cardCountList = await this.createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
             .addSelect('count(1)', 'count')
-            .leftJoin('card.members', 'member')
+            .leftJoin('card.members', 'member', 'member.user_id=:userId', { userId })
             .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
             .andWhere('(card.creator_id=:userId OR member.user_id=:userId)', { userId })
             .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)

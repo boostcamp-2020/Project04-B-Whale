@@ -16,6 +16,7 @@ import { DatabaseEnv } from './common/env/DatabaseEnv';
 import { EnvType } from './common/env/EnvType';
 import { IndexRouter } from './router';
 import { errorHandler } from './common/middleware/errorHandler';
+import { subscriber } from './common/middleware/subscriber';
 import { NaverStrategy } from './common/config/passport/NaverStrategy';
 import { GitHubStrategy } from './common/config/passport/GitHubStrategy';
 import { JwtStrategy } from './common/config/passport/JwtStrategy';
@@ -66,6 +67,7 @@ export class Application {
         this.httpServer.use(cors());
         this.httpServer.use(express.json());
         this.httpServer.use(express.urlencoded({ extended: false }));
+        this.httpServer.use(subscriber);
         this.httpServer.use(IndexRouter());
         this.httpServer.use(errorHandler);
     }

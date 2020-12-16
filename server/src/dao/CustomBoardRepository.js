@@ -74,4 +74,15 @@ export class CustomBoardRepository extends BaseRepository {
 
         return lists.length !== 0;
     }
+
+    async findBoardByCommentId(commentId) {
+        const board = await this.createQueryBuilder('board')
+            .innerJoin('board.lists', 'list')
+            .innerJoin('list.cards', 'card')
+            .innerJoin('card.comments', 'comment')
+            .where('comment.id=:commentId', { commentId })
+            .getOne();
+
+        return board;
+    }
 }

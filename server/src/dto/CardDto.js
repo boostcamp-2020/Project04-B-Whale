@@ -3,16 +3,6 @@ import { IsISO8601, IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-val
 export class CardDto {
     id;
 
-    title;
-
-    content;
-
-    position;
-
-    dueDate;
-
-    listId;
-
     @ValidateIf((o) => o.title !== undefined)
     @IsString()
     @IsNotEmpty()
