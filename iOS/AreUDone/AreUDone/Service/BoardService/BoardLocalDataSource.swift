@@ -50,12 +50,12 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   }
   
   func loadBoards() -> Boards? {
-    let boards = realm.objects(Boards.self).first
-    return Boards(value: boards!)
-  }
+    guard let boards = realm.objects(Boards.self).first else { return nil }
+    return Boards(value: boards)
+   }
   
-  func loadBoardDetail(ofId id: Int) -> BoardDetail? {
-    let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first
-    return BoardDetail(value: boardDetail!)
-  }
+   func loadBoardDetail(ofId id: Int) -> BoardDetail? {
+    guard let boardDetail = realm.objects(BoardDetail.self).filter(“id == \(id)“).first else { return nil }
+    return BoardDetail(value: boardDetail)
+   }
 }
