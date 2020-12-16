@@ -94,6 +94,8 @@ const CardDescriptionContainer = ({ cardContent }) => {
     const [cardContentInputState, setCardContentInputState] = useState(cardContent);
     const { cardState, cardDispatch } = useContext(CardContext);
     const cardDescriptionInput = useRef();
+    const saveButton = useRef();
+    const closeButton = useRef();
 
     const card = cardState.data;
 
@@ -120,6 +122,22 @@ const CardDescriptionContainer = ({ cardContent }) => {
         inverseVisible();
     };
 
+    const onBlur = async (e) => {
+        if (e.relatedTarget !== saveButton.current && e.relatedTarget !== closeButton.current) {
+            await modifyCardContent({ cardId: card.id, cardContent: cardContentInputState });
+            cardDispatch({
+                type: 'CHANGE_CARD_STATE',
+                data: { ...card, content: cardContentInputState },
+            });
+            inverseVisible();
+        }
+    };
+
+    const onClickCloseButton = () => {
+        setCardContentInputState(cardContent);
+        inverseVisible();
+    };
+
     return (
         <Wrapper>
             <CardDescriptionHeaderContainer>
@@ -138,13 +156,23 @@ const CardDescriptionContainer = ({ cardContent }) => {
                 <CardDescriptionInputWrapper>
                     <CardDescriptionInput
                         ref={cardDescriptionInput}
-                        defaultValue={cardContent}
+                        value={cardContentInputState}
                         onChange={onChange}
+                        onBlur={onBlur}
                     />
-                    <CardDescriptionInputSaveButton width="3.5rem" height="2rem" onClick={onClick}>
+                    <CardDescriptionInputSaveButton
+                        width="3.5rem"
+                        height="2rem"
+                        onClick={onClick}
+                        _ref={saveButton}
+                    >
                         저장
                     </CardDescriptionInputSaveButton>
-                    <CardDescriptionInputCloseButton width="2rem" onClick={inverseVisible}>
+                    <CardDescriptionInputCloseButton
+                        width="2rem"
+                        onClick={onClickCloseButton}
+                        _ref={closeButton}
+                    >
                         X
                     </CardDescriptionInputCloseButton>
                 </CardDescriptionInputWrapper>
