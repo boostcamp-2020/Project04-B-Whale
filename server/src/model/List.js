@@ -14,7 +14,7 @@ export class List {
     @Column({ name: 'position', type: 'double' })
     position;
 
-    @ManyToOne(() => Board, (board) => board.lists, { nullable: false })
+    @ManyToOne(() => Board, (board) => board.lists, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'board_id' })
     board;
 
