@@ -7,6 +7,13 @@
 
 import UIKit
 
+protocol SideBarViewDelegate: AnyObject {
+  
+  func boardDeleteButtonTapped()
+  func successBoardDelete(confirmAction: @escaping () -> Void)
+}
+
+
 final class SideBarView: UIView {
   
   // MARK: - Property
@@ -28,6 +35,17 @@ final class SideBarView: UIView {
     return collectionView
   }()
 
+  private lazy var exitButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "trash.fill")
+    button.setImage(image, for: .normal)
+    button.tintColor = .red
+    
+    return button
+  }()
+  
+  weak var delegate: SideBarViewDelegate?
   
   // MARK: - Initializer
   
@@ -58,10 +76,14 @@ private extension SideBarView {
   func configure() {
     addSubview(titleView)
     addSubview(collectionView)
+    titleView.addSubview(exitButton)
     
     configureView()
     configureTitleView()
     configureCollectionView()
+    configureExitButton()
+    
+    addingTarget()
   }
   
   func configureView() {
@@ -91,6 +113,19 @@ private extension SideBarView {
     
     viewModel.updateCollectionView()
   }
+  
+  func configureExitButton() {
+    NSLayoutConstraint.activate([
+      exitButton.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -10),
+      exitButton.topAnchor.constraint(equalTo: titleView.topAnchor),
+      exitButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
+      exitButton.widthAnchor.constraint(equalTo: exitButton.heightAnchor)
+    ])
+  }
+  
+  func addingTarget() {
+    exitButton.addTarget(self, action: #selector(boardDeleteButtonTapped), for: .touchUpInside)
+  }
 }
 
 
@@ -99,10 +134,44 @@ private extension SideBarView {
 private extension SideBarView {
   
   func bindUI() {
+    bindingUpdateSideBarCollectionView()
+    bindingShowExitButton()
+    bindindAfterDeleteBoardAction()
+  }
+  
+  func bindingUpdateSideBarCollectionView() {
     viewModel.bindingUpdateSideBarCollectionView { [weak self] in
       DispatchQueue.main.async {
           self?.collectionView.reloadData()
       }
+    }
+  }
+  
+  func bindingShowExitButton() {
+    viewModel.bindingShowExitButton { [weak self] isCreator in
+      DispatchQueue.main.async {
+        self?.exitButton.isHidden = !isCreator
+      }
+    }
+  }
+  
+  func bindindAfterDeleteBoardAction() {
+    viewModel.bindindAfterDeleteBoardAction { [weak self] in
+      DispatchQueue.main.async {
+        self?.delegate?.boardDeleteButtonTapped()
+      }
+    }
+  }
+}
+
+
+// MARK:- Extension objc Method
+
+extension SideBarView {
+  
+  @objc private func boardDeleteButtonTapped() {
+    delegate?.successBoardDelete { [weak self] in
+      self?.viewModel.deleteBoard()
     }
   }
 }

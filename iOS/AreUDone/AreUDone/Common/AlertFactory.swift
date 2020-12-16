@@ -20,6 +20,7 @@ enum AlertType {
   case delete
   case timePicker
   case logout
+  case boardDelete
 }
 
 class AlertFactory {
@@ -34,6 +35,8 @@ class AlertFactory {
     case .timePicker: alert = TimePickerAlert(style: style)
       
     case .logout: alert = LogoutAlert(style: style)
+      
+    case .boardDelete: alert = DeleteBoardAlert(style: style)
     }
     
     return alert
@@ -74,6 +77,13 @@ struct LogoutAlert: AlertProtocol {
   var actionTitle: String? { return "로그아웃" }
   var cancelTitle: String? { return "취소" }
   var style: UIAlertController.Style
+}
+
+struct DeleteBoardAlert: AlertProtocol {
   
-  
+  var title: String? { return "보드를 삭제하시겠습니까?" }
+  var message: String? { return "보드 삭제 시 복구 할 수 없습니다." }
+  var actionTitle: String? { return "보드 삭제" }
+  var cancelTitle: String? { return "취소" }
+  var style: UIAlertController.Style
 }

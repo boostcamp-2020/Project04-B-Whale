@@ -19,7 +19,7 @@ protocol BoardServiceProtocol: class {
   func fetchAllBoards(completionHandler: @escaping (Result<Boards, APIError>) -> Void) // success 시 API로부터 받아오고 realm 에 save, fail 시 realm 으로부터 load
   func createBoard(withTitle title: String, color: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func updateBoard(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
-  func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void)
+  func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   
   func fetchBoardDetail(with boardId: Int, completionHandler: @escaping (Result<BoardDetail, APIError>) -> Void)
   func requestInvitation(withBoardId boardId: Int, andUserId userId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
@@ -87,7 +87,7 @@ final class BoardService: BoardServiceProtocol {
     }
   }
   
-  func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Boards, APIError>) -> Void) {
+  func deleteBoard(with boardId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
     router.request(route: BoardEndPoint.deleteBoard(boardId: boardId)) { result in
       completionHandler(result)
     }
