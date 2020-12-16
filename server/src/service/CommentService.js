@@ -39,8 +39,8 @@ export class CommentService extends BaseService {
             throw new ForbiddenError(`You're not authorized`);
         }
         const namespace = getNamespace('localstorage');
-        namespace.set('boardId', board.id);
-        namespace.set('cardTitle', (await this.cardRepository.findOne(cardId)).title);
+        namespace?.set('boardId', board.id);
+        namespace?.set('cardTitle', (await this.cardRepository.findOne(cardId)).title);
 
         const comment = this.commentRepository.create({
             content,
@@ -82,8 +82,8 @@ export class CommentService extends BaseService {
         }
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', userId);
-        namespace.set(
+        namespace?.set('userId', userId);
+        namespace?.set(
             'boardId',
             (await this.customBoardRepository.findBoardByCommentId(commentId)).id,
         );

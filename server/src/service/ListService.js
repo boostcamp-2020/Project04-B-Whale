@@ -60,7 +60,7 @@ export class ListService extends BaseService {
         await boardService.checkForbidden(userId, list.board.id);
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', userId);
+        namespace?.set('userId', userId);
 
         list.title = title || list.list_title;
         list.position = position || list.list_position;
@@ -79,8 +79,8 @@ export class ListService extends BaseService {
         await boardService.checkForbidden(userId, list.board_id);
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', userId);
-        namespace.set('boardId', list.board_id);
+        namespace?.set('userId', userId);
+        namespace?.set('boardId', list.board_id);
 
         await this.listRepository.remove(await this.listRepository.findOne(listId));
     }

@@ -126,7 +126,7 @@ export class CardService extends BaseService {
         }
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', userId);
+        namespace?.set('userId', userId);
 
         card.list = listId;
         card.title = title;
@@ -205,8 +205,8 @@ export class CardService extends BaseService {
         await boardService.checkForbidden(userId, list.board_id);
 
         const namespace = getNamespace('localstorage');
-        namespace.set('boardId', list.board_id);
-        namespace.set('listTitle', list.list_title);
+        namespace?.set('boardId', list.board_id);
+        namespace?.set('listTitle', list.list_title);
 
         const cardWithMaxPosition = await this.cardRepository
             .createQueryBuilder('card')
@@ -244,8 +244,8 @@ export class CardService extends BaseService {
         if (!card) throw new EntityNotFoundError();
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', userId);
-        namespace.set('boardId', card.list_board_id);
+        namespace?.set('userId', userId);
+        namespace?.set('boardId', card.list_board_id);
 
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, card.list_board_id);

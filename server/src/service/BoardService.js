@@ -128,7 +128,7 @@ export class BoardService extends BaseService {
         await this.checkForbidden(hostId, boardId);
 
         const namespace = getNamespace('localstorage');
-        namespace.set('userId', hostId);
+        namespace?.set('userId', hostId);
 
         board.title = title;
         await this.boardRepository.save(board);
