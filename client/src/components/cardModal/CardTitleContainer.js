@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import CardContext from '../../context/CardContext';
+import { modifyCardTitle } from '../../utils/cardRequest';
 
 const Wrapper = styled.div`
     display: grid;
@@ -11,14 +13,22 @@ const Wrapper = styled.div`
     margin: 0rem 0rem 2rem 0rem;
 `;
 
-const CardTitle = styled.div`
+const CardTitle = styled.input`
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
-    grid-row-end: 2;
+    grid-row-end: 2
+    width: 100%;
     color: #192b4d;
     font-size: 1.25rem;
     font-weight: bold;
+    background-color: transparent;
+    border-radius: 0.2rem;
+    &: focus {
+        background-color: white;
+        border: 0.15rem solid #0379bf;
+        margin: -0.15rem;
+    }
 `;
 
 const CardListTitle = styled.div`
@@ -32,9 +42,28 @@ const CardListTitle = styled.div`
 `;
 
 const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
+    const { cardState, cardDispatch } = useContext(CardContext);
+    const [cardTitleInput, setCardTitleInput] = useState(cardTitle);
+    const card = cardState.data;
+
+    const onChange = (e) => {
+        setCardTitleInput(e.target.value);
+    };
+
+    const onBlur = async () => {
+        await modifyCardTitle({ cardId: card.id, cardTitle: cardTitleInput });
+        cardDispatch({
+            type: 'CHANGE_CARD_STATE',
+            data: {
+                ...card,
+                title: cardTitleInput,
+            },
+        });
+    };
+
     return (
         <Wrapper>
-            <CardTitle>{cardTitle}</CardTitle>
+            <CardTitle defaultValue={cardTitle} onChange={onChange} onBlur={onBlur} />
             <CardListTitle>포함된 리스트: {cardListTitle}</CardListTitle>
         </Wrapper>
     );

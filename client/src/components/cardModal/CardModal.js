@@ -38,8 +38,8 @@ const ModalWrapper = styled.div`
 const ModalInner = styled.div`
     display: grid;
     grid-template-columns: 3fr 1fr;
-    width: 768px;
-    height: 885px;
+    width: 40%;
+    height: 80%;
     background-color: #f4f5f7;
     position: absolute;
     top: 50%;
@@ -47,6 +47,7 @@ const ModalInner = styled.div`
     transform: translate(-50%, -50%);
     padding: 1rem;
     border-radius: 0.2rem;
+    overflow-y: scroll;
 `;
 
 const CardModalLeftSideBar = styled.div`
@@ -97,6 +98,11 @@ const cardReducer = (state, action) => {
                 data: action.data,
             };
         case 'CHANGE_DUEDATE':
+            return {
+                ...state,
+                data: action.data,
+            };
+        case 'CHANGE_CARD_STATE':
             return {
                 ...state,
                 data: action.data,

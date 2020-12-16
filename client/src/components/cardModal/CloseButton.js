@@ -13,9 +13,9 @@ const Wrapper = styled.button`
     }
 `;
 
-const CloseButton = ({ width, onClick }) => {
+const CloseButton = ({ width, onClick, _ref }) => {
     return (
-        <Wrapper width={width} onClick={onClick}>
+        <Wrapper width={width} onClick={onClick} ref={_ref}>
             X
         </Wrapper>
     );

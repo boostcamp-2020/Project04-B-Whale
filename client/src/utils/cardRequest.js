@@ -82,3 +82,21 @@ export const getCard = async ({ cardId }) => {
     const response = await request({ url: `/api/card/${cardId}`, method: 'GET' });
     return response;
 };
+
+export const modifyCardTitle = async ({ cardId, cardTitle }) => {
+    const response = await request({
+        url: `/api/card/${cardId}`,
+        method: 'PATCH',
+        data: { title: cardTitle },
+    });
+    return response;
+};
+
+export const modifyCardContent = async ({ cardId, cardContent }) => {
+    const response = await request({
+        url: `/api/card/${cardId}`,
+        method: 'PATCH',
+        data: { content: cardContent },
+    });
+    return response;
+};
