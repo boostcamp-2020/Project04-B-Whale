@@ -223,8 +223,8 @@ extension CalendarViewController: CardCellDelegate {
       
       DispatchQueue.main.async {
         var snapshot = self.dataSource.snapshot()
-        
         snapshot.deleteItems([item])
+        self.viewModel.checkCardCollectionView(isEmpty: snapshot.itemIdentifiers.isEmpty)
         self.dataSource.apply(snapshot)
       }
     }

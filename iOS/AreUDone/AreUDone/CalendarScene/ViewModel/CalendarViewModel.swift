@@ -17,6 +17,7 @@ protocol CalendarViewModelProtocol {
   func fetchDailyCards()
   func changeDate(to date: String, direction: Direction?)
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void)
+  func checkCardCollectionView(isEmpty: Bool)
 }
 
 extension CalendarViewModelProtocol {
@@ -102,6 +103,10 @@ final class CalendarViewModel: CalendarViewModelProtocol {
         print(error)
       }
     }
+  }
+  
+  func checkCardCollectionView(isEmpty: Bool) {
+    emptyIndicatorViewHandler?(isEmpty)
   }
 }
 
