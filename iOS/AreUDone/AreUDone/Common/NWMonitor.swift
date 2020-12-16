@@ -14,12 +14,11 @@ final class NWMonitor {
   
   // MARK: - Property
   
-  let semaphore = DispatchSemaphore(value: 1)
+  let monitorSemaphore = DispatchSemaphore(value: 1)
+  let requestSemaphore = DispatchSemaphore(value: 1)
   let monitor = NWPathMonitor()
   let router: Routable
-  
-  var currentState: NWPath.Status!
-  
+    
   
   // MARK: - Initializer
   
@@ -42,39 +41,42 @@ private extension NWMonitor {
   
   func configure() {
     monitor.pathUpdateHandler = { path in
+      self.monitorSemaphore.wait()
       
       if path.status == .satisfied {
-        guard self.currentState != .satisfied else { return }
-        
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
           userInfo: ["networkState": true]
         )
         
-        self.storedEndPoints()
-      } else {
-        guard self.currentState != .unsatisfied else { return }
+        self.requestStoredEndPoints()
+        self.monitorSemaphore.signal()
         
+      } else {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
           userInfo: ["networkState": false]
         )
+        
+        self.monitorSemaphore.signal()
       }
-      
-      self.currentState = path.status
     }
   }
   
-  func storedEndPoints() {
+  func requestStoredEndPoints() {
     let realm = try! Realm()
     let result = realm.objects(OrderedEndPoint.self).sorted(byKeyPath: "date")
-    let endPoints = Array(result)
+    let unmanagedEndPoints = Array(result).map { OrderedEndPoint(value: $0)}
     
-    endPoints.forEach { endPoint in
-      semaphore.wait()
-     
+    try! realm.write {
+      realm.delete(result)
+    }
+    
+    unmanagedEndPoints.forEach { endPoint in
+      requestSemaphore.wait()
+      
       router.request(route: endPoint) { result in
         switch result {
         case .success(_):
@@ -84,12 +86,8 @@ private extension NWMonitor {
           print(error)
         }
 
-        self.semaphore.signal()
+        self.requestSemaphore.signal()
       }
-    }
-    
-    try! realm.write {
-      realm.delete(result)
     }
   }
 }

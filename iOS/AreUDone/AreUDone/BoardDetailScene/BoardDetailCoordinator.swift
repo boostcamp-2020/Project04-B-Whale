@@ -41,7 +41,7 @@ final class BoardDetailCoordinator: NavigationCoordinator {
               guard let self = self else { return UIViewController()}
               
               let boardService = BoardService(router: self.router, localDataSource: BoardLocalDataSource())
-              let listService = ListService(router: self.router)
+              let listService = ListService(router: self.router, localDataSource: ListLocalDataSource())
               let cardService = CardService(router: self.router)
               let activityService = ActivityService(router: self.router)
               let imageService = ImageService(router: self.router, cacheManager: CacheManager())
