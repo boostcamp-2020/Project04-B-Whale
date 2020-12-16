@@ -10,6 +10,7 @@ import UIKit
 protocol SideBarViewDelegate: NSObject {
   
   func boardDeleteButtonTapped()
+  func successBoardDelete(confirmAction: @escaping () -> Void)
 }
 
 
@@ -169,6 +170,8 @@ private extension SideBarView {
 extension SideBarView {
   
   @objc private func boardDeleteButtonTapped() {
-    viewModel.deleteBoard()
+    delegate?.successBoardDelete { [weak self] in
+      self?.viewModel.deleteBoard()
+    }
   }
 }

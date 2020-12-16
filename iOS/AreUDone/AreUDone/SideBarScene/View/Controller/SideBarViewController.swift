@@ -259,4 +259,15 @@ extension SideBarViewController: SideBarViewDelegate {
       self?.coordinator?.pop()
     }
   }
+  
+  func successBoardDelete(confirmAction: @escaping () -> Void) {
+    let alert = UIAlertController(
+      alertType: .boardDelete,
+      alertStyle: .actionSheet,
+      confirmAction: {
+        confirmAction()
+      })
+    
+    present(alert, animated: true)
+  }
 }
