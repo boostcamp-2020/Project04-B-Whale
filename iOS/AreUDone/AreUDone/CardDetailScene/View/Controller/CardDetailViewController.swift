@@ -525,6 +525,9 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
             snapshot.deleteItems([comment])
             self?.dataSource.apply(snapshot)
           }
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self?.viewModel.checkCommentCollectionView(isEmpty: snapshot.itemIdentifiers.isEmpty)
+          }
         }
       })
     

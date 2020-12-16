@@ -31,6 +31,7 @@ protocol CardDetailViewModelProtocol {
   func prepareUpdateCell(handler: (Int) -> Void)
   func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void)
   func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void))
+  func checkCommentCollectionView(isEmpty: Bool)
 }
 
 final class CardDetailViewModel: CardDetailViewModelProtocol {
@@ -180,6 +181,10 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         print(error)
       }
     }
+  }
+  
+  func checkCommentCollectionView(isEmpty: Bool) {
+    self.emptyIndicatorViewHandler?(isEmpty)
   }
   
   private func fetchUserData() {
