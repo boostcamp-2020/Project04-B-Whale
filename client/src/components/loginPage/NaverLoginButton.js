@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import image from '../../image/naverLoginBtn.PNG';
 
 const NaverLoginButtonImg = styled.img`
-    width: 20%;
+    width: 300px;
     position: absolute;
     top: 80%;
     left: 50%;
