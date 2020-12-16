@@ -28,6 +28,15 @@ final class SideBarView: UIView {
     return collectionView
   }()
 
+  private lazy var exitButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let image = UIImage(systemName: "trash.fill")
+    button.setImage(image, for: .normal)
+    
+    return button
+  }()
+  
   
   // MARK: - Initializer
   
@@ -58,10 +67,12 @@ private extension SideBarView {
   func configure() {
     addSubview(titleView)
     addSubview(collectionView)
+    titleView.addSubview(exitButton)
     
     configureView()
     configureTitleView()
     configureCollectionView()
+    configureExitButton()
   }
   
   func configureView() {
@@ -90,6 +101,15 @@ private extension SideBarView {
     ])
     
     viewModel.updateCollectionView()
+  }
+  
+  func configureExitButton() {
+    NSLayoutConstraint.activate([
+      exitButton.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -10),
+      exitButton.topAnchor.constraint(equalTo: titleView.topAnchor),
+      exitButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
+      exitButton.widthAnchor.constraint(equalTo: exitButton.heightAnchor)
+    ])
   }
 }
 
