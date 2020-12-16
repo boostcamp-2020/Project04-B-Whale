@@ -28,7 +28,7 @@ final class MemberCell: UICollectionViewCell, Reusable {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
-    label.font = UIFont.systemFont(ofSize: 13)
+    label.font = UIFont.nanumB(size: 13)
     label.textColor = .black
     
     return label
