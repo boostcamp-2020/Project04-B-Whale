@@ -52,6 +52,13 @@ final class CalendarViewController: UIViewController {
     }
   }
   
+  private lazy var emptyIndicatorView: EmptyIndicatorView = {
+    let view = EmptyIndicatorView(emptyType: .cardEmpty)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   
   // MARK: - Initializer
   
@@ -120,9 +127,22 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func configure() {
+    view.addSubview(emptyIndicatorView)
+    
     segmentedControl.delegate = self
     cardCollectionView.delegate = self
     dateStepper.delegate = self
+    
+    configureEmptyIndicatorView()
+  }
+  
+  func configureEmptyIndicatorView() {
+    NSLayoutConstraint.activate([
+      emptyIndicatorView.centerXAnchor.constraint(equalTo: cardCollectionView.centerXAnchor),
+      emptyIndicatorView.centerYAnchor.constraint(equalTo: cardCollectionView.centerYAnchor),
+      emptyIndicatorView.topAnchor.constraint(equalTo: cardCollectionView.topAnchor),
+      emptyIndicatorView.leadingAnchor.constraint(equalTo: cardCollectionView.leadingAnchor)
+    ])
   }
 }
 
@@ -134,6 +154,7 @@ private extension CalendarViewController {
   func bindUI() {
     bindingUpdateCardCollectionView()
     bindingUpdateDate()
+    bindingEmptyIndicatorView()
   }
   
   func bindingUpdateCardCollectionView() {
@@ -148,6 +169,14 @@ private extension CalendarViewController {
     viewModel.bindingUpdateDate { [weak self] date in
       DispatchQueue.main.async {
         self?.dateStepper.updateDate(date: date)
+      }
+    }
+  }
+  
+  func bindingEmptyIndicatorView() {
+    viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+      DispatchQueue.main.async {
+        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
       }
     }
   }

@@ -11,6 +11,7 @@ protocol CalendarViewModelProtocol {
   
   func bindingUpdateCardCollectionView(handler: @escaping (Cards) -> Void)
   func bindingUpdateDate(handler: @escaping (String) -> Void)
+  func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void)
   
   func fetchUpdateDailyCards(withOption option: FetchDailyCardsOption)
   func fetchDailyCards()
@@ -31,6 +32,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   
   private var updateCardCollectionViewHandler: ((Cards) -> Void)?
   private var updateDateHandler: ((String) -> Void)?
+  private var emptyIndicatorViewHandler: ((Bool) -> Void)?
   
   private let cardService: CardServiceProtocol
   private var fetchDailyCardOption: FetchDailyCardsOption = .allCard {
@@ -93,6 +95,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
         //TODO: - self가 순환참조를 일으키는 확인해야 함.
         self.updateDateHandler?(self.selectedDate.toString())
         self.updateCardCollectionViewHandler?(cards)
+        self.emptyIndicatorViewHandler?(cards.cards.isEmpty)
       case .failure(let error):
         self.updateDateHandler?(self.selectedDate.toString())
         self.updateCardCollectionViewHandler?(Cards())
@@ -113,5 +116,9 @@ extension CalendarViewModel {
   
   func bindingUpdateDate(handler: @escaping (String) -> Void) {
     updateDateHandler = handler
+  }
+  
+  func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void) {
+    emptyIndicatorViewHandler = handler
   }
 }
