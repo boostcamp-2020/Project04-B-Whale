@@ -52,6 +52,13 @@ final class CalendarViewController: UIViewController {
     }
   }
   
+  private lazy var emptyIndicatorView: EmptyIndicatorView = {
+    let view = EmptyIndicatorView(emptyType: .cardEmpty)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   
   // MARK: - Initializer
   
@@ -120,9 +127,22 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func configure() {
+    view.addSubview(emptyIndicatorView)
+    
     segmentedControl.delegate = self
     cardCollectionView.delegate = self
     dateStepper.delegate = self
+    
+    configureEmptyIndicatorView()
+  }
+  
+  func configureEmptyIndicatorView() {
+    NSLayoutConstraint.activate([
+      emptyIndicatorView.centerXAnchor.constraint(equalTo: cardCollectionView.centerXAnchor),
+      emptyIndicatorView.centerYAnchor.constraint(equalTo: cardCollectionView.centerYAnchor),
+      emptyIndicatorView.topAnchor.constraint(equalTo: cardCollectionView.topAnchor),
+      emptyIndicatorView.leadingAnchor.constraint(equalTo: cardCollectionView.leadingAnchor)
+    ])
   }
 }
 
@@ -134,6 +154,7 @@ private extension CalendarViewController {
   func bindUI() {
     bindingUpdateCardCollectionView()
     bindingUpdateDate()
+    bindingEmptyIndicatorView()
   }
   
   func bindingUpdateCardCollectionView() {
@@ -151,6 +172,14 @@ private extension CalendarViewController {
       }
     }
   }
+  
+  func bindingEmptyIndicatorView() {
+    viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+      DispatchQueue.main.async {
+        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
+      }
+    }
+  }
 }
 
 // MARK: DateStepperDelegate
@@ -162,6 +191,7 @@ extension CalendarViewController: DateStepperDelegate {
   }
   
   func dateLabelDidTapped(of dateString: String) {
+    tabBarController?.tabBar.isUserInteractionEnabled = false
     calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(withDividerFormat: .dot), delegate: self)
   }
 }
@@ -172,6 +202,7 @@ extension CalendarViewController: DateStepperDelegate {
 extension CalendarViewController: CalendarPickerViewControllerDelegate {
   
   func send(selectedDate: String) {
+    tabBarController?.tabBar.isUserInteractionEnabled = true
     viewModel.changeDate(to: selectedDate, direction: nil)
   }
 }
@@ -192,8 +223,8 @@ extension CalendarViewController: CardCellDelegate {
       
       DispatchQueue.main.async {
         var snapshot = self.dataSource.snapshot()
-        
         snapshot.deleteItems([item])
+        self.viewModel.checkCardCollectionView(isEmpty: snapshot.itemIdentifiers.isEmpty)
         self.dataSource.apply(snapshot)
       }
     }

@@ -67,6 +67,13 @@ final class CardDetailViewController: UIViewController {
     return view
   }()
   
+  private lazy var emptyIndicatorView: EmptyIndicatorView = {
+    let view = EmptyIndicatorView(emptyType: .commentEmpty)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   
   // MARK:- Initializer
   
@@ -181,6 +188,7 @@ private extension CardDetailViewController {
     scrollView.addSubview(stackView)
     stackView.addArrangedSubview(cardDetailMemberView)
     stackView.addArrangedSubview(commentCollectionView)
+    stackView.addArrangedSubview(emptyIndicatorView)
   }
   
   func configureScrollView() {
@@ -216,6 +224,12 @@ private extension CardDetailViewController {
       dummyViewForCommentView.widthAnchor.constraint(equalTo: view.widthAnchor),
       dummyViewForCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       dummyViewForCommentView.topAnchor.constraint(equalTo: commentView.bottomAnchor)
+    ])
+  }
+  
+  func configureEmptyIndicatorView() {
+    NSLayoutConstraint.activate([
+      emptyIndicatorView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
     ])
   }
   
@@ -259,6 +273,9 @@ private extension CardDetailViewController {
     bindingUpdateDueDateView()
     bindingUpdateContentView()
     bindingPrepareForUpdateMemberView()
+    bindingCreateComment()
+    bindingCompleteAddComment()
+    bindingEmptyIndicatorView()
   }
   
   func bindingCardDetailContentView() {
@@ -349,6 +366,36 @@ private extension CardDetailViewController {
       self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
     }
   }
+  
+  func bindingCreateComment() {
+    viewModel.bindingCreateComment { [weak self] updatedComment in
+      guard let self = self else { return }
+      var snapshot = self.dataSource.snapshot()
+      
+      DispatchQueue.main.async {
+        snapshot.appendItems([updatedComment])
+        self.dataSource.apply(snapshot)
+      }
+    }
+  }
+  
+  func bindingCompleteAddComment() {
+    viewModel.bindingCompleteAddComment { [weak self] in
+      guard let self = self else { return }
+      self.viewModel.fetchDetailCard()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        self.scrollView.scrollToBottom()
+      }
+    }
+  }
+  
+  func bindingEmptyIndicatorView() {
+    viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+      DispatchQueue.main.async {
+        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
+      }
+    }
+  }
 }
 
 
@@ -383,9 +430,7 @@ private extension CardDetailViewController {
 extension CardDetailViewController: CommentViewDelegate {
   
   func commentSaveButtonTapped(with comment: String) {
-    viewModel.addComment(with: comment) { [weak self] in
-      self?.viewModel.fetchDetailCard()
-    }
+    viewModel.addComment(with: comment)
   }
 }
 
@@ -479,6 +524,9 @@ extension CardDetailViewController: CommentCollectionViewCellDelegate {
           DispatchQueue.main.async {
             snapshot.deleteItems([comment])
             self?.dataSource.apply(snapshot)
+          }
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self?.viewModel.checkCommentCollectionView(isEmpty: snapshot.itemIdentifiers.isEmpty)
           }
         }
       })

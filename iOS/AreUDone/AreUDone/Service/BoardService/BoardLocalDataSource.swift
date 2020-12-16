@@ -8,8 +8,6 @@
 import Foundation
 import RealmSwift
 
-import NetworkFramework // 삭제 예정
-
 protocol BoardLocalDataSourceable {
 
   func save(boards: Boards)

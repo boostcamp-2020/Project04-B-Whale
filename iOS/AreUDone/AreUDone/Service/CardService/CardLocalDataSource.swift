@@ -15,7 +15,6 @@ protocol CardLocalDataSourceable {
   
   func updateCardDetail(for id: Int, content: String?, dueDate: String?)
   
-//  func loadCards(at dateString: String) -> Cards?
   func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void))
   func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void))
   

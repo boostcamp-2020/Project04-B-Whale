@@ -290,6 +290,9 @@
 		BD088AF325886D4D0056E95D /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AF225886D4D0056E95D /* SettingViewModel.swift */; };
 		BD088AFC258875510056E95D /* SettingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AFB258875510056E95D /* SettingTableView.swift */; };
 		BD088B01258875FA0056E95D /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B00258875FA0056E95D /* SettingTableViewCell.swift */; };
+		BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B232588A4900056E95D /* UIScrollView+.swift */; };
+		BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */; };
+		BD088B462589CEDE0056E95D /* CommentLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -564,6 +567,9 @@
 		BD088AF225886D4D0056E95D /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		BD088AFB258875510056E95D /* SettingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableView.swift; sourceTree = "<group>"; };
 		BD088B00258875FA0056E95D /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		BD088B232588A4900056E95D /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyIndicatorView.swift; sourceTree = "<group>"; };
+		BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentLocalDataSource.swift; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -689,6 +695,7 @@
 				BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */,
 				33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */,
 				33C494AA2589FF5A0095DE39 /* BorderLayer.swift */,
+				BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -907,6 +914,7 @@
 			children = (
 				BD59A6F0257F3D5A00BF8928 /* CommentEndPoint.swift */,
 				BDD18B3F25664077005DF00A /* CommentService.swift */,
+				BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */,
 			);
 			path = CommentService;
 			sourceTree = "<group>";
@@ -1591,6 +1599,7 @@
 				338316F1258078900040A467 /* NotificationName+.swift */,
 				33C3FBB225862F01006DB60B /* Realm+.swift */,
 				334437722589CD010077DEC7 /* EndPointable+.swift */,
+				BD088B232588A4900056E95D /* UIScrollView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2028,6 +2037,7 @@
 			files = (
 				33F2D4A8257A3F6C008F1E06 /* MemberCollectionView.swift in Sources */,
 				333BA5972577B8640057ACA4 /* SideBarHeaderContentsFactory.swift in Sources */,
+				BD088B462589CEDE0056E95D /* CommentLocalDataSource.swift in Sources */,
 				336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */,
 				333BA51F2575E26B0057ACA4 /* PaddingTextField.swift in Sources */,
 				33EE016F2568ECC7003D3221 /* CalendarViewController.swift in Sources */,
@@ -2062,6 +2072,7 @@
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				33F2D6CA257F838D008F1E06 /* ListTableViewDataSource.swift in Sources */,
+				BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */,
 				338317332581E0340040A467 /* CardAddTableView.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
@@ -2141,6 +2152,7 @@
 				33F2D6AA257F56C8008F1E06 /* ListEndPoint.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */,
+				BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				BD088AFC258875510056E95D /* SettingTableView.swift in Sources */,
 				333BA5002574ABA80057ACA4 /* BoardDetailFooterView.swift in Sources */,
