@@ -14,9 +14,9 @@ const Wrapper = styled.button`
     }
 `;
 
-const SaveButton = ({ width, height, className, onClick, children }) => {
+const SaveButton = ({ width, height, className, onClick, children, _ref }) => {
     return (
-        <Wrapper width={width} height={height} onClick={onClick} className={className}>
+        <Wrapper width={width} height={height} onClick={onClick} className={className} ref={_ref}>
             {children}
         </Wrapper>
     );

@@ -28,16 +28,18 @@ const CommentContainer = ({ comments }) => {
                 <CardCommentHeader>댓글</CardCommentHeader>
             </CardCommentHeaderContainer>
             <CommentInput />
-            {comments.map((comment) => {
-                return (
-                    <Comment
-                        key={comment.id}
-                        userName={comment.user.name}
-                        commentCreatedAt={comment.createdAt}
-                        commentContent={comment.content}
-                    />
-                );
-            })}
+            {comments
+                .map((comment) => {
+                    return (
+                        <Comment
+                            key={comment.id}
+                            userName={comment.user.name}
+                            commentCreatedAt={comment.createdAt}
+                            commentContent={comment.content}
+                        />
+                    );
+                })
+                .reverse()}
         </>
     );
 };

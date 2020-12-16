@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import styled from 'styled-components';
 import SaveButton from './SaveButton';
+import CardContext from '../../context/CardContext';
+import { addComment } from '../../utils/commentRequest';
 
 const Wrapper = styled.div`
     display: grid;
@@ -35,22 +37,44 @@ const CommentInputTextArea = styled.textarea`
 `;
 
 const CommentInputSaveButton = styled(SaveButton)`
-    display: ${(props) => (props.visible ? 'inline-block' : 'none')};
     margin-top: 1rem;
 `;
 
 const CommentInput = () => {
+    const saveButton = useRef();
     const [isOnFocus, setIsOnFocus] = useState(false);
+    const [commentInputState, setCommentInputState] = useState('');
+    const { cardState, cardDispatch } = useContext(CardContext);
+    const card = cardState.data;
 
     const onFocus = () => {
         if (!isOnFocus) {
             setIsOnFocus(!isOnFocus);
         }
     };
-    const onBlur = () => {
-        if (isOnFocus) {
+    const onBlur = (e) => {
+        if (e.relatedTarget !== saveButton.current && isOnFocus) {
             setIsOnFocus(!isOnFocus);
         }
+    };
+
+    const onClick = async () => {
+        const response = await addComment({ cardId: card.id, content: commentInputState });
+        card.comments.push({
+            id: response.data.id,
+            createdAt: response.data.createdAt,
+            content: response.data.content,
+            user: {
+                name: response.data.user.name,
+            },
+        });
+        cardDispatch({ type: 'CHANGE_CARD_STATE', data: card });
+        setIsOnFocus(!isOnFocus);
+        setCommentInputState('');
+    };
+
+    const onChange = (e) => {
+        setCommentInputState(e.target.value);
     };
 
     return (
@@ -60,10 +84,19 @@ const CommentInput = () => {
                     placeholder="댓글을 입력해주세요."
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    onChange={onChange}
+                    value={commentInputState}
                 />
-                <CommentInputSaveButton width="3.5rem" height="2rem" visible={isOnFocus}>
-                    저장
-                </CommentInputSaveButton>
+                {isOnFocus && (
+                    <CommentInputSaveButton
+                        width="3.5rem"
+                        height="2rem"
+                        onClick={onClick}
+                        _ref={saveButton}
+                    >
+                        저장
+                    </CommentInputSaveButton>
+                )}
             </CommentInputTextAreaWrapper>
         </Wrapper>
     );

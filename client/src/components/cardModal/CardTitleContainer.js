@@ -51,7 +51,6 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
     };
 
     const onBlur = async () => {
-        console.log(cardTitleInput);
         await modifyCardTitle({ cardId: card.id, cardTitle: cardTitleInput });
         cardDispatch({
             type: 'CHANGE_CARD_STATE',
