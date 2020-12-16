@@ -10,4 +10,5 @@ import Foundation
 enum Font: String {
   case nanumB = "NanumBarunpen-Bold"
   case nanumR = "NanumBarunpen"
+  case nanumSquareB = "NanumSquareB"
 }

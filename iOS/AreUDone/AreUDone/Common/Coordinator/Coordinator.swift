@@ -8,6 +8,8 @@
 import UIKit
 
 protocol Coordinator {
+  
+  var parentCoordinator: Coordinator? { get set }
   @discardableResult
   func start() -> UIViewController
 }
