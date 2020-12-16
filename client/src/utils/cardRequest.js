@@ -91,3 +91,12 @@ export const modifyCardTitle = async ({ cardId, cardTitle }) => {
     });
     return response;
 };
+
+export const modifyCardContent = async ({ cardId, cardContent }) => {
+    const response = await request({
+        url: `/api/card/${cardId}`,
+        method: 'PATCH',
+        data: { content: cardContent },
+    });
+    return response;
+};

@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import CardContext from '../../context/CardContext';
+import { modifyCardContent } from '../../utils/cardRequest';
 import CardModalButton from './CardModalButton';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
@@ -29,7 +31,7 @@ const CardDescriptionHeader = styled.span`
 `;
 
 const CardDescription = styled.div`
-    display: ${(props) => (props.visible ? 'block' : 'none')};
+    display: block;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 2;
@@ -46,7 +48,7 @@ const CardDescriptionInputWrapper = styled.div`
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
-    display: ${(props) => (props.visible ? 'grid' : 'none')};
+    display: grid;
     grid-template-columns: 1fr 8fr;
     grid-auto-rows: auto;
     column-gap: 0.3rem;
@@ -69,6 +71,7 @@ const CardDescriptionInput = styled.textarea`
     resize: vertical;
     &:focus {
         border: 0.15rem solid #0379bf;
+        margin: -0.15rem;
     }
 `;
 
@@ -88,7 +91,11 @@ const CardDescriptionInputCloseButton = styled(CloseButton)`
 
 const CardDescriptionContainer = ({ cardContent }) => {
     const [visible, setVisible] = useState(false);
+    const [cardContentInputState, setCardContentInputState] = useState(cardContent);
+    const { cardState, cardDispatch } = useContext(CardContext);
     const cardDescriptionInput = useRef();
+
+    const card = cardState.data;
 
     useEffect(() => {
         if (visible) {
@@ -98,6 +105,19 @@ const CardDescriptionContainer = ({ cardContent }) => {
 
     const inverseVisible = () => {
         setVisible(!visible);
+    };
+
+    const onChange = (e) => {
+        setCardContentInputState(e.target.value);
+    };
+
+    const onClick = async () => {
+        await modifyCardContent({ cardId: card.id, cardContent: cardContentInputState });
+        cardDispatch({
+            type: 'CHANGE_CARD_STATE',
+            data: { ...card, content: cardContentInputState },
+        });
+        inverseVisible();
     };
 
     return (
@@ -113,18 +133,22 @@ const CardDescriptionContainer = ({ cardContent }) => {
                     카드 수정
                 </CardModalButton>
             </CardDescriptionHeaderContainer>
-            <CardDescription onClick={inverseVisible} visible={!visible}>
-                {cardContent}
-            </CardDescription>
-            <CardDescriptionInputWrapper visible={visible}>
-                <CardDescriptionInput ref={cardDescriptionInput} defaultValue={cardContent} />
-                <CardDescriptionInputSaveButton width="3.5rem" height="2rem">
-                    저장
-                </CardDescriptionInputSaveButton>
-                <CardDescriptionInputCloseButton width="2rem" onClick={inverseVisible}>
-                    X
-                </CardDescriptionInputCloseButton>
-            </CardDescriptionInputWrapper>
+            {!visible && <CardDescription onClick={inverseVisible}>{cardContent}</CardDescription>}
+            {visible && (
+                <CardDescriptionInputWrapper>
+                    <CardDescriptionInput
+                        ref={cardDescriptionInput}
+                        defaultValue={cardContent}
+                        onChange={onChange}
+                    />
+                    <CardDescriptionInputSaveButton width="3.5rem" height="2rem" onClick={onClick}>
+                        저장
+                    </CardDescriptionInputSaveButton>
+                    <CardDescriptionInputCloseButton width="2rem" onClick={inverseVisible}>
+                        X
+                    </CardDescriptionInputCloseButton>
+                </CardDescriptionInputWrapper>
+            )}
         </Wrapper>
     );
 };
