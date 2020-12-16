@@ -16,7 +16,7 @@ export class Activity {
     @Column({ name: 'content', type: 'varchar', charset: 'utf8mb4' })
     content;
 
-    @ManyToOne(() => Board, (board) => board.activities, { nullable: false })
+    @ManyToOne(() => Board, (board) => board.activities, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'board_id' })
     board;
 
