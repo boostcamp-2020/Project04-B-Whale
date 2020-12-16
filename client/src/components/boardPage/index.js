@@ -24,7 +24,7 @@ const MainContents = styled.div`
 const Wrapper = styled.div`
     display: flex;
     margin-left: 10px;
-    max-width: 100%;
+    max-width: ${(props) => (props.sidebar ? '79' : '100')}%;
     overflow-x: auto;
     height: 93%;
 `;
@@ -85,7 +85,7 @@ const Board = ({ match }) => {
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
-                <Wrapper>
+                <Wrapper sidebar={sidebarDisplay}>
                     {Boolean(boardDetail.lists?.length) && (
                         <DndProvider backend={HTML5Backend}>
                             <ListWrapper style={{ display: 'flex' }}>
