@@ -150,4 +150,16 @@ export class BoardService extends BaseService {
 
         await this.boardRepository.delete(boardId);
     }
+
+    @Transactional()
+    async exitBoard(hostId, boardId) {
+        const board = await this.boardRepository.findOne(boardId);
+        if (!board) throw new EntityNotFoundError();
+        const invitation = await this.invitationRepository.findOne({
+            board: boardId,
+            user: hostId,
+        });
+        if (!invitation) throw new ForbiddenError();
+        await this.invitationRepository.remove(invitation);
+    }
 }
