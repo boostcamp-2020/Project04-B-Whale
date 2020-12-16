@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SideBarViewDelegate: NSObject {
+protocol SideBarViewDelegate: AnyObject {
   
   func boardDeleteButtonTapped()
   func successBoardDelete(confirmAction: @escaping () -> Void)
