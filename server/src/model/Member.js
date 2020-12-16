@@ -11,7 +11,7 @@ export class Member {
     @JoinColumn({ name: 'user_id' })
     user;
 
-    @ManyToOne(() => Card, (card) => card.members, { nullable: false })
+    @ManyToOne(() => Card, (card) => card.members, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'card_id' })
     card;
 }
