@@ -51,7 +51,7 @@ final class CardContentView: UIView {
   
   func updateContentView(with card: Card) {
     titleLabel.text = card.title
-    commentCountLabel.text = String(card.commentCount ?? 0)
+    commentCountLabel.text = String(card.commentCount)
   }
 }
 
