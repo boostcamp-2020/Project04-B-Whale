@@ -260,6 +260,7 @@ private extension CardDetailViewController {
     bindingUpdateContentView()
     bindingPrepareForUpdateMemberView()
     bindingCreateComment()
+    bindingCompleteAddComment()
   }
   
   func bindingCardDetailContentView() {
@@ -359,6 +360,13 @@ private extension CardDetailViewController {
       DispatchQueue.main.async {
         snapshot.appendItems([updatedComment])
         self.dataSource.apply(snapshot)
+
+  func bindingCompleteAddComment() {
+    viewModel.bindingCompleteAddComment { [weak self] in
+      guard let self = self else { return }
+      self.viewModel.fetchDetailCard()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        self.scrollView.scrollToBottom()
       }
     }
   }

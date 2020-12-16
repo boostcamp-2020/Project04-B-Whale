@@ -20,6 +20,7 @@ protocol CardDetailViewModelProtocol {
   func bindingUpdateContentView(handler: @escaping ((String) -> Void))
   func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void))
   func bindingCreateComment(handler: @escaping ((CardDetailComment) -> Void))
+  func bindingCompleteAddComment(handler: @escaping (() -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
@@ -53,6 +54,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var cardDetailMemberViewHandler: (([User]?) -> Void)?
   private var prepareForUpdateMemberViewHandler: ((Int, Int, [User]?) -> Void)?
   private var createCommentHandler: ((CardDetailComment) -> Void)?
+  private var completeAddCommentHandler: (() -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
@@ -105,6 +107,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       switch result {
       case .success((let updatedComment)):
         self.createCommentHandler?(updatedComment)
+        self.completeAddCommentHandler?()
         
       case .failure(let error):
         print(error)
@@ -246,5 +249,8 @@ extension CardDetailViewModel {
   
   func bindingCreateComment(handler: @escaping ((CardDetailComment) -> Void)) {
     createCommentHandler = handler
+  }
+  func bindingCompleteAddComment(handler: @escaping (() -> Void)) {
+    completeAddCommentHandler = handler
   }
 }

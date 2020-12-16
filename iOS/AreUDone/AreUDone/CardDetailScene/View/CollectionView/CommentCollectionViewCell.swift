@@ -83,6 +83,12 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
   
   // MARK:- Method
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    editButton.isHidden = true
+  }
+  
   override func systemLayoutSizeFitting(
     _ targetSize: CGSize,
     withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
@@ -177,7 +183,7 @@ private extension CommentCollectionViewCell {
     NSLayoutConstraint.activate([
       editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       editButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
-      editButton.heightAnchor.constraint(equalToConstant: 15)
+      editButton.heightAnchor.constraint(equalToConstant: 20)
     ])
   }
   

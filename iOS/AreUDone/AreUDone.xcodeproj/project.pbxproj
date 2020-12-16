@@ -278,6 +278,7 @@
 		A84FC84E41C57DD915168344 /* Pods_AreUDoneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C7872B0622973BAF08CBBF /* Pods_AreUDoneTests.framework */; };
 		BD088A952583A8840056E95D /* FetchBoardOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088A942583A8840056E95D /* FetchBoardOption.swift */; };
 		BD088AB2258629690056E95D /* CardLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AB1258629690056E95D /* CardLocalDataSource.swift */; };
+		BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B232588A4900056E95D /* UIScrollView+.swift */; };
 		BD088AD82588677C0056E95D /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
 		BD088AE125886B350056E95D /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AE025886B350056E95D /* SettingCoordinator.swift */; };
 		BD088AE925886B600056E95D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD088AE825886B600056E95D /* Setting.storyboard */; };
@@ -548,6 +549,7 @@
 		B36B8C61E389093085BC5584 /* Pods-AreUDoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AreUDoneTests.release.xcconfig"; path = "Target Support Files/Pods-AreUDoneTests/Pods-AreUDoneTests.release.xcconfig"; sourceTree = "<group>"; };
 		BD088A942583A8840056E95D /* FetchBoardOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBoardOption.swift; sourceTree = "<group>"; };
 		BD088AB1258629690056E95D /* CardLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLocalDataSource.swift; sourceTree = "<group>"; };
+		BD088B232588A4900056E95D /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		BD088AE025886B350056E95D /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		BD088AE825886B600056E95D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		BD088AED25886B7A0056E95D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -1576,6 +1578,7 @@
 				3373A4942578DC7200D92CC0 /* UIView+.swift */,
 				338316F1258078900040A467 /* NotificationName+.swift */,
 				33C3FBB225862F01006DB60B /* Realm+.swift */,
+				BD088B232588A4900056E95D /* UIScrollView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2125,6 +2128,7 @@
 				33F2D6AA257F56C8008F1E06 /* ListEndPoint.swift in Sources */,
 				333BA4F1257496B10057ACA4 /* CustomBarButtonItem.swift in Sources */,
 				33F2D52A257DDC70008F1E06 /* BoardAddCoordinator.swift in Sources */,
+				BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */,
 				3360118C256CBEA1009580A1 /* CalendarPickerHeaderView.swift in Sources */,
 				BD088AFC258875510056E95D /* SettingTableView.swift in Sources */,
 				333BA5002574ABA80057ACA4 /* BoardDetailFooterView.swift in Sources */,
