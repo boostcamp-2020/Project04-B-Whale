@@ -59,6 +59,13 @@ final class BoardListViewController: UIViewController {
     }
   }
   
+  private lazy var emptyIndicatorView: EmptyIndicatorView = {
+    let view = EmptyIndicatorView(emptyType: .boardEmpty)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   
   // MARK: - Initializer
   
@@ -101,8 +108,11 @@ final class BoardListViewController: UIViewController {
 private extension BoardListViewController {
   
   func configure() {
+    view.addSubview(emptyIndicatorView)
+    
     configureView()
     configureAddBoardButton()
+    configureEmptyIndicatorView()
   }
   
   func configureView() {
@@ -115,6 +125,13 @@ private extension BoardListViewController {
     let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addBoardButtonTapped))
     addBoardButton.addGestureRecognizer(gestureRecognizer)
   }
+  
+  func configureEmptyIndicatorView() {
+    NSLayoutConstraint.activate([
+      emptyIndicatorView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      emptyIndicatorView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
+    ])
+  }
 }
 
 
@@ -125,6 +142,7 @@ private extension BoardListViewController {
   func bindUI() {
     bindingUpdateBoarListCollectionView()
     bindingDidBoardTapped()
+    bindingEmptyIndicatorView()
   }
   
   func bindingUpdateBoarListCollectionView() {
@@ -136,6 +154,14 @@ private extension BoardListViewController {
   func bindingDidBoardTapped() {
     viewModel.bindingDidBoardTapped { [weak self] boardId in
       self?.coordinator?.pushToBoardDetail(boardId: boardId)
+    }
+  }
+  
+  func bindingEmptyIndicatorView() {
+    viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+      DispatchQueue.main.async {
+        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
+      }
     }
   }
 }

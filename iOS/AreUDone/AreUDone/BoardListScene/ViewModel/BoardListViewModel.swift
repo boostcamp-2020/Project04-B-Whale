@@ -12,6 +12,7 @@ protocol BoardListViewModelProtocol {
   func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingDidBoardTapped(handler: @escaping (Int) -> Void)
+  func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void)
   
   func fetchBoardId(for board: Board)
   func changeBoardOption(option: FetchBoardOption)
@@ -27,6 +28,7 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   private var initializeBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var didBoardTappedHandler: ((Int) -> Void)?
+  private var emptyIndicatorViewHandler: ((Bool) -> Void)?
   
   private var fetchBoardOption: FetchBoardOption = .myBoards {
     didSet {
@@ -86,5 +88,9 @@ extension BoardListViewModel {
   
   func bindingDidBoardTapped(handler: @escaping (Int) -> Void) {
     didBoardTappedHandler = handler
+  }
+  
+  func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void) {
+    emptyIndicatorViewHandler = handler
   }
 }
