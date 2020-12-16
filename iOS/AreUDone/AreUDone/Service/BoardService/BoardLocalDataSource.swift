@@ -8,10 +8,13 @@
 import Foundation
 import RealmSwift
 
+import NetworkFramework // 삭제 예정
+
 protocol BoardLocalDataSourceable {
 
   func save(boards: Boards)
   func save(boardDetail: BoardDetail)
+  func save(orderedEndPoint: OrderedEndPoint)
   
   func updateBoard(title: String, ofId id: Int)
 
@@ -31,13 +34,25 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   
   func save(boards: Boards) {
     realm.writeOnMain(object: boards) { object in
-      self.realm.create(Boards.self, value: object)
+      self.realm.create(Boards.self, value: object, update: .all)
     }
   }
   
   func save(boardDetail: BoardDetail) {
     realm.writeOnMain(object: boardDetail) { object in
       self.realm.create(BoardDetail.self, value: object, update: .all)
+    }
+  }
+  
+  func save(orderedEndPoint: OrderedEndPoint) {
+    realm.writeOnMain(object: orderedEndPoint) { object in
+      // 1. EndPoint 저장하고
+      self.realm.create(OrderedEndPoint.self, value: object)
+
+      // 2. 로컬로 미리 반영
+      let boards = self.realm.objects(Boards.self).first ?? Boards()
+      let object = Board(value: orderedEndPoint.bodies as Any)
+      boards.myBoards.append(object)
     }
   }
   
@@ -50,12 +65,13 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   }
   
   func loadBoards() -> Boards? {
-    let boards = realm.objects(Boards.self).first
-    return Boards(value: boards!)
+    guard let boards = realm.objects(Boards.self).first else { return nil }
+    return Boards(value: boards)
   }
   
   func loadBoardDetail(ofId id: Int) -> BoardDetail? {
-    let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first
-    return BoardDetail(value: boardDetail!)
+    guard let boardDetail = realm.objects(BoardDetail.self).filter("id == \(id)").first else { return nil }
+    
+    return BoardDetail(value: boardDetail)
   }
 }
