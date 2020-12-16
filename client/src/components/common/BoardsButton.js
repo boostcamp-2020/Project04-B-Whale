@@ -15,12 +15,12 @@ const BoardsButton = () => {
     };
 
     return (
-        <div>
+        <>
             <Button onClick={onClickDisplayDropdown}>Boards ∇</Button>
             {isDropdownDisplay ? (
                 <BoardsDropdown onClose={() => setIsDropdownDisplay(false)} />
             ) : null}
-        </div>
+        </>
     );
 };
 

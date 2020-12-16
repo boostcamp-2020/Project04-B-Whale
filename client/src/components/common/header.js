@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ImHome } from 'react-icons/im';
 import Modal from './CreateBoardModal';
 import BoardsButton from './BoardsButton';
 import logo from '../../image/app_logo.png';
@@ -16,6 +17,18 @@ const HeaderDiv = styled.div`
 
 const LogoImg = styled.img`
     width: 250px;
+    cursor: pointer;
+`;
+
+const ButtonDiv = styled.div`
+    display: flex;
+    padding-left: 10px;
+    align-items: center;
+`;
+
+const GoCalendarBtn = styled(ImHome)`
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 `;
 
@@ -41,10 +54,16 @@ const Header = () => {
         document.location = '/login';
     };
 
+    const goMainBtnHandler = () => {
+        document.location = '/';
+    };
     return (
         <>
             <HeaderDiv>
-                <BoardsButton />
+                <ButtonDiv>
+                    <GoCalendarBtn onClick={goMainBtnHandler} />
+                    <BoardsButton />
+                </ButtonDiv>
                 <HeaderTitle>
                     <LogoImg
                         src={logo}
