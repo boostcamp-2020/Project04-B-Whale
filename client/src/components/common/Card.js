@@ -109,6 +109,7 @@ const Card = ({
                   let updatedPosition;
                   const listInd = boardDetail.lists.findIndex((list) => list.id === item.listId);
                   const cardLength = boardDetail.lists[listInd].cards.length;
+                  if (cardLength < 2) return;
                   if (item.index === 0) {
                       updatedPosition = boardDetail.lists[listInd].cards[1].position / 2;
                   } else if (item.index === cardLength - 1) {
