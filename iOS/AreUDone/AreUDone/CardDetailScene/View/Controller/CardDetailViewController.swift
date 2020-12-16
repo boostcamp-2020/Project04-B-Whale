@@ -67,6 +67,13 @@ final class CardDetailViewController: UIViewController {
     return view
   }()
   
+  private lazy var emptyIndicatorView: EmptyIndicatorView = {
+    let view = EmptyIndicatorView(emptyType: .commentEmpty)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   
   // MARK:- Initializer
   
@@ -181,6 +188,7 @@ private extension CardDetailViewController {
     scrollView.addSubview(stackView)
     stackView.addArrangedSubview(cardDetailMemberView)
     stackView.addArrangedSubview(commentCollectionView)
+    stackView.addArrangedSubview(emptyIndicatorView)
   }
   
   func configureScrollView() {
@@ -216,6 +224,12 @@ private extension CardDetailViewController {
       dummyViewForCommentView.widthAnchor.constraint(equalTo: view.widthAnchor),
       dummyViewForCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       dummyViewForCommentView.topAnchor.constraint(equalTo: commentView.bottomAnchor)
+    ])
+  }
+  
+  func configureEmptyIndicatorView() {
+    NSLayoutConstraint.activate([
+      emptyIndicatorView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
     ])
   }
   
@@ -261,6 +275,7 @@ private extension CardDetailViewController {
     bindingPrepareForUpdateMemberView()
     bindingCreateComment()
     bindingCompleteAddComment()
+    bindingEmptyIndicatorView()
   }
   
   func bindingCardDetailContentView() {
@@ -370,6 +385,14 @@ private extension CardDetailViewController {
       self.viewModel.fetchDetailCard()
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
         self.scrollView.scrollToBottom()
+      }
+    }
+  }
+  
+  func bindingEmptyIndicatorView() {
+    viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+      DispatchQueue.main.async {
+        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
       }
     }
   }

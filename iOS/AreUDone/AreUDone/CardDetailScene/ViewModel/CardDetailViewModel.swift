@@ -21,6 +21,7 @@ protocol CardDetailViewModelProtocol {
   func bindingPrepareForUpdateMemberView(handler: @escaping ((Int, Int, [User]?) -> Void))
   func bindingCreateComment(handler: @escaping ((CardDetailComment) -> Void))
   func bindingCompleteAddComment(handler: @escaping (() -> Void))
+  func bindingEmptyIndicatorView(handler: @escaping ((Bool) -> Void))
   
   func fetchDetailCard()
   func addComment(with comment: String)
@@ -55,6 +56,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   private var prepareForUpdateMemberViewHandler: ((Int, Int, [User]?) -> Void)?
   private var createCommentHandler: ((CardDetailComment) -> Void)?
   private var completeAddCommentHandler: (() -> Void)?
+  private var emptyIndicatorViewHandler: ((Bool) -> Void)?
   
   private let cache: NSCache<NSString, NSData> = NSCache()
   
@@ -94,6 +96,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
         self?.cardDetailListTitleHandler?(detailCard.list!.title)
         self?.cardDetailBoardTitleHandler?(detailCard.board!.title)
         self?.cardDetailMemberViewHandler?(detailCard.fetchMembers())
+        self?.emptyIndicatorViewHandler?(detailCard.comments.isEmpty)
         self?.fetchUserData()
         
       case .failure(let error):
@@ -250,7 +253,12 @@ extension CardDetailViewModel {
   func bindingCreateComment(handler: @escaping ((CardDetailComment) -> Void)) {
     createCommentHandler = handler
   }
+  
   func bindingCompleteAddComment(handler: @escaping (() -> Void)) {
     completeAddCommentHandler = handler
+  }
+  
+  func bindingEmptyIndicatorView(handler: @escaping ((Bool) -> Void)) {
+    emptyIndicatorViewHandler = handler
   }
 }
