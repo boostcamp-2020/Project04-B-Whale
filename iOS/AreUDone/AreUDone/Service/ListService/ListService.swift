@@ -9,6 +9,7 @@ import Foundation
 import NetworkFramework
 
 protocol ListServiceProtocol {
+  
   func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void)
   func deleteList(withListId listId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func updateList(ofId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
@@ -26,21 +27,38 @@ class ListService: ListServiceProtocol {
   // MARK: - Property
   
   private let router: Routable
-  
+  private let localDataSource: ListLocalDataSourceable?
   
   // MARK: - Initializer
   
-  init(router: Routable) {
+  init(router: Routable, localDataSource: ListLocalDataSourceable? = nil) {
     self.router = router
+    self.localDataSource = localDataSource
   }
   
   
   // MARK: - Method
   
   func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void) {
-    router.request(route: ListEndPoint.createList(boardId: boardId, title: title)) { result in
+    let endPoint = ListEndPoint.createList(boardId: boardId, title: title)
+    router.request(route: endPoint) { (result: Result<ListOfBoard, APIError>) in
       DispatchQueue.main.async {
-        completionHandler(result)
+        
+        switch result {
+        case .success(_):
+          completionHandler(result)
+          
+        case .failure(_):
+          
+          if let localDataSource = self.localDataSource {
+            let orderedEndPoint = OrderedEndPoint(value: endPoint.toDictionary())
+            localDataSource.save(with: boardId, orderedEndPoint: orderedEndPoint) { object in
+              completionHandler(.success(object))
+            }
+          }
+          
+          completionHandler(result)
+        }
       }
     }
   }
