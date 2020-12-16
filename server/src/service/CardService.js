@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
-import { createNamespace, getNamespace } from 'cls-hooked';
+import { getNamespace } from 'cls-hooked';
 import { ConflictError } from '../common/error/ConflictError';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
