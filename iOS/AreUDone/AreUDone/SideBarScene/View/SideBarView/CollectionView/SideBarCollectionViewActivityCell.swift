@@ -11,11 +11,27 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   
   // MARK: - Property
   
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+  private lazy var contentLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumB(size: 18)
+    label.numberOfLines = 0
 
-    return titleLabel
+    return label
+  }()
+  
+  private lazy var createdAtLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumR(size: 12)
+    
+    return label
+  }()
+  
+  private lazy var width: NSLayoutConstraint = {
+      let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+      width.isActive = true
+      return width
   }()
   
   
@@ -36,19 +52,15 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   
   // MARK: - Method
   
-  override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-    super.preferredLayoutAttributesFitting(layoutAttributes)
-    
-    layoutIfNeeded()
-
-    layoutAttributes.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 30)
-   
-    return layoutAttributes
+  override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+    width.constant = bounds.size.width
+    return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 0))
   }
   
   func update(with activity: Activity?) {
     guard let activity = activity else { return }
-    titleLabel.text = activity.content
+    contentLabel.text = activity.content
+    createdAtLabel.text = activity.createdAt
   }
 }
 
@@ -58,16 +70,31 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
 private extension SideBarCollectionViewActivityCell {
   
   func configure() {
-    addSubview(titleLabel)
+    contentView.addSubview(contentLabel)
+    contentView.addSubview(createdAtLabel)
     
-    configureTitle()
+    configureContentView()
+    configureContentLabel()
+    configureCreatedAtLabel()
   }
   
-  func configureTitle() {
+  func configureContentView() {
+    contentView.translatesAutoresizingMaskIntoConstraints = false
+  }
+  
+  func configureContentLabel() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-      titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-      titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      contentLabel.bottomAnchor.constraint(equalTo: createdAtLabel.topAnchor, constant: -7),
+      contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+      contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+    ])
+  }
+  
+  func configureCreatedAtLabel() {
+    NSLayoutConstraint.activate([
+      createdAtLabel.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor, constant: 5),
+      createdAtLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
     ])
   }
 }
