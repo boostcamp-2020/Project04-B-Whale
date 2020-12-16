@@ -22,6 +22,7 @@ import { subscriber } from './common/middleware/subscriber';
 import { NaverStrategy } from './common/config/passport/NaverStrategy';
 import { GitHubStrategy } from './common/config/passport/GitHubStrategy';
 import { JwtStrategy } from './common/config/passport/JwtStrategy';
+import { shouldHandleError } from './common/middleware/shouldHandlerError';
 
 export class Application {
     constructor() {
@@ -37,8 +38,8 @@ export class Application {
     }
 
     async initialize() {
-        await this.initEnvironment();
         this.initSentry();
+        await this.initEnvironment();
         await this.initDatabase();
         this.initPassport();
         this.registerMiddleware();
@@ -68,7 +69,7 @@ export class Application {
 
     registerMiddleware() {
         if (process.env.SENTRY_DSN) {
-            this.httpServer.use(Sentry.Handlers.requestHandler());
+            this.httpServer.use(Sentry.Handlers.requestHandler({ user: ['id', 'name'] }));
             this.httpServer.use(Sentry.Handlers.tracingHandler());
         }
         this.httpServer.use(cors());
@@ -76,7 +77,13 @@ export class Application {
         this.httpServer.use(express.urlencoded({ extended: false }));
         this.httpServer.use(subscriber);
         this.httpServer.use(IndexRouter());
-        if (process.env.SENTRY_DSN) this.httpServer.use(Sentry.Handlers.errorHandler());
+        if (process.env.SENTRY_DSN) {
+            this.httpServer.use(
+                Sentry.Handlers.errorHandler({
+                    shouldHandleError,
+                }),
+            );
+        }
         this.httpServer.use(errorHandler);
     }
 
