@@ -119,9 +119,22 @@ private extension SideBarView {
 private extension SideBarView {
   
   func bindUI() {
+    bindingUpdateSideBarCollectionView()
+    bindingShowExitButton()
+  }
+  
+  func bindingUpdateSideBarCollectionView() {
     viewModel.bindingUpdateSideBarCollectionView { [weak self] in
       DispatchQueue.main.async {
           self?.collectionView.reloadData()
+      }
+    }
+  }
+  
+  func bindingShowExitButton() {
+    viewModel.bindingShowExitButton { [weak self] isCreator in
+      DispatchQueue.main.async {
+        self?.exitButton.isHidden = !isCreator
       }
     }
   }

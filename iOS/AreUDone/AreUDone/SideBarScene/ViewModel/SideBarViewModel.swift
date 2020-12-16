@@ -11,6 +11,7 @@ import NetworkFramework
 protocol SideBarViewModelProtocol {
   
   func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void)
+  func bindingShowExitButton(handler: @escaping (Bool) -> Void)
 //  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void)
   
   func updateCollectionView()
@@ -36,6 +37,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   private let sideBarHeaderContentsFactory: SideBarHeaderContentsFactoryProtocol
   
   private var updateSideBarCollectionViewHandler: (() -> Void)?
+  private var showExitButtonHandler: ((Bool) -> Void)?
 //  private var updateActivitiesInCollectionViewHandler: (() -> Void)?
   
   private var boardMembers: [User]? {
@@ -89,10 +91,15 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
       case .success(let boardDetail):
+        guard let boardCreator = boardDetail.creator else { return }
         var invitedUsers = boardDetail.fetchInvitedUsers()
-        invitedUsers.insert(boardDetail.creator!, at: 0)
+        invitedUsers.insert(boardCreator, at: 0)
         
         self.boardMembers = invitedUsers
+        
+        if let userId = Int(UserInfo.shared.userId) {
+          self.showExitButtonHandler?(boardCreator.id == userId)
+        }
         
       case .failure(let error):
         print(error)
@@ -161,6 +168,10 @@ extension SideBarViewModel {
   
   func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void) {
     updateSideBarCollectionViewHandler = handler
+  }
+  
+  func bindingShowExitButton(handler: @escaping (Bool) -> Void) {
+    showExitButtonHandler = handler
   }
 }
 
