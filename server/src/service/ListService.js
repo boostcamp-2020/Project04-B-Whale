@@ -1,7 +1,9 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { createNamespace, getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { BoardService } from './BoardService';
+import { UserRouter } from '../router/UserRouter';
 
 export class ListService extends BaseService {
     static instance = null;
@@ -46,20 +48,23 @@ export class ListService extends BaseService {
 
     @Transactional()
     async updateList({ userId, listId, position, title }) {
-        const list = await this.listRepository
-            .createQueryBuilder('list')
-            .where('list.id = :listId', { listId })
-            .getRawOne();
+        const list = await this.listRepository.findOne(listId, {
+            loadRelationIds: {
+                relations: ['board'],
+                disableMixedMap: true,
+            },
+        });
+
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
-        await boardService.checkForbidden(userId, list.list_board_id);
-        const updatedList = {
-            title: title || list.list_title,
-            position: position || list.list_position,
-            board: list.list_board_id,
-            creator: list.list_creator_id,
-        };
-        await this.listRepository.update({ id: listId }, updatedList);
+        await boardService.checkForbidden(userId, list.board.id);
+
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', userId);
+
+        list.title = title || list.list_title;
+        list.position = position || list.list_position;
+        await this.listRepository.save(list);
     }
 
     @Transactional()
@@ -72,6 +77,11 @@ export class ListService extends BaseService {
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, list.board_id);
-        await this.listRepository.delete(listId);
+
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', userId);
+        namespace?.set('boardId', list.board_id);
+
+        await this.listRepository.remove(await this.listRepository.findOne(listId));
     }
 }

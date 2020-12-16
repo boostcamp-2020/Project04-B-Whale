@@ -189,7 +189,7 @@ describe('GET /api/card/:cardId', () => {
                 id: card0.id,
                 title: card0.title,
                 content: card0.content,
-                dueDate: card0.dueDate,
+                dueDate: moment(card0.dueDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
                 position: card0.position,
                 list: {
                     id: list0.id,
@@ -212,7 +212,9 @@ describe('GET /api/card/:cardId', () => {
             expect(response.body.comments?.[0]).toEqual({
                 id: comment0.id,
                 content: comment0.content,
-                createdAt: moment(comment0.createdAt).tz('Asia/Seoul').format(),
+                createdAt: moment(comment0.createdAt)
+                    .tz('Asia/Seoul')
+                    .format('YYYY-MM-DD HH:mm:ss'),
                 user: {
                     id: user1.id,
                     name: user1.name,

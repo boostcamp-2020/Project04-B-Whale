@@ -245,6 +245,7 @@ describe('CommentService.modifyComment() Test', () => {
             expect(commentResponseDto).toEqual({
                 id: commentRequestDto.id,
                 content: commentRequestDto.content,
+                createdAt: expect.anything(),
                 user: {
                     id: user0.id,
                     name: user0.name,
