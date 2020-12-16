@@ -42,7 +42,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
               let imageService = ImageService(router: self.router, cacheManager: CacheManager())
               let cardService = CardService(router: self.router, localDataSource: CardLocalDataSource())
               let userService = UserService(router: self.router)
-              let commentService = CommentService(router: self.router)
+              let commentService = CommentService(router: self.router, commentLocalDataSource: CommentLocalDataSource())
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
