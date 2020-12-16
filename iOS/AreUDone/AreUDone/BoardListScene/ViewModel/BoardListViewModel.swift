@@ -62,8 +62,10 @@ final class BoardListViewModel: BoardListViewModelProtocol {
       case .success(let boards):
         if self.fetchBoardOption == .myBoards {
           self.updateBoardListCollectionViewHandler?(boards.fetchMyBoard())
+          self.emptyIndicatorViewHandler?(boards.fetchMyBoard().isEmpty)
         } else {
           self.updateBoardListCollectionViewHandler?(boards.fetchInvitedBoard())
+          self.emptyIndicatorViewHandler?(boards.fetchInvitedBoard().isEmpty)
         }
         
       case .failure(let error):
