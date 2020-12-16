@@ -12,9 +12,11 @@ protocol SideBarViewModelProtocol {
   
   func bindingUpdateSideBarCollectionView(handler: @escaping () -> Void)
   func bindingShowExitButton(handler: @escaping (Bool) -> Void)
+  func bindindAfterDeleteBoardAction(handler: @escaping () -> Void)
 //  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void)
   
   func updateCollectionView()
+  func deleteBoard()
 //  func updateMembersInCollectionView()
 //  func updateActivitiesInCollectionView()
   
@@ -38,6 +40,7 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   private var updateSideBarCollectionViewHandler: (() -> Void)?
   private var showExitButtonHandler: ((Bool) -> Void)?
+  private var afterDeleteBoardActionHandler: (() -> Void)?
 //  private var updateActivitiesInCollectionViewHandler: (() -> Void)?
   
   private var boardMembers: [User]? {
@@ -82,6 +85,18 @@ final class SideBarViewModel: SideBarViewModelProtocol {
     
     group.notify(queue: .main) {
       self.updateSideBarCollectionViewHandler?()
+    }
+  }
+  
+  func deleteBoard() {
+    boardService.deleteBoard(with: boardId) { result in
+      switch result {
+      case .success(()):
+        self.afterDeleteBoardActionHandler?()
+        
+      case .failure(let error):
+        print(error)
+      }
     }
   }
   
@@ -172,6 +187,10 @@ extension SideBarViewModel {
   
   func bindingShowExitButton(handler: @escaping (Bool) -> Void) {
     showExitButtonHandler = handler
+  }
+  
+  func bindindAfterDeleteBoardAction(handler: @escaping () -> Void) {
+    afterDeleteBoardActionHandler = handler
   }
 }
 

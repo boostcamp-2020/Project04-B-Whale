@@ -93,6 +93,7 @@ final class SideBarViewController: UIViewController {
 private extension SideBarViewController {
   
   func configure() {
+    sideBarView.delegate = self
     view.addSubview(sideBarView)
     
     configureView()
@@ -247,5 +248,15 @@ extension SideBarViewController: InvitationViewControllerDelegate {
   
   func reloadMemberCollectionView() {
     viewModel.updateCollectionView()
+  }
+}
+
+
+extension SideBarViewController: SideBarViewDelegate {
+  
+  func boardDeleteButtonTapped() {
+    DispatchQueue.main.async { [weak self] in
+      self?.coordinator?.pop()
+    }
   }
 }

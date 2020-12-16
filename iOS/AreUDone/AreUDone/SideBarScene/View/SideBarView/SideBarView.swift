@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol SideBarViewDelegate: NSObject {
+  
+  func boardDeleteButtonTapped()
+}
+
+
 final class SideBarView: UIView {
   
   // MARK: - Property
@@ -37,6 +43,7 @@ final class SideBarView: UIView {
     return button
   }()
   
+  weak var delegate: SideBarViewDelegate?
   
   // MARK: - Initializer
   
@@ -73,6 +80,8 @@ private extension SideBarView {
     configureTitleView()
     configureCollectionView()
     configureExitButton()
+    
+    addingTarget()
   }
   
   func configureView() {
@@ -111,6 +120,10 @@ private extension SideBarView {
       exitButton.widthAnchor.constraint(equalTo: exitButton.heightAnchor)
     ])
   }
+  
+  func addingTarget() {
+    exitButton.addTarget(self, action: #selector(boardDeleteButtonTapped), for: .touchUpInside)
+  }
 }
 
 
@@ -121,6 +134,7 @@ private extension SideBarView {
   func bindUI() {
     bindingUpdateSideBarCollectionView()
     bindingShowExitButton()
+    bindindAfterDeleteBoardAction()
   }
   
   func bindingUpdateSideBarCollectionView() {
@@ -137,5 +151,23 @@ private extension SideBarView {
         self?.exitButton.isHidden = !isCreator
       }
     }
+  }
+  
+  func bindindAfterDeleteBoardAction() {
+    viewModel.bindindAfterDeleteBoardAction { [weak self] in
+      DispatchQueue.main.async {
+        self?.delegate?.boardDeleteButtonTapped()
+      }
+    }
+  }
+}
+
+
+// MARK:- Extension objc Method
+
+extension SideBarView {
+  
+  @objc private func boardDeleteButtonTapped() {
+    viewModel.deleteBoard()
   }
 }
