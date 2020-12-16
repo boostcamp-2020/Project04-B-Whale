@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { createNamespace, getNamespace } from 'cls-hooked';
 import { ConflictError } from '../common/error/ConflictError';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -124,6 +125,9 @@ export class CardService extends BaseService {
             throw new ConflictError(`can't move this card to list`);
         }
 
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', userId);
+
         card.list = listId;
         card.title = title;
         card.content = content;
@@ -193,12 +197,16 @@ export class CardService extends BaseService {
     async createCard({ userId, listId, title, dueDate, content }) {
         const list = await this.listRepository
             .createQueryBuilder('list')
-            .select(['list.id', 'list.board'])
+            .select(['list.id', 'list.title', 'list.board'])
             .where('list.id = :listId', { listId })
             .getRawOne();
         if (!list) throw new EntityNotFoundError();
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, list.board_id);
+
+        const namespace = getNamespace('localstorage');
+        namespace?.set('boardId', list.board_id);
+        namespace?.set('listTitle', list.list_title);
 
         const cardWithMaxPosition = await this.cardRepository
             .createQueryBuilder('card')
@@ -235,9 +243,13 @@ export class CardService extends BaseService {
             .getRawOne();
         if (!card) throw new EntityNotFoundError();
 
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', userId);
+        namespace?.set('boardId', card.list_board_id);
+
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, card.list_board_id);
-        await this.cardRepository.delete(cardId);
+        await this.cardRepository.remove(await this.cardRepository.findOne(cardId));
     }
 
     async addMemberToCardByUserIds({ cardId, userId, userIds }) {

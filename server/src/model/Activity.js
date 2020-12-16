@@ -6,7 +6,7 @@ export class Activity {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'content', type: 'varchar' })
+    @Column({ name: 'content', type: 'varchar', charset: 'utf8mb4' })
     content;
 
     @ManyToOne(() => Board, (board) => board.activities, { nullable: false })
