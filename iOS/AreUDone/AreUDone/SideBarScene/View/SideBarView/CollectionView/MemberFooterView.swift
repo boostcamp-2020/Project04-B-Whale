@@ -19,17 +19,17 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
     view.translatesAutoresizingMaskIntoConstraints = false
     
     view.backgroundColor = .white
-    view.layer.cornerRadius = 10
+    view.layer.cornerRadius = 5
     view.layer.borderColor = UIColor.black.cgColor
-    view.layer.borderWidth = 0.3
+    view.layer.borderWidth = 1
     
     return view
   }()
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     titleLabel.text = "초대하기"
+    titleLabel.font = UIFont.nanumB(size: 20)
     
     return titleLabel
   }()
@@ -66,7 +66,7 @@ private extension MemberFooterView {
     NSLayoutConstraint.activate([
       baseView.centerXAnchor.constraint(equalTo: centerXAnchor),
       baseView.topAnchor.constraint(equalTo: topAnchor),
-      baseView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
+      baseView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
       baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
     ])
     
