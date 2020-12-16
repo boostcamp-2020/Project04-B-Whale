@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { Router } from 'express';
 import { isNumberString } from 'class-validator';
 import { CardService } from '../service/CardService';
@@ -66,7 +67,7 @@ export const CardRouter = () => {
             title,
             content,
             position,
-            dueDate,
+            dueDate: moment.tz(dueDate, 'Asia/Seoul').format(),
         });
         res.status(204).end();
     });

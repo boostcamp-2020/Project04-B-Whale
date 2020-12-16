@@ -88,6 +88,13 @@ describe('POST /api/list/:listId/card', () => {
 
             // then
             expect(response.status).toEqual(201);
+            expect(response.body).toEqual({
+                id: expect.any(Number),
+                title: 'card title',
+                position: 1,
+                content: 'card detail',
+                dueDate: '2020-12-31 00:00:00',
+            });
         });
     });
 });

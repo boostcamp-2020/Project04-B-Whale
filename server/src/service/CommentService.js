@@ -1,3 +1,5 @@
+import { getNamespace } from 'cls-hooked';
+import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -36,6 +38,9 @@ export class CommentService extends BaseService {
         if (!isAuthorized) {
             throw new ForbiddenError(`You're not authorized`);
         }
+        const namespace = getNamespace('localstorage');
+        namespace?.set('boardId', board.id);
+        namespace?.set('cardTitle', (await this.cardRepository.findOne(cardId)).title);
 
         const comment = this.commentRepository.create({
             content,
@@ -51,6 +56,7 @@ export class CommentService extends BaseService {
         return {
             id: comment.id,
             content: comment.content,
+            createdAt: moment(comment.createdAt).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             user: {
                 id: user.id,
                 name: user.name,
@@ -63,7 +69,7 @@ export class CommentService extends BaseService {
     async removeComment({ userId, commentId }) {
         const comment = await this.commentRepository.findOne(commentId, {
             loadRelationIds: {
-                relations: ['user'],
+                relations: ['user', 'card'],
                 disableMixedMap: true,
             },
         });
@@ -74,6 +80,13 @@ export class CommentService extends BaseService {
         if (userId !== comment.user.id) {
             throw new ForbiddenError('Not your comment');
         }
+
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', userId);
+        namespace?.set(
+            'boardId',
+            (await this.customBoardRepository.findBoardByCommentId(commentId)).id,
+        );
 
         await this.commentRepository.remove(comment);
     }
@@ -110,6 +123,7 @@ export class CommentService extends BaseService {
         return {
             id: comment.id,
             content: comment.content,
+            createdAt: moment(comment.createdAt).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss'),
             user: {
                 id: user.id,
                 name: user.name,
