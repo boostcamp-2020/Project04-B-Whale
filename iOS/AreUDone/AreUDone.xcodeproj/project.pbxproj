@@ -278,7 +278,6 @@
 		A84FC84E41C57DD915168344 /* Pods_AreUDoneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C7872B0622973BAF08CBBF /* Pods_AreUDoneTests.framework */; };
 		BD088A952583A8840056E95D /* FetchBoardOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088A942583A8840056E95D /* FetchBoardOption.swift */; };
 		BD088AB2258629690056E95D /* CardLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AB1258629690056E95D /* CardLocalDataSource.swift */; };
-		BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B232588A4900056E95D /* UIScrollView+.swift */; };
 		BD088AD82588677C0056E95D /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 338364C825665CD900F92EE4 /* NanumSquareBold.ttf */; };
 		BD088AE125886B350056E95D /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AE025886B350056E95D /* SettingCoordinator.swift */; };
 		BD088AE925886B600056E95D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD088AE825886B600056E95D /* Setting.storyboard */; };
@@ -286,6 +285,8 @@
 		BD088AF325886D4D0056E95D /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AF225886D4D0056E95D /* SettingViewModel.swift */; };
 		BD088AFC258875510056E95D /* SettingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088AFB258875510056E95D /* SettingTableView.swift */; };
 		BD088B01258875FA0056E95D /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B00258875FA0056E95D /* SettingTableViewCell.swift */; };
+		BD088B242588A4900056E95D /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B232588A4900056E95D /* UIScrollView+.swift */; };
+		BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -549,13 +550,14 @@
 		B36B8C61E389093085BC5584 /* Pods-AreUDoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AreUDoneTests.release.xcconfig"; path = "Target Support Files/Pods-AreUDoneTests/Pods-AreUDoneTests.release.xcconfig"; sourceTree = "<group>"; };
 		BD088A942583A8840056E95D /* FetchBoardOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBoardOption.swift; sourceTree = "<group>"; };
 		BD088AB1258629690056E95D /* CardLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLocalDataSource.swift; sourceTree = "<group>"; };
-		BD088B232588A4900056E95D /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		BD088AE025886B350056E95D /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		BD088AE825886B600056E95D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		BD088AED25886B7A0056E95D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		BD088AF225886D4D0056E95D /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		BD088AFB258875510056E95D /* SettingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableView.swift; sourceTree = "<group>"; };
 		BD088B00258875FA0056E95D /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		BD088B232588A4900056E95D /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyIndicatorView.swift; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 				333BA4F0257496B10057ACA4 /* CustomBarButtonItem.swift */,
 				BD2AA89A2574A2C000EA8791 /* PaddingLabel.swift */,
 				33F2D513257CB39A008F1E06 /* CustomSegmentControl.swift */,
+				BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2050,6 +2053,7 @@
 				BD2AA80F256F8B6C00EA8791 /* CommentCollectionViewCell.swift in Sources */,
 				BDEA7BD82576246B00CF6B11 /* ContentInputViewController.swift in Sources */,
 				33F2D6CA257F838D008F1E06 /* ListTableViewDataSource.swift in Sources */,
+				BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */,
 				338317332581E0340040A467 /* CardAddTableView.swift in Sources */,
 				BDD18AC5256544C6005DF00A /* Coordinator.swift in Sources */,
 				BD59A683257E157000BF8928 /* MemberUpdateViewController.swift in Sources */,
