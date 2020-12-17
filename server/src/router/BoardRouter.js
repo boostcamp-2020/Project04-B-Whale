@@ -50,5 +50,21 @@ export const BoardRouter = () => {
         res.status(201).json(createdList);
     });
 
+    router.delete('/:id', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        const config = {
+            userId: req.user.id,
+            boardId: req.params.id,
+        };
+        await boardService.deleteBoard(config);
+        res.sendStatus(204);
+    });
+
+    router.delete('/:id/invitation/', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.exitBoard(req.user.id, req.params.id);
+        res.sendStatus(204);
+    });
+
     return router;
 };

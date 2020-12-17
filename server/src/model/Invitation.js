@@ -11,7 +11,7 @@ export class Invitation {
     @JoinColumn({ name: 'user_id' })
     user;
 
-    @ManyToOne(() => Board, (board) => board.invitations, { nullable: false })
+    @ManyToOne(() => Board, (board) => board.invitations, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'board_id' })
     board;
 }
