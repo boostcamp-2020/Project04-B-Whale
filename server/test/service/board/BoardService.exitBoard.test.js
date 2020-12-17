@@ -1,9 +1,7 @@
 import { getEntityManagerOrTransactionManager } from 'typeorm-transactional-cls-hooked';
 import { Application } from '../../../src/Application';
 import { Board } from '../../../src/model/Board';
-import { Card } from '../../../src/model/Card';
 import { Invitation } from '../../../src/model/Invitation';
-import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
 import { BoardService } from '../../../src/service/BoardService';
 import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';

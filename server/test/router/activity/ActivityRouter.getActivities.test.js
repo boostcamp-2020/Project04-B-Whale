@@ -3,8 +3,6 @@ import { getRepository } from 'typeorm';
 import { Application } from '../../../src/Application';
 import { JwtUtil } from '../../../src/common/util/JwtUtil';
 import { Board } from '../../../src/model/Board';
-import { Card } from '../../../src/model/Card';
-import { List } from '../../../src/model/List';
 import { User } from '../../../src/model/User';
 import { TransactionRollbackExecutor } from '../../TransactionRollbackExecutor';
 
