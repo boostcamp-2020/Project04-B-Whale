@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GithubPicker } from 'react-color';
+import { Modal } from 'antd';
 import { createBoard } from '../../utils/boardRequest';
 
 const DimmedModal = styled.div`
@@ -72,7 +73,7 @@ const AddButton = styled.button.attrs({
     font-size: 18px;
 `;
 
-const Modal = ({ onClose, visible }) => {
+const CreateBoardModal = ({ onClose, visible }) => {
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#ffffff');
 
@@ -91,6 +92,14 @@ const Modal = ({ onClose, visible }) => {
     };
 
     const addBoard = async () => {
+        if (!title.replace(/(\s*)/g, '').length) {
+            Modal.info({
+                title: `보드 타이틀을 입력해주세요😩`,
+                onOk() {},
+                style: { top: '40%' },
+            });
+            return;
+        }
         const { data } = await createBoard({ title, color });
         document.location = `/board/${data.id}`;
     };
@@ -114,4 +123,4 @@ const Modal = ({ onClose, visible }) => {
     );
 };
 
-export default Modal;
+export default CreateBoardModal;
