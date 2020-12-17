@@ -61,6 +61,8 @@ final class CardAddContentsTableViewCell: UITableViewCell, Reusable {
 private extension CardAddContentsTableViewCell {
   
   func configure() {
+    selectionStyle = .none
+    
     addSubview(titleLabel)
     addSubview(contents)
     
