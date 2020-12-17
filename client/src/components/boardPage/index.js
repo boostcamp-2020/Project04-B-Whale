@@ -14,6 +14,7 @@ import AskOverDropdown from './AskOverDropdown';
 import AddListOrCard from './AddListOrCard';
 import List from './List';
 import BoardsProvider from '../provider/BoardsProvider';
+import ActivityProvider from '../provider/ActivityProvider';
 
 const MainContents = styled.div`
     height: 92%;
@@ -106,10 +107,14 @@ const Board = ({ match }) => {
                     )}
                     <AddListOrCard parent="list" />
                 </Wrapper>
-                <ActivitySidebar
-                    sidebarDisplay={sidebarDisplay}
-                    setSidebarDisplay={setSidebarDisplay}
-                />
+                {sidebarDisplay && (
+                    <ActivityProvider>
+                        <ActivitySidebar
+                            sidebarDisplay={sidebarDisplay}
+                            setSidebarDisplay={setSidebarDisplay}
+                        />
+                    </ActivityProvider>
+                )}
                 {invitedDropdownDisplay?.visible && (
                     <InvitedDropdown
                         invitedDropdownDisplay={invitedDropdownDisplay}

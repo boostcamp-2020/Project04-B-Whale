@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useContext, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import ActivityDetail from './ActivityDetail';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { getMyInfo } from '../../utils/userRequest';
+import { getActivities } from '../../utils/activityRequest';
 import { removeBoard, exitBoard } from '../../utils/boardRequest';
+import ActivityContext from '../../context/ActivityContext';
 
 const boxOpen = keyframes`
   to {
@@ -19,10 +22,11 @@ const boxClose = keyframes`
 `;
 
 const Sidebar = styled.div`
-    display: ${(props) => (props.sidebarDisplay ? 'flex' : 'none')};
+    display: flex;
     background-color: #f2f2f5;
     position: absolute;
     flex-direction: column;
+    box-shadow: -5px 5px 5px gray;
     top: 80px;
     width: 20%;
     height: 92%;
@@ -80,16 +84,18 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
     };
     const { boardDetail } = useContext(BoardDetailContext);
     const [myId, setMyId] = useState(0);
+    const { activities, setActivities } = useContext(ActivityContext);
 
     useEffect(async () => {
         const { data } = await getMyInfo();
         setMyId(data.id);
     }, []);
 
-    const activities = [
-        { id: 1, boardId: 1, content: '신동훈님이 현재 보드를 생성하였습니다.' },
-        { id: 2, boardId: 1, content: '이건홍님이 현재 보드를 생성하였습니다.' },
-    ];
+    useEffect(async () => {
+        const { data } = await getActivities(boardDetail.id);
+        if (!data.activities) return;
+        setActivities([...data.activities]);
+    }, [boardDetail]);
 
     const removeBoardHandler = async () => {
         const { status } = await removeBoard(boardDetail.id);
