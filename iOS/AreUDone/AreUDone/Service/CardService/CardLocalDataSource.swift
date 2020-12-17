@@ -12,6 +12,11 @@ protocol CardLocalDataSourceable {
   
   func save(cards: [Card])
   func save(cardDetail: CardDetail)
+  func save(
+    with listId: Int,
+    storedEndPoint: StoredEndPoint,
+    handler: @escaping (Card) -> Void
+  )
   
   func updateCardDetail(for id: Int, content: String?, dueDate: String?)
   
@@ -38,7 +43,31 @@ final class CardLocalDataSource: CardLocalDataSourceable {
     realm.writeOnMain {
       self.realm.add(cardDetail, update: .all)
     }
-    
+  }
+  
+  func save(
+    with listId: Int,
+    storedEndPoint: StoredEndPoint,
+    handler: @escaping (Card) -> Void
+  ) {
+    realm.writeOnMain(object: storedEndPoint) { object in
+      // 1. EndPoint 저장하고
+      self.realm.create(StoredEndPoint.self, value: object)
+
+
+      // title, duedate, comment count
+      // 2. 로컬로 미리 반영
+      if let list =
+          self.realm.objects(ListOfBoard.self)
+          .filter("id == \(listId)").first
+      {
+        let object = Card(value: storedEndPoint.bodies as Any)
+//        list.cards.append(object)
+
+        // 3. unmanaged object 로 반환
+        handler(Card(value: object))
+      }
+    }
   }
   
   func updateCardDetail(for id: Int, content: String?, dueDate: String?) {

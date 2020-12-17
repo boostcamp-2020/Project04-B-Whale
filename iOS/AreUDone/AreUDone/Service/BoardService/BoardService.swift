@@ -69,7 +69,7 @@ final class BoardService: BoardServiceProtocol {
       case .failure(_):
         if let localDataSource = self.localDataSource {
           // 실패 시 endpoint save
-          let orderedEndpoint = OrderedEndPoint(value: endPoint.toDictionary())
+          let orderedEndpoint = StoredEndPoint(value: endPoint.toDictionary())
           localDataSource.save(orderedEndPoint: orderedEndpoint)
           
           completionHandler(.success(()))

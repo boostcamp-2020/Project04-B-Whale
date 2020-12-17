@@ -237,6 +237,7 @@ extension SideBarViewController: SideBarViewControllerProtocol {
   }
   
   func expandSideBar() {
+    viewModel.updateCollectionView()
     animateSideBarView(to: .expanded, withDuration: animationTime)
   }
 }

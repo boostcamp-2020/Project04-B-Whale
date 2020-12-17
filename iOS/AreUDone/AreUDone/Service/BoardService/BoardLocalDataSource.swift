@@ -12,7 +12,7 @@ protocol BoardLocalDataSourceable {
 
   func save(boards: Boards)
   func save(boardDetail: BoardDetail)
-  func save(orderedEndPoint: OrderedEndPoint)
+  func save(orderedEndPoint: StoredEndPoint)
   
   func updateBoard(title: String, ofId id: Int)
 
@@ -42,10 +42,10 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
     }
   }
   
-  func save(orderedEndPoint: OrderedEndPoint) {
+  func save(orderedEndPoint: StoredEndPoint) {
     realm.writeOnMain(object: orderedEndPoint) { object in
       // 1. EndPoint 저장하고
-      self.realm.create(OrderedEndPoint.self, value: object)
+      self.realm.create(StoredEndPoint.self, value: object)
 
       // 2. 로컬로 미리 반영
       let boards = self.realm.objects(Boards.self).first ?? Boards()

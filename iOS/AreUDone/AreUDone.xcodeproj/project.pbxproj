@@ -31,7 +31,7 @@
 		333BA5D825787FC40057ACA4 /* ImageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */; };
 		3344375B2588F53C0077DEC7 /* ListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344375A2588F53C0077DEC7 /* ListTableView.swift */; };
 		334437732589CD010077DEC7 /* EndPointable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334437722589CD010077DEC7 /* EndPointable+.swift */; };
-		334437782589CEFA0077DEC7 /* OrderedEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334437772589CEFA0077DEC7 /* OrderedEndPoint.swift */; };
+		334437782589CEFA0077DEC7 /* StoredEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334437772589CEFA0077DEC7 /* StoredEndPoint.swift */; };
 		3344377D2589D1D70077DEC7 /* NWMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344377C2589D1D70077DEC7 /* NWMonitor.swift */; };
 		335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4AE256E9A6B006A5C4A /* Board.swift */; };
 		335AC4B4256EA1BB006A5C4A /* BoardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */; };
@@ -430,7 +430,7 @@
 		333BA5D725787FC40057ACA4 /* ImageEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEndPoint.swift; sourceTree = "<group>"; };
 		3344375A2588F53C0077DEC7 /* ListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableView.swift; sourceTree = "<group>"; };
 		334437722589CD010077DEC7 /* EndPointable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EndPointable+.swift"; sourceTree = "<group>"; };
-		334437772589CEFA0077DEC7 /* OrderedEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedEndPoint.swift; sourceTree = "<group>"; };
+		334437772589CEFA0077DEC7 /* StoredEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredEndPoint.swift; sourceTree = "<group>"; };
 		3344377C2589D1D70077DEC7 /* NWMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWMonitor.swift; sourceTree = "<group>"; };
 		335AC4AE256E9A6B006A5C4A /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		335AC4B3256EA1BB006A5C4A /* BoardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1527,7 +1527,7 @@
 				BD59A6CB257F180100BF8928 /* TokenParser.swift */,
 				BD59A6D0257F192300BF8928 /* UserIdStore.swift */,
 				BD59A700257F7A2A00BF8928 /* MonthCardCount.swift */,
-				334437772589CEFA0077DEC7 /* OrderedEndPoint.swift */,
+				334437772589CEFA0077DEC7 /* StoredEndPoint.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2179,7 +2179,7 @@
 				33F2D6C5257F7D9F008F1E06 /* BoardDetailCollectionViewDataSource.swift in Sources */,
 				3360124F256E58F7009580A1 /* TabbarItemContentsFactory.swift in Sources */,
 				BD59A6D1257F192300BF8928 /* UserIdStore.swift in Sources */,
-				334437782589CEFA0077DEC7 /* OrderedEndPoint.swift in Sources */,
+				334437782589CEFA0077DEC7 /* StoredEndPoint.swift in Sources */,
 				334437732589CD010077DEC7 /* EndPointable+.swift in Sources */,
 				33EE01802568EE7E003D3221 /* CalendarCoordinator.swift in Sources */,
 				336010C8256B78CE009580A1 /* CardEndPoint.swift in Sources */,

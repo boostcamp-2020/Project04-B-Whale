@@ -36,7 +36,7 @@ private extension ListTableView {
   func configureView() {
     backgroundColor = .clear
 
-    rowHeight = 55
+    rowHeight = 65
     sectionHeaderHeight = 60
     sectionFooterHeight = 60
     showsVerticalScrollIndicator = false

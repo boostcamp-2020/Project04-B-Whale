@@ -28,7 +28,7 @@ class Cards: Object, Codable {
 }
 
 class Card: Object, Codable {
-  @objc dynamic var id: Int = 0
+  @objc dynamic var id: Int = UUID().hashValue
   @objc dynamic var title: String = ""
   @objc dynamic var dueDate: String = ""
   @objc dynamic var position: Double = 0

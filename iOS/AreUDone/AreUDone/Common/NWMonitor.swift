@@ -64,11 +64,17 @@ private extension NWMonitor {
       }
     }
   }
+}
+
+
+// MARK: - Extension
+
+private extension NWMonitor {
   
   func requestStoredEndPoints() {
     let realm = try! Realm()
-    let result = realm.objects(OrderedEndPoint.self).sorted(byKeyPath: "date")
-    let unmanagedEndPoints = Array(result).map { OrderedEndPoint(value: $0)}
+    let result = realm.objects(StoredEndPoint.self).sorted(byKeyPath: "date")
+    let unmanagedEndPoints = Array(result).map { StoredEndPoint(value: $0)}
     
     try! realm.write {
       realm.delete(result)

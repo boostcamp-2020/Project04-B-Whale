@@ -21,6 +21,7 @@ final class CardContentView: UIView {
     let imageView = UIImageView()
     let image = UIImage(systemName: "text.bubble")
     imageView.image = image
+    imageView.tintColor = .black
     
     return imageView
   }()

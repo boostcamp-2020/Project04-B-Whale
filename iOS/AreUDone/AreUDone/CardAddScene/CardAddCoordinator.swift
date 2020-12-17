@@ -41,7 +41,7 @@ final class CardAddCoordinator: NavigationCoordinator {
             identifier: CardAddViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
               
-              let cardService = CardService(router: self.router)
+              let cardService = CardService(router: self.router, localDataSource: CardLocalDataSource())
               let viewModel = CardAddViewModel(cardService: cardService, viewModel: self.viewModel)
               return CardAddViewController(coder: coder, viewModel: viewModel)
             }) as? CardAddViewController else { return UIViewController() }

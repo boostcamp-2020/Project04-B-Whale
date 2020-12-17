@@ -51,8 +51,8 @@ class ListService: ListServiceProtocol {
         case .failure(_):
           
           if let localDataSource = self.localDataSource {
-            let orderedEndPoint = OrderedEndPoint(value: endPoint.toDictionary())
-            localDataSource.save(with: boardId, orderedEndPoint: orderedEndPoint) { object in
+            let orderedEndPoint = StoredEndPoint(value: endPoint.toDictionary())
+            localDataSource.save(with: boardId, storedEndPoint: orderedEndPoint) { object in
               completionHandler(.success(object))
             }
           }
