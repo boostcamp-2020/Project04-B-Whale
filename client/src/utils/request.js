@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import axios from 'axios';
 
 const instance = axios.create({
@@ -12,6 +11,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (config) => {
         const newConfig = config;
+        const reg = /^Bearer /;
+        const token = localStorage.getItem('jwt');
+        if (token === null || !reg.test(token)) window.location.href = '/login';
         newConfig.headers.Authorization = localStorage.getItem('jwt');
         return newConfig;
     },
