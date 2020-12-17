@@ -65,7 +65,8 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   // MARK: - Method
   
   func updateListTitle(to title: String) {
-    listTitle = title
+    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+    listTitle = trimmedTitle
   }
   
   func presentCalendar() {
