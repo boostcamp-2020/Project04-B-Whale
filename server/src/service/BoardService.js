@@ -113,6 +113,10 @@ export class BoardService extends BaseService {
             board: boardId,
         });
         if (invitedUsers) throw new BadRequestError(`Duplicate user.`);
+
+        const namespace = getNamespace('localstorage');
+        namespace?.set('userId', hostId);
+
         const invitation = {
             board: boardId,
             user: userId,
