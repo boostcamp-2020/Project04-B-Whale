@@ -170,10 +170,8 @@ extension CardCollectionViewCell: UIScrollViewDelegate {
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.x <= 0 {
-//      scrollView.contentOffset.x = 0
       isSwiped = false
     } else {
-//      scrollView.bounces = true
       delegate?.resetCellOffset(without: self)
       isSwiped = true
     }

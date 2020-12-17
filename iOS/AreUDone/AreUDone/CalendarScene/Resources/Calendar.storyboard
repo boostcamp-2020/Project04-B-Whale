@@ -23,19 +23,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 카드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuB-J3-HwS">
-                                <rect key="frame" x="20" y="64" width="112.5" height="46"/>
+                                <rect key="frame" x="20" y="64" width="112.5" height="55"/>
                                 <fontDescription key="fontDescription" name="NanumBarunpen-Bold" family="NanumBarunpen" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26k-J8-FJY">
-                                <rect key="frame" x="10" y="120" width="394" height="722"/>
+                                <rect key="frame" x="10" y="131" width="394" height="711"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="note-background" translatesAutoresizingMaskIntoConstraints="NO" id="E8z-DL-jap">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="672"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="661"/>
                                     </imageView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Mgr-hO-jXA" customClass="CardCollectionView" customModule="AreUDone" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="672"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="661"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fLM-tM-eZ2">
                                             <size key="itemSize" width="128" height="128"/>
@@ -46,7 +46,7 @@
                                         <cells/>
                                     </collectionView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlO-vv-bNx" customClass="CustomSegmentedControl" customModule="AreUDone" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="672" width="394" height="50"/>
+                                        <rect key="frame" x="0.0" y="661" width="394" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9on-qu-KVG"/>
@@ -69,7 +69,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JjI-Mb-dZ4" customClass="DateStepper" customModule="AreUDone" customModuleProvider="target">
-                                <rect key="frame" x="166.5" y="60" width="227.5" height="54"/>
+                                <rect key="frame" x="166.5" y="64.5" width="227.5" height="54"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -84,8 +84,8 @@
                             <constraint firstItem="JjI-Mb-dZ4" firstAttribute="centerY" secondItem="ZuB-J3-HwS" secondAttribute="centerY" id="Xse-Be-UVw"/>
                             <constraint firstItem="9a7-qQ-npf" firstAttribute="bottom" secondItem="26k-J8-FJY" secondAttribute="bottom" constant="20" id="bOg-4c-6d9"/>
                             <constraint firstItem="ZuB-J3-HwS" firstAttribute="top" secondItem="9a7-qQ-npf" secondAttribute="top" constant="20" id="dMk-1h-TeY"/>
-                            <constraint firstItem="ZuB-J3-HwS" firstAttribute="height" secondItem="2ij-hR-TD9" secondAttribute="height" multiplier="0.05" constant="1" id="eEy-W7-9O3"/>
-                            <constraint firstItem="26k-J8-FJY" firstAttribute="top" secondItem="ZuB-J3-HwS" secondAttribute="bottom" constant="10" id="jYP-xz-pZn"/>
+                            <constraint firstItem="ZuB-J3-HwS" firstAttribute="height" secondItem="2ij-hR-TD9" secondAttribute="height" multiplier="0.06" constant="1" id="eEy-W7-9O3"/>
+                            <constraint firstItem="26k-J8-FJY" firstAttribute="top" secondItem="ZuB-J3-HwS" secondAttribute="bottom" constant="12" id="jYP-xz-pZn"/>
                             <constraint firstItem="ZuB-J3-HwS" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" constant="10" id="wub-IU-qdU"/>
                         </constraints>
                     </view>

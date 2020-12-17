@@ -37,6 +37,10 @@ final class CalendarViewController: UIViewController {
   }
   @IBOutlet weak var backgroundImageView: UIImageView! {
     didSet {
+      backgroundImageView.layer.maskedCorners = [
+        .layerMinXMinYCorner,
+        .layerMaxXMinYCorner
+      ]
       backgroundImageView.layer.cornerRadius = 10
     }
   }
