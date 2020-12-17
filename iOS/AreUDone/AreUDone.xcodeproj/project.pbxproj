@@ -1331,7 +1331,7 @@
 		33F2D528257DDC45008F1E06 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */,
+				BD088B7C258AF65E0056E95D /* Controller */,
 				33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */,
 				33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */,
 				33F2D548257DE682008F1E06 /* TitleTableViewCell.swift */,
@@ -1423,6 +1423,14 @@
 			isa = PBXGroup;
 			children = (
 				BD088AED25886B7A0056E95D /* SettingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BD088B7C258AF65E0056E95D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D531257DDCA9008F1E06 /* BoardAddViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

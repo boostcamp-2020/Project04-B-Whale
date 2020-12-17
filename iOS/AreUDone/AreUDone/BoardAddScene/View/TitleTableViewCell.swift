@@ -30,8 +30,8 @@ final class TitleTableViewCell: UITableViewCell, Reusable {
   private lazy var textField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
-    
     textField.font = UIFont.nanumR(size: 18)
+    textField.becomeFirstResponder()
     
     return textField
   }()
