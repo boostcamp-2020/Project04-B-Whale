@@ -34,7 +34,7 @@ final class BoardDetailViewController: UIViewController {
     didSet {
       collectionView.dataSource = dataSource
       collectionView.delegate = self
-      
+
       collectionView.dragInteractionEnabled = true
       collectionView.dragDelegate = self
       collectionView.dropDelegate = self
@@ -102,9 +102,15 @@ private extension BoardDetailViewController {
   func configure() {
     view.addSubview(pageControl)
     
+    configureNotification()
     configurePageControl()
     configureNavigationBar()
     configureCollectionView()
+  }
+  
+  func configureNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(cardWillDragged), name: Notification.Name.cardWillDragged, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(cardDidDragged), name: Notification.Name.cardDidDragged, object: nil)
   }
   
   func configurePageControl() {
@@ -322,6 +328,21 @@ extension BoardDetailViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
+  }
+}
+
+// MARK: - Extension objc
+
+extension BoardDetailViewController {
+  
+  @objc func cardWillDragged() {
+    collectionView.dropDelegate = nil
+//    isDroppable = false
+  }
+  
+  @objc func cardDidDragged() {
+    collectionView.dropDelegate = self
+//    isDroppable = true
   }
 }
 

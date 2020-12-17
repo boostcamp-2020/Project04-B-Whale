@@ -29,9 +29,29 @@ final class ListTableViewCell: UITableViewCell, Reusable {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    titleLabel.font = UIFont.nanumR(size: 18)
+    titleLabel.font = UIFont.nanumB(size: 18)
     
     return titleLabel
+  }()
+  
+  private lazy var dueDateLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.font = UIFont.nanumR(size: 15)
+    
+    return label
+  }()
+  private lazy var commentsCountLabel: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    button.titleLabel?.font = UIFont.nanumR(size: 15)
+    button.setTitleColor(.black, for: .normal)
+    button.setImage(UIImage(systemName: "text.bubble"), for: .normal)
+    button.tintColor = .black
+    
+    return button
   }()
   
   
@@ -54,6 +74,8 @@ final class ListTableViewCell: UITableViewCell, Reusable {
   
   func update(with card: Card) {
     titleLabel.text = card.title
+    dueDateLabel.text = card.dueDate.components(separatedBy: " ").first ?? ""
+    commentsCountLabel.setTitle(" \(card.commentCount)", for: .normal)
   }
 }
 
@@ -65,10 +87,14 @@ private extension ListTableViewCell {
   func configure() {
     addSubview(baseView)
     baseView.addSubview(titleLabel)
+    baseView.addSubview(dueDateLabel)
+    baseView.addSubview(commentsCountLabel)
     
     configureView()
     configureBaseView()
     configureTitle()
+    configureDueDateLabel()
+    configureCommentCountsLabel()
   }
   
   func configureView() {
@@ -87,8 +113,22 @@ private extension ListTableViewCell {
   
   func configureTitle() {
     NSLayoutConstraint.activate([
-      titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-      titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+      titleLabel.topAnchor.constraint(equalTo: baseView.topAnchor, constant: 5),
+      titleLabel.leadingAnchor.constraint(equalTo: baseView.leadingAnchor, constant: 10),
+    ])
+  }
+  
+  func configureDueDateLabel() {
+    NSLayoutConstraint.activate([
+      dueDateLabel.bottomAnchor.constraint(equalTo: baseView.bottomAnchor, constant: -5),
+      dueDateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+    ])
+  }
+  
+  func configureCommentCountsLabel() {
+    NSLayoutConstraint.activate([
+      commentsCountLabel.centerYAnchor.constraint(equalTo: dueDateLabel.centerYAnchor),
+      commentsCountLabel.trailingAnchor.constraint(equalTo: baseView.trailingAnchor, constant: -10)
     ])
   }
 }

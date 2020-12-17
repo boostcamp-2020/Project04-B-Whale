@@ -111,7 +111,7 @@ private extension SideBarView {
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
     
-    viewModel.updateCollectionView()
+//    viewModel.updateCollectionView()
   }
   
   func configureExitButton() {

@@ -41,7 +41,7 @@ final class BoardService: BoardServiceProtocol {
     router.request(route: BoardEndPoint.fetchAllBoards) { (result: (Result<Boards, APIError>)) in
       switch result {
       case .success(let boards):
-        completionHandler(.success(boards))
+        completionHandler(result)
         self.localDataSource?.save(boards: boards)
       
       case .failure(_):
@@ -49,7 +49,7 @@ final class BoardService: BoardServiceProtocol {
           if let boards = self.localDataSource?.loadBoards() {
             completionHandler(.success(boards))
           } else {
-            completionHandler(.failure(.data))
+            completionHandler(result)
           }
         }
       
@@ -69,7 +69,7 @@ final class BoardService: BoardServiceProtocol {
       case .failure(_):
         if let localDataSource = self.localDataSource {
           // 실패 시 endpoint save
-          let orderedEndpoint = OrderedEndPoint(value: endPoint.toDictionary())
+          let orderedEndpoint = StoredEndPoint(value: endPoint.toDictionary())
           localDataSource.save(orderedEndPoint: orderedEndpoint)
           
           completionHandler(.success(()))

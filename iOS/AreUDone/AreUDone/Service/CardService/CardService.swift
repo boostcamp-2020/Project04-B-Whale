@@ -91,87 +91,104 @@ class CardService: CardServiceProtocol {
   }
   
   func createCard(listId: Int, title: String, dueDate: String, content: String, completionHandler: @escaping (Result<Card, APIError>) -> Void) {
-    router.request(route: CardEndPoint.createCard(listId: listId, title: title, dueDate: dueDate, content: content)) { result in
-      completionHandler(result)
-    }
-  }
-  
-  func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void)) {
-    router.request(route: CardEndPoint.fetchDetailCard(id: id)) { (result: Result<CardDetail, APIError>) in
-      switch result {
-      case .success(let cardDetail):
-        completionHandler(.success(cardDetail))
-        self.localDataSource?.save(cardDetail: cardDetail)
+    let endPoint = CardEndPoint.createCard(listId: listId, title: title, dueDate: dueDate, content: content)
+    router.request(route: endPoint) { (result: Result<Card, APIError>) in
+      DispatchQueue.main.async {
         
-      case .failure(_):
-        self.localDataSource?.loadCardDetail(for: id, completionHandler: { cardDetail in
-          guard let cardDetail = cardDetail else {
-            completionHandler(.failure(.data))
-            return
+        switch result {
+        case .success(_):
+          completionHandler(result)
+          
+        case .failure(_):
+          
+          if let localDataSource = self.localDataSource {
+            let storedEndPoint = StoredEndPoint(value: endPoint.toDictionary())
+            localDataSource.save(with: listId, storedEndPoint: storedEndPoint) { card in
+              completionHandler(.success(card))
+            }
           }
-          completionHandler(.success(cardDetail))
-        })
+        }
       }
     }
   }
-  
-  func updateCard(
-    id: Int,
-    listId: Int? = nil,
-    title: String? = nil,
-    content: String? = nil,
-    position: Double? = nil,
-    dueDate: String? = nil,
-    completionHandler: @escaping ((Result<Void, APIError>) -> Void)
-  ) {
-    router.request(route: CardEndPoint.updateCard(
-      id: id,
-      listId: listId,
-      title: title,
-      content: content,
-      position: position,
-      dueDate: dueDate
-    )) { (result: Result<Void, APIError>) in
-      switch result {
-      case .success(()):
-        completionHandler(result)
-        self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
-        
-      case .failure(_):
-        completionHandler(.failure(.data))
-      }
+
+
+func fetchDetailCard(id: Int, completionHandler: @escaping ((Result<CardDetail, APIError>) -> Void)) {
+  router.request(route: CardEndPoint.fetchDetailCard(id: id)) { (result: Result<CardDetail, APIError>) in
+    switch result {
+    case .success(let cardDetail):
+      completionHandler(.success(cardDetail))
+      self.localDataSource?.save(cardDetail: cardDetail)
+      
+    case .failure(_):
+      self.localDataSource?.loadCardDetail(for: id, completionHandler: { cardDetail in
+        guard let cardDetail = cardDetail else {
+          completionHandler(.failure(.data))
+          return
+        }
+        completionHandler(.success(cardDetail))
+      })
     }
   }
-  
-  func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
-    router.request(route: CardEndPoint.updateCardMember(id: id, userIds: userIds)) { (result: Result<Void, APIError>) in
+}
+
+func updateCard(
+  id: Int,
+  listId: Int? = nil,
+  title: String? = nil,
+  content: String? = nil,
+  position: Double? = nil,
+  dueDate: String? = nil,
+  completionHandler: @escaping ((Result<Void, APIError>) -> Void)
+) {
+  router.request(route: CardEndPoint.updateCard(
+    id: id,
+    listId: listId,
+    title: title,
+    content: content,
+    position: position,
+    dueDate: dueDate
+  )) { (result: Result<Void, APIError>) in
+    switch result {
+    case .success(()):
       completionHandler(result)
+      self.localDataSource?.updateCardDetail(for: id, content: content, dueDate: dueDate)
+      
+    case .failure(_):
+      completionHandler(.failure(.data))
     }
   }
-  
-  func fetchCardsCount(
-    startDate: String,
-    endDate: String,
-    completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
-  ) {
-    router.request(route: CardEndPoint.fetchCardsCount(
-      startDate: startDate,
-      endDate: endDate
-    )) { (result: Result<MonthCardCount, APIError>) in
-      completionHandler(result)
+}
+
+func updateCardMember(id: Int, userIds: [Int], completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+  router.request(route: CardEndPoint.updateCardMember(id: id, userIds: userIds)) { (result: Result<Void, APIError>) in
+    completionHandler(result)
+  }
+}
+
+func fetchCardsCount(
+  startDate: String,
+  endDate: String,
+  completionHandler: @escaping ((Result<MonthCardCount, APIError>) -> Void)
+) {
+  router.request(route: CardEndPoint.fetchCardsCount(
+    startDate: startDate,
+    endDate: endDate
+  )) { (result: Result<MonthCardCount, APIError>) in
+    completionHandler(result)
+  }
+}
+
+func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
+  router.request(route: CardEndPoint.deleteCard(id: cardId)) { (result: Result<Void, APIError>) in
+    switch result {
+    case .success(()):
+      completionHandler(.success(()))
+      self.localDataSource?.deleteCard(for: cardId)
+      
+    case .failure(_):
+      completionHandler(.failure(.data))
     }
   }
-  
-  func deleteCard(for cardId: Int, completionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
-    router.request(route: CardEndPoint.deleteCard(id: cardId)) { (result: Result<Void, APIError>) in
-      switch result {
-      case .success(()):
-        completionHandler(.success(()))
-        self.localDataSource?.deleteCard(for: cardId)
-        
-      case .failure(_):
-        completionHandler(.failure(.data))
-      }
-    }
-  }
+}
 }

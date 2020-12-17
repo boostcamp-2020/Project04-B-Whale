@@ -9,7 +9,7 @@ import Foundation
 import NetworkFramework
 import RealmSwift
 
-class OrderedEndPoint: Object, EndPointable {
+class StoredEndPoint: Object, EndPointable {
   @objc dynamic var date: Date = Date()
   
   var httpMethod: HTTPMethod? {

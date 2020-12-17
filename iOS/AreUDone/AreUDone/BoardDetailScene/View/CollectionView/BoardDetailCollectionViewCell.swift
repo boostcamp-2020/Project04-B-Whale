@@ -142,6 +142,14 @@ extension BoardDetailCollectionViewCell: UITableViewDragDelegate {
     session.localContext = (viewModel, indexPath, tableView)
     return [dragItem]
   }
+  
+  func tableView(_ tableView: UITableView, dragSessionWillBegin session: UIDragSession) {
+    NotificationCenter.default.post(name: Notification.Name.cardWillDragged, object: nil)
+  }
+  
+  func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
+    NotificationCenter.default.post(name: Notification.Name.cardDidDragged, object: nil)
+  }
 }
 
 
