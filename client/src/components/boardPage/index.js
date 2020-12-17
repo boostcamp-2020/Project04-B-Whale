@@ -79,6 +79,8 @@ const Board = ({ match }) => {
     }, [id]);
 
     const onMouseWheel = (e) => {
+        const isListArea = !!e.target.closest('.list');
+        if (isListArea) return;
         boardWrapper.current.scrollBy({ left: e.deltaY * 2, behavior: 'smooth' });
     };
 
