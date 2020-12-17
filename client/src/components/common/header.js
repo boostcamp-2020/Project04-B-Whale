@@ -32,6 +32,7 @@ const ButtonDiv = styled.div`
 const GoCalendarBtn = styled(ImHome)`
     width: 20px;
     height: 20px;
+    margin-right: 10px;
     cursor: pointer;
 `;
 

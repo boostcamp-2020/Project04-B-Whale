@@ -17,7 +17,7 @@ const BoardsButton = () => {
     };
 
     return (
-        <div>
+        <>
             <Button onClick={onClickDisplayDropdown}>
                 <div>Boards</div>
                 <VscTriangleDown />
