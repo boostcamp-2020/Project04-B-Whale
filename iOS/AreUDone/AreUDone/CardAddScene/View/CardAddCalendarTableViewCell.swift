@@ -68,6 +68,8 @@ final class CardAddCalendarTableViewCell: UITableViewCell, Reusable {
 private extension CardAddCalendarTableViewCell {
   
   func configure() {
+    selectionStyle = .none
+    
     addSubview(titleLabel)
     addSubview(dueDateLabel)
     

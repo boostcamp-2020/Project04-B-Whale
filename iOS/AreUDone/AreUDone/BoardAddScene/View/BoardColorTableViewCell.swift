@@ -9,7 +9,7 @@ import UIKit
 
 protocol BoardColorTableViewCellDelegate: AnyObject {
   
-  func randomButtonTapped(cell: BoardColorTableViewCell)
+  func randomButtonTapped()
 }
 
 final class BoardColorTableViewCell: UITableViewCell, Reusable {
@@ -85,6 +85,8 @@ final class BoardColorTableViewCell: UITableViewCell, Reusable {
 private extension BoardColorTableViewCell {
   
   func configure() {
+    selectionStyle = .none
+    
     contentView.addSubview(titleLabel)
     contentView.addSubview(colorInfoLabel)
     contentView.addSubview(colorImageView)
@@ -94,7 +96,6 @@ private extension BoardColorTableViewCell {
     configureRandomButton()
     configureColorImageView()
     configureColorInfoLabel()
-    
   }
   
   func configureTitleLabel() {
@@ -140,6 +141,6 @@ private extension BoardColorTableViewCell {
 private extension BoardColorTableViewCell {
   
   @objc func randomButtonTapped() {
-    delegate?.randomButtonTapped(cell: self)
+    delegate?.randomButtonTapped()
   }
 }

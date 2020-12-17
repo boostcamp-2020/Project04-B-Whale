@@ -45,9 +45,9 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   private var pushContentInputHandler: ((String) -> Void)?
   private var updateTableViewHandler: (() -> Void)?
   
-  private var listTitle: String = "" {
+  private var cardTitle: String = "" {
     didSet {
-      check(title: listTitle)
+      check(title: cardTitle)
     }
   }
   private var selectedDate: Date = Date()
@@ -65,7 +65,8 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   // MARK: - Method
   
   func updateListTitle(to title: String) {
-    listTitle = title
+    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+    cardTitle = trimmedTitle
   }
   
   func presentCalendar() {
@@ -100,7 +101,7 @@ final class CardAddViewModel: CardAddViewModelProtocol {
     let listId = viewModel.fetchListId()
     cardService.createCard(
       listId: listId,
-      title: listTitle,
+      title: cardTitle,
       dueDate: dateString,
       content: content
     ) { result in

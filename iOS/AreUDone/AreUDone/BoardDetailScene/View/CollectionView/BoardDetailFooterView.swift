@@ -14,11 +14,10 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
   private lazy var button: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    
     button.layer.masksToBounds = true
     button.layer.cornerRadius = 10
-    
     button.setTitle("리스트 추가", for: .normal)
+    button.titleLabel?.font = UIFont.nanumB(size: 18)
     
     return button
   }()
@@ -97,6 +96,8 @@ private extension BoardDetailFooterView {
       animations: {
         self.titleInputView.alpha = 1
       }, completion: nil)
+    
+    titleInputView.setFirstResponder()
   }
   
 }
@@ -107,7 +108,10 @@ private extension BoardDetailFooterView {
 extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
   func addButtonTapped(listTitle: String) {
-    listAddHandler?(listTitle)
+    let trimmedListTitle = listTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmedListTitle.isEmpty else { return }
+    
+    listAddHandler?(trimmedListTitle)
     cancelButtonTapped()
   }
   

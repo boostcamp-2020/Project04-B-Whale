@@ -32,11 +32,9 @@ final class AddOrCancelView: UIView {
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    
     button.setTitle("취소", for: .normal)
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-    button.setTitleColor(.darkGray, for: .normal)
-    
+    button.titleLabel?.font = UIFont.nanumB(size: 16)
+    button.setTitleColor(.black, for: .normal)
     button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     
     return button
@@ -44,11 +42,9 @@ final class AddOrCancelView: UIView {
   private lazy var addButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     button.setTitle("만들기", for: .normal)
-    button.setTitleColor(.darkGray, for: .normal)
-    
+    button.titleLabel?.font = UIFont.nanumB(size: 16)
+    button.setTitleColor(.black, for: .normal)
     button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     
     return button
@@ -71,12 +67,8 @@ final class AddOrCancelView: UIView {
   
   // MARK: - Method
   
-  @objc private func addButtonTapped() {
-    delegate?.addButtonTapped(listTitle: textFieldView.text ?? "")
-  }
-  
-  @objc private func cancelButtonTapped() {
-    delegate?.cancelButtonTapped()
+  func setFirstResponder() {
+    textFieldView.becomeFirstResponder()
   }
 }
 
@@ -127,6 +119,20 @@ private extension AddOrCancelView {
   }
 }
 
+
+// MARK:- Extension objc Method
+
+private extension AddOrCancelView {
+  
+  @objc private func addButtonTapped() {
+    delegate?.addButtonTapped(listTitle: textFieldView.text ?? "")
+  }
+  
+  @objc private func cancelButtonTapped() {
+    delegate?.cancelButtonTapped()
+    textFieldView.resignFirstResponder()
+  }
+}
 
 
 final class TextField: UITextField {

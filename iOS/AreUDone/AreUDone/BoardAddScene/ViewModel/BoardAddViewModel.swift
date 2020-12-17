@@ -14,8 +14,15 @@ protocol BoardAddViewModelProtocol {
   func bindingDismiss(handler: @escaping () -> Void)
   
   func updateBoardTitle(to title: String)
-  func updateRGBHexString()
+  func updateRGBHexString(completionHandler: ((String) -> Void)?)
   func createBoard()
+}
+
+extension BoardAddViewModelProtocol {
+  
+  func updateRGBHexString(completionHandler: ((String) -> Void)? = nil) {
+    updateRGBHexString(completionHandler: completionHandler)
+  }
 }
 
 final class BoardAddViewModel: BoardAddViewModelProtocol {
@@ -30,12 +37,12 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
   
   private var boardTitle: String = "" {
     didSet {
-      check(title: boardTitle, colorAsString: rgbHexString)
+      check(title: boardTitle)
     }
   }
   private var rgbHexString: String = "" {
     didSet {
-      check(title: boardTitle, colorAsString: rgbHexString)
+      check(title: boardTitle)
     }
   }
 
@@ -44,27 +51,21 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
   
   init(boardService: BoardServiceProtocol) {
     self.boardService = boardService
+    
+    rgbHexString = makeRandomRGBHexString()
   }
   
   
   // MARK: - Method
   
   func updateBoardTitle(to title: String) {
-    boardTitle = title
+    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+    boardTitle = trimmedTitle
   }
   
-  func updateRGBHexString() {
-    var hexString = "#"
-    let digits = [
-      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-      "a", "b", "c", "d", "e", "f"
-    ]
-    
-    (0..<6).forEach { _ in
-      hexString += digits.randomElement() ?? "0"
-    }
-    
-    rgbHexString = hexString
+  func updateRGBHexString(completionHandler: ((String) -> Void)?) {
+    rgbHexString = makeRandomRGBHexString()
+    completionHandler?(rgbHexString)
     updateBoardColorHandler?(rgbHexString)
   }
   
@@ -86,12 +87,26 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
 
 private extension BoardAddViewModel {
   
-  func check(title: String, colorAsString: String) {
-    if colorAsString.isEmpty || boardTitle.isEmpty {
+  func check(title: String) {
+    if boardTitle.isEmpty {
       isCreateEnableHandler?(false)
     } else {
       isCreateEnableHandler?(true)
     }
+  }
+  
+  func makeRandomRGBHexString() -> String {
+    var hexString = "#"
+    let digits = [
+      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+      "a", "b", "c", "d", "e", "f"
+    ]
+    
+    (0..<6).forEach { _ in
+      hexString += digits.randomElement() ?? "0"
+    }
+    
+    return hexString
   }
 }
 
