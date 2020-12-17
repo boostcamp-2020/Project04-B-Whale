@@ -7,7 +7,7 @@ export const ActivityRouter = () => {
     router.get('/', async (req, res) => {
         const activityService = ActivityService.getInstance();
         const { boardId } = req.query;
-        const activities = await activityService.getActivities(req.user.id, boardId);
+        const activities = await activityService.getActivities(req.user.id, +boardId);
         res.status(200).json({ activities });
     });
 
