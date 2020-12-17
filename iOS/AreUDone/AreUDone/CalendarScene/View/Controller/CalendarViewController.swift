@@ -35,6 +35,11 @@ final class CalendarViewController: UIViewController {
       )
     }
   }
+  @IBOutlet weak var backgroundImageView: UIImageView! {
+    didSet {
+      backgroundImageView.layer.cornerRadius = 10
+    }
+  }
   
   @IBOutlet weak var titleLabel: UILabel! {
     didSet {

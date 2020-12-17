@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 카드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuB-J3-HwS">
-                                <rect key="frame" x="20" y="64" width="102" height="46"/>
+                                <rect key="frame" x="20" y="64" width="112.5" height="46"/>
                                 <fontDescription key="fontDescription" name="NanumBarunpen-Bold" family="NanumBarunpen" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -31,6 +31,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26k-J8-FJY">
                                 <rect key="frame" x="10" y="120" width="394" height="722"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="note-background" translatesAutoresizingMaskIntoConstraints="NO" id="E8z-DL-jap">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="672"/>
+                                    </imageView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Mgr-hO-jXA" customClass="CardCollectionView" customModule="AreUDone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="672"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -53,9 +56,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="dlO-vv-bNx" secondAttribute="trailing" id="4sc-e9-mjJ"/>
+                                    <constraint firstItem="E8z-DL-jap" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" id="CgF-L4-0fZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="E8z-DL-jap" secondAttribute="trailing" id="EfI-yl-NBH"/>
                                     <constraint firstItem="Mgr-hO-jXA" firstAttribute="top" secondItem="26k-J8-FJY" secondAttribute="top" id="PnE-bD-pxj"/>
+                                    <constraint firstItem="dlO-vv-bNx" firstAttribute="top" secondItem="E8z-DL-jap" secondAttribute="bottom" id="WdR-KO-ak4"/>
                                     <constraint firstItem="Mgr-hO-jXA" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" id="ZCW-7n-CqJ"/>
                                     <constraint firstItem="dlO-vv-bNx" firstAttribute="top" secondItem="Mgr-hO-jXA" secondAttribute="bottom" id="ZqY-qu-Uf4"/>
+                                    <constraint firstItem="E8z-DL-jap" firstAttribute="top" secondItem="26k-J8-FJY" secondAttribute="top" id="aRn-1T-3RF"/>
                                     <constraint firstAttribute="bottom" secondItem="dlO-vv-bNx" secondAttribute="bottom" id="pBO-RN-fXk"/>
                                     <constraint firstAttribute="trailing" secondItem="Mgr-hO-jXA" secondAttribute="trailing" id="sym-h0-P52"/>
                                     <constraint firstItem="dlO-vv-bNx" firstAttribute="leading" secondItem="26k-J8-FJY" secondAttribute="leading" id="y1S-Ms-jTM"/>
@@ -83,6 +90,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backgroundImageView" destination="E8z-DL-jap" id="eLf-9a-zjd"/>
                         <outlet property="baseView" destination="26k-J8-FJY" id="SSZ-5X-UfJ"/>
                         <outlet property="cardCollectionView" destination="Mgr-hO-jXA" id="Xzp-a5-Ofs"/>
                         <outlet property="dateStepper" destination="JjI-Mb-dZ4" id="BdK-Ja-9lk"/>
@@ -96,6 +104,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="note-background" width="341" height="515"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
