@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ImHome } from 'react-icons/im';
-import Modal from './CreateBoardModal';
 import BoardsButton from './BoardsButton';
 import logo from '../../image/app_logo.png';
 
@@ -9,14 +8,14 @@ const HeaderDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 5px 10px;
     width: 100%;
-    height: 80px;
     min-height: 50px;
     background-color: lightskyblue;
 `;
 
 const LogoImg = styled.img`
-    width: 250px;
+    width: 200px;
     cursor: pointer;
 
     @media ${(props) => props.theme.sideBar} {
@@ -36,23 +35,14 @@ const GoCalendarBtn = styled(ImHome)`
     cursor: pointer;
 `;
 
-const HeaderTitle = styled.div`
-    color: white;
-`;
-
-const AddBoardBtn = styled.button`
-    padding: 5px 10px;
-    margin-right: 10px;
-`;
+const HeaderTitle = styled.div``;
 
 const LogoutBtn = styled.button`
     padding: 5px 10px;
-    margin-right: 10px;
+    border-radius: ${(props) => props.theme.radiusSmall};
 `;
 
 const Header = () => {
-    const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
-
     const logoutHandler = () => {
         localStorage.removeItem('jwt');
         document.location = '/login';
@@ -78,17 +68,8 @@ const Header = () => {
                     />
                 </HeaderTitle>
 
-                <div>
-                    <AddBoardBtn onClick={() => setCreateBoardModalVisible(true)}>+</AddBoardBtn>
-                    <LogoutBtn onClick={logoutHandler}>로그아웃</LogoutBtn>
-                </div>
+                <LogoutBtn onClick={logoutHandler}>로그아웃</LogoutBtn>
             </HeaderDiv>
-            {createBoardModalVisible && (
-                <Modal
-                    visible={createBoardModalVisible}
-                    onClose={() => setCreateBoardModalVisible(false)}
-                />
-            )}
         </>
     );
 };

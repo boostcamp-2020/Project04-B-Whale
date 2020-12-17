@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { RiContactsFill, RiGroupFill } from 'react-icons/ri';
 import { BoardsStatusContext } from '../../context/BoardsContext';
 import Board from './Board';
+import AddBoardButton from './AddBoardButton';
 
 const Wrapper = styled.div`
     position: absolute;
@@ -13,18 +15,23 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 7%;
+    top: 2.9rem;
     left: 0.6em;
     width: 200px;
     height: 200px;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
-    overflow: auto;
     z-index: 2;
 `;
 
+const BoardListWrapper = styled.div`
+    max-height: 165px;
+    overflow: auto;
+`;
+
 const BoardTitle = styled.div`
+    display: flex;
     padding: 5px;
     border-bottom: ${(props) => props.theme.border};
     font-size: 17px;
@@ -45,18 +52,27 @@ const BoardsDropdown = ({ onClose }) => {
     return (
         <Wrapper onClick={onClickClose}>
             <DropdownWrapper>
-                <BoardTitle>내가 만든 보드</BoardTitle>
-                <BoardWrapper>
-                    {myBoards.map((board) => {
-                        return <Board key={board.id} id={board.id} title={board.title} />;
-                    })}
-                </BoardWrapper>
-                <BoardTitle>초대 받은 보드</BoardTitle>
-                <BoardWrapper>
-                    {invitedBoards.map((board) => {
-                        return <Board key={board.id} id={board.id} title={board.title} />;
-                    })}
-                </BoardWrapper>
+                <BoardListWrapper>
+                    <BoardTitle>
+                        <RiContactsFill style={{ marginRight: '5px' }} />
+                        내가 만든 보드
+                    </BoardTitle>
+                    <BoardWrapper>
+                        {myBoards.map((board) => {
+                            return <Board key={board.id} id={board.id} title={board.title} />;
+                        })}
+                    </BoardWrapper>
+                    <BoardTitle>
+                        <RiGroupFill style={{ marginRight: '5px' }} />
+                        초대 받은 보드
+                    </BoardTitle>
+                    <BoardWrapper>
+                        {invitedBoards.map((board) => {
+                            return <Board key={board.id} id={board.id} title={board.title} />;
+                        })}
+                    </BoardWrapper>
+                </BoardListWrapper>
+                <AddBoardButton />
             </DropdownWrapper>
         </Wrapper>
     );

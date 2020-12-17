@@ -7,6 +7,8 @@ const BoardTitle = styled.li`
     margin-bottom: 2px;
     border-bottom: ${(props) => props.theme.border};
     cursor: pointer;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 `;
 
 const Board = ({ id, title }) => {
