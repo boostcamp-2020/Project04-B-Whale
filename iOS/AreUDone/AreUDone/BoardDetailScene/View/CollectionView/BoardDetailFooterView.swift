@@ -108,7 +108,10 @@ private extension BoardDetailFooterView {
 extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
   func addButtonTapped(listTitle: String) {
-    listAddHandler?(listTitle)
+    let trimmedListTitle = listTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmedListTitle.isEmpty else { return }
+    
+    listAddHandler?(trimmedListTitle)
     cancelButtonTapped()
   }
   
