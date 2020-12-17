@@ -14,12 +14,22 @@ const MenuDiv = styled.div`
     padding: 5px 0;
 `;
 
+const LeftTopmenuDiv = styled.div`
+    width: 50%;
+
+    @media ${(props) => props.theme.sideBar} {
+        width: 80%;
+    }
+`;
+
 const BoardTitle = styled.span`
     margin-right: 2%;
     border-radius: 4px;
     padding: 5px 5px;
     resize: none;
     margin-left: 2em;
+    font-weight: 900;
+    font-family: '돋움';
     ${(props) =>
         props.state === 'span' &&
         `&:hover {
@@ -28,6 +38,9 @@ const BoardTitle = styled.span`
             background-color: gray;
             color: white;
         }`};
+    @media ${(props) => props.theme.sideBar} {
+        margin-left: 1px;
+    }
 `;
 
 const BoardInput = styled.input`
@@ -95,6 +108,10 @@ const MenuWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 5px 0;
+
+    @media ${(props) => props.theme.sideBar} {
+        width: 20%;
+    }
 `;
 
 const TopMenu = ({
@@ -145,7 +162,7 @@ const TopMenu = ({
 
     return (
         <MenuDiv>
-            <div style={{ width: '50%' }}>
+            <LeftTopmenuDiv>
                 {inputState === 'span' && (
                     <BoardTitle state={inputState} onClick={() => setInputState('input')}>
                         {boardDetail.title}
@@ -186,7 +203,7 @@ const TopMenu = ({
                 >
                     초대하기
                 </InviteButton>
-            </div>
+            </LeftTopmenuDiv>
             <MenuWrapper>
                 <MenuButton sidebarDisplay={sidebarDisplay} onClick={() => setSidebarDisplay(true)}>
                     메뉴

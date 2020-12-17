@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Modal, Button } from 'antd';
@@ -46,7 +45,6 @@ const ListMenuDropdown = ({
     listId,
     listMenuState,
     setListMenuState,
-    listMoveDropdownState,
     setListMoveDropdownState,
 }) => {
     const wrapper = useRef();
@@ -62,7 +60,7 @@ const ListMenuDropdown = ({
         setListMenuState(false);
     };
 
-    const listMoveBtnHandler = (evt) => {
+    const listMoveBtnHandler = () => {
         setListMoveDropdownState({
             offsetX: listMenuState.offsetX,
             offsetY: listMenuState.offsetY,
@@ -72,10 +70,7 @@ const ListMenuDropdown = ({
     };
 
     const handleAgree = async () => {
-        // TODO: status switch
-        // eslint-disable-next-line no-unused-vars
-        const { status } = await deleteList({ listId });
-
+        await deleteList({ listId });
         boardDetail.lists.splice(
             boardDetail.lists.findIndex((v) => {
                 return v.id === listId;

@@ -18,15 +18,27 @@ const LogoImg = styled.img`
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
+    @media ${(props) => props.theme.sideBar} {
+        width: 70%;
+    }
+`;
+
+const Viedo = styled.video`
+    width: 100%;
+    height: 100%;
+    @media ${(props) => props.theme.sideBar} {
+        width: 350%;
+        transform: translate(-35%, 0%);
+    }
 `;
 
 const Login = () => {
     return (
         <>
             <LoginPageWrapper>
-                <video muted autoPlay loop style={{ width: '100%', height: '100%' }}>
+                <Viedo muted autoPlay loop>
                     <source src={backgroundVideo} type="video/mp4" />
-                </video>
+                </Viedo>
                 <LogoImg src={logo} alt="naver login" />
                 <NaverLoginButton />
                 <GitHubLoginButton />

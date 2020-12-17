@@ -14,6 +14,7 @@ import AskOverDropdown from './AskOverDropdown';
 import AddListOrCard from './AddListOrCard';
 import List from './List';
 import BoardsProvider from '../provider/BoardsProvider';
+import ActivityProvider from '../provider/ActivityProvider';
 
 const MainContents = styled.div`
     height: 92%;
@@ -24,9 +25,12 @@ const MainContents = styled.div`
 const Wrapper = styled.div`
     display: flex;
     margin-left: 10px;
-    max-width: 100%;
+    max-width: ${(props) => (props.sidebar ? '79' : '100')}%;
     overflow-x: auto;
     height: 93%;
+    @media ${(props) => props.theme.sideBar} {
+        max-width: ${(props) => (props.sidebar ? '29' : '100')}%;
+    }
 `;
 
 const ListWrapper = styled.div``;
@@ -85,7 +89,7 @@ const Board = ({ match }) => {
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
-                <Wrapper>
+                <Wrapper sidebar={sidebarDisplay}>
                     {Boolean(boardDetail.lists?.length) && (
                         <DndProvider backend={HTML5Backend}>
                             <ListWrapper style={{ display: 'flex' }}>
@@ -106,10 +110,14 @@ const Board = ({ match }) => {
                     )}
                     <AddListOrCard parent="list" />
                 </Wrapper>
-                <ActivitySidebar
-                    sidebarDisplay={sidebarDisplay}
-                    setSidebarDisplay={setSidebarDisplay}
-                />
+                {sidebarDisplay && (
+                    <ActivityProvider>
+                        <ActivitySidebar
+                            sidebarDisplay={sidebarDisplay}
+                            setSidebarDisplay={setSidebarDisplay}
+                        />
+                    </ActivityProvider>
+                )}
                 {invitedDropdownDisplay?.visible && (
                     <InvitedDropdown
                         invitedDropdownDisplay={invitedDropdownDisplay}

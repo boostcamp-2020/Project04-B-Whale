@@ -29,6 +29,10 @@ const DropdownWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    @media ${(props) => props.theme.sideBar} {
+        width: 220px;
+        left: ${(props) => props.offsetY - 30}px;
+    }
 `;
 
 const ContentWrapper = styled.div`

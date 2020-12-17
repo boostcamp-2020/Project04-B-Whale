@@ -25,6 +25,10 @@ const DropdownWrapper = styled.div`
     max-height: 500px;
     overflow: scroll;
     padding: 5px;
+    @media ${(props) => props.theme.sideBar} {
+        width: 220px;
+        left: ${(props) => props.offsetY - 30}px;
+    }
 `;
 
 const InvitedUserDropdown = (props) => {
