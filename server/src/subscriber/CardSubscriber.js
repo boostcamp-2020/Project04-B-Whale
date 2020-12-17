@@ -51,12 +51,13 @@ export class CardSubscriber {
             },
         });
 
-        const userId = !event.entity.creator?.id ? event.entity.creator : event.entity.creator?.id;
-        const user = await userService.getUserById(userId);
+        const namespace = getNamespace('localstorage');
+        if (!namespace?.get('userId')) return;
 
+        const user = await userService.getUserById(namespace.get('userId'));
         await activityService.createActivity(
             currentList.board.id,
-            `${user.name}님이 카드 ${event.entity.title}을 ${prevList.title} 리스트에서 ${currentList.title} 리스트로 이동하였습니다.`,
+            `${user.name}님이 카드 ${event.databaseEntity.title}을 ${prevList.title} 리스트에서 ${currentList.title} 리스트로 이동하였습니다.`,
         );
     }
 
