@@ -8,10 +8,12 @@
 import Foundation
 
 struct Activities: Codable {
-    let activities: [Activity]
+  let activities: [Activity]
 }
 
 struct Activity: Codable {
-    let id, boardId: Int
-    let content, createdAt: String
+  let id: Int
+  let boardId: Int
+  let content: String
+  let createdAt: String
 }
