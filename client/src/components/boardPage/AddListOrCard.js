@@ -100,7 +100,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
             lists: [
                 ...boardDetail.lists,
                 {
-                    id: responseData.listId,
+                    id: responseData.id,
                     title: responseData.title,
                     position: responseData.position,
                     cards: [{ id: 0 }],
