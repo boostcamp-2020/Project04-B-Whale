@@ -29,8 +29,13 @@ export class ActivityService extends BaseService {
 
         const boardService = BoardService.getInstance();
         await boardService.checkForbidden(userId, boardId);
+        const activities = await this.activityRepository.find({
+            where: { board: boardId },
+            order: {
+                createdAt: 'DESC',
+            },
+        });
 
-        const activities = await this.activityRepository.find({ board: boardId });
         return activities.map((activity) => {
             return {
                 ...activity,
