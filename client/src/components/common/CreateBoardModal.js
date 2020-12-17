@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosClose } from 'react-icons/io';
 import { GithubPicker } from 'react-color';
-import { Modal } from 'antd';
+import { Modal, Input } from 'antd';
 import { createBoard } from '../../utils/boardRequest';
 
 const DimmedModal = styled.div`
@@ -50,14 +50,8 @@ const CloseModalBtn = styled.button`
 
 const ModalContents = styled.div``;
 
-const BoardTitleInput = styled.input.attrs({
-    placeholder: '보드 타이틀을 입력하세요.',
-})`
-    width: 100%;
+const BoardTitleInput = styled(Input)`
     margin-bottom: 10px;
-    padding: 5px;
-    border: ${(props) => props.theme.border};
-    border-radius: ${(props) => props.theme.radiusSmall};
 `;
 
 const Wrapper = styled.div`
@@ -75,15 +69,11 @@ const AddButton = styled.button.attrs({
 `;
 
 const CreateBoardModal = ({ onClose, visible }) => {
-    const [title, setTitle] = useState('');
-    const [color, setColor] = useState('#ffffff');
+    const [color, setColor] = useState('#B80000');
+    const inputTitleElement = useRef();
 
     const onClickChangeColor = ({ hex }) => {
         setColor(hex);
-    };
-
-    const createBoardInputHandler = (event) => {
-        setTitle(event.target.value);
     };
 
     const onDimmedClick = (e) => {
@@ -92,15 +82,29 @@ const CreateBoardModal = ({ onClose, visible }) => {
         }
     };
 
-    const addBoard = async () => {
-        if (!title.replace(/(\s*)/g, '').length) {
-            Modal.info({
-                title: `보드 타이틀을 입력해주세요😩`,
-                onOk() {},
-                style: { top: '40%' },
-            });
-            return;
+    const showInvalidTitleModal = () => {
+        Modal.info({
+            title: '생성할 보드 제목을 입력해주세요😩',
+            onOk() {
+                inputTitleElement.current.focus();
+            },
+            style: { top: '40%' },
+        });
+    };
+
+    const checkInputHandler = (e) => {
+        if (e.keyCode !== undefined && e.keyCode !== 13) return false;
+        const replacedTitle = inputTitleElement.current.state.value?.replace(/ /g, '');
+        if (!replacedTitle) {
+            showInvalidTitleModal();
+            return false;
         }
+        return true;
+    };
+
+    const addBoard = async (e) => {
+        if (!checkInputHandler(e)) return;
+        const title = inputTitleElement.current.state.value;
         const { data } = await createBoard({ title, color });
         document.location = `/board/${data.id}`;
     };
@@ -114,7 +118,13 @@ const CreateBoardModal = ({ onClose, visible }) => {
                         <IoIosClose />
                     </CloseModalBtn>
                     <ModalContents>
-                        <BoardTitleInput value={title} onChange={createBoardInputHandler} />
+                        <BoardTitleInput
+                            ref={inputTitleElement}
+                            autoFocus="autoFocus"
+                            type="text"
+                            placeholder="보드 타이틀을 입력하세요."
+                            onKeyDown={addBoard}
+                        />
                         <Wrapper>
                             <GithubPicker width={212} onChangeComplete={onClickChangeColor} />
                             <AddButton onClick={addBoard}>생성</AddButton>
