@@ -10,7 +10,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2  
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12.x
+      - run: npm install
       - name: Create environment files
         run: |
           touch .env
@@ -20,6 +25,7 @@ jobs:
           done 
         env:
           CLIENT_SERVER_ENVIRONMENTS: ${{ secrets.CLIENT_SERVER_ENVIRONMENTS }}
+      - run: npm run build
       - uses: appleboy/scp-action@v0.1.1
         with:
           host: ${{ secrets.CLIENT_SERVER_HOST }}
@@ -27,17 +33,5 @@ jobs:
           username: ${{ secrets.CLIENT_SERVER_USERNAME }}
           password: ${{ secrets.CLIENT_SERVER_PASSWORD }}
           target: /home/${{ secrets.CLIENT_SERVER_USERNAME }}
-          source: ./client
+          source: ./client/build
           overwrite: true
-      - uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.CLIENT_SERVER_HOST }}
-          port: ${{ secrets.CLIENT_SERVER_PORT }}
-          username: ${{ secrets.CLIENT_SERVER_USERNAME }}
-          password: ${{ secrets.CLIENT_SERVER_PASSWORD }}
-          script: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd ~/client
-            npm install --production
-            npm run build
