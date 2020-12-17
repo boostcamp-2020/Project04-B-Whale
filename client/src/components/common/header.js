@@ -18,6 +18,10 @@ const HeaderDiv = styled.div`
 const LogoImg = styled.img`
     width: 250px;
     cursor: pointer;
+
+    @media ${(props) => props.theme.sideBar} {
+        width: 140px;
+    }
 `;
 
 const ButtonDiv = styled.div`

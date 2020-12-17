@@ -28,6 +28,9 @@ const Wrapper = styled.div`
     max-width: ${(props) => (props.sidebar ? '79' : '100')}%;
     overflow-x: auto;
     height: 93%;
+    @media ${(props) => props.theme.sideBar} {
+        max-width: ${(props) => (props.sidebar ? '29' : '100')}%;
+    }
 `;
 
 const ListWrapper = styled.div``;
