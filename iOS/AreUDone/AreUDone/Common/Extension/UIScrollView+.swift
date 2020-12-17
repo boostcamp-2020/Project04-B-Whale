@@ -16,7 +16,10 @@ extension UIScrollView {
   }
   
   func scrollToTop(for point: CGPoint) {
-    let topOffset = point
-    setContentOffset(topOffset, animated: true)
+    let collectionViewHeight = contentSize.height - point.y
+    if contentOffset.y > point.y && collectionViewHeight > bounds.height {
+      let topOffset = point
+      setContentOffset(topOffset, animated: true)
+    }
   }
 }
