@@ -38,8 +38,8 @@ export class Application {
     }
 
     async initialize() {
-        this.initSentry();
         await this.initEnvironment();
+        this.initSentry();
         await this.initDatabase();
         this.initPassport();
         this.registerMiddleware();
