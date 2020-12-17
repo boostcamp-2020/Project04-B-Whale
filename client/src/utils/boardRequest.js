@@ -55,3 +55,25 @@ export const updateBoardTitle = async (boardId, title) => {
 
     return response;
 };
+
+export const removeBoard = async (boardId) => {
+    const config = {
+        url: `/api/board/${boardId}`,
+        method: 'DELETE',
+    };
+
+    const response = await request(config);
+
+    return response;
+};
+
+export const exitBoard = async (boardId) => {
+    const config = {
+        url: `/api/board/${boardId}/invitation`,
+        method: 'DELETE',
+    };
+
+    const response = await request(config);
+
+    return response;
+};

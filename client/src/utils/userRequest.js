@@ -10,3 +10,13 @@ export const searchUsersByName = async (name) => {
 
     return response;
 };
+
+export const getMyInfo = async () => {
+    const config = {
+        url: `/api/user/me`,
+        method: 'GET',
+    };
+    const response = await request(config);
+
+    return response;
+};

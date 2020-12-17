@@ -14,9 +14,9 @@ const NaverLoginButton = () => {
                 top: '90%',
                 background: '#555555',
                 left: '50%',
-                transform: 'translate(-51%, -50%)',
-                width: '386px',
-                height: '82px',
+                transform: 'translate(-52%, -50%)',
+                width: '300px',
+                height: '65px',
             }}
         />
     );
