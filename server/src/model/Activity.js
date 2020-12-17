@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+} from 'typeorm';
 import { Board } from './Board';
 
 @Entity()
@@ -12,4 +19,7 @@ export class Activity {
     @ManyToOne(() => Board, (board) => board.activities, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'board_id' })
     board;
+
+    @CreateDateColumn({ name: 'created_at', type: 'datetime' })
+    createdAt;
 }
