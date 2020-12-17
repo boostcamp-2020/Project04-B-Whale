@@ -16,12 +16,23 @@ const DateWrapper = styled.div`
     &:last-child {
         color: ${(props) => props.theme.blueColor};
     }
-    &:hover {
-        background-color: #00ff00;
+    &:hover > .date {
+        border: 1px solid ${(props) => props.theme.blueColor};
+    }
+
+    @media ${(props) => props.theme.sideBar} {
+        padding: 4px;
     }
 `;
 
-const DateNumber = styled.div``;
+const DateNumber = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 20px;
+`;
 
 const CardCountWrapper = styled.div`
     visibility: ${(props) => (props.count ? 'visible' : 'hidden')};
@@ -34,6 +45,9 @@ const CardCountWrapper = styled.div`
     border-radius: ${(props) => props.theme.radiusSmall};
     color: ${(props) => props.theme.whiteColor};
 
+    &.mostCard {
+        background-color: ${(props) => props.theme.mostColor};
+    }
     &.manyCard {
         background-color: ${(props) => props.theme.manyColor};
     }
@@ -42,6 +56,7 @@ const CardCountWrapper = styled.div`
     }
     &.littleCard {
         background-color: ${(props) => props.theme.littleColor};
+        color: black;
     }
 
     @media ${(props) => props.theme.sideBar} {
@@ -61,17 +76,18 @@ const CardCount = styled.div`
 `;
 
 const getCardBackground = (count) => {
-    if (count > 10) return 'manyCard';
-    if (count > 5) return 'someCard';
+    if (count > 10) return 'mostCard';
+    if (count > 5) return 'manyCard';
+    if (count > 2) return 'someCard';
     return 'littleCard';
 };
 
-const Date = ({ className, onClick, date, count }) => {
+const Date = ({ className, isGrayed, onClick, date, count }) => {
     const cardBackground = getCardBackground(count);
 
     return (
-        <DateWrapper className={className} onClick={() => onClick(date)}>
-            <DateNumber>{date.format('D')}</DateNumber>
+        <DateWrapper className={isGrayed} onClick={() => onClick(date)}>
+            <DateNumber className={`date ${className}`}>{date.format('D')}</DateNumber>
             <CardCountWrapper className={cardBackground} count={count}>
                 <BsCardChecklist size={24} />
                 <CardCount>{count || 0}</CardCount>
