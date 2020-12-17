@@ -20,39 +20,13 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     (response) => {
-        const { status } = response;
-        switch (status) {
-            case 200:
-            case 204:
-                break;
-            case 201:
-                // alert('정상적으로 생성되었습니다.');
-                break;
-            default:
-                break;
-        }
         return response;
     },
 
     (error) => {
-        const { status, data } = error.response;
-        switch (status) {
-            case 400:
-            case 409:
-                alert(data.error.message);
-                break;
-            case 401:
-                window.location.href = '/login';
-                break;
-            case 403:
-                alert(data.error.message);
-                break;
-            case 404:
-                alert(data.error.message);
-                break;
-            default:
-                alert(data.error.message);
-        }
+        const { status } = error.response;
+        if (status === 401) window.location.href = '/login';
+        return error.response;
     },
 );
 
