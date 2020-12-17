@@ -51,22 +51,11 @@ final class CardLocalDataSource: CardLocalDataSourceable {
     handler: @escaping (Card) -> Void
   ) {
     realm.writeOnMain(object: storedEndPoint) { object in
-      // 1. EndPoint 저장하고
       self.realm.create(StoredEndPoint.self, value: object)
 
-
-      // title, duedate, comment count
-      // 2. 로컬로 미리 반영
-      if let list =
-          self.realm.objects(ListOfBoard.self)
-          .filter("id == \(listId)").first
-      {
-        let object = Card(value: storedEndPoint.bodies as Any)
-//        list.cards.append(object)
-
-        // 3. unmanaged object 로 반환
-        handler(Card(value: object))
-      }
+      
+      let object = Card(value: storedEndPoint.bodies as Any)
+      handler(Card(value: object))
     }
   }
   
