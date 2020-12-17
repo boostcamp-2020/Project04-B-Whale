@@ -66,7 +66,8 @@ final class CalendarPickerViewController: UIViewController {
     let alert = UIAlertController(
       alertType: .timePicker,
       alertStyle: .actionSheet,
-      confirmAction: {
+      confirmAction: { [weak self] in
+        guard let self = self else { return }
         let date = self.timePicker.date
         self.viewModel.updateSelectedDate(to: date)
       })
@@ -271,8 +272,8 @@ private extension CalendarPickerViewController {
     snapshot.appendSections([.main])
     snapshot.appendItems(item)
     
-    UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
-      self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) { [weak self] in
+      self?.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }.startAnimation()
     
   }
