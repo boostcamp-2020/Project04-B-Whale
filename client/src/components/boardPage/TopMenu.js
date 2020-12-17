@@ -21,6 +21,7 @@ const BoardTitle = styled.span`
     resize: none;
     margin-left: 2em;
     font-weight: 900;
+    font-family: '돋움';
     ${(props) =>
         props.state === 'span' &&
         `&:hover {

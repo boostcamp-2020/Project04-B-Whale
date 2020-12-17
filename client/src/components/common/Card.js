@@ -3,6 +3,7 @@
 import React, { useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
+import { AiOutlineComment } from 'react-icons/ai';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { modifyCardPosition } from '../../utils/cardRequest';
 
@@ -47,9 +48,7 @@ const CardCommentCount = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 1.5rem;
-    padding: 0 1rem;
+    padding: 0 3px;
 `;
 
 const Card = ({
@@ -66,7 +65,7 @@ const Card = ({
     onClick,
     draggable,
 }) => {
-    const { boardDetail } = useContext(BoardDetailContext);
+    const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const cardRef = useRef(null);
     const [, drop] = draggable
         ? useDrop({
@@ -127,6 +126,13 @@ const Card = ({
                       listId: item.listId,
                       position: updatedPosition,
                   });
+                  const emptyCardIndex = boardDetail.lists[listInd].cards.findIndex(
+                      (v) => v.id === 0,
+                  );
+                  if (emptyCardIndex > -1) {
+                      boardDetail.lists[listInd].cards.splice(emptyCardIndex, 1);
+                      setBoardDetail({ ...boardDetail });
+                  }
               },
           })
         : [];
@@ -161,7 +167,10 @@ const Card = ({
             <CardTitle fontSize={fontSize}>{cardTitle}</CardTitle>
             <CardDueDateCommentCountFlexBox>
                 <CardDueDate fontSize={fontSize}>{cardDueDate}</CardDueDate>
-                <CardCommentCount>{cardCommentCount}</CardCommentCount>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <AiOutlineComment />
+                    <CardCommentCount>{cardCommentCount}</CardCommentCount>
+                </div>
             </CardDueDateCommentCountFlexBox>
         </CardWrapper>
     );
