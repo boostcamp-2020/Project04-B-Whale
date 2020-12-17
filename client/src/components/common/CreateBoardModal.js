@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { IoIosClose } from 'react-icons/io';
 import { GithubPicker } from 'react-color';
 import { Modal } from 'antd';
 import { createBoard } from '../../utils/boardRequest';
@@ -109,7 +110,9 @@ const CreateBoardModal = ({ onClose, visible }) => {
             <DimmedModal visible={visible} />
             <ModalWrapper onClick={onDimmedClick} visible={visible}>
                 <ModalInner color={color}>
-                    <CloseModalBtn onClick={onClose}>X</CloseModalBtn>
+                    <CloseModalBtn onClick={onClose}>
+                        <IoIosClose />
+                    </CloseModalBtn>
                     <ModalContents>
                         <BoardTitleInput value={title} onChange={createBoardInputHandler} />
                         <Wrapper>
