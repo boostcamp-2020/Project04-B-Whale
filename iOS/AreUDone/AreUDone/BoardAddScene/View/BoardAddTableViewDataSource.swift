@@ -44,6 +44,11 @@ final class BoardAddTableViewDataSource: NSObject, UITableViewDataSource {
     case 1:
       let cell: BoardColorTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
       cell.delegate = self
+      
+      viewModel.updateRGBHexString { hexString in
+        cell.update(with: hexString)
+      }
+      
       return cell
       
     default:
@@ -67,7 +72,7 @@ extension BoardAddTableViewDataSource: TitleTableViewCellDelegate {
 
 extension BoardAddTableViewDataSource: BoardColorTableViewCellDelegate {
   
-  func randomButtonTapped(cell: BoardColorTableViewCell) {
+  func randomButtonTapped() {
     viewModel.updateRGBHexString()
   }
 }

@@ -70,6 +70,8 @@ final class TitleTableViewCell: UITableViewCell, Reusable {
 private extension TitleTableViewCell {
   
   func configure() {
+    selectionStyle = .none
+    
     contentView.addSubview(titleLabel)
     contentView.addSubview(textField)
     
