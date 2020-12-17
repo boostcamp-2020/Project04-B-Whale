@@ -14,4 +14,9 @@ extension UIScrollView {
       setContentOffset(bottomOffset, animated: true)
     }
   }
+  
+  func scrollToTop(for point: CGPoint) {
+    let topOffset = point
+    setContentOffset(topOffset, animated: true)
+  }
 }

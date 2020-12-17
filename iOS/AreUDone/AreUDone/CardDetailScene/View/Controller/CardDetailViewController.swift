@@ -373,7 +373,12 @@ private extension CardDetailViewController {
       var snapshot = self.dataSource.snapshot()
       
       DispatchQueue.main.async {
-        snapshot.appendItems([updatedComment])
+        if let firstItem = snapshot.itemIdentifiers.first {
+          snapshot.insertItems([updatedComment], beforeItem: firstItem)
+        } else {
+          snapshot.appendItems([updatedComment])
+        }
+
         self.dataSource.apply(snapshot)
       }
     }
@@ -382,9 +387,8 @@ private extension CardDetailViewController {
   func bindingCompleteAddComment() {
     viewModel.bindingCompleteAddComment { [weak self] in
       guard let self = self else { return }
-      self.viewModel.fetchDetailCard()
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        self.scrollView.scrollToBottom()
+        self.scrollView.scrollToTop(for: self.commentCollectionView.frame.origin)
       }
     }
   }
