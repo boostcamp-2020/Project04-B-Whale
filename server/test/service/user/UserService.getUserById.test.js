@@ -30,10 +30,10 @@ describe('UserService.getUserById() Test', () => {
             await em.save(user0);
 
             // when
-            const _user0 = await userService.getUserById(user0.id);
+            const newUser0 = await userService.getUserById(user0.id);
 
             // then
-            expect(_user0.id).toEqual(user0.id);
+            expect(newUser0.id).toEqual(user0.id);
         });
     });
 
