@@ -1,0 +1,39 @@
+name: Server CD on Branch 'develop/client'
+on:
+  push:
+    branches: [ develop/client ]
+defaults:
+  run:
+    shell: bash
+    working-directory: ./client
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2  
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12.x
+      - run: npm install --only prop
+      - run: npm run build
+      - name: Create environment files
+        run: |
+          touch .env
+          for env in $CLIENT_SERVER_ENVIRONMENTS
+          do
+            echo $env >> .env
+          done 
+        env:
+          CLIENT_SERVER_ENVIRONMENTS: ${{ secrets.CLIENT_SERVER_ENVIRONMENTS }}
+      - uses: appleboy/scp-action@v0.1.1
+        with:
+          host: ${{ secrets.CLIENT_SERVER_HOST }}
+          port: ${{ secrets.CLIENT_SERVER_PORT }}
+          username: ${{ secrets.CLIENT_SERVER_USERNAME }}
+          password: ${{ secrets.CLIENT_SERVER_PASSWORD }}
+          target: /home/${{ secrets.CLIENT_SERVER_USERNAME }}
+          source: ./client
+          overwrite: true
+          
