@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
-import { createNamespace, getNamespace } from 'cls-hooked';
+import { getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { ForbiddenError } from '../common/error/ForbiddenError';
@@ -132,6 +132,23 @@ export class BoardService extends BaseService {
 
         board.title = title;
         await this.boardRepository.save(board);
+    }
+
+    @Transactional()
+    async deleteBoard({ userId, boardId }) {
+        const board = await this.boardRepository.findOne(boardId, {
+            loadRelationIds: {
+                relations: ['creator'],
+                disableMixedMap: true,
+            },
+        });
+        if (!board) throw new EntityNotFoundError();
+
+        if (userId !== board.creator.id) {
+            throw new ForbiddenError('Not your board');
+        }
+
+        await this.boardRepository.delete(boardId);
     }
 
     @Transactional()

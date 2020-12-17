@@ -1,9 +1,8 @@
 import { Transactional } from 'typeorm-transactional-cls-hooked';
-import { createNamespace, getNamespace } from 'cls-hooked';
+import { getNamespace } from 'cls-hooked';
 import { BaseService } from './BaseService';
 import { EntityNotFoundError } from '../common/error/EntityNotFoundError';
 import { BoardService } from './BoardService';
-import { UserRouter } from '../router/UserRouter';
 
 export class ListService extends BaseService {
     static instance = null;

@@ -1,4 +1,4 @@
-import { EventSubscriber, getRepository } from 'typeorm';
+import { EventSubscriber } from 'typeorm';
 import { getNamespace } from 'cls-hooked';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { List } from '../model/List';
