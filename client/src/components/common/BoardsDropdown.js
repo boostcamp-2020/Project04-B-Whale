@@ -15,18 +15,21 @@ const Wrapper = styled.div`
 
 const DropdownWrapper = styled.div`
     position: relative;
-    top: 2.9rem;
-    left: 0.6em;
-    width: 200px;
-    height: 200px;
+    top: 3.1em;
+    left: 3.1em;
+    width: 250px;
     background-color: ${(props) => props.theme.whiteColor};
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
     z-index: 2;
+
+    @media ${(props) => props.theme.sideBar} {
+        top: 2.5em;
+    }
 `;
 
 const BoardListWrapper = styled.div`
-    max-height: 165px;
+    max-height: 265px;
     overflow: auto;
 `;
 
@@ -34,7 +37,7 @@ const BoardTitle = styled.div`
     display: flex;
     padding: 5px;
     border-bottom: ${(props) => props.theme.border};
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
 `;
 
@@ -54,7 +57,7 @@ const BoardsDropdown = ({ onClose }) => {
             <DropdownWrapper>
                 <BoardListWrapper>
                     <BoardTitle>
-                        <RiContactsFill style={{ marginRight: '5px' }} />
+                        <RiContactsFill size={20} style={{ marginRight: '5px' }} />
                         내가 만든 보드
                     </BoardTitle>
                     <BoardWrapper>
@@ -63,7 +66,7 @@ const BoardsDropdown = ({ onClose }) => {
                         })}
                     </BoardWrapper>
                     <BoardTitle>
-                        <RiGroupFill style={{ marginRight: '5px' }} />
+                        <RiGroupFill size={20} style={{ marginRight: '5px' }} />
                         초대 받은 보드
                     </BoardTitle>
                     <BoardWrapper>

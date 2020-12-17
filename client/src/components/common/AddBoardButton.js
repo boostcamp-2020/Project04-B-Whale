@@ -6,6 +6,7 @@ import Modal from './CreateBoardModal';
 const Button = styled.li`
     display: flex;
     padding: 7px 10px;
+    font-size: 18px;
     cursor: pointer;
 `;
 

@@ -7,6 +7,7 @@ const Button = styled.button`
     display: flex;
     padding: 5px 10px;
     border-radius: ${(props) => props.theme.radiusSmall};
+    font-size: 20px;
 `;
 
 const BoardsButton = () => {
@@ -20,7 +21,7 @@ const BoardsButton = () => {
         <>
             <Button onClick={onClickDisplayDropdown}>
                 <div>Boards</div>
-                <VscTriangleDown />
+                <VscTriangleDown size={20} />
             </Button>
             {isDropdownDisplay ? (
                 <BoardsDropdown onClose={() => setIsDropdownDisplay(false)} />

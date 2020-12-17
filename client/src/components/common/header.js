@@ -41,6 +41,7 @@ const HeaderTitle = styled.div``;
 const LogoutBtn = styled.button`
     padding: 5px 10px;
     border-radius: ${(props) => props.theme.radiusSmall};
+    font-size: 20px;
 `;
 
 const Header = () => {
