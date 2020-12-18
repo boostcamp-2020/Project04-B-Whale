@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CardCellDelegate {
+protocol CardCellDelegate: AnyObject {
   
   func remove(cell: CardCollectionViewCell)
   func resetCellOffset(without cell: CardCollectionViewCell)
@@ -49,7 +49,7 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
     return view
   }()
   
-  var delegate: CardCellDelegate?
+  weak var delegate: CardCellDelegate?
   var isSwiped: Bool = false
   
   // MARK:- Initializer

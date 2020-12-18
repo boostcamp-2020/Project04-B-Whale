@@ -371,9 +371,15 @@ private extension CardDetailViewController {
     viewModel.bindingCreateComment { [weak self] updatedComment in
       guard let self = self else { return }
       var snapshot = self.dataSource.snapshot()
+      self.viewModel.checkCommentCollectionView(isEmpty: false)
       
-      DispatchQueue.main.async {
-        snapshot.appendItems([updatedComment])
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        if let firstItem = snapshot.itemIdentifiers.first {
+          snapshot.insertItems([updatedComment], beforeItem: firstItem)
+        } else {
+          snapshot.appendItems([updatedComment])
+        }
+
         self.dataSource.apply(snapshot)
       }
     }
@@ -382,17 +388,19 @@ private extension CardDetailViewController {
   func bindingCompleteAddComment() {
     viewModel.bindingCompleteAddComment { [weak self] in
       guard let self = self else { return }
-      self.viewModel.fetchDetailCard()
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        self.scrollView.scrollToBottom()
+        self.scrollView.scrollToTop(for: self.commentCollectionView.frame.origin)
       }
     }
   }
   
   func bindingEmptyIndicatorView() {
     viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
+//      DispatchQueue.main.async {
       DispatchQueue.main.async {
-        self?.emptyIndicatorView.isHidden = isEmpty ? false : true
+        UIView.animate(withDuration: 0.4) {
+          self?.emptyIndicatorView.isHidden = isEmpty ? false : true
+        }
       }
     }
   }

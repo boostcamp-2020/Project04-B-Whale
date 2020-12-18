@@ -12,7 +12,7 @@ final class SceneCoordinator: Coordinator {
   
   // MARK: - Property
   
-  var parentCoordinator: Coordinator?
+  weak var parentCoordinator: Coordinator?
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
