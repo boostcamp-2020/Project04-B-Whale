@@ -12,7 +12,7 @@ import NetworkFramework
 final class TabbarCoordinator: Coordinator {
   
   // MARK: - Property
-  var parentCoordinator: Coordinator?
+  weak var parentCoordinator: Coordinator?
   
   private let router: Routable
   

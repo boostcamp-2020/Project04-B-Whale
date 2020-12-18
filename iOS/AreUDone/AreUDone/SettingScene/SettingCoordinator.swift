@@ -17,7 +17,7 @@ final class SettingCoordinator: NavigationCoordinator {
   }
   private let router: Routable
   var navigationController: UINavigationController?
-  var sceneCoordinator: Coordinator?
+  weak var sceneCoordinator: Coordinator?
   
   // MARK:- Initializer
   

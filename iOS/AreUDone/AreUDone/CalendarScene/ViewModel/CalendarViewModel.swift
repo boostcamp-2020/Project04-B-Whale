@@ -97,6 +97,7 @@ final class CalendarViewModel: CalendarViewModelProtocol {
         self.updateDateHandler?(self.selectedDate.toString())
         self.updateCardCollectionViewHandler?(cards)
         self.emptyIndicatorViewHandler?(cards.cards.isEmpty)
+        
       case .failure(let error):
         self.updateDateHandler?(self.selectedDate.toString())
         self.updateCardCollectionViewHandler?(Cards())
