@@ -35,6 +35,13 @@ final class MemberCell: UICollectionViewCell, Reusable {
   }()
   
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    profileImageView.image = nil
+    profileId.text = nil
+  }
+  
   // MARK: - Initializer
   
   required init?(coder: NSCoder) {

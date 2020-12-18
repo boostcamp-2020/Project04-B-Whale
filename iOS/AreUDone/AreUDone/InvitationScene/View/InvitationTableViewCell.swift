@@ -9,6 +9,8 @@ import UIKit
 
 final class InvitationTableViewCell: UITableViewCell, Reusable {
 
+  // MARK: - Property
+  
   private lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +23,7 @@ final class InvitationTableViewCell: UITableViewCell, Reusable {
     
     return imageView
   }()
+  
   
   // MARK: - Initializer
   
@@ -59,6 +62,8 @@ private extension InvitationTableViewCell {
   
   func configureView() {
     textLabel?.textAlignment = .center
+    textLabel?.font = UIFont.nanumR(size: 16)
+    
     accessoryView = UIImageView(image: UIImage(systemName: "plus.circle"))
   }
   
