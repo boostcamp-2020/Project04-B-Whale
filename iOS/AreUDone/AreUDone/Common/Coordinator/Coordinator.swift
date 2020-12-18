@@ -7,6 +7,18 @@
 
 import UIKit
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
+  
+  var parentCoordinator: Coordinator? { get set }
+  @discardableResult
   func start() -> UIViewController
 }
+
+protocol NavigationCoordinator {
+  
+  var navigationController: UINavigationController? { get set }
+  
+  @discardableResult
+  func start() -> UIViewController
+}
+

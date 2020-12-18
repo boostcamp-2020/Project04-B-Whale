@@ -1,0 +1,77 @@
+//
+//  CalendarCoordinator.swift
+//  AreUDone
+//
+//  Created by a1111 on 2020/11/21.
+//
+
+import UIKit
+import NetworkFramework
+
+final class CalendarCoordinator: NavigationCoordinator {
+  
+  // MARK: - Property
+  
+  private var storyboard: UIStoryboard {
+    return UIStoryboard.load(storyboard: .calendar)
+  }
+  private let router: Routable
+  
+  var navigationController: UINavigationController?
+  
+  private var calendarPickerCoordinator: NavigationCoordinator!
+  private var cardDetailCoordinator: NavigationCoordinator!
+  
+  // MARK: - Initializer
+  
+  init(router: Routable) {
+    self.router = router
+  }
+  
+  
+  // MARK: - Method
+  
+  func start() -> UIViewController {
+    
+    guard let calendarViewController = storyboard.instantiateViewController(
+            identifier: CalendarViewController.identifier,
+            creator: { [weak self] coder in
+              guard let self = self else { return UIViewController() }
+              let cardService = CardService(router: self.router, localDataSource: CardLocalDataSource())
+              let viewModel = CalendarViewModel(cardService: cardService)
+              return CalendarViewController(coder: coder, viewModel: viewModel)
+            }) as? CalendarViewController
+    else { return UIViewController() }
+    
+    calendarViewController.calendarCoordinator = self
+    
+    return calendarViewController
+  }
+}
+
+
+// MARK:- Extension
+
+extension CalendarCoordinator {
+  
+  func didTapOnDate(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
+    calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: selectedDate)
+    calendarPickerCoordinator.navigationController = navigationController
+    
+    guard let calendarPickerViewController = calendarPickerCoordinator.start()
+            as? CalendarPickerViewController
+    else { return }
+    
+    calendarPickerViewController.delegate = delegate
+    navigationController?.present(calendarPickerViewController, animated: true)
+  }
+  
+  func showCardDetail(for id: Int) {
+    cardDetailCoordinator = CardDetailCoordinator(id: id, router: self.router)
+    cardDetailCoordinator.navigationController = navigationController
+    
+    let cardDetailViewController = cardDetailCoordinator.start()
+    cardDetailViewController.hidesBottomBarWhenPushed = true
+    navigationController?.pushViewController(cardDetailViewController, animated: true)
+  }
+}

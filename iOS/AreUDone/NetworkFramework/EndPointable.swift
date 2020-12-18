@@ -17,10 +17,12 @@ public protocol EndPointable {
 }
 
 public enum HTTPMethod: String {
-  case post,
-       get,
-       put
+  case POST,
+       GET,
+       PUT,
+       DELETE,
+       PATCH
 }
 public typealias HTTPHeader = [String: String]
-public typealias HTTPBody = [String: String]
+public typealias HTTPBody = [String: Any]
 public typealias HTTPQuery = [String: String]

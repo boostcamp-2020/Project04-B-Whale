@@ -5,40 +5,57 @@
 //  Created by a1111 on 2020/11/18.
 //
 
+import AVFoundation
 import Foundation
 import NetworkFramework
 
 protocol SigninViewModelProtocol {
   
-  func naverSigninBinding(handler: @escaping ((EndPointable) -> ()))
-  func appleSigninBinding(handler: @escaping ((EndPointable) -> ()))
+  func videoPlayBinding(handler: @escaping((AVPlayerLayer) -> Void))
   
-  func naverSigninButtonTapped()
-  func appleSigninButtonTapped()
+  func videoPlay()
+  func videoRemove()
 }
 
 final class SigninViewModel: SigninViewModelProtocol {
-  
-  private var naverSigninHandler: ((EndPointable) -> ())?
-  private var appleSigninHandler: ((EndPointable) -> ())?
-  
-  func naverSigninBinding(handler: @escaping ((EndPointable) -> ())) {
-    naverSigninHandler = handler
 
+  // MARK: - Property
+  
+  private var videoPlayHandler: ((AVPlayerLayer) -> Void)?
+  private var videoPlayerLooper: VideoPlayerLoopable?
+  
+  
+  // MARK: - Initializer
+  
+  init(videoPlayerLooper: VideoPlayerLoopable) {
+    self.videoPlayerLooper = videoPlayerLooper
   }
   
-  func appleSigninBinding(handler: @escaping ((EndPointable) -> ())) {
-    appleSigninHandler = handler
+  
+  // MARK: - Method
+  
+  func videoPlay() {
+    if let playerLayer = videoPlayerLooper?.configureVideoLayer(
+        for: VideoConstant.background,
+        ofType: VideoConstant.mp4
+    ) {
+      videoPlayHandler?(playerLayer)
+      videoPlayerLooper?.play()
+    }
   }
   
-  func naverSigninButtonTapped() {
-    // TODO: 네트워크 Service 객체에 네이버 로그인 요청
-    
-
+  func videoRemove() {
+    videoPlayerLooper?.remove()
+    videoPlayerLooper = nil
   }
-  
-  func appleSigninButtonTapped() {
-    // TODO: 네트워크 Service 객체에 애플 로그인 요청
+}
 
+
+// MARK:- Extension bindUI
+
+extension SigninViewModel {
+  
+  func videoPlayBinding(handler: @escaping ((AVPlayerLayer) -> Void)) {
+    videoPlayHandler = handler
   }
 }

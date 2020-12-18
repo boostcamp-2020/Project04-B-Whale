@@ -9,8 +9,24 @@ import UIKit
 
 final class SigninViewController: UIViewController {
   
+  // MARK: - Property
+  
   private let viewModel: SigninViewModelProtocol
   weak var signinCoordinator: SigninCoordinator?
+  
+  @IBOutlet private weak var videoBackgroundView: UIView! {
+    didSet {
+      videoBackgroundView.alpha = 0
+    }
+  }
+  
+  @IBOutlet weak var githubSigninButton: SigninButton! {
+    didSet {
+      githubSigninButton.titleLabel?.font = UIFont.nanumSquareB(size: 18)
+    }
+  }
+  
+  // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
     self.viewModel = viewModel
@@ -22,35 +38,59 @@ final class SigninViewController: UIViewController {
     fatalError("This controller must be initialized with code")
   }
   
+  
+  // MARK: - Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     bindUI()
+    backgroundPlay()
   }
   
-  private func bindUI() {
-    appleSigninBinding()
-    naverSigninBinding()
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    backgroundRemove()
   }
   
-  private func appleSigninBinding() {
-    viewModel.appleSigninBinding() { [weak self] endpoint in
-      self?.signinCoordinator?.openURL(endPoint: endpoint)
-    }
-  }
   
-  private func naverSigninBinding() {
-    viewModel.naverSigninBinding() { [weak self] endpoint in
-      self?.signinCoordinator?.openURL(endPoint: endpoint)
-    }
-  }
-  
-  @IBAction func appleSigninButtonTapped(_ sender: Any) {
-    viewModel.appleSigninButtonTapped()
-  }
+  // MARK: - Method
   
   @IBAction func naverSigninButtonTapped(_ sender: Any) {
-    viewModel.naverSigninButtonTapped()
+    signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .naver))
+  }
+  
+  @IBAction func githubSigninButtonTapped(_ sender: Any) {
+    signinCoordinator?.openURL(endPoint: UserEndPoint.requestLogin(flatform: .github))
+  }
+  
+  private func backgroundPlay() {
+    viewModel.videoPlay()
+  }
+  
+  private func backgroundRemove() {
+    viewModel.videoRemove()
+  }
+}
+
+
+// MARK: - Extension bindUI
+
+private extension SigninViewController {
+  
+  private func bindUI() {
+    videoPlayBinding()
+  }
+
+  func videoPlayBinding() {
+    viewModel.videoPlayBinding { [weak self] playerLayer in
+      guard let self = self else { return }
+      playerLayer.frame = self.videoBackgroundView.bounds
+      self.videoBackgroundView.layer.addSublayer(playerLayer)
+      
+      UIView.animate(withDuration: 1) {
+        self.videoBackgroundView.alpha = 1
+      }
+    }
   }
 }
 

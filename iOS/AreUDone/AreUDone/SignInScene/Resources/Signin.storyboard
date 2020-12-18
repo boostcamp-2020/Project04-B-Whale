@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="NanumSquareOTF_acEB.otf">
-            <string>NanumSquareOTF_acEB</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Signin View Controller-->
         <scene sceneID="Oj0-20-KMj">
             <objects>
-                <viewController storyboardIdentifier="SignInViewController" id="Ms5-cy-f3q" customClass="SigninViewController" customModule="AreUDone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SigninViewController" id="Ms5-cy-f3q" customClass="SigninViewController" customModule="AreUDone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KP1-hl-g3i">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obc-CD-fb9" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
-                                <rect key="frame" x="71" y="699" width="272" height="56"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fa-mg-n8R">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQL-Dk-c5z" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
+                                <rect key="frame" x="71" y="689" width="272" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Obc-CD-fb9" secondAttribute="height" multiplier="4.85:1" id="Xg4-Cf-Kll"/>
-                                    <constraint firstAttribute="height" constant="56" id="gNi-5O-DF0"/>
+                                    <constraint firstAttribute="height" constant="56" id="ZI7-Hu-OLc"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="NanumSquareOTF_acEB" family="NanumSquareOTF_ac" pointSize="18"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="            애플 아이디로 로그인">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                <state key="normal" title="Github 아이디로 로그인">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="appleSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="UrH-Nu-aUH"/>
+                                    <action selector="githubSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="TgT-Ro-C0u"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applelogo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kWB-MX-gQp">
-                                <rect key="frame" x="79" y="707.5" width="40" height="38.5"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="github_logo" translatesAutoresizingMaskIntoConstraints="NO" id="MN7-0q-2sK">
+                                <rect key="frame" x="85" y="703" width="28" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="kWB-MX-gQp" secondAttribute="height" multiplier="1:1" id="rXk-xo-yY5"/>
+                                    <constraint firstAttribute="width" constant="28" id="B6J-MU-7jJ"/>
+                                    <constraint firstAttribute="width" secondItem="MN7-0q-2sK" secondAttribute="height" multiplier="1:1" id="BLn-pN-1vq"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-vA-RKX" customClass="SigninButton" customModule="AreUDone" customModuleProvider="target">
@@ -52,20 +50,41 @@
                                     <constraint firstAttribute="height" constant="56" id="jvp-gS-HVK"/>
                                 </constraints>
                                 <state key="normal" image="NaverSignInIcon"/>
+                                <connections>
+                                    <action selector="naverSigninButtonTapped:" destination="Ms5-cy-f3q" eventType="touchUpInside" id="rwo-bW-pTh"/>
+                                </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boostrello" translatesAutoresizingMaskIntoConstraints="NO" id="ioi-B4-9Bj">
+                                <rect key="frame" x="-84" y="94" width="582" height="116.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ioi-B4-9Bj" secondAttribute="height" multiplier="10:2" id="bV8-ev-zz6"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xOx-i5-aaB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="kWB-MX-gQp" firstAttribute="top" secondItem="Obc-CD-fb9" secondAttribute="top" constant="8" id="B19-Hu-xe2"/>
+                            <constraint firstItem="ioi-B4-9Bj" firstAttribute="height" secondItem="KP1-hl-g3i" secondAttribute="height" multiplier="0.13" id="2Qn-9U-a4B"/>
+                            <constraint firstItem="ioi-B4-9Bj" firstAttribute="centerX" secondItem="KP1-hl-g3i" secondAttribute="centerX" id="44j-5D-Qw1"/>
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="BDf-1e-AQO"/>
-                            <constraint firstItem="kWB-MX-gQp" firstAttribute="bottom" secondItem="Obc-CD-fb9" secondAttribute="bottom" constant="-8" id="Fhu-Sa-oZx"/>
-                            <constraint firstItem="kWB-MX-gQp" firstAttribute="leading" secondItem="Obc-CD-fb9" secondAttribute="leading" constant="8" id="GrS-lk-p33"/>
-                            <constraint firstItem="Obc-CD-fb9" firstAttribute="centerX" secondItem="xOx-i5-aaB" secondAttribute="centerX" id="HWN-wO-FYH"/>
+                            <constraint firstAttribute="bottom" secondItem="9fa-mg-n8R" secondAttribute="bottom" id="Djt-5s-7Lt"/>
                             <constraint firstItem="GJ3-vA-RKX" firstAttribute="bottom" secondItem="xOx-i5-aaB" secondAttribute="bottom" constant="-46" id="HaI-rx-41r"/>
-                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="top" secondItem="Obc-CD-fb9" secondAttribute="bottom" constant="5" id="aaP-M2-W4h"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="leading" secondItem="ZQL-Dk-c5z" secondAttribute="leading" constant="14" id="HrV-F6-eJt"/>
+                            <constraint firstItem="ioi-B4-9Bj" firstAttribute="top" secondItem="xOx-i5-aaB" secondAttribute="top" constant="50" id="WWz-2P-qQh"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="top" secondItem="ZQL-Dk-c5z" secondAttribute="top" constant="14" id="Z2l-gZ-aBu"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="leading" secondItem="GJ3-vA-RKX" secondAttribute="leading" id="bpV-Sm-Lf9"/>
+                            <constraint firstItem="MN7-0q-2sK" firstAttribute="bottom" secondItem="ZQL-Dk-c5z" secondAttribute="bottom" constant="-14" id="dbl-uu-kOI"/>
+                            <constraint firstItem="xOx-i5-aaB" firstAttribute="trailing" secondItem="9fa-mg-n8R" secondAttribute="trailing" id="lLk-GV-1cj"/>
+                            <constraint firstItem="ZQL-Dk-c5z" firstAttribute="trailing" secondItem="GJ3-vA-RKX" secondAttribute="trailing" id="m0C-35-tMW"/>
+                            <constraint firstItem="GJ3-vA-RKX" firstAttribute="top" secondItem="ZQL-Dk-c5z" secondAttribute="bottom" constant="15" id="ot4-r8-xqS"/>
+                            <constraint firstItem="9fa-mg-n8R" firstAttribute="leading" secondItem="xOx-i5-aaB" secondAttribute="leading" id="otQ-79-Cbn"/>
+                            <constraint firstItem="9fa-mg-n8R" firstAttribute="top" secondItem="KP1-hl-g3i" secondAttribute="top" id="tm6-8a-KQY"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="githubSigninButton" destination="ZQL-Dk-c5z" id="gRe-Gl-6Pv"/>
+                        <outlet property="videoBackgroundView" destination="9fa-mg-n8R" id="u12-1v-8W1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C3g-Eo-neO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -74,7 +93,8 @@
     </scenes>
     <resources>
         <image name="NaverSignInIcon" width="578" height="125"/>
-        <image name="applelogo" catalog="system" width="128" height="121"/>
+        <image name="boostrello" width="940" height="265"/>
+        <image name="github_logo" width="225" height="225"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -5,34 +5,51 @@
 //  Created by 서명렬 on 2020/11/18.
 //
 
+import NetworkFramework
 import UIKit
 
 final class SceneCoordinator: Coordinator {
   
+  // MARK: - Property
+  
+  weak var parentCoordinator: Coordinator?
   private var window: UIWindow?
   private let initCoordinatorFactory: CoordinatorFactoryable
+  private let signinChecker: SigninCheckable
+  private let router: Routable
+  private var initCoordinator: Coordinator!
   
-  init(window: UIWindow?, factory: CoordinatorFactoryable) {
+  
+  // MARK: - Initializer
+  
+  init(
+    window: UIWindow?,
+    router: Routable,
+    factory: CoordinatorFactoryable,
+    signinChecker: SigninCheckable
+  ) {
     self.window = window
+    self.router = router
     initCoordinatorFactory = factory
+    self.signinChecker = signinChecker
   }
   
-  @discardableResult
+  
+  // MARK: - Method
+  
   func start() -> UIViewController {
-    let isSignIn = checkSignIn()
     
-    let initCoordinator = initCoordinatorFactory.makeCoordinator(by: isSignIn)
+    let signinCheckResult = signinChecker.check()
+    
+    initCoordinator = initCoordinatorFactory.coordinator(
+      by: signinCheckResult,
+      with: router
+    )
+    initCoordinator.parentCoordinator = self
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
     
     return initViewController
-  }
-  
-  private func checkSignIn() -> Bool {
-    if let _ = Keychain.shared.loadValue(forKey: "") {
-      return true
-    }
-    return false
   }
 }
