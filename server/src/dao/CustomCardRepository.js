@@ -90,6 +90,7 @@ export class CustomCardRepository extends BaseRepository {
             .leftJoinAndSelect('a.members', 'c')
             .leftJoinAndSelect('c.user', 'c_0')
             .where('a.id = :cardId', { cardId })
+            .orderBy('b.createdAt', 'DESC')
             .getOne();
 
         return card;
