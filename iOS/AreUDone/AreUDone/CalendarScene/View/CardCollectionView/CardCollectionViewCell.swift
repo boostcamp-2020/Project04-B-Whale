@@ -24,7 +24,8 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
     view.showsVerticalScrollIndicator = false
     view.showsHorizontalScrollIndicator = false
     view.layer.cornerRadius = 6
-    view.backgroundColor = .systemRed
+    view.backgroundColor = .clear
+    view.bounces = false
     
     return view
   }()
@@ -169,11 +170,8 @@ extension CardCollectionViewCell: UIScrollViewDelegate {
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.x <= 0 {
-      scrollView.bounces = false
-      scrollView.contentOffset.x = 0
       isSwiped = false
     } else {
-      scrollView.bounces = true
       delegate?.resetCellOffset(without: self)
       isSwiped = true
     }

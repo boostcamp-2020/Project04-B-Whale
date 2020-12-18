@@ -13,12 +13,15 @@ final class CardContentView: UIView {
 
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 18)
+    
     return label
   }()
 
   private lazy var commentImageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
     let image = UIImage(systemName: "text.bubble")
     imageView.image = image
     imageView.tintColor = .black
@@ -28,6 +31,7 @@ final class CardContentView: UIView {
   
   private lazy var commentCountLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 14)
     return label
   }()
@@ -76,23 +80,22 @@ private extension CardContentView {
     ]
     layer.cornerCurve = .continuous
     layer.cornerRadius = 5
+    
+    addSubview(titleLabel)
+    addSubview(commentImageView)
+    addSubview(commentCountLabel)
   }
   
   func configureTitleLabel() {
-    addSubview(titleLabel)
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-      titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+      titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
+      titleLabel.trailingAnchor.constraint(equalTo: commentImageView.leadingAnchor, constant: -10)
     ])
   }
   
   func configureCommentImageView() {
-    addSubview(commentImageView)
-    commentImageView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       commentImageView.widthAnchor.constraint(equalToConstant: 20),
       commentImageView.heightAnchor.constraint(equalTo: commentImageView.widthAnchor),
@@ -102,9 +105,6 @@ private extension CardContentView {
   }
   
   func configureCommentCountLabel() {
-    addSubview(commentCountLabel)
-    commentCountLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       commentCountLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
       commentCountLabel.leadingAnchor.constraint(equalTo: commentImageView.trailingAnchor, constant: 5),
