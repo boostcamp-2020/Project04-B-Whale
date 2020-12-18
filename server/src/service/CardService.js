@@ -132,7 +132,7 @@ export class CardService extends BaseService {
         card.title = title;
         card.content = content;
         card.position = position;
-        card.dueDate = dueDate;
+        card.dueDate = dueDate || card.dueDate;
 
         await this.cardRepository.save(card);
     }

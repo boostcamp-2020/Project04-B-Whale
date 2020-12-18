@@ -64,7 +64,7 @@ describe('CardService.modifyCardById() Test', () => {
                 title: 'card update title',
                 content: undefined,
                 position: undefined,
-                dueDate: moment('2020-12-30T13:40:00').format(),
+                dueDate: undefined,
             };
 
             // when
@@ -86,7 +86,7 @@ describe('CardService.modifyCardById() Test', () => {
             expect(updatedCard.content).toEqual(card1.content);
             expect(updatedCard.position).toEqual(card1.position);
             expect(moment(updatedCard.dueDate).tz('Asia/Seoul').format()).toEqual(
-                moment(updateData.dueDate).tz('Asia/Seoul').format(),
+                moment(card1.dueDate).tz('Asia/Seoul').format(),
             );
         });
     });
