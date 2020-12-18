@@ -38,7 +38,7 @@ final class SideBarView: UIView {
   private lazy var exitButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    let image = UIImage(systemName: "trash.fill")
+    let image = UIImage(named: "exit-icon")
     button.setImage(image, for: .normal)
     button.tintColor = .red
     
@@ -109,16 +109,14 @@ private extension SideBarView {
       collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-    ])
-    
-//    viewModel.updateCollectionView()
+    ])    
   }
   
   func configureExitButton() {
     NSLayoutConstraint.activate([
-      exitButton.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -10),
-      exitButton.topAnchor.constraint(equalTo: titleView.topAnchor),
-      exitButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
+      exitButton.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -15),
+      exitButton.topAnchor.constraint(equalTo: titleView.topAnchor, constant: 10),
+      exitButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -10),
       exitButton.widthAnchor.constraint(equalTo: exitButton.heightAnchor)
     ])
   }

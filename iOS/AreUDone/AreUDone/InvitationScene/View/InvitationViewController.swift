@@ -40,6 +40,7 @@ final class InvitationViewController: UIViewController {
   @IBOutlet weak var searchBarView: UIView! {
     didSet {
       searchBarView.addSubview(searchController.searchBar)
+      searchController.searchBar.searchTextField.becomeFirstResponder()
     }
   }
   
@@ -68,6 +69,24 @@ final class InvitationViewController: UIViewController {
     configure()
     bindUI()
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    searchBarBecomeFirstResponder()
+  }
+}
+
+
+// MARK: - Extension
+
+private extension InvitationViewController {
+  
+  func searchBarBecomeFirstResponder() {
+    DispatchQueue.main.async {
+      self.searchController.searchBar.searchTextField.becomeFirstResponder()
+    }
+  }
 }
 
 
@@ -84,6 +103,9 @@ private extension InvitationViewController {
   
   func configureView() {
     navigationItem.title = "초대하기"
+    let font = UIFont.nanumB(size: 18)
+    
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font]
 
     let barButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
       self?.coordinator?.dismiss()

@@ -27,6 +27,7 @@ final class BoardDetailViewController: UIViewController {
     textField.delegate = self
     textField.returnKeyType = .done
     textField.textColor = .white
+    textField.font = UIFont.nanumB(size: 19)
     
     return textField
   }()
@@ -337,12 +338,10 @@ extension BoardDetailViewController {
   
   @objc func cardWillDragged() {
     collectionView.dropDelegate = nil
-//    isDroppable = false
   }
   
   @objc func cardDidDragged() {
     collectionView.dropDelegate = self
-//    isDroppable = true
   }
 }
 

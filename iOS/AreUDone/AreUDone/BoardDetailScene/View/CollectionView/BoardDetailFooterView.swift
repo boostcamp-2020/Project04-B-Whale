@@ -69,7 +69,7 @@ private extension BoardDetailFooterView {
       button.centerXAnchor.constraint(equalTo: centerXAnchor),
       button.topAnchor.constraint(equalTo: topAnchor, constant: 20),
       button.widthAnchor.constraint(equalToConstant: bounds.width * 0.9),
-      button.heightAnchor.constraint(equalToConstant: 40)
+      button.heightAnchor.constraint(equalToConstant: 43)
     ])
     button.layoutIfNeeded()
     
