@@ -98,7 +98,7 @@ private extension CalendarViewController {
   func configureDataSource() -> DataSource {
     let dataSource = DataSource(
       collectionView: cardCollectionView
-    ) { (collectionView, indexPath, card) -> UICollectionViewCell? in
+    ) { [weak self] (collectionView, indexPath, card) -> UICollectionViewCell? in
       let cell: CardCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
       
       cell.updateCell(with: card)

@@ -12,7 +12,7 @@ enum Direction {
   case left
 }
 
-protocol DateStepperDelegate: class {
+protocol DateStepperDelegate: AnyObject {
   
   func arrowDidTapped(direction: Direction, with date: String)
   func dateLabelDidTapped(of date: String)
