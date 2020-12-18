@@ -46,7 +46,7 @@ private extension CardCollectionView {
     layer.cornerRadius = 10
     layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-    backgroundColor = .clear
+    backgroundColor = .white
     showsVerticalScrollIndicator = false
     showsHorizontalScrollIndicator = false
     

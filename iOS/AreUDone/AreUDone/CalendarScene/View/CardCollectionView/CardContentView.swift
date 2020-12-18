@@ -73,7 +73,7 @@ private extension CardContentView {
   }
   
   func configureView() {
-    backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
+    backgroundColor = .systemGray6
     layer.maskedCorners = [
       .layerMinXMinYCorner,
       .layerMinXMaxYCorner
