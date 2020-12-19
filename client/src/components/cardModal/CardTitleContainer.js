@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import CardContext from '../../context/CardContext';
 import { modifyCardTitle } from '../../utils/cardRequest';
+import boardDetailContext from '../../context/BoardDetailContext';
 
 const Wrapper = styled.div`
     display: grid;
@@ -17,7 +19,7 @@ const CardTitle = styled.input`
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
-    grid-row-end: 2
+    grid-row-end: 2;
     width: 100%;
     color: #192b4d;
     font-size: 1.25rem;
@@ -45,6 +47,7 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
     const { cardState, cardDispatch } = useContext(CardContext);
     const [cardTitleInput, setCardTitleInput] = useState(cardTitle);
     const card = cardState.data;
+    const { boardDetail, setBoardDetail } = useContext(boardDetailContext);
 
     const onChange = (e) => {
         setCardTitleInput(e.target.value);
@@ -59,6 +62,10 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
                 title: cardTitleInput,
             },
         });
+        const listIndex = boardDetail.lists.findIndex((list) => list.id === card.list.id);
+        const cardIndex = boardDetail.lists[listIndex].cards.findIndex((c) => c.id === card.id);
+        boardDetail.lists[listIndex].cards[cardIndex].title = cardTitleInput;
+        setBoardDetail({ ...boardDetail });
     };
 
     return (
