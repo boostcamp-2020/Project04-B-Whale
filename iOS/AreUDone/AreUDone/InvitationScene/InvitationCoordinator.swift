@@ -14,6 +14,7 @@ final class InvitationCoordinator: NavigationCoordinator {
   
   var navigationController: UINavigationController?
   private let boardId: Int
+  private let members: [User]
   private let router: Routable
   private weak var delegate: InvitationViewControllerDelegate?
   
@@ -27,10 +28,12 @@ final class InvitationCoordinator: NavigationCoordinator {
   init(
     router: Routable,
     boardId: Int,
+    members: [User],
     delegate: InvitationViewControllerDelegate? = nil
   ) {
     self.router = router
     self.boardId = boardId
+    self.members = members
     self.delegate = delegate
   }
   
@@ -52,7 +55,8 @@ final class InvitationCoordinator: NavigationCoordinator {
                 userService: userService,
                 boardService: boardService,
                 imageService: imageSerivce,
-                boardId: self.boardId
+                boardId: self.boardId,
+                members: self.members
               )
               
               let viewController = InvitationViewController(coder: coder, viewModel: viewModel)

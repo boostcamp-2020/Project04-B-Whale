@@ -12,9 +12,9 @@ protocol InvitationViewModelProtocol {
   func bindingUpdateInvitationTableView(handler: @escaping () -> Void) // reload
   
   func numberOfUsers() -> Int
-  func fetchUserInfo(at index: Int, handler: @escaping (User, Data) -> Void)
+  func fetchUserInfo(at index: Int, handler: @escaping ((User, Bool), Data) -> Void)
   func fetchProfileImage(with urlAsString: String, userName: String, handler: @escaping ((Data) -> Void))
-
+  
   func searchUser(of userName: String)
   func inviteUserToBoard(of index: Int)
 }
@@ -27,17 +27,18 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   private let boardService: BoardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let boardId: Int
+  private var members: [User]
   
   private var updateInvitationTableViewHandler: (() -> Void)?
-
-  private var users: [User]? {
+  
+  private var users: [(User, Bool)]? {
     didSet {
       updateInvitationTableViewHandler?()
     }
   }
   
   private let cache: NSCache<NSString, NSData> = NSCache()
-
+  
   
   // MARK: - Initializer
   
@@ -45,21 +46,23 @@ final class InvitationViewModel: InvitationViewModelProtocol {
     userService: UserServiceProtocol,
     boardService: BoardServiceProtocol,
     imageService: ImageServiceProtocol,
-    boardId: Int) {
+    boardId: Int,
+    members: [User]) {
     self.userService = userService
     self.boardService = boardService
     self.imageService = imageService
     self.boardId = boardId
+    self.members = members
   }
   
   func numberOfUsers() -> Int {
     return users?.count ?? 0
   }
   
-  func fetchUserInfo(at index: Int, handler: @escaping (User, Data) -> Void) {
+  func fetchUserInfo(at index: Int, handler: @escaping ((User, Bool), Data) -> Void) {
     guard let user = users?[index] else { return }
     
-    fetchProfileImage(with: user.profileImageUrl, userName: user.name) { data in
+    fetchProfileImage(with: user.0.profileImageUrl, userName: user.0.name) { data in
       handler(user, data)
     }
   }
@@ -86,7 +89,14 @@ final class InvitationViewModel: InvitationViewModelProtocol {
     userService.fetchUserInfo(userName: userName) { result in
       switch result {
       case .success(let users):
-        self.users = users
+        
+        
+        // set 계산
+        let uninvitedUsersSet = Set(users).subtracting(Set(self.members))
+        let unvitedUsers = Array(uninvitedUsersSet).sorted { $0.name < $1.name }.map { ($0, false) }
+        let invitedUsers = self.members.map { ($0, true) }
+        
+        self.users = invitedUsers + unvitedUsers
         
       case .failure(let error):
         print(error)
@@ -95,11 +105,13 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   }
   
   func inviteUserToBoard(of index: Int) {
-    guard let userId = users?[index].id else { return }
+    guard let userId = users?[index].0.id else { return }
     
     boardService.requestInvitation(withBoardId: boardId, andUserId: userId) { result in
       switch result {
       case .success(()):
+        self.users?[index].1 = true
+        
         break
         
       case .failure(let error):

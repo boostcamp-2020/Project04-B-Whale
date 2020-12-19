@@ -42,9 +42,15 @@ final class InvitationTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Method
  
-  func update(with data: Data, and user: User) {
+  func update(with data: Data, and user: (User, Bool)) {
     profileImageView.image = UIImage(data: data)
-    textLabel?.text = user.name
+    textLabel?.text = user.0.name
+    
+    let imageName = user.1 ? "checkmark.circle" : "plus.circle"
+    let color = user.1 ? UIColor.gray : UIColor.systemBlue
+    
+    accessoryView = UIImageView(image: UIImage(systemName: imageName))
+    accessoryView?.tintColor = color
   }
 }
 
@@ -64,7 +70,6 @@ private extension InvitationTableViewCell {
     textLabel?.textAlignment = .center
     textLabel?.font = UIFont.nanumR(size: 16)
     
-    accessoryView = UIImageView(image: UIImage(systemName: "plus.circle"))
   }
   
   func configureProfileImageView() {
