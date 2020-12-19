@@ -122,6 +122,8 @@ const CardDueDateContainer = ({ dueDate }) => {
                         format={dateFormat}
                         onOk={onClickChangeDueDate}
                         clearIcon={false}
+                        autoFocus="autoFocus"
+                        inputReadOnly
                     />
                     <CardCloseButton width="2rem" onClick={() => setIsDisplay(false)}>
                         X
