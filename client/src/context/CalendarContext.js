@@ -40,6 +40,13 @@ export const CalendarReducer = (state, action) => {
                 cardCount,
             };
         }
+        case 'DELETE_CARD': {
+            const { cardCount } = action;
+            return {
+                ...state,
+                cardCount,
+            };
+        }
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }
