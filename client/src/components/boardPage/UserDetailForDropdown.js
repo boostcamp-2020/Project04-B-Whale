@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FaHome } from 'react-icons/fa';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { RiUserFollowLine } from 'react-icons/ri';
 import BoardDetailContext from '../../context/BoardDetailContext';
 import { inviteUserIntoBoard } from '../../utils/boardRequest';
 
@@ -67,10 +69,14 @@ const InvitedUserDetail = ({
                 </div>
             )}
             {already && parent === 'invite' && (
-                <div style={{ color: 'red', margin: 'auto 10px' }}>초대된 유저</div>
+                <div style={{ color: 'red', margin: 'auto 10px' }}>
+                    <RiUserFollowLine style={{ fill: 'red' }} />
+                </div>
             )}
             {!already && parent === 'invite' && (
-                <InviteBtn onClick={inviteHandler}>초대하기</InviteBtn>
+                <InviteBtn onClick={inviteHandler}>
+                    <AiOutlineUserAdd />
+                </InviteBtn>
             )}
         </UserDiv>
     );
