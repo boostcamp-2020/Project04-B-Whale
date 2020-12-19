@@ -15,6 +15,10 @@ final class BorderLayer: CALayer {
     super.init()
   }
   
+  override init(layer: Any) {
+    super.init(layer: layer)
+  }
+  
   convenience init(frame: CGRect) {
     self.init()
     

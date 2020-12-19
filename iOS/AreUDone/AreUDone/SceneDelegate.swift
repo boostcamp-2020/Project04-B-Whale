@@ -16,15 +16,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
   private var sceneCoordinator: Coordinator!
-  private var isInitialNotification = true
   private lazy var screenBorderAlertAnimator = ScreenBorderAlertAnimator(
     borderLayer: borderLayer
   )
   private lazy var borderLayer: BorderLayer = {
     let rootView = window?.rootViewController?.view
-    let frame = rootView?.frame ?? .zero
+
+    let width = rootView?.frame.width ?? .zero
+    let height = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? .zero
     
+    
+    print(-height)
+    let frame = CGRect(x: 0, y: -height*2, width: width, height: height*2)
     let borderLayer = BorderLayer(frame: frame)
+    borderLayer.backgroundColor = UIColor.red.cgColor
     rootView?.layer.addSublayer(borderLayer)
     return borderLayer
   }()
@@ -130,12 +135,8 @@ extension SceneDelegate {
   
   @objc func networkChanged(notification: Notification) {
     DispatchQueue.main.async {
-      guard
-        let networkState = notification.userInfo?["networkState"] as? Bool, !self.isInitialNotification
-      else {
-        self.isInitialNotification = false
-        return
-      }
+      guard let networkState = notification.userInfo?["networkState"] as? Bool
+      else { return }
       
       self.screenBorderAlertAnimator.start(networkState: networkState)
     }

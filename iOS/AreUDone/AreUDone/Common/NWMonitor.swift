@@ -14,11 +14,13 @@ final class NWMonitor {
   
   // MARK: - Property
   
-  let monitorSemaphore = DispatchSemaphore(value: 1)
-  let requestSemaphore = DispatchSemaphore(value: 1)
-  let monitor = NWPathMonitor()
-  let router: Routable
-    
+  private let requestSemaphore = DispatchSemaphore(value: 1)
+  private let monitor = NWPathMonitor()
+  private let router: Routable
+  
+  private var currentState: NWPath.Status!
+  private var isInitial = true
+  
   
   // MARK: - Initializer
   
@@ -41,27 +43,29 @@ private extension NWMonitor {
   
   func configure() {
     monitor.pathUpdateHandler = { path in
-      self.monitorSemaphore.wait()
-      
-      if path.status == .satisfied {
+      guard !self.isInitial else {
+        self.currentState = path.status
+        self.isInitial = false
+        return
+      }
+
+      if path.status == .satisfied && self.currentState != .satisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
           userInfo: ["networkState": true]
         )
-        
         self.requestStoredEndPoints()
-        self.monitorSemaphore.signal()
         
-      } else {
+      } else if path.status == .unsatisfied && self.currentState != .unsatisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
           userInfo: ["networkState": false]
         )
-        
-        self.monitorSemaphore.signal()
       }
+      
+      self.currentState = path.status
     }
   }
 }
