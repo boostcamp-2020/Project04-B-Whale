@@ -53,7 +53,7 @@ const Sidebar = styled.div`
     animation: ${(props) => (props.sidebarDisplay ? boxOpen : boxClose)} ease;
     animation-fill-mode: forwards;
     animation-duration: 0.2s;
-    z-index: 999;
+    z-index: 9999;
     @media ${(props) => props.theme.sideBar} {
         animation: none;
         animation: ${(props) => (props.sidebarDisplay ? mediaBoxOpen : boxClose)} ease;

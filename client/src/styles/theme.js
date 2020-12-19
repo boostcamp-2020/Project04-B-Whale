@@ -1,5 +1,5 @@
 const sizes = {
-    sideBar: '590px',
+    sideBar: '610px',
     desktop: '1920px',
 };
 
