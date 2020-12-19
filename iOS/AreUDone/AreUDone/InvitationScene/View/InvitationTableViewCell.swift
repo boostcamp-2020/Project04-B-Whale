@@ -54,6 +54,7 @@ final class InvitationTableViewCell: UITableViewCell, Reusable {
 private extension InvitationTableViewCell {
   
   func configure() {
+    selectionStyle = .none
     addSubview(profileImageView)
     
     configureView()
