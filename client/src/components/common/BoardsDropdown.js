@@ -48,7 +48,14 @@ const BoardsDropdown = ({ onClose }) => {
                 <BoardTitle>내가 만든 보드</BoardTitle>
                 <BoardWrapper>
                     {myBoards.map((board) => {
-                        return <Board key={board.id} id={board.id} title={board.title} />;
+                        return (
+                            <Board
+                                key={board.id}
+                                id={board.id}
+                                title={board.title}
+                                closeHandler={onClose}
+                            />
+                        );
                     })}
                 </BoardWrapper>
                 <BoardTitle>초대 받은 보드</BoardTitle>
