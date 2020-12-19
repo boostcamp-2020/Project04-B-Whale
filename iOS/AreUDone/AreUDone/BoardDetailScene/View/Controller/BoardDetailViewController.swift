@@ -134,6 +134,8 @@ private extension BoardDetailViewController {
   
   func configureNavigationBarAppearance(of navigationBar: UINavigationBar) {
     let navigationAppearance = UINavigationBarAppearance()
+    let font = UIFont.nanumB(size: 16)
+    navigationAppearance.titleTextAttributes = [NSAttributedString.Key.font: font]
     navigationAppearance.configureWithTransparentBackground()
     navigationAppearance.backgroundEffect = UIBlurEffect(style: .systemChromeMaterialDark)
     navigationBar.standardAppearance = navigationAppearance
