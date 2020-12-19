@@ -20,7 +20,7 @@ export class ListSubscriber {
         const boardId = !+event.entity.board ? event.entity.board?.id : +event.entity.board;
         await activityService.createActivity(
             boardId,
-            `${user.name}님이 리스트 ${event.entity.title}을 생성하였습니다.`,
+            `${user.name}님이 ${event.entity.title} 리스트를 생성하였습니다.`,
         );
     }
 
@@ -53,7 +53,7 @@ export class ListSubscriber {
         const user = await userService.getUserById(namespace.get('userId'));
         await activityService.createActivity(
             namespace.get('boardId'),
-            `${user.name}님이 리스트 ${event.databaseEntity.title}을 삭제하였습니다.`,
+            `${user.name}님이 ${event.databaseEntity.title} 리스트를 삭제하였습니다.`,
         );
     }
 }
