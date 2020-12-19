@@ -112,7 +112,9 @@ const AddListBtnInput = ({ parent, id, history }) => {
 
     const setStateCard = (responseData) => {
         const { title, position } = responseData;
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
+        const { cards } = boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)];
+        if (cards[0].id === 0) cards.shift();
+        cards.push({
             id: responseData.id,
             title,
             dueDate: responseData.dueDate,
