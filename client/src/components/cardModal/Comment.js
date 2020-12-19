@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+import CardContext from '../../context/CardContext';
+import { modifyComment } from '../../utils/commentRequest';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
 
@@ -87,11 +89,38 @@ const CommentSaveCloseButtonContainer = styled.div`
     align-items: center;
 `;
 
-const Comment = ({ userName, commentCreatedAt, commentContent, profileImageUrl }) => {
+const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profileImageUrl }) => {
     const [editOpen, setEditOpen] = useState(false);
+    const [contentState, setContentState] = useState(commentContent);
+    const { cardDispatch } = useContext(CardContext);
+    const contentTextArea = useRef();
 
     const inverseEditOpen = () => {
+        if (editOpen) {
+            contentTextArea.current.value = commentContent;
+        } else {
+            contentTextArea.current.value = contentState;
+        }
         setEditOpen(!editOpen);
+    };
+
+    const onChange = (e) => {
+        if (editOpen) {
+            setContentState(e.target.value);
+        }
+    };
+
+    const onClickSaveButton = async () => {
+        const response = await modifyComment({ commentId, commentContent: contentState });
+        if (response.status !== 200) {
+            if (response.status === 403) {
+                alert('댓글을 수정할 수 없습니다.');
+            }
+
+            return;
+        }
+
+        cardDispatch({ type: 'MODIFY_COMMENT', commentId, commentContent: contentState });
     };
 
     return (
@@ -103,9 +132,13 @@ const Comment = ({ userName, commentCreatedAt, commentContent, profileImageUrl }
                     <CommentCreatedAt>{commentCreatedAt}</CommentCreatedAt>
                 </CommentTitleContainer>
                 <CommentContentContainer editOpen={editOpen}>
-                    <CommentContentTextArea defaultValue={commentContent} />
+                    <CommentContentTextArea
+                        defaultValue={commentContent}
+                        onChange={onChange}
+                        ref={contentTextArea}
+                    />
                     <CommentSaveCloseButtonContainer visible={editOpen}>
-                        <SaveButton width="3.5rem" height="2rem">
+                        <SaveButton width="3.5rem" height="2rem" onClick={onClickSaveButton}>
                             저장
                         </SaveButton>
                         <CloseButton width="2rem" onClick={inverseEditOpen} />
