@@ -123,7 +123,7 @@ const AskOverDropdown = (props) => {
                     onKeyDown={searchEscHandler}
                     ref={input}
                 />
-                <ContentWrapper>
+                <ContentWrapper onWheel={(e) => e.stopPropagation()}>
                     {!searchedUsers.length &&
                         inputContent &&
                         (!noUserState ? (

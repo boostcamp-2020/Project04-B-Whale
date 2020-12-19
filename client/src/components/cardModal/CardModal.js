@@ -159,7 +159,11 @@ const CardModal = ({ visible, closeModal, cardId, listId }) => {
         <>
             <CardContext.Provider value={{ cardState, cardDispatch }}>
                 <DimmedModal visible={visible} />
-                <ModalWrapper onClick={onDimmedClick} visible={visible}>
+                <ModalWrapper
+                    onWheel={(e) => e.stopPropagation()}
+                    onClick={onDimmedClick}
+                    visible={visible}
+                >
                     <ModalInner>
                         <CardModalLeftSideBar>
                             <CardTitleContainer

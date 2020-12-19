@@ -44,6 +44,7 @@ const InvitedUserDropdown = (props) => {
             <DropdownWrapper
                 offsetY={invitedDropdownDisplay.offsetY}
                 offsetX={invitedDropdownDisplay.offsetX}
+                onWheel={(e) => e.stopPropagation()}
             >
                 <UserDetailForDropdown
                     profileImageUrl={boardDetail.creator.profileImageUrl}

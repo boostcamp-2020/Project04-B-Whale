@@ -55,7 +55,7 @@ const BoardsDropdown = ({ onClose }) => {
     return (
         <Wrapper onClick={onClickClose}>
             <DropdownWrapper>
-                <BoardListWrapper>
+                <BoardListWrapper onWheel={(e) => e.stopPropagation()}>
                     <BoardTitle>
                         <RiContactsFill size={20} style={{ marginRight: '5px' }} />
                         내가 만든 보드

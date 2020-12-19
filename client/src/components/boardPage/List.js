@@ -215,7 +215,12 @@ export default function List({ title, id, index, moveList, position }) {
 
     return (
         <>
-            <ListWrapper ref={ref} opacity={opacity} cursor={cursor} className="list">
+            <ListWrapper
+                ref={ref}
+                opacity={opacity}
+                cursor={cursor}
+                onWheel={(e) => e.stopPropagation()}
+            >
                 <ListContentWrapper>
                     {!titleInputState && (
                         <TitleDiv onClick={() => setTitleInputState(true)}>{title}</TitleDiv>
