@@ -62,8 +62,18 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
   }
   
   private func configureNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: Notification.Name("fore"), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: Notification.Name("back"), object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(sceneWillEnterForeground),
+      name: Notification.Name.foreground,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(sceneDidEnterBackground),
+      name: Notification.Name.background,
+      object: nil
+    )
   }
   
   @objc private func sceneWillEnterForeground(){
