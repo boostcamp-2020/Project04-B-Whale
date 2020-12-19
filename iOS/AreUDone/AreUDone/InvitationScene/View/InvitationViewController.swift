@@ -125,8 +125,7 @@ private extension InvitationViewController {
 extension InvitationViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    guard let searchKeyword = searchController.searchBar.text,
-          !searchKeyword.isEmpty else { return }
+    guard let searchKeyword = searchController.searchBar.text else { return }
     
     debounce(time: 0.5) {
       self.viewModel.searchUser(of: searchKeyword)
