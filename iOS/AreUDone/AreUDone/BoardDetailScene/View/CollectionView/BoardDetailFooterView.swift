@@ -55,6 +55,7 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
 private extension BoardDetailFooterView {
   
   func configure() {
+    
     addSubview(button)
     addSubview(titleInputView)
 
@@ -108,10 +109,7 @@ private extension BoardDetailFooterView {
 extension BoardDetailFooterView: AddOrCancelViewDelegate {
   
   func addButtonTapped(listTitle: String) {
-    let trimmedListTitle = listTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-    guard !trimmedListTitle.isEmpty else { return }
-    
-    listAddHandler?(trimmedListTitle)
+    listAddHandler?(listTitle)
     cancelButtonTapped()
   }
   

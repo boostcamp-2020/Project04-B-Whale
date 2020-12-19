@@ -85,8 +85,20 @@ final class InvitationViewModel: InvitationViewModelProtocol {
     }
   }
   
-  func searchUser(of userName: String) {
-    userService.fetchUserInfo(userName: userName) { result in
+  func searchUser(of searchKeyword: String) {
+    let trimmedSearchKeyword = searchKeyword.trimmed
+    guard !trimmedSearchKeyword.isEmpty else {
+      users = .none
+      return
+    }
+    
+    var keyword = searchKeyword
+    
+    if trimmedSearchKeyword == "@developer" {
+      keyword = ""
+    }
+    
+    userService.fetchUserInfo(userName: keyword) { result in
       switch result {
       case .success(let users):
         

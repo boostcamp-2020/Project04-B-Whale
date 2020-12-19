@@ -22,7 +22,7 @@ final class AddOrCancelView: UIView {
   private lazy var textFieldView: TextField = {
     let textField = TextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
-    
+    textField.font = UIFont.nanumB(size: 18)
     textField.backgroundColor = .white
     textField.layer.cornerRadius = 5
     textField.layer.borderWidth = 0.2
@@ -125,12 +125,19 @@ private extension AddOrCancelView {
 private extension AddOrCancelView {
   
   @objc private func addButtonTapped() {
-    delegate?.addButtonTapped(listTitle: textFieldView.text ?? "")
+    guard
+      let text = textFieldView.text,
+      !text.trimmed.isEmpty
+    else { return }
+    
+    delegate?.addButtonTapped(listTitle: text)
+    textFieldView.resetText()
   }
   
   @objc private func cancelButtonTapped() {
     delegate?.cancelButtonTapped()
     textFieldView.resignFirstResponder()
+    textFieldView.resetText()
   }
 }
 
@@ -151,5 +158,10 @@ final class TextField: UITextField {
   
   override public func editingRect(forBounds bounds: CGRect) -> CGRect {
     return bounds.inset(by: padding)
+  }
+  
+  func resetText() {
+    
+    text = .none
   }
 }

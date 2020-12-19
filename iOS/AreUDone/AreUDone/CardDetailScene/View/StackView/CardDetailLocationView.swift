@@ -23,7 +23,7 @@ final class CardDetailLocationView: UIView {
   private lazy var listNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont.nanumR(size: 14)
+    label.font = UIFont.nanumB(size: 16)
     
     return label
   }()
@@ -31,7 +31,25 @@ final class CardDetailLocationView: UIView {
   private lazy var boardNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumB(size: 16)
+    
+    return label
+  }()
+  
+  private lazy var listDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumR(size: 14)
+    label.text = "리스트에 있습니다"
+    
+    return label
+  }()
+  
+  private lazy var boardDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.nanumR(size: 14)
+    label.text = "보드에 있습니다"
     
     return label
   }()
@@ -51,12 +69,12 @@ final class CardDetailLocationView: UIView {
   }
   
   func updateListNameLabel(with title: String) {
-    let text = title + " 리스트에 있습니다."
+    let text = title
     listNameLabel.text = text
   }
   
   func updateBoardNameLabel(with title: String) {
-    let text = title + " 보드에 있습니다."
+    let text = title
     boardNameLabel.text = text
   }
 }
@@ -71,10 +89,14 @@ private extension CardDetailLocationView {
     addSubview(titleLabel)
     addSubview(listNameLabel)
     addSubview(boardNameLabel)
+    addSubview(listDescriptionLabel)
+    addSubview(boardDescriptionLabel)
     
     configureTitleLabel()
     configureListNameLabel()
     configureBoardNameLabel()
+    configureListDescriptionLabel()
+    configureBoardDescriptionLabel()
   }
   
   func configureTitleLabel() {
@@ -87,18 +109,32 @@ private extension CardDetailLocationView {
   
   func configureListNameLabel() {
     NSLayoutConstraint.activate([
-      listNameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+      listNameLabel.topAnchor.constraint(equalTo: boardNameLabel.bottomAnchor, constant: 5),
       listNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      listNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
+      listNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
     ])
   }
   
   func configureBoardNameLabel() {
     NSLayoutConstraint.activate([
-      boardNameLabel.topAnchor.constraint(equalTo: listNameLabel.bottomAnchor, constant: 5),
+      boardNameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
       boardNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-      boardNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
-      boardNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+    ])
+  }
+  
+  func configureListDescriptionLabel() {
+    NSLayoutConstraint.activate([
+      listDescriptionLabel.leadingAnchor.constraint(equalTo: listNameLabel.trailingAnchor, constant: 5),
+      listDescriptionLabel.firstBaselineAnchor.constraint(equalTo: listNameLabel.firstBaselineAnchor),
+      listDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
+    ])
+  }
+  
+  func configureBoardDescriptionLabel() {
+    NSLayoutConstraint.activate([
+      boardDescriptionLabel.leadingAnchor.constraint(equalTo: boardNameLabel.trailingAnchor, constant: 5),
+      boardDescriptionLabel.firstBaselineAnchor.constraint(equalTo: boardNameLabel.firstBaselineAnchor),
+      boardDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25)
     ])
   }
 }

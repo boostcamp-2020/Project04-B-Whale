@@ -59,7 +59,7 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
   // MARK: - Method
   
   func updateBoardTitle(to title: String) {
-    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedTitle = title.trimmed
     boardTitle = trimmedTitle
   }
   
