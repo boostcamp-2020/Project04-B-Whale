@@ -112,7 +112,8 @@ const AddListBtnInput = ({ parent, id, history }) => {
 
     const setStateCard = (responseData) => {
         const { title, position } = responseData;
-        boardDetail.lists[boardDetail.lists.findIndex((v) => v.id === id)].cards.push({
+        const listIndex = boardDetail.lists.findIndex((v) => v.id === id);
+        boardDetail.lists[listIndex].cards.push({
             id: responseData.id,
             title,
             dueDate: responseData.dueDate,
@@ -120,6 +121,13 @@ const AddListBtnInput = ({ parent, id, history }) => {
             content: '',
             commentCount: 0,
         });
+        if (boardDetail.lists[listIndex].cards.length === 2) {
+            const emptyCardIndex = boardDetail.lists[listIndex].cards.findIndex(
+                (card) => card.id === 0,
+            );
+            if (emptyCardIndex === -1) return;
+            boardDetail.lists[listIndex].cards.splice(emptyCardIndex, 1);
+        }
         setBoardDetail({ ...boardDetail });
         setState('button');
     };
