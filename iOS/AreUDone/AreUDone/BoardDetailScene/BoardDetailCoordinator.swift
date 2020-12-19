@@ -89,9 +89,9 @@ extension BoardDetailCoordinator {
     navigationController?.popViewController(animated: true)
   }
   
-  func pushToInvitation(delegate: InvitationViewControllerDelegate) {
-    invitationCoordinator = InvitationCoordinator(router: router, boardId: boardId, delegate: delegate)
-  
+  func pushToInvitation(delegate: InvitationViewControllerDelegate, members: [User]) {
+    invitationCoordinator = InvitationCoordinator(router: router, boardId: boardId, members: members, delegate: delegate)
+    
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()
