@@ -122,13 +122,6 @@ const AddListBtnInput = ({ parent, id, history }) => {
             content: '',
             commentCount: 0,
         });
-        if (boardDetail.lists[listIndex].cards.length === 2) {
-            const emptyCardIndex = boardDetail.lists[listIndex].cards.findIndex(
-                (card) => card.id === 0,
-            );
-            if (emptyCardIndex === -1) return;
-            boardDetail.lists[listIndex].cards.splice(emptyCardIndex, 1);
-        }
         setBoardDetail({ ...boardDetail });
         setState('button');
     };
