@@ -60,15 +60,13 @@ const CommentInput = () => {
 
     const onClick = async () => {
         const response = await addComment({ cardId: card.id, content: commentInputState });
-        card.comments.push({
-            id: response.data.id,
-            createdAt: response.data.createdAt,
-            content: response.data.content,
-            user: {
-                name: response.data.user.name,
-            },
-        });
-        cardDispatch({ type: 'CHANGE_CARD_STATE', data: card });
+
+        if (response.status !== 201) {
+            alert('댓글을 생성할 수 없습니다.');
+            return;
+        }
+
+        cardDispatch({ type: 'ADD_COMMENT', comment: response.data });
         setIsOnFocus(!isOnFocus);
         setCommentInputState('');
     };

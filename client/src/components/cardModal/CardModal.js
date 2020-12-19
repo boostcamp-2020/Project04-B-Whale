@@ -109,6 +109,11 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'ADD_COMMENT':
+            state.data.comments.unshift(action.comment);
+            return {
+                ...state,
+            };
         case 'MODIFY_COMMENT':
             state.data.comments.forEach((comment) => {
                 if (comment.id === action.commentId) {
