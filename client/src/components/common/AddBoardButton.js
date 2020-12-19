@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HiPlus } from 'react-icons/hi';
-import Modal from '../common/CreateBoardModal';
+import Modal from './CreateBoardModal';
 
-const Button = styled.button`
-    width: 100%;
-    padding: 8px 0;
-    border: ${(props) => props.theme.border};
+const Button = styled.li`
+    display: flex;
+    padding: 7px 10px;
     font-size: 18px;
-    font-weight: 700;
-    text-align: center;
+    cursor: pointer;
 `;
 
 const AddBoardButton = () => {
