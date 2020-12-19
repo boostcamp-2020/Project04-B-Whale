@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BorderLayer: CALayer {
+final class AlertLayer: CALayer {
   
   // MARK: - Initializer
   
@@ -34,7 +34,7 @@ final class BorderLayer: CALayer {
 
 // MARK: - Extension Configure Method
 
-extension BorderLayer {
+extension AlertLayer {
   
   func configure() {
     backgroundColor = UIColor.clear.cgColor
