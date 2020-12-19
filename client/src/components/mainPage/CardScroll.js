@@ -19,6 +19,9 @@ const CardScrollWrapper = styled.div`
     border-radius: 1rem;
     padding: 0.5rem;
     margin: 10px 0;
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 const CardScroll = () => {
