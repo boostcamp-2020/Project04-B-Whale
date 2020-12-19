@@ -36,6 +36,7 @@ const CommentContainer = ({ comments }) => {
                             userName={comment.user.name}
                             commentCreatedAt={comment.createdAt}
                             commentContent={comment.content}
+                            profileImageUrl={comment.user.profileImageUrl}
                         />
                     );
                 })
