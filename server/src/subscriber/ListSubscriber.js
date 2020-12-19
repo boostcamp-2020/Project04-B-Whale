@@ -28,8 +28,11 @@ export class ListSubscriber {
     async afterUpdate(event) {
         const namespace = getNamespace('localstorage');
         if (!namespace?.get('userId')) return;
-
-        if (event.entity.position !== event.databaseEntity.position) return;
+        if (
+            event.entity.position !== undefined &&
+            event.entity.position !== event.databaseEntity.position
+        )
+            return;
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
         const user = await userService.getUserById(namespace.get('userId'));
