@@ -100,3 +100,11 @@ export const modifyCardContent = async ({ cardId, cardContent }) => {
     });
     return response;
 };
+
+export const removeCard = async ({ cardId }) => {
+    const response = await request({
+        url: `/api/card/${cardId}`,
+        method: 'DELETE',
+    });
+    return response;
+};
