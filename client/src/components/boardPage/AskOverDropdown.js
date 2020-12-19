@@ -83,7 +83,8 @@ const AskOverDropdown = (props) => {
     let time;
     useEffect(() => {
         time = setTimeout(async () => {
-            if (!input.current?.value) {
+            const replacedInput = input.current?.value?.replace(/ /g, '');
+            if (!input.current?.value || !replacedInput) {
                 setSearchedUsers([]);
                 return;
             }
