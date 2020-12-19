@@ -83,7 +83,7 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   }
   
   func searchUser(of searchKeyword: String) {
-    let trimmedSearchKeyword = searchKeyword.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedSearchKeyword = searchKeyword.trimmed
     guard !trimmedSearchKeyword.isEmpty else {
       users = .none
       return

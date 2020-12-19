@@ -127,7 +127,7 @@ private extension AddOrCancelView {
   @objc private func addButtonTapped() {
     guard
       let text = textFieldView.text,
-      !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      !text.trimmed.isEmpty
     else { return }
     
     delegate?.addButtonTapped(listTitle: text)

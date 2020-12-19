@@ -14,6 +14,10 @@ enum DateDividerFormat: String {
 
 extension String {
   
+  var trimmed: String {
+    self.trimmingCharacters(in: .whitespacesAndNewlines)
+  }
+  
   func toDateFormat(withDividerFormat dividerFormat: DateDividerFormat = .dash) -> Date {
     let dateFormatter = DateFormatter()
     let divider = dividerFormat.rawValue

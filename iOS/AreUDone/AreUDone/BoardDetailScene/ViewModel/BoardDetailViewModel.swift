@@ -134,10 +134,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   
   func updateBoardTitle(to title: String) {
-    boardService.updateBoard(withBoardId: boardId, title: title) { result in
+    let trimmedTitle = title.trimmed
+    boardService.updateBoard(withBoardId: boardId, title: trimmedTitle) { result in
       switch result {
       case .success(()):
-        self.boardTitle = title
+        self.boardTitle = trimmedTitle
         
       case .failure(let error):
         self.updateBoardTitleHandler?(self.boardTitle)

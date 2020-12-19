@@ -107,13 +107,16 @@ final class ListViewModel: ListViewModelProtocol {
   }
   
   func updateListTitle(to title: String) {
+    let trimmedTitle = title.trimmed
+    
     listService.updateList(
       ofId: list.id,
       position: nil,
-      title: title) { result in
+      title: trimmedTitle
+    ) { result in
       switch result {
       case .success(()):
-        self.listTitle = title
+        self.listTitle = trimmedTitle
         
       case .failure(let error):
         self.updateListTitleHandler?(self.listTitle)
