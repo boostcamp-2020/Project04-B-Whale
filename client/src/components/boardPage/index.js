@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -36,6 +36,7 @@ const Wrapper = styled.div`
 const ListWrapper = styled.div``;
 
 const Board = ({ match }) => {
+    const boardWrapper = useRef();
     const { id } = match.params;
     const [sidebarDisplay, setSidebarDisplay] = useState(false);
     const [invitedDropdownDisplay, setInvitedDropdownDisplay] = useState({
@@ -77,19 +78,25 @@ const Board = ({ match }) => {
         setBoardDetail(data);
     }, [id]);
 
+    const onMouseWheel = (e) => {
+        const isListArea = !!e.target.closest('.list');
+        if (isListArea) return;
+        boardWrapper.current.scrollBy({ left: e.deltaY * 2, behavior: 'smooth' });
+    };
+
     return (
         <>
             <BoardsProvider>
                 <Header />
             </BoardsProvider>
-            <MainContents backgroundColor={boardDetail.color}>
+            <MainContents backgroundColor={boardDetail.color} onWheel={onMouseWheel}>
                 <TopMenu
                     sidebarDisplay={sidebarDisplay}
                     setSidebarDisplay={setSidebarDisplay}
                     setInvitedDropdownDisplay={setInvitedDropdownDisplay}
                     setAskoverDropdownDisplay={setAskoverDropdownDisplay}
                 />
-                <Wrapper sidebar={sidebarDisplay}>
+                <Wrapper ref={boardWrapper} sidebar={sidebarDisplay}>
                     {Boolean(boardDetail.lists?.length) && (
                         <DndProvider backend={HTML5Backend}>
                             <ListWrapper style={{ display: 'flex' }}>
