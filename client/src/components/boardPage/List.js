@@ -290,6 +290,7 @@ export default function List({ title, id, index, moveList, position }) {
                         setCardModalVisible(false);
                     }}
                     cardId={cardId}
+                    listId={id}
                 />
             )}
         </>
