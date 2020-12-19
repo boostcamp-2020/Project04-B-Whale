@@ -95,19 +95,20 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
     const { cardDispatch } = useContext(CardContext);
     const contentTextArea = useRef();
 
-    const inverseEditOpen = () => {
-        if (editOpen) {
-            contentTextArea.current.value = commentContent;
-        } else {
-            contentTextArea.current.value = contentState;
-        }
-        setEditOpen(!editOpen);
-    };
-
     const onChange = (e) => {
         if (editOpen) {
             setContentState(e.target.value);
         }
+    };
+
+    const onClickEditButton = () => {
+        contentTextArea.current.value = contentState;
+        setEditOpen(true);
+    };
+
+    const onClickCloseButton = () => {
+        contentTextArea.current.value = commentContent;
+        setEditOpen(false);
     };
 
     const onClickSaveButton = async () => {
@@ -118,6 +119,8 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
         }
 
         cardDispatch({ type: 'MODIFY_COMMENT', commentId, commentContent: contentState });
+        setEditOpen(false);
+        contentTextArea.current.value = contentState;
     };
 
     const onClickDeleteButton = async () => {
@@ -148,11 +151,11 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
                         <SaveButton width="3.5rem" height="2rem" onClick={onClickSaveButton}>
                             저장
                         </SaveButton>
-                        <CloseButton width="2rem" onClick={inverseEditOpen} />
+                        <CloseButton width="2rem" onClick={onClickCloseButton} />
                     </CommentSaveCloseButtonContainer>
                 </CommentContentContainer>
                 <CommentEditDeleteContainer visible={!editOpen}>
-                    <CommentActionButton onClick={inverseEditOpen}>수정</CommentActionButton>
+                    <CommentActionButton onClick={onClickEditButton}>수정</CommentActionButton>
                     <CommentActionButton onClick={onClickDeleteButton}>삭제</CommentActionButton>
                 </CommentEditDeleteContainer>
             </CommentRightContainer>
