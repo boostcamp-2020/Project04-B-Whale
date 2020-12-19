@@ -33,6 +33,7 @@ final class EmptyIndicatorView: UIView {
   private lazy var emptyIndicatorLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    
     label.numberOfLines = 0
     label.font = UIFont.nanumB(size: 20)
     
@@ -54,10 +55,13 @@ final class EmptyIndicatorView: UIView {
 private extension EmptyIndicatorView {
   
   func configure() {
+    configureView()
+    configureEmptyIndicatorLabel()
+  }
+  
+  func configureView() {
     isHidden = true
     addSubview(emptyIndicatorLabel)
-    
-    configureEmptyIndicatorLabel()
   }
   
   func configureEmptyIndicatorLabel() {

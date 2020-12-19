@@ -13,11 +13,12 @@ final class SceneCoordinator: Coordinator {
   // MARK: - Property
   
   weak var parentCoordinator: Coordinator?
+  private var initCoordinator: Coordinator!
+  
   private var window: UIWindow?
+  private let router: Routable
   private let initCoordinatorFactory: CoordinatorFactoryable
   private let signinChecker: SigninCheckable
-  private let router: Routable
-  private var initCoordinator: Coordinator!
   
   
   // MARK: - Initializer
@@ -30,7 +31,7 @@ final class SceneCoordinator: Coordinator {
   ) {
     self.window = window
     self.router = router
-    initCoordinatorFactory = factory
+    self.initCoordinatorFactory = factory
     self.signinChecker = signinChecker
   }
   
@@ -38,7 +39,6 @@ final class SceneCoordinator: Coordinator {
   // MARK: - Method
   
   func start() -> UIViewController {
-    
     let signinCheckResult = signinChecker.check()
     
     initCoordinator = initCoordinatorFactory.coordinator(
@@ -46,6 +46,7 @@ final class SceneCoordinator: Coordinator {
       with: router
     )
     initCoordinator.parentCoordinator = self
+    
     let initViewController = initCoordinator.start()
     window?.rootViewController = initViewController
     window?.makeKeyAndVisible()
