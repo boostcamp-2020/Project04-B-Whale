@@ -46,19 +46,20 @@ const Sidebar = styled.div`
     position: absolute;
     flex-direction: column;
     box-shadow: -5px 5px 5px gray;
-    top: 80px;
+    top: 69px;
     width: 20%;
-    height: 92%;
+    height: 91%;
     margin-left: 100%;
     animation: ${(props) => (props.sidebarDisplay ? boxOpen : boxClose)} ease;
     animation-fill-mode: forwards;
     animation-duration: 0.2s;
-    z-index: 9999;
+    z-index: 99;
     @media ${(props) => props.theme.sideBar} {
         animation: none;
         animation: ${(props) => (props.sidebarDisplay ? mediaBoxOpen : boxClose)} ease;
         width: 70%;
         margin-left: 30%;
+        top: 53px;
     }
 `;
 

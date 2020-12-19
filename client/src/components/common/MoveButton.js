@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
     padding: 5px 10px;
-    width: 10em;
+    width: 7em;
     border: ${(props) => props.theme.border};
 `;
 

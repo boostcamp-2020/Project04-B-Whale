@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const ModalWrapper = styled.div`
     position: absolute;
     top: 2.2em;
-    left: 0.6em;
+    left: -11.4em;
     width: 300px;
     padding: 5px;
     background-color: ${(props) => props.theme.whiteColor};

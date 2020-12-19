@@ -7,6 +7,7 @@ import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
 import MemberButton from '../common/MemberButton';
 import MoveButton from '../common/MoveButton';
+import RemoveButton from '../common/RemoveButton';
 import { getCard } from '../../utils/cardRequest';
 import CardContext from '../../context/CardContext';
 import BoardDetailContext from '../../context/BoardDetailContext';
@@ -20,7 +21,7 @@ const DimmedModal = styled.div`
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
+    z-index: 9990;
 `;
 
 const ModalWrapper = styled.div`
@@ -30,7 +31,7 @@ const ModalWrapper = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 9999;
     overflow: auto;
     outline: 0;
 `;
@@ -48,6 +49,7 @@ const ModalInner = styled.div`
     padding: 1rem;
     border-radius: 0.2rem;
     overflow-y: scroll;
+    min-width: 385px;
 `;
 
 const CardModalLeftSideBar = styled.div`
@@ -118,7 +120,9 @@ const cardReducer = (state, action) => {
     }
 };
 
-const CardModal = ({ visible, closeModal, cardId }) => {
+const CardModal = ({ visible, closeModal, cardId, listId }) => {
+    if (visible) document.getElementById('root').style.overflow = 'hidden';
+
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [cardState, cardDispatch] = useReducer(cardReducer, {
         loading: false,
@@ -171,6 +175,11 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                             <ButtonList>
                                 <MemberButton />
                                 <MoveButton />
+                                <RemoveButton
+                                    cardId={cardId}
+                                    listId={listId}
+                                    closeModal={closeModal}
+                                />
                             </ButtonList>
                         </CardModalRightSideBar>
                     </ModalInner>

@@ -10,8 +10,7 @@ const Wrapper = styled.div`
     display: flex;
     width: 100%;
     max-width: 1100px;
-    height: 100%;
-    overflow: hidden;
+    height: fit-content;
     margin: 0 auto;
 `;
 const Main = ({ location }) => {

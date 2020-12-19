@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Member from './Member';
 
 const Wrapper = styled.div`
-    width: 100%;
+    width: fit-content;
     height: 5rem;
-    margin: 0 3rem;
+    margin: 1rem 2rem;
+    max-width: 80%;
 `;
 
 const CardMemberHeader = styled.div`
