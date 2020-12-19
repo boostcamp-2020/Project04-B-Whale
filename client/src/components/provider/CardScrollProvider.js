@@ -63,7 +63,7 @@ const CardScrollProvider = ({ children }) => {
         } catch (error) {
             cardScrollDispatch({ type: 'ERROR', error });
         }
-    }, [calendarStatus]);
+    }, [calendarStatus.selectedDate]);
 
     return (
         <CardScrollStatusContext.Provider value={cardScrollState}>
