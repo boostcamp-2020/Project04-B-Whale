@@ -19,3 +19,12 @@ export const modifyComment = async ({ commentId, commentContent }) => {
 
     return response;
 };
+
+export const deleteComment = async ({ commentId }) => {
+    const response = await request({
+        url: `/api/comment/${commentId}`,
+        method: 'DELETE',
+    });
+
+    return response;
+};

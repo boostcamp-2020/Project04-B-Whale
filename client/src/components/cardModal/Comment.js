@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import CardContext from '../../context/CardContext';
-import { modifyComment } from '../../utils/commentRequest';
+import { deleteComment, modifyComment } from '../../utils/commentRequest';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
 
@@ -113,14 +113,21 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
     const onClickSaveButton = async () => {
         const response = await modifyComment({ commentId, commentContent: contentState });
         if (response.status !== 200) {
-            if (response.status === 403) {
-                alert('댓글을 수정할 수 없습니다.');
-            }
-
+            alert('댓글을 수정할 수 없습니다.');
             return;
         }
 
         cardDispatch({ type: 'MODIFY_COMMENT', commentId, commentContent: contentState });
+    };
+
+    const onClickDeleteButton = async () => {
+        const response = await deleteComment({ commentId });
+        if (response.status !== 204) {
+            alert('댓글을 삭제할 수 없습니다.');
+            return;
+        }
+
+        cardDispatch({ type: 'DELETE_COMMENT', commentId });
     };
 
     return (
@@ -146,7 +153,7 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
                 </CommentContentContainer>
                 <CommentEditDeleteContainer visible={!editOpen}>
                     <CommentActionButton onClick={inverseEditOpen}>수정</CommentActionButton>
-                    <CommentActionButton>삭제</CommentActionButton>
+                    <CommentActionButton onClick={onClickDeleteButton}>삭제</CommentActionButton>
                 </CommentEditDeleteContainer>
             </CommentRightContainer>
         </CommentWrapper>

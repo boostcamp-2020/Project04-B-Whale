@@ -110,14 +110,18 @@ const cardReducer = (state, action) => {
                 data: action.data,
             };
         case 'MODIFY_COMMENT':
-            const { comments } = state.data;
-            const { commentId } = action;
-            const { commentContent } = action;
-            comments.forEach((comment) => {
-                if (comment.id === commentId) {
-                    comment.content = commentContent;
+            state.data.comments.forEach((comment) => {
+                if (comment.id === action.commentId) {
+                    comment.content = action.commentContent;
                 }
             });
+            return {
+                ...state,
+            };
+        case 'DELETE_COMMENT':
+            state.data.comments = state.data.comments.filter(
+                (comment) => comment.id !== action.commentId,
+            );
             return {
                 ...state,
             };
