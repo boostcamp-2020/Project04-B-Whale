@@ -10,14 +10,23 @@ import NetworkFramework
 
 final class CalendarPickerCoordinator: NavigationCoordinator {
   
-  private let selectedDate: Date
-  var navigationController: UINavigationController?
+  // MARK:- Property
+  
   let router: Routable
+  
+  var navigationController: UINavigationController?
+  private let selectedDate: Date
+  
+  
+  // MARK:- Initializer
   
   init(router: Routable, selectedDate: Date) {
     self.router = router
     self.selectedDate = selectedDate
   }
+  
+  
+  // MARK:- Method
   
   func start() -> UIViewController {
     let cardService = CardService(router: router)
@@ -31,6 +40,8 @@ final class CalendarPickerCoordinator: NavigationCoordinator {
   }
 }
 
+
+// MARK:- Extension
 
 extension CalendarPickerCoordinator {
   
