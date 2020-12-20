@@ -33,6 +33,7 @@ const CommentContainer = ({ comments }) => {
                     <Comment
                         key={comment.id}
                         commentId={comment.id}
+                        userId={comment.user.id}
                         userName={comment.user.name}
                         commentCreatedAt={comment.createdAt}
                         commentContent={comment.content}

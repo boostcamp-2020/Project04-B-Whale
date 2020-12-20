@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { decode } from 'jsonwebtoken';
 import CardContext from '../../context/CardContext';
 import { deleteComment, modifyComment } from '../../utils/commentRequest';
 import CloseButton from './CloseButton';
@@ -70,7 +71,6 @@ const CommentContentTextArea = styled.textarea`
 `;
 
 const CommentEditDeleteContainer = styled.span`
-    display: ${(props) => (props.visible ? 'inline-block' : 'none')};
     margin-left: 0.3rem;
 `;
 
@@ -89,11 +89,23 @@ const CommentSaveCloseButtonContainer = styled.div`
     align-items: center;
 `;
 
-const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profileImageUrl }) => {
+const Comment = ({
+    commentId,
+    userId,
+    userName,
+    commentCreatedAt,
+    commentContent,
+    profileImageUrl,
+}) => {
     const [editOpen, setEditOpen] = useState(false);
     const [contentState, setContentState] = useState(commentContent);
     const { cardDispatch } = useContext(CardContext);
     const contentTextArea = useRef();
+
+    const userIdFromAccessToken = parseInt(
+        decode(localStorage.getItem('jwt').replace(/Bearer /gi, ''))?.userId,
+        10,
+    );
 
     const onChange = (e) => {
         if (editOpen) {
@@ -154,10 +166,14 @@ const Comment = ({ commentId, userName, commentCreatedAt, commentContent, profil
                         <CloseButton width="2rem" onClick={onClickCloseButton} />
                     </CommentSaveCloseButtonContainer>
                 </CommentContentContainer>
-                <CommentEditDeleteContainer visible={!editOpen}>
-                    <CommentActionButton onClick={onClickEditButton}>수정</CommentActionButton>
-                    <CommentActionButton onClick={onClickDeleteButton}>삭제</CommentActionButton>
-                </CommentEditDeleteContainer>
+                {!editOpen && userIdFromAccessToken === userId && (
+                    <CommentEditDeleteContainer>
+                        <CommentActionButton onClick={onClickEditButton}>수정</CommentActionButton>
+                        <CommentActionButton onClick={onClickDeleteButton}>
+                            삭제
+                        </CommentActionButton>
+                    </CommentEditDeleteContainer>
+                )}
             </CommentRightContainer>
         </CommentWrapper>
     );
