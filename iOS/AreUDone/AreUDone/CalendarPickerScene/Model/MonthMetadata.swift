@@ -8,6 +8,7 @@
 import Foundation
 
 struct MonthMetadata {
+  
   let numberOfDays: Int
   let firstDay: Date
   let firstDayIndex: Int
