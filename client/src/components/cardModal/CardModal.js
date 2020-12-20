@@ -109,6 +109,27 @@ const cardReducer = (state, action) => {
                 ...state,
                 data: action.data,
             };
+        case 'ADD_COMMENT':
+            state.data.comments.unshift(action.comment);
+            return {
+                ...state,
+            };
+        case 'MODIFY_COMMENT':
+            state.data.comments.forEach((comment) => {
+                if (comment.id === action.commentId) {
+                    comment.content = action.commentContent;
+                }
+            });
+            return {
+                ...state,
+            };
+        case 'DELETE_COMMENT':
+            state.data.comments = state.data.comments.filter(
+                (comment) => comment.id !== action.commentId,
+            );
+            return {
+                ...state,
+            };
         case 'ERROR':
             return {
                 loading: false,
