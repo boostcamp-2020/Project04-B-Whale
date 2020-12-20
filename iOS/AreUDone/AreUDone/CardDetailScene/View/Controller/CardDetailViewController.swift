@@ -363,7 +363,7 @@ private extension CardDetailViewController {
   func bindingPrepareForUpdateMemberView() {
     viewModel.bindingPrepareForUpdateMemberView { [weak self] (cardId, boardId, cardMembers) in
       guard let self = self else { return }
-      self.cardDetailCoordinator?.showMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
+      self.cardDetailCoordinator?.presentMemberUpdate(with: cardId, boardId: boardId, cardMember: cardMembers, delegate: self)
     }
   }
   
@@ -467,7 +467,7 @@ extension CardDetailViewController: UIGestureRecognizerDelegate {
 extension CardDetailViewController: CardDetailContentViewDelegate {
   
   func cardDetailContentEditButtonTapped(with content: String) {
-    cardDetailCoordinator?.showContentInput(with: content, delegate: self)
+    cardDetailCoordinator?.pushToContentInput(with: content, delegate: self)
   }
 }
 
@@ -477,7 +477,7 @@ extension CardDetailViewController: CardDetailContentViewDelegate {
 extension CardDetailViewController: CardDetailDueDateViewDelegate {
   
   func cardDetailDueDateEditButtonTapped(with dateString: String) {
-    cardDetailCoordinator?.showCalendar(with: dateString, delegate: self)
+    cardDetailCoordinator?.presentCalendar(with: dateString, delegate: self)
   }
 }
 
