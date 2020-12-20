@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum SingleSection {
+  case main
+}

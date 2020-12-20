@@ -14,8 +14,8 @@ protocol CardDetailMemberViewDelegate: NSObject {
 final class CardDetailMemberView: UIView {
   
   // TODO:- 위치변경, Item 변경
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, User>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, User>
+  typealias DataSource = UICollectionViewDiffableDataSource<SingleSection, User>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<SingleSection, User>
   
   // MARK:- Property
   
