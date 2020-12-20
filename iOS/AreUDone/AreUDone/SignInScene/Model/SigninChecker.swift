@@ -19,8 +19,10 @@ protocol SigninCheckable {
 
 final class SigninChecker: SigninCheckable {
   
+  // MARK:- Method
+  
   func check() -> SigninCheckResult {
-    if let _ = Keychain.shared.loadValue(forKey: "token") {
+    if let _ = Keychain.shared.loadValue(forKey: KeyChainConstant.token) {
       return .isSigned
     }
     return .isNotSigned
