@@ -16,11 +16,13 @@ const Row = styled.div`
         background-color: ${(props) => props.theme.lightGrayColor};
         color: ${(props) => props.theme.grayColor};
     }
-    & > .today {
+    & .today {
+        border: 1px solid ${(props) => props.theme.lightRedColor};
         background-color: ${(props) => props.theme.lightRedColor};
         color: ${(props) => props.theme.whiteColor};
     }
-    & > .selected {
+    & .selected {
+        border: 1px solid ${(props) => props.theme.blueColor};
         background-color: ${(props) => props.theme.blueColor};
         color: ${(props) => props.theme.whiteColor};
     }
@@ -42,6 +44,10 @@ const Day = styled.div`
     }
     &:last-child {
         color: ${(props) => props.theme.blueColor};
+    }
+
+    @media ${(props) => props.theme.sideBar} {
+        font-size: 27px;
     }
 `;
 
@@ -94,7 +100,8 @@ const CalendarBody = () => {
                             return (
                                 <CalendarDate
                                     key={current.format('YYYY-MM-DD')}
-                                    className={`${isToday} ${isSelected} ${isGrayed}`}
+                                    className={`${isToday} ${isSelected}`}
+                                    isGrayed={isGrayed}
                                     onClick={onClickChangeSelectedDate}
                                     date={current}
                                     count={existCard && existCard.count}

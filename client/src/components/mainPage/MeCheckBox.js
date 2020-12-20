@@ -14,6 +14,10 @@ const CheckBoxWrapper = styled.div`
     padding: 5px;
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radiusSmall};
+
+    @media ${(props) => props.theme.sideBar} {
+        margin: 0 10px;
+    }
 `;
 
 const Label = styled.label.attrs({
@@ -53,7 +57,7 @@ const MeCheckBox = () => {
         <Wrapper>
             <CheckBoxWrapper>
                 <CheckBox defaultChecked={member} onChange={onChangeMeCheckBox} />
-                <Label>Me</Label>
+                <Label>내 카드만 보기</Label>
             </CheckBoxWrapper>
         </Wrapper>
     );

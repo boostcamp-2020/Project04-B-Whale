@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     display: flex;
     width: 100%;
     max-width: 1100px;
+    height: fit-content;
     margin: 0 auto;
 `;
 const Main = ({ location }) => {
@@ -17,6 +18,7 @@ const Main = ({ location }) => {
     if (token) {
         localStorage.setItem('jwt', token);
     }
+    document.getElementById('root').style.overflow = 'auto';
 
     return (
         <BoardsProvider>

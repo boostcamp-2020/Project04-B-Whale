@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { VscTriangleDown } from 'react-icons/vsc';
 import BoardsDropdown from './BoardsDropdown';
 
 const Button = styled.button`
-    margin: 5px 10px;
+    display: flex;
     padding: 5px 10px;
+    border-radius: ${(props) => props.theme.radiusSmall};
+    font-size: 20px;
 `;
 
 const BoardsButton = () => {
@@ -15,12 +18,15 @@ const BoardsButton = () => {
     };
 
     return (
-        <div>
-            <Button onClick={onClickDisplayDropdown}>Boards</Button>
+        <>
+            <Button onClick={onClickDisplayDropdown}>
+                <div>Boards</div>
+                <VscTriangleDown size={20} />
+            </Button>
             {isDropdownDisplay ? (
                 <BoardsDropdown onClose={() => setIsDropdownDisplay(false)} />
             ) : null}
-        </div>
+        </>
     );
 };
 

@@ -5,8 +5,13 @@ import CalendarBody from './CalendarBody';
 
 const CalendarWrapper = styled.div`
     margin: 20px 5px;
+    margin-bottom: 10px;
     border: ${(props) => props.theme.border};
     border-radius: ${(props) => props.theme.radius};
+
+    @media ${(props) => props.theme.sideBar} {
+        margin: 10px;
+    }
 `;
 
 const Calendar = () => {

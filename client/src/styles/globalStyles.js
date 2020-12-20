@@ -15,14 +15,20 @@ const GlobalStyle = createGlobalStyle`
       text-decoration: none;
       user-select: none;
   }
-  html {
-    height: 100%;
+
+  @font-face {
+    font-family: 'NanumBarunpen';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
   }
+
   body {
-    height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* height: 100%;  */
+    font-family: NanumBarunpen;
   }
   #root{
-    height: 100%;
+        height: 100%; 
   }
   button {
       cursor: pointer;

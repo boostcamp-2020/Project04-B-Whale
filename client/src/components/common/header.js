@@ -1,57 +1,77 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Modal from './CreateBoardModal';
+import { ImHome } from 'react-icons/im';
 import BoardsButton from './BoardsButton';
+import logo from '../../image/app_logo.png';
 
 const HeaderDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 10%;
-    min-height: 50px;
-    background-color: #f73f52;
-`;
-
-const HeaderTitle = styled.div`
-    color: white;
-`;
-
-const AddBoardBtn = styled.button`
     padding: 5px 10px;
-    margin-right: 10px;
+    width: 100%;
+    min-height: 50px;
+    background-color: rgba(0, 0, 0, 0.1);
 `;
+
+const LogoImg = styled.img`
+    width: 200px;
+    cursor: pointer;
+
+    @media ${(props) => props.theme.sideBar} {
+        width: 140px;
+    }
+`;
+
+const ButtonDiv = styled.div`
+    display: flex;
+    padding-left: 10px;
+    align-items: center;
+`;
+
+const GoCalendarBtn = styled(ImHome)`
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+`;
+
+const HeaderTitle = styled.div``;
 
 const LogoutBtn = styled.button`
     padding: 5px 10px;
-    margin-right: 10px;
+    border-radius: ${(props) => props.theme.radiusSmall};
+    font-size: 20px;
 `;
 
 const Header = () => {
-    const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
-
     const logoutHandler = () => {
         localStorage.removeItem('jwt');
-        document.location = '/';
+        document.location = '/login';
     };
 
+    const goMainBtnHandler = () => {
+        document.location = '/';
+    };
     return (
         <>
             <HeaderDiv>
-                <BoardsButton />
-                <HeaderTitle>TODO LIST</HeaderTitle>
+                <ButtonDiv>
+                    <GoCalendarBtn onClick={goMainBtnHandler} />
+                    <BoardsButton />
+                </ButtonDiv>
+                <HeaderTitle>
+                    <LogoImg
+                        src={logo}
+                        alt="AreUDone logo"
+                        onClick={() => {
+                            document.location = '/';
+                        }}
+                    />
+                </HeaderTitle>
 
-                <div>
-                    <AddBoardBtn onClick={() => setCreateBoardModalVisible(true)}>+</AddBoardBtn>
-                    <LogoutBtn onClick={logoutHandler}>로그아웃</LogoutBtn>
-                </div>
+                <LogoutBtn onClick={logoutHandler}>로그아웃</LogoutBtn>
             </HeaderDiv>
-            {createBoardModalVisible && (
-                <Modal
-                    visible={createBoardModalVisible}
-                    onClose={() => setCreateBoardModalVisible(false)}
-                />
-            )}
         </>
     );
 };

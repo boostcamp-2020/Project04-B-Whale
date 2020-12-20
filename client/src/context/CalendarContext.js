@@ -40,6 +40,20 @@ export const CalendarReducer = (state, action) => {
                 cardCount,
             };
         }
+        case 'CHANGE_DUEDATE': {
+            const { cardCount } = action;
+            return {
+                ...state,
+                cardCount,
+            };
+        }
+        case 'DELETE_CARD': {
+            const { cardCount } = action;
+            return {
+                ...state,
+                cardCount,
+            };
+        }
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }

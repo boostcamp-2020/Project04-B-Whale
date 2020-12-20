@@ -1,0 +1,48 @@
+name: Frontend CI/CD on Branch 'master'
+on:
+  push:
+    branches: [ master ]
+    paths: [ 'client/**' ]
+  pull_request:
+    branches: [ master ]
+    paths: [ 'client/**' ]
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+    working-directory: ./client
+jobs:
+  buildable-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12.x
+      - run: npm install
+      - run: npm run build
+  deploy:
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    needs: buildable-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create environment files
+        run: |
+          touch .env
+          for env in $MASTER_FRONTEND_ENVIRONMENTS
+          do
+            echo $env >> .env
+          done
+        env:
+          MASTER_FRONTEND_ENVIRONMENTS: ${{ secrets.MASTER_FRONTEND_ENVIRONMENTS }}
+      - uses: akhileshns/heroku-deploy@v3.7.8
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_MASTER_FRONTEND_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: ./client
+          env_file: .env
+        env:
+          HD_NODE_ENV: production

@@ -1,0 +1,15 @@
+.react-datepicker-time__input {
+    width:95% !important; 
+}
+
+.saturday {
+    color: #588dff;
+}
+
+.sunday {
+    color: #f76e7c;
+}
+
+.day-disable {
+    color: #cccccc;
+}

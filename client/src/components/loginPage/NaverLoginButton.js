@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import image from '../../image/naverLoginBtn.PNG';
 
 const NaverLoginButtonImg = styled.img`
-    width: 20%;
+    width: 300px;
     position: absolute;
-    top: 70%;
-    left: 40%;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     cursor: pointer;
 `;
 
