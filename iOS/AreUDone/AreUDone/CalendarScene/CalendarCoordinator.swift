@@ -22,6 +22,7 @@ final class CalendarCoordinator: NavigationCoordinator {
   private var calendarPickerCoordinator: NavigationCoordinator!
   private var cardDetailCoordinator: NavigationCoordinator!
   
+  
   // MARK: - Initializer
   
   init(router: Routable) {
@@ -54,7 +55,7 @@ final class CalendarCoordinator: NavigationCoordinator {
 
 extension CalendarCoordinator {
   
-  func didTapOnDate(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
+  func presentCalendarPicker(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
     calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: selectedDate)
     calendarPickerCoordinator.navigationController = navigationController
     
@@ -66,7 +67,7 @@ extension CalendarCoordinator {
     navigationController?.present(calendarPickerViewController, animated: true)
   }
   
-  func showCardDetail(for id: Int) {
+  func pushToCardDetail(for id: Int) {
     cardDetailCoordinator = CardDetailCoordinator(id: id, router: self.router)
     cardDetailCoordinator.navigationController = navigationController
     
