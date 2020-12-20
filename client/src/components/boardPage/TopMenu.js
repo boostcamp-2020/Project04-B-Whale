@@ -165,12 +165,9 @@ const TopMenu = ({
                 if (board.id === boardDetail.id) board.title = inputContent;
                 return board;
             });
-            console.log(newMyBoards);
-            console.log(newInvitedBoards);
             const newBoards = { myboards: newMyBoards, invitedBoards: newInvitedBoards };
             boardsDispatch({ type: 'MODIFY_BOARD', boards: newBoards });
 
-            // TODO: boards 변경
             setInputState('span');
         }
     };
