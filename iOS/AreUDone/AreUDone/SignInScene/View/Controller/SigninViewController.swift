@@ -26,6 +26,7 @@ final class SigninViewController: UIViewController {
     }
   }
   
+  
   // MARK: - Initializer
   
   init?(coder: NSCoder, viewModel: SigninViewModelProtocol) {
@@ -78,11 +79,11 @@ final class SigninViewController: UIViewController {
 private extension SigninViewController {
   
   private func bindUI() {
-    videoPlayBinding()
+    bindingVideoPlay()
   }
 
-  func videoPlayBinding() {
-    viewModel.videoPlayBinding { [weak self] playerLayer in
+  func bindingVideoPlay() {
+    viewModel.bindingVideoPlay { [weak self] playerLayer in
       guard let self = self else { return }
       playerLayer.frame = self.videoBackgroundView.bounds
       self.videoBackgroundView.layer.addSublayer(playerLayer)
