@@ -17,8 +17,13 @@
 
 
 ## 프로젝트 소개
-> 다사용자 할일 관리 서비스
+> 실시간 다사용자 할일 관리 서비스
 
+
+## 데모 영상
+> [WEB 데모영상]()
+
+> [iOS 데모영상](https://www.youtube.com/watch?v=dYPaWi2tTGA&feature=youtu.be&ab_channel=%ED%95%84%EB%AF%B8%ED%95%84%EB%AF%B8TV)
 
 ## 기능
  - Calendar를 통해 전체 계획을 관리할 수 있다.
@@ -27,6 +32,11 @@
  - 카드를 리스트로 묶어서 관리할 수 있다.
 > [Card | List | Board 란?](https://github.com/boostcamp-2020/Project04-B-Whale/wiki/Card-%7C-List-%7C-Board-%EB%9E%80%3F)
 
+
+## 기술 특장점
+> [WEB 기술 특장점](https://github.com/boostcamp-2020/Project04-B-Whale/wiki/WEB-%EA%B8%B0%EC%88%A0-%ED%8A%B9%EC%9E%A5%EC%A0%90)
+
+> [iOS 기술 특장점](https://github.com/boostcamp-2020/Project04-B-Whale/wiki/iOS-%EA%B8%B0%EC%88%A0-%ED%8A%B9%EC%9E%A5%EC%A0%90)
 
 ## 멤버들
 
