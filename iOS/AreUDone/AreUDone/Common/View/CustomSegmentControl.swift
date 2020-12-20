@@ -68,7 +68,7 @@ private extension CustomSegmentedControl {
     configureView()
     configureButton()
     
-    configStackView()
+    configureStackView()
     configureSelectorView()
   }
   
@@ -117,10 +117,9 @@ private extension CustomSegmentedControl {
       )
     )
     selectorView.backgroundColor = selectorViewColor
-    addSubview(selectorView)
   }
   
-  private func configStackView() {
+  private func configureStackView() {
     addSubview(stackView)
     
     NSLayoutConstraint.activate([
@@ -158,9 +157,9 @@ private extension CustomSegmentedControl {
         return
       }
       
-      
       UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut) {
-        self.selectorView.frame.origin.x = selectorPosition + selectorWidth * (self.widthRate) - (selectorWidth * self.widthRate / 2)
+        self.selectorView.frame.origin.x =
+          selectorPosition + selectorWidth * (self.widthRate) - (selectorWidth * self.widthRate / 2)
       }.startAnimation()
       
       button.setTitleColor(selectorTextColor, for: .normal)

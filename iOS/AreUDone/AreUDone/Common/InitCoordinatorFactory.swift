@@ -9,6 +9,7 @@ import UIKit
 import NetworkFramework
 
 protocol CoordinatorFactoryable {
+  
   func coordinator(by isValid: SigninCheckResult, with router: Routable) -> Coordinator
 }
 
@@ -28,6 +29,7 @@ final class InitCoorndinatorFactory: CoordinatorFactoryable {
         tabbarController: UITabBarController(),
         coordinators: coordinators
       )
+      
     case .isNotSigned:
       return SigninCoordinator()
     }

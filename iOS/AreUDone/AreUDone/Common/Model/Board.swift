@@ -8,7 +8,10 @@
 import Foundation
 import RealmSwift
 
-class Boards: Object, Codable {
+final class Boards: Object, Codable {
+  
+  // MARK: - Property
+  
   @objc dynamic var id: Int = 0
   var myBoards = List<Board>()
   var invitedBoards = List<Board>()
@@ -17,18 +20,23 @@ class Boards: Object, Codable {
     return "id"
   }
   
+  
+  // MARK: - Initializer
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
-    let decodedMyBoards =
-      try container.decodeIfPresent([Board].self, forKey: .myBoards) ?? []
-    myBoards.append(objectsIn: decodedMyBoards)
+    let decodedMyBoards = try container.decodeIfPresent([Board].self, forKey: .myBoards) ?? []
+    let decodedInvitedBoards = try container.decodeIfPresent([Board].self, forKey: .invitedBoards) ?? []
     
-    let decodedInvitedBoards =
-      try container.decodeIfPresent([Board].self, forKey: .invitedBoards) ?? []
+    myBoards.append(objectsIn: decodedMyBoards)
     invitedBoards.append(objectsIn: decodedInvitedBoards)
   }
+  
+  
+  // MARK: - Method
   
   func fetchMyBoard() -> [Board] {
     return Array(myBoards)
@@ -39,7 +47,10 @@ class Boards: Object, Codable {
   }
 }
 
-class Board: Object, Codable {
+final class Board: Object, Codable {
+  
+  // MARK: - Property
+  
   @objc dynamic var id: Int = UUID().hashValue
   @objc dynamic var title: String = ""
   @objc dynamic var color: String = ""

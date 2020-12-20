@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
   private var sceneCoordinator: Coordinator!
-  private lazy var screenBorderAlertAnimator = ScreenBorderAlertAnimator(borderLayer: alertLayer)
+  private lazy var screenBorderAlertAnimator = AlertAnimator(alertLayer: alertLayer)
   private lazy var alertLayer: AlertLayer = {
     let rootView = window?.rootViewController?.view
 

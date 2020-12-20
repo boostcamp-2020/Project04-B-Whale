@@ -8,7 +8,9 @@
 import Foundation
 import RealmSwift
 
-class CardDetail: Object, Codable {
+final class CardDetail: Object, Codable {
+  
+  // MARK: - Property
   
   @objc dynamic var id: Int = 0
   @objc dynamic var title: String = ""
@@ -19,8 +21,16 @@ class CardDetail: Object, Codable {
   @objc dynamic var board: CardDetailBoard?
   @objc dynamic var list: CardDetailList?
   
+  override class func primaryKey() -> String? {
+    return "id"
+  }
+  
+  
+  // MARK: - Initializer
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     self.id = try container.decode(Int.self, forKey: .id)
@@ -36,6 +46,9 @@ class CardDetail: Object, Codable {
     self.comments.append(objectsIn: decodedComments)
   }
   
+  
+  // MARK: - Method
+  
   func fetchMembers() -> [User] {
     return Array(members)
   }
@@ -43,21 +56,27 @@ class CardDetail: Object, Codable {
   func fetchComment() -> [CardDetailComment] {
     return Array(comments)
   }
-  
-  override class func primaryKey() -> String? {
-    return "id"
-  }
 }
 
-class CardDetailComment: Object, Codable {
+final class CardDetailComment: Object, Codable {
+  
+  // MARK: - Property
   
   @objc dynamic var id: Int = 0
   @objc dynamic var content: String = ""
   @objc dynamic var createdAt: String = ""
   @objc dynamic var user: User?
   
+  override class func primaryKey() -> String? {
+    return "id"
+  }
+  
+  
+  // MARK: - Initializer
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     self.id = try container.decode(Int.self, forKey: .id)
@@ -66,23 +85,29 @@ class CardDetailComment: Object, Codable {
     self.user = try container.decode(User.self, forKey: .user)
   }
   
+  
+  // MARK: - Method
+  
   override func isEqual(_ object: Any?) -> Bool {
     guard let other = object as? CardDetailComment else { return false }
     
     return self.id == other.id
   }
-  
-  override class func primaryKey() -> String? {
-    return "id"
-  }
 }
 
-class CardDetailBoard: Object, Codable {
+final class CardDetailBoard: Object, Codable {
+  
+  // MARK: - Property
+  
   @objc dynamic var id: Int = 0
   @objc dynamic var title: String = ""
   
+  
+  // MARK: - Initializer
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     self.id = try container.decode(Int.self, forKey: .id)
@@ -91,15 +116,22 @@ class CardDetailBoard: Object, Codable {
 }
 
 
-class CardDetailList: Object, Codable {
+final class CardDetailList: Object, Codable {
+  
+  // MARK: - Property
+  
   @objc dynamic var id: Int = 0
   @objc dynamic var title: String = ""
   
-    required convenience init(from decoder: Decoder) throws {
-      self.init()
-      let container = try decoder.container(keyedBy: CodingKeys.self)
-
-      self.id = try container.decode(Int.self, forKey: .id)
-      self.title = try container.decode(String.self, forKey: .title)
-    }
+  
+  // MARK: - Initializer
+  
+  required convenience init(from decoder: Decoder) throws {
+    self.init()
+    
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+    self.id = try container.decode(Int.self, forKey: .id)
+    self.title = try container.decode(String.self, forKey: .title)
+  }
 }

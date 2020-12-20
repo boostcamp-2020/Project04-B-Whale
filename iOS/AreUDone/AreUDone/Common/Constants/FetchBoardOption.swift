@@ -8,7 +8,6 @@
 import Foundation
 
 enum FetchBoardOption {
-  
   case myBoards
   case invitedBoards
 }

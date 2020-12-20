@@ -10,12 +10,15 @@ import NetworkFramework
 
 protocol ImageServiceProtocol {
   
-  func fetchImage(with url: String, imageName: String, completionHandler: @escaping ((Result<Data, APIError>) -> Void))
+  func fetchImage(
+    with url: String,
+    imageName: String,
+    completionHandler: @escaping ((Result<Data, APIError>) -> Void)
+  )
 }
 
 final class ImageService: ImageServiceProtocol {
  
-  
   // MARK: - Property
   
   private let router: Routable
@@ -32,8 +35,11 @@ final class ImageService: ImageServiceProtocol {
   
   // MARK: - Method
   
-  func fetchImage(with url: String, imageName: String, completionHandler: @escaping ((Result<Data, APIError>) -> Void)) {
-    
+  func fetchImage(
+    with url: String,
+    imageName: String,
+    completionHandler: @escaping ((Result<Data, APIError>) -> Void)
+  ) {
     if let data = cacheManager.load(imageName: imageName) {
       completionHandler(.success(data))
       return

@@ -9,20 +9,21 @@ import Foundation
 import KeychainFramework
 
 protocol Keychainable {
+  
   func save(value: String, forKey key: String)
   func loadValue(forKey key: String) -> String?
   func removeValue(forKey key: String)
   func removeAll()
 }
 
-class Keychain: Keychainable {
+final class Keychain: Keychainable {
   
   // MARK: - Property
   
   static let shared = Keychain()
   
   private var secureStore: SecureStore {
-    let queryable = GenericPasswordQueryable(service: "AreUDone")
+    let queryable = GenericPasswordQueryable(service: KeyChainConstant.serviceName)
     return SecureStore(secureStoreQueryable: queryable)
   }
   

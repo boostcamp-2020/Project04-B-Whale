@@ -10,11 +10,11 @@ import NetworkFramework
 
 protocol UserServiceProtocol {
   
-  func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void))
+  func fetchMyInfo(completionHandler: @escaping ((Result<User, APIError>) -> Void))
   func fetchUserInfo(userName: String, completionHandler: @escaping ((Result<[User], APIError>) -> Void))
 }
 
-class UserService: UserServiceProtocol {
+final class UserService: UserServiceProtocol {
   
   // MARK: - Property
   
@@ -30,14 +30,15 @@ class UserService: UserServiceProtocol {
   
   // MARK: - Method
   
-  func requestMe(completionHandler: @escaping ((Result<User, APIError>) -> Void)) {
-    router.request(route: UserEndPoint.requestMe) { (result: Result<User, APIError>) in
+  func fetchMyInfo(completionHandler: @escaping ((Result<User, APIError>) -> Void)) {
+    router.request(route: UserEndPoint.fetchMyInfo) { (result: Result<User, APIError>) in
       completionHandler(result)
     }
   }
   
   func fetchUserInfo(userName: String, completionHandler: @escaping ((Result<[User], APIError>) -> Void)) {
-    router.request(route: UserEndPoint.searchUser(userName: userName)) { (result: Result<[User], APIError>)  in
+    let endPoint = UserEndPoint.fetchUserInfo(userName: userName)
+    router.request(route: endPoint) { (result: Result<[User], APIError>)  in
       completionHandler(result)
     }
   }

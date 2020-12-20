@@ -10,24 +10,31 @@ import NetworkFramework
 import KeychainFramework
 
 enum BoardEndPoint {
-  
-  case fetchAllBoards
   case createBoard(title: String, color: String)
-  case updateBoard(boardId: Int, title: String)
-  case deleteBoard(boardId: Int)
-  
   case inviteUserToBoard(boardId: Int, userId: Int)
-  case exitBoard(boardId: Int, invitationId: Int)
+
+  case fetchAllBoards
   case fetchBoardDetail(boardId: Int)
+
+  case updateBoard(boardId: Int, title: String)
+  
+  case deleteBoard(boardId: Int)
+  case exitBoard(boardId: Int, invitationId: Int)
 }
 
 extension BoardEndPoint: EndPointable {
   var environmentBaseURL: String {
     switch self {
-    case .fetchAllBoards:
+    case .createBoard:
       return "\(APICredentials.ip)/api/board"
       
-    case .createBoard:
+    case .inviteUserToBoard(let boardId, _):
+      return "\(APICredentials.ip)/api/board/\(boardId)/invitation"
+      
+    case .fetchBoardDetail(let boardId):
+      return "\(APICredentials.ip)/api/board/\(boardId)"
+      
+    case .fetchAllBoards:
       return "\(APICredentials.ip)/api/board"
       
     case .updateBoard(let boardId, _):
@@ -36,19 +43,13 @@ extension BoardEndPoint: EndPointable {
     case .deleteBoard(let boardId):
       return "\(APICredentials.ip)/api/board/\(boardId)"
       
-    case .inviteUserToBoard(let boardId, _):
-      return "\(APICredentials.ip)/api/board/\(boardId)/invitation"
-      
     case .exitBoard(let boardId, let invitationId):
       return "\(APICredentials.ip)/api/board/\(boardId)/invitation/\(invitationId)"
-      
-    case .fetchBoardDetail(let boardId):
-      return "\(APICredentials.ip)/api/board/\(boardId)"
     }
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() }
     return url
   }
   
@@ -58,11 +59,12 @@ extension BoardEndPoint: EndPointable {
   
   var httpMethod: HTTPMethod? {
     switch self {
-    case .fetchAllBoards, .fetchBoardDetail:
-      return .GET
-      
+    
     case .createBoard, .inviteUserToBoard:
       return .POST
+      
+    case .fetchAllBoards, .fetchBoardDetail:
+      return .GET
       
     case .updateBoard:
       return .PUT
@@ -88,12 +90,11 @@ extension BoardEndPoint: EndPointable {
     case .createBoard(let title, let color):
       return ["title": title, "color": color]
       
-    case .updateBoard(_, let title):
-      
-      return ["title": title]
-      
     case .inviteUserToBoard(_, let userId):
       return ["userId": "\(userId)"]
+      
+    case .updateBoard(_, let title):
+      return ["title": title]
       
     default:
       return nil

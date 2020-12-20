@@ -9,6 +9,9 @@ import Foundation
 
 @propertyWrapper
 struct UserDefault {
+  
+  // MARK: - Property
+  
   private let key: String
   
   var wrappedValue: String {
@@ -21,7 +24,10 @@ struct UserDefault {
   }
 }
 
-class UserInfo {
+
+final class UserInfo {
+  
+  // MARK: - Property
   
   static let shared = UserInfo()
   

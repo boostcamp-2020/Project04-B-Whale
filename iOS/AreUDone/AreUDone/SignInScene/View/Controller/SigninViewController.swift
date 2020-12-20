@@ -20,11 +20,12 @@ final class SigninViewController: UIViewController {
     }
   }
   
-  @IBOutlet weak var githubSigninButton: SigninButton! {
+  @IBOutlet private weak var githubSigninButton: SigninButton! {
     didSet {
       githubSigninButton.titleLabel?.font = UIFont.nanumSquareB(size: 18)
     }
   }
+  
   
   // MARK: - Initializer
   
@@ -77,12 +78,12 @@ final class SigninViewController: UIViewController {
 
 private extension SigninViewController {
   
-  private func bindUI() {
-    videoPlayBinding()
+  func bindUI() {
+    bindingVideoPlay()
   }
 
-  func videoPlayBinding() {
-    viewModel.videoPlayBinding { [weak self] playerLayer in
+  func bindingVideoPlay() {
+    viewModel.bindingVideoPlay { [weak self] playerLayer in
       guard let self = self else { return }
       playerLayer.frame = self.videoBackgroundView.bounds
       self.videoBackgroundView.layer.addSublayer(playerLayer)

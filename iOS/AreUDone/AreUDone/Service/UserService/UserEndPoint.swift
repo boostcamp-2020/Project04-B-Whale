@@ -14,38 +14,38 @@ enum LoginPlatform: String {
 }
 
 enum UserEndPoint {
-  
   case requestLogin(flatform: LoginPlatform)
-  case requestMe
-  case searchUser(userName: String)
+  
+  case fetchMyInfo
+  case fetchUserInfo(userName: String)
 }
 
 extension UserEndPoint: EndPointable {
-  
+    
   var environmentBaseURL: String {
     switch self {
     case .requestLogin(let flatform):
       return "\(APICredentials.ip)/api/oauth/login/\(flatform.rawValue)"
       
-    case .requestMe:
+    case .fetchMyInfo:
       return "\(APICredentials.ip)/api/user/me"
       
-    case .searchUser:
+    case .fetchUserInfo:
       return "\(APICredentials.ip)/api/user"
     }
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() }
     return url
   }
   
   var query: HTTPQuery? {
     switch self {
     
-    case .searchUser(let userName):
+    case .fetchUserInfo(let userName):
       return ["username": userName]
-    
+      
     default:
       return nil
     }
@@ -54,8 +54,8 @@ extension UserEndPoint: EndPointable {
   var httpMethod: HTTPMethod? {
     switch self {
     case .requestLogin,
-         .requestMe,
-         .searchUser:
+         .fetchMyInfo,
+         .fetchUserInfo:
       return .GET
     }
   }

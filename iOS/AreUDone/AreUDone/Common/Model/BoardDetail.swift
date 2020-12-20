@@ -8,7 +8,10 @@
 import Foundation
 import RealmSwift
 
-class BoardDetail: Object, Codable {
+final class BoardDetail: Object, Codable {
+  
+  // MARK: - Property
+  
   @objc dynamic var id: Int = 0
   @objc dynamic var creator: User?
   @objc dynamic var title = ""
@@ -20,34 +23,33 @@ class BoardDetail: Object, Codable {
     return "id"
   }
   
+  func fetchList(at index: Int) -> ListOfBoard {
+    let list = lists[index]
+    return ListOfBoard(value: list)
+  }
+  
+  // MARK: - Initializer
+  
   required convenience init(from decoder: Decoder) throws {
     self.init()
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     self.id = try container.decode(Int.self, forKey: .id)
     self.creator = try container.decode(User.self, forKey: .creator)
     self.title = try container.decode(String.self, forKey: .title)
     self.color = try container.decode(String.self, forKey: .color)
+    let decodedInvitedUsers = try container.decodeIfPresent([User].self, forKey: .invitedUsers) ?? []
+    let decodedLists = try container.decodeIfPresent([ListOfBoard].self, forKey: .lists) ?? []
     
-    let decodedInvitedUsers =
-      try container.decodeIfPresent([User].self, forKey: .invitedUsers) ?? []
     invitedUsers.append(objectsIn: decodedInvitedUsers)
-    
-    let decodedLists =
-      try container.decodeIfPresent([ListOfBoard].self, forKey: .lists) ?? []
     lists.append(objectsIn: decodedLists)
   }
   
   
-  func fetchInvitedUsers() -> [User] {
-    var users = [User]()
-    users.append(contentsOf: invitedUsers)
-    return users
-  }
+  // MARK: - Method
   
-  func fetchLists() -> [ListOfBoard] {
-    var lists = [ListOfBoard]()
-    lists.append(contentsOf: lists)
-    return lists
+  func fetchInvitedUsers() -> [User] {
+    return Array(invitedUsers)
   }
 }

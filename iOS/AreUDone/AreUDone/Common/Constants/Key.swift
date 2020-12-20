@@ -9,6 +9,7 @@ import Foundation
 
 enum KeyChainConstant {
   static let token = "token"
+  static let serviceName = "AreUDone"
 }
 
 enum NotificationConstant {

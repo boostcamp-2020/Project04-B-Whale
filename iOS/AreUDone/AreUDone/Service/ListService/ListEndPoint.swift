@@ -10,7 +10,6 @@ import NetworkFramework
 import KeychainFramework
 
 enum ListEndPoint {
-  
   case createList(boardId: Int, title: String)
   case updateList(listId: Int, position: Double?, title: String?)
   case deleteList(listId: Int)
@@ -31,7 +30,7 @@ extension ListEndPoint: EndPointable {
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } 
     return url
   }
   

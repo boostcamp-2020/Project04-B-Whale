@@ -18,17 +18,26 @@ protocol CardLocalDataSourceable {
     handler: @escaping (Card) -> Void
   )
   
-  func updateCardDetail(for id: Int, content: String?, dueDate: String?)
-  
   func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void))
   func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void))
   
+  func updateCardDetail(
+    for id: Int,
+    content: String?,
+    dueDate: String?
+  )
   func deleteCard(for cardId: Int)
+  
 }
 
 final class CardLocalDataSource: CardLocalDataSourceable {
   
+  // MARK: - Property
+  
   let realm = try! Realm()
+  
+  
+  // MARK: - Method
   
   func save(cards: [Card]) {
     realm.writeOnMain {
@@ -39,7 +48,6 @@ final class CardLocalDataSource: CardLocalDataSourceable {
   }
   
   func save(cardDetail: CardDetail) {
-    
     realm.writeOnMain {
       self.realm.add(cardDetail, update: .all)
     }
@@ -53,9 +61,32 @@ final class CardLocalDataSource: CardLocalDataSourceable {
     realm.writeOnMain(object: storedEndPoint) { object in
       self.realm.create(StoredEndPoint.self, value: object)
 
-      
       let object = Card(value: storedEndPoint.bodies as Any)
       handler(Card(value: object))
+    }
+  }
+  
+  func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void)) {
+    realm.writeOnMain {
+      let result = self.realm.objects(Card.self).filter("dueDate CONTAINS %@", "\(dateString)")
+      
+      let loadedCard = Array(result)
+      if loadedCard.isEmpty {
+        completionHandler(nil)
+        
+      } else {
+        let cards = Cards()
+        
+        cards.cards.append(objectsIn: loadedCard)
+        completionHandler(cards)
+      }
+    }
+  }
+  
+  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void)) {
+    realm.writeOnMain {
+      let result = self.realm.objects(CardDetail.self).filter("id == \(cardId)")
+      completionHandler(result.first)
     }
   }
   
@@ -71,30 +102,6 @@ final class CardLocalDataSource: CardLocalDataSourceable {
         card.dueDate = dueDate
         cardDetail.dueDate = dueDate
       }
-    }
-    
-  }
-  
-  func loadCards(at dateString: String, completionHandler: @escaping ((Cards?) -> Void)) {
-    realm.writeOnMain {
-      let result = self.realm.objects(Card.self).filter("dueDate CONTAINS %@", "\(dateString)")
-      let loadedCard = Array(result)
-      if loadedCard.isEmpty {
-        completionHandler(nil)
-      } else {
-        let cards = Cards()
-        
-        cards.cards.append(objectsIn: loadedCard)
-        completionHandler(cards)
-      }
-    }
-  }
-  
-  func loadCardDetail(for cardId: Int, completionHandler: @escaping ((CardDetail?) -> Void)) {
-    realm.writeOnMain {
-      let result = self.realm.objects(CardDetail.self).filter("id == \(cardId)")
-      
-      completionHandler(result.first)
     }
   }
   
