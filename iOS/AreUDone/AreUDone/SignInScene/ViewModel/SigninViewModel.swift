@@ -51,7 +51,7 @@ final class SigninViewModel: SigninViewModelProtocol {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 extension SigninViewModel {
   

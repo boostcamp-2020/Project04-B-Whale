@@ -18,7 +18,6 @@ final class CalendarCoordinator: NavigationCoordinator {
     return UIStoryboard.load(storyboard: .calendar)
   }
   
-  
   var navigationController: UINavigationController?
   private var calendarPickerCoordinator: NavigationCoordinator!
   private var cardDetailCoordinator: NavigationCoordinator!
