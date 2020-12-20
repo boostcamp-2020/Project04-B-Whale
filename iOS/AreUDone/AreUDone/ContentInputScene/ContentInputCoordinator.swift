@@ -12,14 +12,15 @@ final class ContentInputCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
+  private let router: Routable
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .contentInput)
   }
   
   var navigationController: UINavigationController?
-  
   private let content: String
-  private let router: Routable
+  
   
   // MARK:- Initializer
   
@@ -53,6 +54,8 @@ final class ContentInputCoordinator: NavigationCoordinator {
   }
 }
 
+
+// MARK:- Extension
 
 extension ContentInputCoordinator {
   
