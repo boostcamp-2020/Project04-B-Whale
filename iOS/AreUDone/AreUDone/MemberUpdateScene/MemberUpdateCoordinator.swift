@@ -12,15 +12,17 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
-  var navigationController: UINavigationController?
+  private let router: Routable
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .memberUpdate)
   }
-  private let router: Routable
   
+  var navigationController: UINavigationController?
   private let cardId: Int
   private let boardId: Int
   private let cardMember: [User]?
+  
   
   // MARK:- Initializer
   
@@ -63,6 +65,9 @@ final class MemberUpdateCoordinator: NavigationCoordinator {
     return memberUpdateViewController
   }
 }
+
+
+// MARK:- Extension
 
 extension MemberUpdateCoordinator {
   

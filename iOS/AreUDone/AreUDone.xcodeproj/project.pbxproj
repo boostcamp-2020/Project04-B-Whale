@@ -297,6 +297,7 @@
 		BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */; };
 		BD088BB1258F0BBE0056E95D /* SingleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088BB0258F0BBE0056E95D /* SingleSection.swift */; };
 		BD088BC8258F21A70056E95D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088BC7258F21A70056E95D /* UIColor+.swift */; };
+		BD088BD0258F40B80056E95D /* MemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088BCF258F40B80056E95D /* MemberSection.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -578,6 +579,7 @@
 		BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyIndicatorView.swift; sourceTree = "<group>"; };
 		BD088BB0258F0BBE0056E95D /* SingleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSection.swift; sourceTree = "<group>"; };
 		BD088BC7258F21A70056E95D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		BD088BCF258F40B80056E95D /* MemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSection.swift; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -1707,6 +1709,7 @@
 				BD088A942583A8840056E95D /* FetchBoardOption.swift */,
 				33A09234258DF60100072D12 /* Key.swift */,
 				BD088BB0258F0BBE0056E95D /* SingleSection.swift */,
+				BD088BCF258F40B80056E95D /* MemberSection.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2240,6 +2243,7 @@
 				336010C3256B786E009580A1 /* Card.swift in Sources */,
 				336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */,
 				BD2AA7F8256F4E3900EA8791 /* CardDetailDueDateView.swift in Sources */,
+				BD088BD0258F40B80056E95D /* MemberSection.swift in Sources */,
 				333BA587257792690057ACA4 /* ActivityEndPoint.swift in Sources */,
 				33F2D49C257A31DF008F1E06 /* ImageTitleView.swift in Sources */,
 				335AC4AF256E9A6B006A5C4A /* Board.swift in Sources */,

@@ -46,6 +46,9 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     self.cardService = cardService
   }
   
+  
+  // MARK:- Method
+  
   func fetchMemberData(completionHandler: @escaping (([User], [User]?) -> Void)) {
     boardService.fetchBoardDetail(with: boardId) { result in
       switch result {
@@ -59,7 +62,9 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
             return
           }
           
-          let notCardMember = Set(boardMember).subtracting(cardMember).sorted { $0.id < $1.id }
+          let notCardMember = Set(boardMember)
+            .subtracting(cardMember)
+            .sorted { $0.id < $1.id }
           completionHandler(notCardMember, cardMember)
         }
         
@@ -70,7 +75,11 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
     }
   }
   
-  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void)) {
+  func fetchProfileImage(
+    with urlAsString: String,
+    userName: String,
+    completionHandler: @escaping ((Data) -> Void)
+  ) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
       completionHandler(cachedData as Data)
     } else {
@@ -88,9 +97,11 @@ final class MemberUpdateViewModel: MemberUpdateViewModelProtocol {
   
   func updateCardMember(with members: [User], completionHandler: @escaping () -> Void) {
     var userIds = [Int]()
+    
     members.forEach { member in
       userIds.append(member.id)
     }
+    
     cardService.updateCardMember(id: cardId, userIds: userIds) { result in
       switch result {
       case .success(()):
