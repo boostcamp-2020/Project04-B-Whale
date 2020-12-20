@@ -12,11 +12,12 @@ final class CardAddCoordinator: NavigationCoordinator {
   
   // MARK: - Property
 
+  private let router: Routable
+  private let viewModel: ListViewModelProtocol
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .cardAdd)
   }
-  private let router: Routable
-  private let viewModel: ListViewModelProtocol
 
   var navigationController: UINavigationController?
   private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
