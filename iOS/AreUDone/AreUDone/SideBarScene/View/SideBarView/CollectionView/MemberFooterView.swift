@@ -70,7 +70,7 @@ private extension MemberFooterView {
       baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
     ])
     
-    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewDidTapped))
     baseView.addGestureRecognizer(gestureRecognizer)
   }
   
@@ -87,7 +87,7 @@ private extension MemberFooterView {
 
 private extension MemberFooterView {
   
-  @objc func baseViewTapped() {
+  @objc func baseViewDidTapped() {
     delegate?.pushToInvitation()
   }
 }

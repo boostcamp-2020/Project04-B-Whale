@@ -12,17 +12,17 @@ final class BoardDetailCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
-  var navigationController: UINavigationController?
-  private var invitationCoordinator: NavigationCoordinator!
-  private var cardDetailCoordinator: NavigationCoordinator!
-  private var cardAddCoordinator: NavigationCoordinator!
-
   private let boardId: Int
   private let router: Routable
   
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .boardDetail)
   }
+  
+  var navigationController: UINavigationController?
+  private var invitationCoordinator: NavigationCoordinator!
+  private var cardDetailCoordinator: NavigationCoordinator!
+  private var cardAddCoordinator: NavigationCoordinator!
   
   
   // MARK: - Initializer
@@ -89,9 +89,8 @@ extension BoardDetailCoordinator {
     navigationController?.popViewController(animated: true)
   }
   
-  func pushToInvitation(delegate: InvitationViewControllerDelegate, members: [User]) {
+  func pushInvitation(delegate: InvitationViewControllerDelegate, members: [User]) {
     invitationCoordinator = InvitationCoordinator(router: router, boardId: boardId, members: members, delegate: delegate)
-    
     invitationCoordinator.navigationController = navigationController
     
     let viewController = invitationCoordinator.start()
@@ -101,7 +100,7 @@ extension BoardDetailCoordinator {
     navigationController?.present(subNavigationController, animated: true)
   }
   
-  func pushToCardDetail(of cardId: Int) {
+  func pushCardDetail(of cardId: Int) {
     cardDetailCoordinator = CardDetailCoordinator(id: cardId, router: self.router)
     cardDetailCoordinator.navigationController = navigationController
     

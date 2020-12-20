@@ -19,9 +19,10 @@ final class AddOrCancelView: UIView {
   
   weak var delegate: AddOrCancelViewDelegate?
   
-  private lazy var textFieldView: TextField = {
-    let textField = TextField()
+  private lazy var textFieldView: PaddingTextField = {
+    let textField = PaddingTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
+    
     textField.font = UIFont.nanumB(size: 18)
     textField.backgroundColor = .white
     textField.layer.cornerRadius = 5
@@ -32,6 +33,7 @@ final class AddOrCancelView: UIView {
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.setTitle("취소", for: .normal)
     button.titleLabel?.font = UIFont.nanumB(size: 16)
     button.setTitleColor(.black, for: .normal)
@@ -42,6 +44,7 @@ final class AddOrCancelView: UIView {
   private lazy var addButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.setTitle("만들기", for: .normal)
     button.titleLabel?.font = UIFont.nanumB(size: 16)
     button.setTitleColor(.black, for: .normal)
@@ -64,6 +67,7 @@ final class AddOrCancelView: UIView {
     
     configure()
   }
+  
   
   // MARK: - Method
   
@@ -131,37 +135,12 @@ private extension AddOrCancelView {
     else { return }
     
     delegate?.addButtonTapped(listTitle: text)
-    textFieldView.resetText()
+    textFieldView.text = .none
   }
   
   @objc private func cancelButtonTapped() {
     delegate?.cancelButtonTapped()
     textFieldView.resignFirstResponder()
-    textFieldView.resetText()
-  }
-}
-
-
-final class TextField: UITextField {
-  
-  // MARK: - Property
-  
-  let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-  
-  override public func textRect(forBounds bounds: CGRect) -> CGRect {
-    return bounds.inset(by: padding)
-  }
-  
-  override public func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-    return bounds.inset(by: padding)
-  }
-  
-  override public func editingRect(forBounds bounds: CGRect) -> CGRect {
-    return bounds.inset(by: padding)
-  }
-  
-  func resetText() {
-    
-    text = .none
+    textFieldView.text = .none
   }
 }

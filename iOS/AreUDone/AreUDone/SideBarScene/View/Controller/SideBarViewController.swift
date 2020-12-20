@@ -221,7 +221,7 @@ extension SideBarViewController: UIGestureRecognizerDelegate {
 extension SideBarViewController: SideBarViewControllerProtocol {
   
   func pushToInvitation() {
-    coordinator?.pushToInvitation(delegate: self, members: viewModel.members())
+    coordinator?.pushInvitation(delegate: self, members: viewModel.members())
   }
   
   func start() {

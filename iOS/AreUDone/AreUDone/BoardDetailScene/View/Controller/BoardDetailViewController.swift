@@ -13,13 +13,7 @@ final class BoardDetailViewController: UIViewController {
   // MARK: - Property
   
   private let viewModel: BoardDetailViewModelProtocol
-  weak var coordinator: BoardDetailCoordinator?
-  private lazy var dataSource = BoardDetailCollectionViewDataSource(viewModel: viewModel, presentCardAddHandler: { [weak self] viewModel in
-    self?.coordinator?.presentCardAdd(to: viewModel)
-    
-  }) { [weak self] cardId in
-    self?.coordinator?.pushToCardDetail(of: cardId)
-  }
+  private let sideBarViewController: SideBarViewControllerProtocol
   
   private lazy var titleTextField: UITextField = {
     let textField = UITextField()
@@ -35,7 +29,7 @@ final class BoardDetailViewController: UIViewController {
     didSet {
       collectionView.dataSource = dataSource
       collectionView.delegate = self
-
+      
       collectionView.dragInteractionEnabled = true
       collectionView.dragDelegate = self
       collectionView.dropDelegate = self
@@ -47,10 +41,18 @@ final class BoardDetailViewController: UIViewController {
     
     return pageControl
   }()
+  
+  weak var coordinator: BoardDetailCoordinator?
+  private lazy var dataSource = BoardDetailCollectionViewDataSource(
+    viewModel: viewModel,
+    presentCardAddHandler: { [weak self] viewModel in
+      self?.coordinator?.presentCardAdd(to: viewModel)
+    }, presentCardDetailHandler: { [weak self] cardId in
+      self?.coordinator?.pushCardDetail(of: cardId)
+    })
   private var firstScrollOffset: CGFloat!
   private var scrollOffset: CGFloat!
   
-  private let sideBarViewController: SideBarViewControllerProtocol
   
   
   // MARK: - Initializer
@@ -67,15 +69,15 @@ final class BoardDetailViewController: UIViewController {
   }
   
   required init?(coder: NSCoder) {
-    fatalError("This controller must be initialized with code")
+    fatalError("This controller should be initialized with code")
   }
- 
+  
   
   // MARK: - Life Cycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     bindUI()
     configure()
     
@@ -110,8 +112,17 @@ private extension BoardDetailViewController {
   }
   
   func configureNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(cardWillDragged), name: Notification.Name.cardWillDragged, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(cardDidDragged), name: Notification.Name.cardDidDragged, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(cardWillDragged),
+      name: Notification.Name.cardWillDragged,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(cardDidDragged),
+      name: Notification.Name.cardDidDragged,
+      object: nil
+    )
   }
   
   func configurePageControl() {
@@ -125,10 +136,11 @@ private extension BoardDetailViewController {
   func configureNavigationBar() {
     navigationController?.isNavigationBarHidden = false
     navigationItem.largeTitleDisplayMode = .never
-    guard let navigationBar = navigationController?.navigationBar else { return }
     
+    guard let navigationBar = navigationController?.navigationBar else { return }
     configureNavigationBarAppearance(of: navigationBar)
     configureNavigationBarTitleView(of: navigationBar)
+    
     configureBarButtonItem()
   }
   
@@ -174,9 +186,9 @@ private extension BoardDetailViewController {
     )
     
     firstScrollOffset = (flowLayout.sectionInset.left
-                      + flowLayout.itemSize.width
-                      + flowLayout.minimumLineSpacing
-                      + flowLayout.itemSize.width/2) - (view.bounds.width/2)
+                          + flowLayout.itemSize.width
+                          + flowLayout.minimumLineSpacing
+                          + flowLayout.itemSize.width/2) - (view.bounds.width/2)
     scrollOffset = flowLayout.itemSize.width + flowLayout.minimumLineSpacing
     
     flowLayout.footerReferenceSize = CGSize(
@@ -207,6 +219,51 @@ private extension BoardDetailViewController {
 }
 
 
+// MARK: - Extension BindUI
+
+private extension BoardDetailViewController {
+  
+  func bindUI() {
+    bindingUpdateBoardDetailCollectionView()
+    bindingUpdateBackgroundColor()
+    bindingUpdateBoardTitle()
+    bindingUpdateControlPageCounts()
+  }
+  
+  func bindingUpdateBoardDetailCollectionView() {
+    viewModel.bindingUpdateBoardDetailCollectionView { [weak self] in
+      DispatchQueue.main.async {
+        self?.collectionView.reloadData()
+      }
+    }
+  }
+  
+  func bindingUpdateBackgroundColor() {
+    viewModel.bindingUpdateBackgroundColor { [weak self] colorString in
+      DispatchQueue.main.async {
+        self?.view.backgroundColor = colorString.toUIColor()
+      }
+    }
+  }
+  
+  func bindingUpdateBoardTitle() {
+    viewModel.bindingUpdateBoardTitle { [weak self] title in
+      DispatchQueue.main.async {
+        self?.titleTextField.text = title
+      }
+    }
+  }
+  
+  func bindingUpdateControlPageCounts() {
+    viewModel.bindingUpdateControlPageCounts { [weak self] counts in
+      DispatchQueue.main.async {
+        self?.pageControl.numberOfPages = counts
+      }
+    }
+  }
+}
+
+
 // MARK: - Extension UICollectionView Scroll / Delegate
 
 extension BoardDetailViewController: UICollectionViewDelegate {
@@ -214,7 +271,7 @@ extension BoardDetailViewController: UICollectionViewDelegate {
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     var renewedIndex: CGFloat
     var expectedX: CGFloat
-
+    
     if scrollView.contentOffset.x < firstScrollOffset {
       let index = scrollView.contentOffset.x / scrollOffset
       
@@ -224,7 +281,7 @@ extension BoardDetailViewController: UICollectionViewDelegate {
         targetX: targetContentOffset.pointee.x
       )
       expectedX = renewedIndex * firstScrollOffset
-
+      
     } else {
       let index = (scrollView.contentOffset.x - firstScrollOffset) / scrollOffset
       renewedIndex = makeRenewedIndex(
@@ -242,7 +299,7 @@ extension BoardDetailViewController: UICollectionViewDelegate {
   
   func makeRenewedIndex(with index: CGFloat, currentX: CGFloat, targetX: CGFloat) -> CGFloat {
     var renewedIndex: CGFloat
-
+    
     if currentX > targetX {
       renewedIndex = floor(index) // 왼쪽
     } else {
@@ -257,20 +314,18 @@ extension BoardDetailViewController: UICollectionViewDelegate {
 
 extension BoardDetailViewController: UICollectionViewDragDelegate {
   
-  // 1. 드래깅 시작
   func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
     guard let list = viewModel.fetchList(at: indexPath.item) else { return [] }
     
     let itemProvider = NSItemProvider(object: list)
-
     let dragItem = UIDragItem(itemProvider: itemProvider)
-        
+    
     return [dragItem]
   }
   
   func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
     NotificationCenter.default.post(name: Notification.Name.listWillDragged, object: nil)
-
+    
   }
   
   func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
@@ -327,14 +382,15 @@ extension BoardDetailViewController: UITextFieldDelegate {
     }
     textField.resignFirstResponder()
   }
-
+  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 }
 
-// MARK: - Extension objc
+
+// MARK: - Extension objc Method
 
 extension BoardDetailViewController {
   
@@ -344,37 +400,5 @@ extension BoardDetailViewController {
   
   @objc func cardDidDragged() {
     collectionView.dropDelegate = self
-  }
-}
-
-
-// MARK: - Extension bindUI
-
-private extension BoardDetailViewController {
-  
-  func bindUI() {
-    viewModel.bindingUpdateBoardDetailCollectionView { [weak self] in
-      DispatchQueue.main.async {
-        self?.collectionView.reloadData()
-      }
-    }
-    
-    viewModel.bindingUpdateBackgroundColor { [weak self] colorString in
-      DispatchQueue.main.async {
-        self?.view.backgroundColor = colorString.toUIColor()
-      }
-    }
-    
-    viewModel.bindingUpdateBoardTitle { [weak self] title in
-      DispatchQueue.main.async {
-        self?.titleTextField.text = title
-      }
-    }
-    
-    viewModel.bindingUpdateControlPageCounts { [weak self] counts in
-      DispatchQueue.main.async {
-        self?.pageControl.numberOfPages = counts
-      }
-    }
   }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 protocol ListFooterViewDelegate: AnyObject {
   
-  func baseViewTapped()
+  func baseViewDidTapped()
 }
 
 final class ListFooterView: UIView {
@@ -76,7 +76,7 @@ private extension ListFooterView {
   }
   
   func configureBaseView() {
-    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewDidTapped))
     buttonView.addGestureRecognizer(gestureRecognizer)
 
     
@@ -101,8 +101,8 @@ private extension ListFooterView {
 
 private extension ListFooterView {
   
-  @objc func baseViewTapped() {
-    delegate?.baseViewTapped()
+  @objc func baseViewDidTapped() {
+    delegate?.baseViewDidTapped()
   }
 }
 

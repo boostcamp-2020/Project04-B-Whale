@@ -18,13 +18,14 @@ final class ListTableViewCell: UITableViewCell, Reusable {
     view.backgroundColor = .white
     view.layer.cornerRadius = 5
 
-    view.layer.shadowColor = UIColor.black.cgColor
-    view.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-    view.layer.shadowRadius = 0.3
-    view.layer.shadowOpacity = 0.3
+    view.addShadow(
+      offset: CGSize(width: 0, height: 0.5),
+      radius: 0.3,
+      opacity: 0.3
+    )
+
     return view
   }()
-  
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +34,6 @@ final class ListTableViewCell: UITableViewCell, Reusable {
     
     return titleLabel
   }()
-  
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
