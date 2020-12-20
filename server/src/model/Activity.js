@@ -1,10 +1,11 @@
+import moment from 'moment-timezone';
 import {
+    BeforeInsert,
     Column,
     Entity,
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    CreateDateColumn,
 } from 'typeorm';
 import { Board } from './Board';
 
@@ -20,6 +21,13 @@ export class Activity {
     @JoinColumn({ name: 'board_id' })
     board;
 
-    @CreateDateColumn({ name: 'created_at', type: 'datetime' })
+    @Column({ name: 'created_at', type: 'datetime' })
     createdAt;
+
+    @BeforeInsert()
+    beforeInsert() {
+        if (this.createdAt === null || this.createdAt === undefined) {
+            this.createdAt = moment().tz('Asia/Seoul').format();
+        }
+    }
 }
