@@ -22,11 +22,14 @@ final class DayLabel: UILabel {
     super.init(coder: coder)
     configure()
   }
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension DayLabel {
   
-  
-  // MARK:- Method
-  
-  private func configure() {
+  func configure() {
     font = UIFont.nanumB(size: 12)
     textColor = .secondaryLabel
     textAlignment = .center

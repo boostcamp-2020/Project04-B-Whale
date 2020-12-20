@@ -104,9 +104,9 @@ final class CalendarPickerViewController: UIViewController {
     super.viewDidLoad()
     
     bindUI()
-    addGestureRecognizer()
+    addingGestureRecognizer()
     configure()
-
+    
     viewModel.fetchInitialCalendar()
   }
 }
@@ -126,14 +126,15 @@ private extension CalendarPickerViewController {
     view.addSubview(dimmedBackgroundView)
     view.addSubview(collectionView)
     view.addSubview(headerView)
+    timeSettingActionSheet.view.addSubview(timePicker)
     
-    configureDimmerViewConstraints()
-    configureCollectionViewConstraints()
-    configureHeaderViewConstraints()
+    configureDimmerView()
+    configureCollectionView()
+    configureHeaderView()
     configureTimeSettingActionSheet()
   }
   
-  func configureDimmerViewConstraints() {
+  func configureDimmerView() {
     NSLayoutConstraint.activate([
       dimmedBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       dimmedBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -142,7 +143,7 @@ private extension CalendarPickerViewController {
     ])
   }
   
-  func configureCollectionViewConstraints() {
+  func configureCollectionView() {
     NSLayoutConstraint.activate([
       collectionView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
@@ -151,7 +152,7 @@ private extension CalendarPickerViewController {
     ])
   }
   
-  func configureHeaderViewConstraints() {
+  func configureHeaderView() {
     NSLayoutConstraint.activate([
       headerView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
       headerView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
@@ -161,20 +162,21 @@ private extension CalendarPickerViewController {
   }
   
   func configureTimeSettingActionSheet() {
-    timeSettingActionSheet.view.addSubview(timePicker)
-      timeSettingActionSheet.view.heightAnchor.constraint(equalToConstant: 250).isActive = true
-      
-      NSLayoutConstraint.activate([
-        timePicker.leadingAnchor.constraint(equalTo: timeSettingActionSheet.view.leadingAnchor),
-        timePicker.trailingAnchor.constraint(equalTo: timeSettingActionSheet.view.trailingAnchor),
-        timePicker.topAnchor.constraint(equalTo: timeSettingActionSheet.view.topAnchor, constant: 20),
-        timePicker.bottomAnchor.constraint(equalTo: timeSettingActionSheet.view.bottomAnchor),
-        timePicker.heightAnchor.constraint(equalTo: timeSettingActionSheet.view.heightAnchor, multiplier: 0.5)
-      ])
+    NSLayoutConstraint.activate([
+      timeSettingActionSheet.view.heightAnchor.constraint(equalToConstant: 250),
+      timePicker.leadingAnchor.constraint(equalTo: timeSettingActionSheet.view.leadingAnchor),
+      timePicker.trailingAnchor.constraint(equalTo: timeSettingActionSheet.view.trailingAnchor),
+      timePicker.topAnchor.constraint(equalTo: timeSettingActionSheet.view.topAnchor, constant: 20),
+      timePicker.bottomAnchor.constraint(equalTo: timeSettingActionSheet.view.bottomAnchor),
+      timePicker.heightAnchor.constraint(equalTo: timeSettingActionSheet.view.heightAnchor, multiplier: 0.5)
+    ])
   }
   
-  func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dimmerViewDidTapped))
+  func addingGestureRecognizer() {
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(dimmerViewDidTapped)
+    )
     dimmedBackgroundView.addGestureRecognizer(tapRecognizer)
   }
 }

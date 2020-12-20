@@ -296,6 +296,7 @@
 		BD088B462589CEDE0056E95D /* CommentLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */; };
 		BD088B4E2589E5680056E95D /* EmptyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */; };
 		BD088BB1258F0BBE0056E95D /* SingleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088BB0258F0BBE0056E95D /* SingleSection.swift */; };
+		BD088BC8258F21A70056E95D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD088BC7258F21A70056E95D /* UIColor+.swift */; };
 		BD2AA727256CBE7600EA8791 /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */; };
 		BD2AA72D256CBEB400EA8791 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */; };
 		BD2AA736256CC97200EA8791 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA735256CC97200EA8791 /* CardContentView.swift */; };
@@ -576,6 +577,7 @@
 		BD088B452589CEDE0056E95D /* CommentLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentLocalDataSource.swift; sourceTree = "<group>"; };
 		BD088B4D2589E5680056E95D /* EmptyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyIndicatorView.swift; sourceTree = "<group>"; };
 		BD088BB0258F0BBE0056E95D /* SingleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSection.swift; sourceTree = "<group>"; };
+		BD088BC7258F21A70056E95D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		BD2AA726256CBE7600EA8791 /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		BD2AA72B256CBEB400EA8791 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD2AA735256CC97200EA8791 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -1615,6 +1617,7 @@
 				33C3FBB225862F01006DB60B /* Realm+.swift */,
 				334437722589CD010077DEC7 /* EndPointable+.swift */,
 				BD088B232588A4900056E95D /* UIScrollView+.swift */,
+				BD088BC7258F21A70056E95D /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2137,6 +2140,7 @@
 				BD59A689257E163100BF8928 /* MemberUpdateViewModel.swift in Sources */,
 				BD2AA7EE256F421E00EA8791 /* CardDetailStackView.swift in Sources */,
 				33C494C1258A5BCD0095DE39 /* ListLocalDataSource.swift in Sources */,
+				BD088BC8258F21A70056E95D /* UIColor+.swift in Sources */,
 				338364612565586800F92EE4 /* SigninViewModel.swift in Sources */,
 				BDEA7BFB2577768D00CF6B11 /* UserEndPoint.swift in Sources */,
 				BD2AA8BD2574D0A200EA8791 /* CommentView.swift in Sources */,
