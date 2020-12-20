@@ -12,8 +12,8 @@ import BoardDetailContext from '../../context/BoardDetailContext';
 import AskOverDropdown from './AskOverDropdown';
 import AddListOrCard from './AddListOrCard';
 import List from './List';
-import BoardsProvider from '../provider/BoardsProvider';
 import ActivityProvider from '../provider/ActivityProvider';
+import BoardsProvider from '../provider/BoardsProvider';
 
 const MainContents = styled.div`
     height: 100%;
@@ -91,13 +91,13 @@ const Board = ({ match }) => {
             <MainContents backgroundColor={boardDetail.color} onWheel={onMouseWheel}>
                 <BoardsProvider>
                     <Header />
+                    <TopMenu
+                        sidebarDisplay={sidebarDisplay}
+                        setSidebarDisplay={setSidebarDisplay}
+                        setInvitedDropdownDisplay={setInvitedDropdownDisplay}
+                        setAskoverDropdownDisplay={setAskoverDropdownDisplay}
+                    />
                 </BoardsProvider>
-                <TopMenu
-                    sidebarDisplay={sidebarDisplay}
-                    setSidebarDisplay={setSidebarDisplay}
-                    setInvitedDropdownDisplay={setInvitedDropdownDisplay}
-                    setAskoverDropdownDisplay={setAskoverDropdownDisplay}
-                />
                 <Wrapper ref={boardWrapper} sidebar={sidebarDisplay}>
                     {Boolean(boardDetail.lists?.length) && (
                         <DndProvider backend={HTML5Backend}>

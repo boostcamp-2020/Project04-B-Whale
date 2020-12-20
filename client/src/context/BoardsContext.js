@@ -14,6 +14,13 @@ export const BoardsReducer = (state, action) => {
                 ...boards,
             };
         }
+        case 'MODIFY_BOARD': {
+            const boards = action.data;
+            return {
+                ...state,
+                ...boards,
+            };
+        }
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }
