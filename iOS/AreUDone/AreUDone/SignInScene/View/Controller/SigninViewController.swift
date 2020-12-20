@@ -20,7 +20,7 @@ final class SigninViewController: UIViewController {
     }
   }
   
-  @IBOutlet weak var githubSigninButton: SigninButton! {
+  @IBOutlet private weak var githubSigninButton: SigninButton! {
     didSet {
       githubSigninButton.titleLabel?.font = UIFont.nanumSquareB(size: 18)
     }
@@ -78,7 +78,7 @@ final class SigninViewController: UIViewController {
 
 private extension SigninViewController {
   
-  private func bindUI() {
+  func bindUI() {
     bindingVideoPlay()
   }
 
