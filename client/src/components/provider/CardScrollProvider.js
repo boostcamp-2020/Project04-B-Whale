@@ -47,8 +47,13 @@ const CardScrollProvider = ({ children }) => {
             dueDate: moment(calendarStatus.selectedDate).add(1, 'day').format('YYYY-MM-DD'),
             member: calendarStatus.member,
         });
+
+        if (!Array.isArray(today?.cards) || !Array.isArray(tomorrow?.cards)) {
+            return;
+        }
+
         const cards = [...today.cards, ...tomorrow.cards];
-        const todayCardCount = today.cards.length;
+        const todayCardCount = today?.cards?.length;
         initNotification({ cards, todayCardCount });
     }, []);
 
