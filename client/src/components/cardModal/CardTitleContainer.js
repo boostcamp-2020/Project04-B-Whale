@@ -37,14 +37,23 @@ const CardTitle = styled.input`
 const CardListTitle = styled.div`
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
     padding-bottom: 1rem;
     color: #5e6d84;
     font-size: 0.9rem;
 `;
 
-const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
+const CardBoardTitle = styled.div`
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    color: #5e6d84;
+    font-size: 0.9rem;
+`;
+
+const CardTitleContainer = ({ cardTitle, cardListTitle, cardBoardTitle }) => {
     const { cardState, cardDispatch } = useContext(CardContext);
     const [cardTitleInput, setCardTitleInput] = useState(cardTitle);
     const card = cardState.data;
@@ -79,6 +88,7 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
     return (
         <Wrapper>
             <CardTitle defaultValue={cardTitle} onChange={onChange} onBlur={onBlur} />
+            <CardBoardTitle>포함된 보드: {cardBoardTitle}</CardBoardTitle>
             <CardListTitle>포함된 리스트: {cardListTitle}</CardListTitle>
         </Wrapper>
     );
