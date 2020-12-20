@@ -70,6 +70,10 @@ const Board = ({ match }) => {
 
     useEffect(async () => {
         const { data } = await getDetailBoard(id);
+        if (data.error) {
+            alert('잘못된 접근입니다.');
+            document.location = '/';
+        }
         data.lists.forEach((element) => {
             if (!element.cards.length) {
                 element.cards.splice(0, 0, { id: 0 });
