@@ -15,7 +15,7 @@ export class Comment {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'content', type: 'varchar' })
+    @Column({ name: 'content', type: 'varchar', charset: 'utf8mb4' })
     content;
 
     @Column({ name: 'created_at', type: 'datetime' })

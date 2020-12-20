@@ -8,7 +8,7 @@ export class List {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'title', type: 'varchar' })
+    @Column({ name: 'title', type: 'varchar', charset: 'utf8mb4' })
     title;
 
     @Column({ name: 'position', type: 'double' })
