@@ -9,10 +9,10 @@ export class Card {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'title', type: 'varchar' })
+    @Column({ name: 'title', type: 'varchar', charset: 'utf8mb4' })
     title;
 
-    @Column({ name: 'content', type: 'varchar' })
+    @Column({ name: 'content', type: 'varchar', charset: 'utf8mb4' })
     content;
 
     @Column({ name: 'position', type: 'double' })

@@ -9,10 +9,10 @@ export class Board {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'title', type: 'varchar' })
+    @Column({ name: 'title', type: 'varchar', charset: 'utf8mb4' })
     title;
 
-    @Column({ name: 'color', type: 'varchar' })
+    @Column({ name: 'color', type: 'varchar', charset: 'utf8mb4' })
     color;
 
     @ManyToOne(() => User, (user) => user.boards, { nullable: false })

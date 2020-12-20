@@ -11,13 +11,13 @@ export class User {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'social_id', type: 'varchar' })
+    @Column({ name: 'social_id', type: 'varchar', charset: 'utf8mb4' })
     socialId;
 
-    @Column({ name: 'name', type: 'varchar' })
+    @Column({ name: 'name', type: 'varchar', charset: 'utf8mb4' })
     name;
 
-    @Column({ name: 'profile_image_url', type: 'varchar' })
+    @Column({ name: 'profile_image_url', type: 'varchar', charset: 'utf8mb4' })
     profileImageUrl;
 
     @OneToMany(() => Board, (board) => board.creator)

@@ -1,6 +1,7 @@
+import moment from 'moment-timezone';
 import {
+    BeforeInsert,
     Column,
-    CreateDateColumn,
     Entity,
     JoinColumn,
     ManyToOne,
@@ -14,10 +15,10 @@ export class Comment {
     @PrimaryGeneratedColumn('increment', { type: 'int' })
     id;
 
-    @Column({ name: 'content', type: 'varchar' })
+    @Column({ name: 'content', type: 'varchar', charset: 'utf8mb4' })
     content;
 
-    @CreateDateColumn({ name: 'created_at', type: 'datetime' })
+    @Column({ name: 'created_at', type: 'datetime' })
     createdAt;
 
     @ManyToOne(() => User, (user) => user.comments, { nullable: false })
@@ -34,5 +35,12 @@ export class Comment {
         }
         this.content = content;
         return true;
+    }
+
+    @BeforeInsert()
+    beforeInsert() {
+        if (this.createdAt === null || this.createdAt === undefined) {
+            this.createdAt = moment().tz('Asia/Seoul').format();
+        }
     }
 }
