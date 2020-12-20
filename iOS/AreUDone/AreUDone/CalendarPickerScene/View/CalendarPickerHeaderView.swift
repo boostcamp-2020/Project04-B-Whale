@@ -23,7 +23,6 @@ final class CalendarPickerHeaderView: UIView {
     
     return label
   }()
-  
   private lazy var timeSettingButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +33,6 @@ final class CalendarPickerHeaderView: UIView {
     
     return button
   }()
-  
   private lazy var dayOfWeekStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +40,6 @@ final class CalendarPickerHeaderView: UIView {
     
     return stackView
   }()
-  
   private lazy var separatorView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +47,6 @@ final class CalendarPickerHeaderView: UIView {
     
     return view
   }()
-  
   private lazy var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.calendar = Calendar(identifier: .gregorian)
@@ -65,7 +61,6 @@ final class CalendarPickerHeaderView: UIView {
       monthLabel.text = dateFormatter.string(from: baseDate)
     }
   }
-  
   weak var delegate: CalendarPickerHeaderViewDelegate?
   
   
@@ -81,6 +76,8 @@ final class CalendarPickerHeaderView: UIView {
     configure()
   }
   
+  
+  // MARK:- Method
   
   func prepareForTimeSetting() {
     timeSettingButton.isHidden = false
@@ -167,7 +164,7 @@ private extension CalendarPickerHeaderView {
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension CalendarPickerHeaderView {
   

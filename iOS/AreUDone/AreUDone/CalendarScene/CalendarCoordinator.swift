@@ -56,7 +56,7 @@ final class CalendarCoordinator: NavigationCoordinator {
 extension CalendarCoordinator {
   
   func presentCalendarPicker(selectedDate: Date, delegate: CalendarPickerViewControllerDelegate) {
-    calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: selectedDate)
+    calendarPickerCoordinator = CalendarPickerCoordinator(router: router, selectedDate: selectedDate)
     calendarPickerCoordinator.navigationController = navigationController
     
     guard let calendarPickerViewController = calendarPickerCoordinator.start()

@@ -9,7 +9,6 @@ import UIKit
 
 final class CalendarCollectionView: UICollectionView {
   
-
   // MARK: - Property
   
   private var swipeHandler: ((Direction) -> Void)!
@@ -21,7 +20,6 @@ final class CalendarCollectionView: UICollectionView {
     super.init(coder: coder)
     
     configure()
-    addGestureRecognizer()
   }
   
   override init(
@@ -29,8 +27,8 @@ final class CalendarCollectionView: UICollectionView {
     collectionViewLayout layout: UICollectionViewLayout
   ) {
     super.init(frame: frame, collectionViewLayout: layout)
+    
     configure()
-    addGestureRecognizer()
   }
   
   convenience init(
@@ -40,11 +38,13 @@ final class CalendarCollectionView: UICollectionView {
   ) {
     self.init(frame: frame, collectionViewLayout: layout)
     self.swipeHandler = swipeHandler
-
   }
-  
-  
-  // MARK: - Method
+}
+
+
+// MARK:- Extension Configure Method
+
+private extension CalendarCollectionView {
   
   func configure() {
     backgroundColor = .systemGroupedBackground
@@ -53,19 +53,35 @@ final class CalendarCollectionView: UICollectionView {
     layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     layer.cornerRadius = 10
     
+    registerCell()
+    addingGestureRecognizer()
+  }
+  
+  func registerCell() {
     register(CalendarDateCollectionViewCell.self)
   }
-
-  func addGestureRecognizer() {
-    let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+  
+  func addingGestureRecognizer() {
+    let leftSwipeGesture = UISwipeGestureRecognizer(
+      target: self,
+      action: #selector(didSwiped)
+    )
     leftSwipeGesture.direction = .left
-    
-    let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
-    rightSwipeGesture.direction = .right
-    
     addGestureRecognizer(leftSwipeGesture)
+    
+    let rightSwipeGesture = UISwipeGestureRecognizer(
+      target: self,
+      action: #selector(didSwiped)
+    )
+    rightSwipeGesture.direction = .right
     addGestureRecognizer(rightSwipeGesture)
   }
+}
+
+
+// MARK:- Extension objc Method
+
+private extension CalendarCollectionView {
   
   @objc func didSwiped(recognizer: UISwipeGestureRecognizer) {
     switch recognizer.direction {
