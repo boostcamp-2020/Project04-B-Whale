@@ -24,9 +24,25 @@ protocol ListViewModelProtocol {
   
   func updateListTitle(to title: String)
   
-  func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, handler: @escaping () -> Void)
-  func updateCardPosition(from sourceIndex: Int, to destinationIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping () -> Void)
-  func updateCardPosition(from sourceIndex: Int, by card: Card, in sourceViewModel: ListViewModelProtocol, handler: @escaping (Int) -> Void)
+  func updateCardPosition(
+    from sourceIndex: Int,
+    to destinationIndex: Int,
+    by card: Card,
+    handler: @escaping () -> Void
+  )
+  func updateCardPosition(
+    from sourceIndex: Int,
+    to destinationIndex: Int,
+    by card: Card,
+    in sourceViewModel: ListViewModelProtocol,
+    handler: @escaping () -> Void
+  )
+  func updateCardPosition(
+    from sourceIndex: Int,
+    by card: Card,
+    in sourceViewModel: ListViewModelProtocol,
+    handler: @escaping (Int) -> Void
+  )
   
   func updateTableView()
 }
@@ -36,7 +52,6 @@ final class ListViewModel: ListViewModelProtocol {
   // MARK: - Property
   
   let realm = try! Realm()
-  
   
   private let listService: ListServiceProtocol
   private let cardService: CardServiceProtocol
@@ -78,7 +93,6 @@ final class ListViewModel: ListViewModelProtocol {
   
   func numberOfCards() -> Int {
     return list.cards.count
-    
   }
   
   func fetchListId() -> Int {

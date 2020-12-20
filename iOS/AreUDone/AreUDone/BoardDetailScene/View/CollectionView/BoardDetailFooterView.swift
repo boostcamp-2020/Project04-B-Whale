@@ -14,6 +14,7 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
   private lazy var button: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.layer.masksToBounds = true
     button.layer.cornerRadius = 10
     button.setTitle("리스트 추가", for: .normal)
@@ -24,8 +25,8 @@ final class BoardDetailFooterView: UICollectionReusableView, Reusable {
   
   private lazy var titleInputView: AddOrCancelView = {
     let view = AddOrCancelView()
-    view.delegate = self
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.delegate = self
     
     view.alpha = 0
 
@@ -88,19 +89,6 @@ private extension BoardDetailFooterView {
       titleInputView.heightAnchor.constraint(equalToConstant: button.frame.height * 2)
     ])
   }
-  
-  @objc func buttonTapped() {
-    UIView.transition(
-      with: titleInputView,
-      duration: 0.3,
-      options: .transitionCurlDown ,
-      animations: {
-        self.titleInputView.alpha = 1
-      }, completion: nil)
-    
-    titleInputView.setFirstResponder()
-  }
-  
 }
 
 
@@ -122,5 +110,23 @@ extension BoardDetailFooterView: AddOrCancelViewDelegate {
       options: .transitionCurlUp ,
       animations: nil,
       completion: nil)
+  }
+}
+
+
+// MARK: - Extension objc Method
+
+extension BoardDetailFooterView {
+  
+  @objc func buttonTapped() {
+    UIView.transition(
+      with: titleInputView,
+      duration: 0.3,
+      options: .transitionCurlDown ,
+      animations: {
+        self.titleInputView.alpha = 1
+      }, completion: nil)
+    
+    titleInputView.setFirstResponder()
   }
 }

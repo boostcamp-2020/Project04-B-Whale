@@ -20,7 +20,7 @@ final class CardAddCoordinator: NavigationCoordinator {
   }
 
   var navigationController: UINavigationController?
-  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
+  private var calendarPickerCoordinator: CalendarPickerCoordinator!
   private var contentInputCoordinator: NavigationCoordinator!
   
 

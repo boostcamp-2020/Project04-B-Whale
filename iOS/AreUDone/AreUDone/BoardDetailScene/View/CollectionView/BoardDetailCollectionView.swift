@@ -24,6 +24,7 @@ final class BoardDetailCollectionView: UICollectionView {
   }
 }
 
+
 // MARK: - Extension Configure Method
 
 private extension BoardDetailCollectionView {

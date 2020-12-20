@@ -19,11 +19,14 @@ final class BoardDetailCollectionViewCell: UICollectionViewCell, Reusable {
     
   private lazy var tableView: ListTableView = {
     let tableView = ListTableView(frame: bounds, style: .plain)
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    
     tableView.delegate = self
+    tableView.dragInteractionEnabled = true
+    tableView.dragDelegate = self
     
     return tableView
   }()
-  private var isDroppable: Bool = true
   
   
   // MARK: - Initializer
@@ -75,10 +78,6 @@ private extension BoardDetailCollectionViewCell {
   }
   
   func configureCollectionView() {
-    tableView.dragInteractionEnabled = true
-    tableView.dragDelegate = self
-    tableView.dropDelegate = self
-    
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(equalTo: topAnchor),
       tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -88,8 +87,18 @@ private extension BoardDetailCollectionViewCell {
   }
   
   func configureNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(listWillDragged), name: Notification.Name.listWillDragged, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(listDidDragged), name: Notification.Name.listDidDragged, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(listWillDragged),
+      name: Notification.Name.listWillDragged,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(listDidDragged),
+      name: Notification.Name.listDidDragged,
+      object: nil
+    )
   }
 }
 
@@ -122,7 +131,7 @@ extension BoardDetailCollectionViewCell: UITableViewDelegate {
 
 extension BoardDetailCollectionViewCell: ListFooterViewDelegate {
 
-  func baseViewTapped() {
+  func baseViewDidTapped() {
     presentCardAddHandler?(viewModel)
   }
 }
@@ -188,7 +197,11 @@ extension BoardDetailCollectionViewCell: UITableViewDropDelegate {
       ///  ** 1. 같은 테이블뷰**
       case (.some(let sourceIndexPath), .some(let destinationIndexPath)):
         
-        viewModel.updateCardPosition(from: sourceIndexPath.row, to: destinationIndexPath.row, by: card) {
+        viewModel.updateCardPosition(
+          from: sourceIndexPath.row,
+          to: destinationIndexPath.row,
+          by: card
+        ) {
           DispatchQueue.main.async {
             tableView.beginUpdates()
             tableView.deleteRows(at: [IndexPath(item: sourceIndexPath.row, section: 0)], with: .left)
@@ -211,7 +224,11 @@ extension BoardDetailCollectionViewCell: UITableViewDropDelegate {
                   UITableView
                 ) else { return }
         
-        viewModel.updateCardPosition(from: sourceIndexPath.item, to: destinationIndexPath.row, by: card, in: sourceViewModel) {
+        viewModel.updateCardPosition(
+          from: sourceIndexPath.item,
+          to: destinationIndexPath.row,
+          by: card, in: sourceViewModel
+        ) {
           DispatchQueue.main.async {
             if sourceTableView != tableView {
               sourceTableView.reloadData()
@@ -237,7 +254,11 @@ extension BoardDetailCollectionViewCell: UITableViewDropDelegate {
                   UITableView
                 ) else { return }
         
-        viewModel.updateCardPosition(from: sourceIndexPath.row, by: card, in: sourceViewModel) { lastIndex in
+        viewModel.updateCardPosition(
+          from: sourceIndexPath.row,
+          by: card,
+          in: sourceViewModel
+        ) { lastIndex in
           DispatchQueue.main.async {
             if sourceTableView != tableView {
               sourceTableView.reloadData()
@@ -259,11 +280,9 @@ extension BoardDetailCollectionViewCell {
   
   @objc func listWillDragged() {
     tableView.dropDelegate = nil
-    isDroppable = false
   }
   @objc func listDidDragged() {
     tableView.dropDelegate = self
-    isDroppable = true
   }
 }
 
