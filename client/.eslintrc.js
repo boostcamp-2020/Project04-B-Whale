@@ -20,5 +20,7 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'no-case-declarations': 'off',
         'no-param-reassign': 'off',
+        'no-console': 'off',
+        'no-alert': 'off',
     },
 };
