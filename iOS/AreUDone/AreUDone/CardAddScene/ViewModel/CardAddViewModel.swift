@@ -10,24 +10,24 @@ import RealmSwift
 
 protocol CardAddViewModelProtocol {
   
-  func bindingPop(handler: @escaping () -> Void)
-
   func bindingIsCreateEnable(handler: @escaping (Bool) -> Void)
-  func bindingPresentCalendar(handler: @escaping (String) -> Void)
-  func bindingPushContentInput(handler: @escaping (String) -> Void)
   func bindingUpdateTableView(handler: @escaping () -> Void)
   
-  func updateListTitle(to title: String)
-  
-  func presentCalendar()
-  func updateSelectedDate(to dateString: String)
-  func fetchDate(handler: (String) -> Void)
-  
-  func pushContentInput()
-  func updateContent(to content: String)
-  func fetchContent(handler: (String) -> Void)
-  
+  func bindingPresentCalendar(handler: @escaping (String) -> Void)
+  func bindingPushContentInput(handler: @escaping (String) -> Void)
+  func bindingPop(handler: @escaping () -> Void)
+
   func createCard()
+
+  func fetchDate(handler: (String) -> Void)
+  func fetchContent(handler: (String) -> Void)
+
+  func updateCardTitle(to title: String)
+  func updateSelectedDate(to dateString: String)
+  func updateContent(to content: String)
+
+  func presentCalendar()
+  func pushContentInput()
 }
 
 final class CardAddViewModel: CardAddViewModelProtocol {
@@ -39,11 +39,12 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   private let cardService: CardServiceProtocol
   private let viewModel: ListViewModelProtocol
   
-  private var popHandler: (() -> Void)?
   private var isCreateEnableHandler: ((Bool) -> Void)?
+  private var updateTableViewHandler: (() -> Void)?
+
   private var presentCalendarHandler: ((String) -> Void)?
   private var pushContentInputHandler: ((String) -> Void)?
-  private var updateTableViewHandler: (() -> Void)?
+  private var popHandler: (() -> Void)?
   
   private var cardTitle: String = "" {
     didSet {
@@ -63,38 +64,6 @@ final class CardAddViewModel: CardAddViewModelProtocol {
   
   
   // MARK: - Method
-  
-  func updateListTitle(to title: String) {
-    let trimmedTitle = title.trimmed
-    cardTitle = trimmedTitle
-  }
-  
-  func presentCalendar() {
-    presentCalendarHandler?(Date().toStringWithTime())
-  }
-  
-  func updateSelectedDate(to dateString: String) {
-    selectedDate = dateString.toDateAndTimeFormat()
-    updateTableViewHandler?()
-  }
-  
-  func fetchDate(handler: (String) -> Void) {
-    let dateString = selectedDate.toStringWithTime()
-    handler(dateString)
-  }
-  
-  func pushContentInput() {
-    pushContentInputHandler?(content)
-  }
-  
-  func updateContent(to content: String) {
-    self.content = content
-    updateTableViewHandler?()
-  }
-  
-  func fetchContent(handler: (String) -> Void) {
-    handler(content)
-  }
   
   func createCard() {
     let dateString = selectedDate.toStringWithTime()
@@ -119,6 +88,38 @@ final class CardAddViewModel: CardAddViewModelProtocol {
       }
     }
   }
+  
+  func fetchDate(handler: (String) -> Void) {
+    let dateString = selectedDate.toStringWithTime()
+    handler(dateString)
+  }
+  
+  func fetchContent(handler: (String) -> Void) {
+    handler(content)
+  }
+  
+  func updateCardTitle(to title: String) {
+    let trimmedTitle = title.trimmed
+    cardTitle = trimmedTitle
+  }
+  
+  func updateSelectedDate(to dateString: String) {
+    selectedDate = dateString.toDateAndTimeFormat()
+    updateTableViewHandler?()
+  }
+  
+  func updateContent(to content: String) {
+    self.content = content
+    updateTableViewHandler?()
+  }
+  
+  func presentCalendar() {
+    presentCalendarHandler?(Date().toStringWithTime())
+  }
+  
+  func pushContentInput() {
+    pushContentInputHandler?(content)
+  }
 }
 
 
@@ -135,16 +136,17 @@ private extension CardAddViewModel {
   }
 }
 
-// MARK: - Extension UIBind
+
+// MARK: - Extension BindUI
 
 extension CardAddViewModel {
   
-  func bindingPop(handler: @escaping () -> Void) {
-    popHandler = handler
-  }
-  
   func bindingIsCreateEnable(handler: @escaping (Bool) -> Void) {
     isCreateEnableHandler = handler
+  }
+  
+  func bindingUpdateTableView(handler: @escaping () -> Void) {
+    updateTableViewHandler = handler
   }
   
   func bindingPresentCalendar(handler: @escaping (String) -> Void) {
@@ -155,8 +157,8 @@ extension CardAddViewModel {
     pushContentInputHandler = handler
   }
   
-  func bindingUpdateTableView(handler: @escaping () -> Void) {
-    updateTableViewHandler = handler
+  func bindingPop(handler: @escaping () -> Void) {
+    popHandler = handler
   }
 }
 

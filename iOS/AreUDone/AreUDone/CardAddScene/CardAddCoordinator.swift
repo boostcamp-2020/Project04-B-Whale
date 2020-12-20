@@ -11,20 +11,18 @@ import NetworkFramework
 final class CardAddCoordinator: NavigationCoordinator {
   
   // MARK: - Property
-  
-  var navigationController: UINavigationController?
-  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
-  private var contentInputCoordinator: NavigationCoordinator!
 
-  private let router: Routable
-  private let viewModel: ListViewModelProtocol
-  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .cardAdd)
   }
+  private let router: Routable
+  private let viewModel: ListViewModelProtocol
+
+  var navigationController: UINavigationController?
+  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
+  private var contentInputCoordinator: NavigationCoordinator!
   
 
-  
   // MARK: - Initializer
   
   init(router: Routable, viewModel: ListViewModelProtocol) {
@@ -66,9 +64,13 @@ extension CardAddCoordinator {
     calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
     
-    guard let calendarPickerViewController = calendarPickerCoordinator.start()
-            as? CalendarPickerViewController
-    else { return }
+    guard
+      let calendarPickerViewController = calendarPickerCoordinator.start()
+        as? CalendarPickerViewController
+    else {
+      return
+      
+    }
     
     calendarPickerViewController.delegate = delegate
     navigationController?.present(calendarPickerViewController, animated: true)
@@ -77,9 +79,13 @@ extension CardAddCoordinator {
   func pushContentInput(with content: String, delegate: ContentInputViewControllerDelegate) {
     contentInputCoordinator = ContentInputCoordinator(content: content, router: router)
     contentInputCoordinator.navigationController = navigationController
-    guard let contentInputViewController = contentInputCoordinator.start()
+    
+    guard
+      let contentInputViewController = contentInputCoordinator.start()
             as? ContentInputViewController
-    else { return }
+    else {
+      return
+    }
     contentInputViewController.delegate = delegate
     
     navigationController?.pushViewController(

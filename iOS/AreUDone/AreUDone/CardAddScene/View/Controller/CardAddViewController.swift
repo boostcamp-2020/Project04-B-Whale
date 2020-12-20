@@ -11,8 +11,8 @@ final class CardAddViewController: UIViewController {
   
   // MARK: - Property
   
-  weak var coordinator: CardAddCoordinator?
   private let viewModel: CardAddViewModelProtocol
+  weak var coordinator: CardAddCoordinator?
 
   @IBOutlet private weak var tableView: CardAddTableView! {
     didSet {
@@ -63,27 +63,73 @@ private extension CardAddViewController {
       NSAttributedString.Key.font: UIFont.nanumB(size: 20)
     ]
 
+    configureLeftBarButtonItem()
+    configureRightBarButtonItem()
+  }
+  
+  func configureLeftBarButtonItem() {
     let leftBarButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
       self?.coordinator?.dismiss()
     }
     leftBarButtonItem.setColor(to: .black)
     
+    navigationItem.leftBarButtonItem = leftBarButtonItem
+  }
+  
+  func configureRightBarButtonItem() {
     rightBarButtonItem = UIBarButtonItem(
       title: "생성하기",
       style: .plain,
       target: self,
       action: #selector(createButtonTapped)
     )
-    rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.nanumR(size: 18)], for: .normal)
-    rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.nanumR(size: 18)], for: .disabled)
+    let textAttribute = [NSAttributedString.Key.font: UIFont.nanumR(size: 18)]
+    rightBarButtonItem.setTitleTextAttributes(textAttribute, for: .normal)
+    rightBarButtonItem.setTitleTextAttributes(textAttribute, for: .disabled)
     rightBarButtonItem.isEnabled = false
     
-    navigationItem.leftBarButtonItem = leftBarButtonItem
     navigationItem.rightBarButtonItem = rightBarButtonItem
   }
+}
+
+
+// MARK: - Extension BindUI
+
+extension CardAddViewController {
   
-  @objc func createButtonTapped() {
-    viewModel.createCard()
+  func bindUI() {
+    bindingIsCreateEnable()
+    bindingPresentCalendar()
+    bindingUpdateTableView()
+    bindingPop()
+  }
+  
+  func bindingIsCreateEnable() {
+    viewModel.bindingIsCreateEnable { [weak self] bool in
+      self?.rightBarButtonItem.isEnabled = bool
+    }
+  }
+  
+  func bindingPresentCalendar() {
+    viewModel.bindingPresentCalendar() { [weak self] dateString in
+      guard let self = self else { return }
+      
+      self.coordinator?.presentCalendar(with: dateString, delegate: self)
+    }
+  }
+  
+  func bindingUpdateTableView() {
+    viewModel.bindingUpdateTableView() { [weak self] in
+      self?.tableView.reloadData()
+    }
+  }
+  
+  func bindingPop() {
+    viewModel.bindingPop() { [weak self] in
+      DispatchQueue.main.async {
+        self?.coordinator?.dismiss()
+      }
+    }
   }
 }
 
@@ -127,35 +173,11 @@ extension CardAddViewController: ContentInputViewControllerDelegate {
 }
 
 
-// MARK: - Extension bindUI
+// MARK: - Extension objc Method
 
 extension CardAddViewController {
   
-  func bindUI() {
-    viewModel.bindingIsCreateEnable { [weak self] bool in
-      self?.rightBarButtonItem.isEnabled = bool
-    }
-    
-    viewModel.bindingPresentCalendar() { [weak self] dateString in
-      guard let self = self else { return }
-      
-      self.coordinator?.presentCalendar(with: dateString, delegate: self)
-    }
-    
-    viewModel.bindingPushContentInput { [weak self] contents in
-      guard let self = self else { return }
-      
-      self.coordinator?.pushContentInput(with: contents, delegate: self)
-    }
-    
-    viewModel.bindingUpdateTableView() { [weak self] in
-      self?.tableView.reloadData()
-    }
-    
-    viewModel.bindingPop() { [weak self] in
-      DispatchQueue.main.async {
-        self?.coordinator?.dismiss()
-      }
-    }
+  @objc func createButtonTapped() {
+    viewModel.createCard()
   }
 }
