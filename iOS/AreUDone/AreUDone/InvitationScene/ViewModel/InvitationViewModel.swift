@@ -104,9 +104,10 @@ final class InvitationViewModel: InvitationViewModelProtocol {
         
         
         // set 계산
-        let uninvitedUsersSet = Set(users).subtracting(Set(self.members))
+        let uninvitedUsersSet = Set(users).subtracting(self.members)
         let unvitedUsers = Array(uninvitedUsersSet).sorted { $0.name < $1.name }.map { ($0, false) }
-        let invitedUsers = self.members.map { ($0, true) }
+        
+        let invitedUsers = Set(self.members).intersection(users).sorted { $0.name < $1.name }.map { ($0, true) }
         
         self.users = invitedUsers + unvitedUsers
         
@@ -119,13 +120,12 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   func inviteUserToBoard(of index: Int) {
     guard let userId = users?[index].0.id else { return }
     
-    boardService.requestInvitation(withBoardId: boardId, andUserId: userId) { result in
+    boardService.inviteUserToBoard(withBoardId: boardId, andUserId: userId) { result in
       switch result {
       case .success(()):
         self.users?[index].1 = true
-        
-        break
-        
+        self.members.append((self.users?[index].0)!)
+
       case .failure(let error):
         print(error)
       }
