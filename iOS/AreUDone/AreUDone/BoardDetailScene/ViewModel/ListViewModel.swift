@@ -103,7 +103,7 @@ final class ListViewModel: ListViewModelProtocol {
   
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
-    self.list.cards.remove(at: index)
+    list.cards.remove(at: index)
   }
   
   func updateListTitle(to title: String) {
