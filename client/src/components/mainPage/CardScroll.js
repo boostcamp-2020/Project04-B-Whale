@@ -7,7 +7,7 @@ import CardModal from '../cardModal/CardModal';
 import BoardDetailProvider from '../provider/BoardDetailProvider';
 
 const CardScrollWrapper = styled.div`
-    display: grid;
+    display: ${(props) => (props.visible ? 'grid' : 'none')};
     width: 100%;
     height: 20rem;
     grid-template-columns: 1fr 1fr;
@@ -29,10 +29,11 @@ const CardScroll = () => {
     if (loading || error !== null) {
         return null;
     }
+    const visible = !!data?.cards?.length;
 
     return (
         <>
-            <CardScrollWrapper>
+            <CardScrollWrapper visible={visible}>
                 {data?.cards?.map((card) => {
                     return (
                         <Card

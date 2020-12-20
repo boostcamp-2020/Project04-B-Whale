@@ -162,7 +162,7 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
                     <IoIosClose size="30" onClick={onClose} style={{ cursor: 'pointer' }} />
                 </SidebarTopMenu>
                 <Hr />
-                <ActivitiesWrapper>
+                <ActivitiesWrapper onWheel={(e) => e.stopPropagation()}>
                     {activities.map((v) => {
                         return (
                             <ActivityDetail
