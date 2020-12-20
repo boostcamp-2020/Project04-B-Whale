@@ -71,7 +71,7 @@ final class CardAddTableViewDataSource: NSObject, UITableViewDataSource {
 extension CardAddTableViewDataSource: TitleTableViewCellDelegate {
   
   func textFieldDidChanged(to title: String) {
-    viewModel.updateListTitle(to: title)
+    viewModel.updateCardTitle(to: title)
   }
 }
 

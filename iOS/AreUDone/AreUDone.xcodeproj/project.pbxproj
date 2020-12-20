@@ -1052,11 +1052,8 @@
 		338317202581DDB50040A467 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				338317222581DDDF0040A467 /* CardAddViewController.swift */,
-				338317322581E0340040A467 /* CardAddTableView.swift */,
-				338317372581E10E0040A467 /* CardAddTableViewDataSource.swift */,
-				3383173F2581E21E0040A467 /* CardAddCalendarTableViewCell.swift */,
-				3383175125820C2B0040A467 /* CardAddContentsTableViewCell.swift */,
+				33A09275258F22B200072D12 /* Controller */,
+				33A09276258F22BB00072D12 /* TableView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1115,6 +1112,36 @@
 				338364C625665CD900F92EE4 /* NanumSquareRegular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		33A09275258F22B200072D12 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				338317222581DDDF0040A467 /* CardAddViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		33A09276258F22BB00072D12 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				338317322581E0340040A467 /* CardAddTableView.swift */,
+				338317372581E10E0040A467 /* CardAddTableViewDataSource.swift */,
+				3383173F2581E21E0040A467 /* CardAddCalendarTableViewCell.swift */,
+				3383175125820C2B0040A467 /* CardAddContentsTableViewCell.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		33A0927A258F22DA00072D12 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */,
+				33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */,
+				33F2D548257DE682008F1E06 /* TitleTableViewCell.swift */,
+				33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 		33B87E0D2565071C00354880 = {
@@ -1341,10 +1368,7 @@
 			isa = PBXGroup;
 			children = (
 				BD088B7C258AF65E0056E95D /* Controller */,
-				33F2D550257DE9C7008F1E06 /* BoardAddTableView.swift */,
-				33F2D566257E2389008F1E06 /* BoardAddTableViewDataSource.swift */,
-				33F2D548257DE682008F1E06 /* TitleTableViewCell.swift */,
-				33F2D55E257DF349008F1E06 /* BoardColorTableViewCell.swift */,
+				33A0927A258F22DA00072D12 /* TableView */,
 			);
 			path = View;
 			sourceTree = "<group>";

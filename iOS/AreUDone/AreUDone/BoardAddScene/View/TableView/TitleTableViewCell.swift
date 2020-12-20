@@ -30,6 +30,7 @@ final class TitleTableViewCell: UITableViewCell, Reusable {
   private lazy var textField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
+    
     textField.font = UIFont.nanumR(size: 18)
     textField.becomeFirstResponder()
     
@@ -57,10 +58,6 @@ final class TitleTableViewCell: UITableViewCell, Reusable {
   func update(withTitle title: String, placeholder: String) {
     titleLabel.text = title
     textField.placeholder = placeholder
-  }
-  
-  func boardTitle() -> String {
-    return textField.text ?? ""
   }
 }
 
@@ -98,6 +95,12 @@ private extension TitleTableViewCell {
       textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
     ])
   }
+}
+
+
+// MARK: - Extension objc Method
+
+private extension TitleTableViewCell {
   
   @objc func textFieldDidChanged() {
     delegate?.textFieldDidChanged(to: textField.text ?? "")

@@ -12,10 +12,11 @@ final class BoardAddCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
+  private let router: Routable
+
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .boardAdd)
   }
-  private let router: Routable
   
   var navigationController: UINavigationController?
   
@@ -30,7 +31,6 @@ final class BoardAddCoordinator: NavigationCoordinator {
   // MARK: - Method
   
   func start() -> UIViewController {
-    
     guard let boardAddViewController = storyboard.instantiateViewController(
             identifier: BoardAddViewController.identifier, creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
