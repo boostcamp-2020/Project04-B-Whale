@@ -1,5 +1,5 @@
 //
-//  CalendarPickerViewCoordinator.swift
+//  CalendarPickerCoordinator.swift
 //  AreUDone
 //
 //  Created by a1111 on 2020/11/24.
@@ -8,7 +8,7 @@
 import UIKit
 import NetworkFramework
 
-final class CalendarPickerViewCoordinator: NavigationCoordinator {
+final class CalendarPickerCoordinator: NavigationCoordinator {
   
   private let selectedDate: Date
   var navigationController: UINavigationController?
@@ -32,7 +32,7 @@ final class CalendarPickerViewCoordinator: NavigationCoordinator {
 }
 
 
-extension CalendarPickerViewCoordinator {
+extension CalendarPickerCoordinator {
   
   func dismiss() {
     navigationController?.dismiss(animated: true)

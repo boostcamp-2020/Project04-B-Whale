@@ -19,7 +19,7 @@ final class CardDetailCoordinator: NavigationCoordinator {
   private let router: Routable
   private let id: Int
   private var contentInputCoordinator: NavigationCoordinator!
-  private var calendarPickerCoordinator: CalendarPickerViewCoordinator!
+  private var calendarPickerCoordinator: CalendarPickerCoordinator!
   private var memberUpdateCoordinator: MemberUpdateCoordinator!
   
   // MARK:- Initializer
@@ -82,7 +82,7 @@ extension CardDetailCoordinator {
   
   func showCalendar(with stringToDate: String, delegate: CalendarPickerViewControllerDelegate) {
     let date = stringToDate.toDateAndTimeFormat()
-    calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: date)
+    calendarPickerCoordinator = CalendarPickerCoordinator(router: router, selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
     
     guard let calendarPickerViewController = calendarPickerCoordinator.start()

@@ -91,7 +91,7 @@ final class CalendarPickerViewController: UIViewController {
   
   //TODO:- 물어보기 delegate의 위치와 이름
   weak var delegate: CalendarPickerViewControllerDelegate?
-  weak var coordinator: CalendarPickerViewCoordinator?
+  weak var coordinator: CalendarPickerCoordinator?
   
   
   // MARK: - Initializer

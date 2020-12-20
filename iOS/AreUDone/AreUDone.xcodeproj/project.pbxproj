@@ -69,7 +69,7 @@
 		33601191256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */; };
 		3360119A256CBEEA009580A1 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601199256CBEEA009580A1 /* MonthMetadata.swift */; };
 		336011A2256CBEFF009580A1 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A1256CBEFF009580A1 /* Day.swift */; };
-		336011A7256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */; };
+		336011A7256CD3B3009580A1 /* CalendarPickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A6256CD3B3009580A1 /* CalendarPickerCoordinator.swift */; };
 		336011AF256CD543009580A1 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
 		336011BA256CDDA0009580A1 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011B9256CDDA0009580A1 /* UICollectionView+.swift */; };
 		336011CE256D15F0009580A1 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011CD256D15F0009580A1 /* CalendarCollectionView.swift */; };
@@ -92,7 +92,7 @@
 		33638E152573F738006033CF /* TabbarItemContentsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360124E256E58F7009580A1 /* TabbarItemContentsFactory.swift */; };
 		33638E192573F73E006033CF /* DateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011ED256D4877009580A1 /* DateStepper.swift */; };
 		33638E1D2573F749006033CF /* BoardListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601229256E5022009580A1 /* BoardListCoordinator.swift */; };
-		33638E212573F76D006033CF /* CalendarPickerViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */; };
+		33638E212573F76D006033CF /* CalendarPickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011A6256CD3B3009580A1 /* CalendarPickerCoordinator.swift */; };
 		33638E252573F77A006033CF /* CalendarPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601181256CBE51009580A1 /* CalendarPickerViewController.swift */; };
 		33638E292573F77E006033CF /* BoardDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC4EE256F8ADF006A5C4A /* BoardDetailCoordinator.swift */; };
 		33638E2D2573F782006033CF /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */; };
@@ -461,7 +461,7 @@
 		33601190256CBEBD009580A1 /* CalendarDateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCollectionViewCell.swift; sourceTree = "<group>"; };
 		33601199256CBEEA009580A1 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
 		336011A1256CBEFF009580A1 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
-		336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewCoordinator.swift; sourceTree = "<group>"; };
+		336011A6256CD3B3009580A1 /* CalendarPickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerCoordinator.swift; sourceTree = "<group>"; };
 		336011AE256CD543009580A1 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
 		336011B9256CDDA0009580A1 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		336011CD256D15F0009580A1 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
@@ -947,7 +947,7 @@
 		336011C1256CFC44009580A1 /* CalendarPickerScene */ = {
 			isa = PBXGroup;
 			children = (
-				336011A6256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift */,
+				336011A6256CD3B3009580A1 /* CalendarPickerCoordinator.swift */,
 				33601198256CBED2009580A1 /* Model */,
 				336011C3256CFCF5009580A1 /* View */,
 				336011C2256CFCDB009580A1 /* ViewModel */,
@@ -2128,7 +2128,7 @@
 				BDD18B882567A0C5005DF00A /* SigninChecker.swift in Sources */,
 				33D2DE21256B5210008E3969 /* JsonFactory.swift in Sources */,
 				333BA57D25777CF50057ACA4 /* SideBarViewModel.swift in Sources */,
-				336011A7256CD3B3009580A1 /* CalendarPickerViewCoordinator.swift in Sources */,
+				336011A7256CD3B3009580A1 /* CalendarPickerCoordinator.swift in Sources */,
 				3383172B2581DDF00040A467 /* CardAddViewModel.swift in Sources */,
 				33F2D4DD257B3F47008F1E06 /* InvitationCoordinator.swift in Sources */,
 				BD2AA7A7256DF93800EA8791 /* CardDetailViewModel.swift in Sources */,
@@ -2276,7 +2276,7 @@
 				33F2D644257E6B41008F1E06 /* BoardDetailFooterView.swift in Sources */,
 				33F2D68F257E6C4F008F1E06 /* PaddingLabel.swift in Sources */,
 				33F2D66C257E6B7D008F1E06 /* AddOrCancelView.swift in Sources */,
-				33638E212573F76D006033CF /* CalendarPickerViewCoordinator.swift in Sources */,
+				33638E212573F76D006033CF /* CalendarPickerCoordinator.swift in Sources */,
 				33638E2D2573F782006033CF /* CalendarPickerViewModel.swift in Sources */,
 				33638E292573F77E006033CF /* BoardDetailCoordinator.swift in Sources */,
 				33F2D658257E6B58008F1E06 /* TitleTableViewCell.swift in Sources */,
