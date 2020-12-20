@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CommentCollectionViewCellDelegate: NSObject {
+protocol CommentCollectionViewCellDelegate: AnyObject {
   
   func CommentCollectionViewCellEditButtonTapped(with cell: CommentCollectionViewCell)
 }
@@ -25,7 +25,6 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     
     return imageView
   }()
-  
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,14 +32,12 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     
     return label
   }()
-  
   private lazy var contentLabel: CardDetailContentLabel = {
     let label = CardDetailContentLabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
     return label
   }()
-  
   private lazy var createdAtLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +45,6 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
     
     return label
   }()
-  
   private lazy var editButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -117,14 +113,15 @@ final class CommentCollectionViewCell: UICollectionViewCell, Reusable {
 // MARK:- Extension Configure Method
 
 private extension CommentCollectionViewCell {
+  
   func configure() {
-    backgroundColor = .white
     contentView.addSubview(profileImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(contentLabel)
     contentView.addSubview(createdAtLabel)
     contentView.addSubview(editButton)
     
+    configureView()
     configureContentView()
     configureProfileImageView()
     configureNameLabel()
@@ -133,6 +130,10 @@ private extension CommentCollectionViewCell {
     configureEditButton()
     
     addingTarget()
+  }
+  
+  func configureView() {
+    backgroundColor = .white
   }
   
   func configureContentView(){
@@ -196,6 +197,8 @@ private extension CommentCollectionViewCell {
   }
 }
 
+
+// MARK:- Extension objc Method
 
 private extension CommentCollectionViewCell {
   

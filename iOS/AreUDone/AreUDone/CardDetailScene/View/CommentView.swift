@@ -23,14 +23,12 @@ final class CommentView: UIView {
     
     return view
   }()
-  
   private lazy var commentTextField: CommentTextField = {
     let textField = CommentTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     return textField
   }()
-  
   private lazy var commentSaveButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +40,7 @@ final class CommentView: UIView {
   }()
   
   weak var delegate: CommentViewDelegate?
+  
   
   // MARK:- Initializer
   
@@ -56,6 +55,9 @@ final class CommentView: UIView {
     
     configure()
   }
+  
+  
+  // MARK:- Method
   
   func update(with profileImage: UIImage?) {
     profileImageView.image = profileImage
@@ -131,7 +133,7 @@ private extension CommentView {
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension CommentView {
   
@@ -146,12 +148,12 @@ private extension CommentView {
       let comment = commentTextField.text,
       !comment.isEmpty
     else { return }
+    
     let trimmedComment = comment.trimmed
     
     delegate?.commentSaveButtonTapped(with: trimmedComment)
     commentSaveButton.isEnabled = false
     commentTextField.text = .none
     commentTextField.resignFirstResponder()
-    
   }
 }

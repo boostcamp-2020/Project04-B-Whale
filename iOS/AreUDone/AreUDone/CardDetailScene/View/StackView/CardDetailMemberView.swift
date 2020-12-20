@@ -7,7 +7,8 @@
 
 import UIKit
 
-protocol CardDetailMemberViewDelegate: NSObject {
+protocol CardDetailMemberViewDelegate: AnyObject {
+  
   func cardDetailMemberEditButtonTapped()
 }
 

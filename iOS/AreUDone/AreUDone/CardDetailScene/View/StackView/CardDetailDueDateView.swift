@@ -25,7 +25,6 @@ final class CardDetailDueDateView: UIView {
     
     return label
   }()
-  
   private lazy var dueDateLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +32,6 @@ final class CardDetailDueDateView: UIView {
     
     return label
   }()
-  
   private lazy var editButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -73,17 +71,20 @@ final class CardDetailDueDateView: UIView {
 private extension CardDetailDueDateView {
   
   func configure() {
-    layer.borderWidth = 0.3
-    layer.borderColor = UIColor.lightGray.cgColor
-    
     addSubview(titleLabel)
     addSubview(dueDateLabel)
     addSubview(editButton)
     
+    configureView()
     configureTitleLabel()
     configureDueDateLabel()
     configureEditButton()
     addingTarget()
+  }
+  
+  func configureView() {
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
   }
   
   func configureTitleLabel() {

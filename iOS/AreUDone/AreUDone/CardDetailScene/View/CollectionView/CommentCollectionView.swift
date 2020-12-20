@@ -19,7 +19,10 @@ final class CommentCollectionView: UICollectionView {
   
   override var intrinsicContentSize: CGSize {
     layoutIfNeeded()
-    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+    return CGSize(
+      width: UIView.noIntrinsicMetric,
+      height: contentSize.height
+    )
   }
   
   
@@ -44,11 +47,14 @@ final class CommentCollectionView: UICollectionView {
 private extension CommentCollectionView {
   
   func configure() {
-    backgroundColor = .white
-    isScrollEnabled = false
-    
+    configureView()
     configureFlowLayout()
     registerCell()
+  }
+  
+  func configureView() {
+    backgroundColor = .white
+    isScrollEnabled = false
   }
   
   func configureFlowLayout() {
