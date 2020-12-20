@@ -927,8 +927,8 @@
 		33601103256B8FBC009580A1 /* ActivityService */ = {
 			isa = PBXGroup;
 			children = (
-				BDD18B452566408F005DF00A /* ActivityService.swift */,
 				333BA586257792690057ACA4 /* ActivityEndPoint.swift */,
+				BDD18B452566408F005DF00A /* ActivityService.swift */,
 			);
 			path = ActivityService;
 			sourceTree = "<group>";

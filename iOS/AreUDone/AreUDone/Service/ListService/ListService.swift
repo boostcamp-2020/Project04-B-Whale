@@ -11,14 +11,24 @@ import NetworkFramework
 protocol ListServiceProtocol {
   
   func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void)
-  func deleteList(withListId listId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
   func updateList(ofId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+  func deleteList(withListId listId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
 }
 
 extension ListServiceProtocol {
-
-  func updateList(ofId listId: Int, position: Double? = nil, title: String? = nil, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-    updateList(ofId: listId, position: position, title: title, completionHandler: completionHandler)
+  
+  func updateList(
+    ofId listId: Int,
+    position: Double? = nil,
+    title: String? = nil,
+    completionHandler: @escaping (Result<Void, APIError>) -> Void
+  ) {
+    updateList(
+      ofId: listId,
+      position: position,
+      title: title,
+      completionHandler: completionHandler
+    )
   }
 }
 
@@ -28,6 +38,7 @@ class ListService: ListServiceProtocol {
   
   private let router: Routable
   private let localDataSource: ListLocalDataSourceable?
+  
   
   // MARK: - Initializer
   
@@ -39,24 +50,27 @@ class ListService: ListServiceProtocol {
   
   // MARK: - Method
   
-  func createList(withBoardId boardId: Int, title: String, completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void) {
+  func createList(
+    withBoardId boardId: Int,
+    title: String,
+    completionHandler: @escaping (Result<ListOfBoard, APIError>) -> Void
+  ) {
     let endPoint = ListEndPoint.createList(boardId: boardId, title: title)
+    
     router.request(route: endPoint) { (result: Result<ListOfBoard, APIError>) in
-      DispatchQueue.main.async {
+      
+      switch result {
+      case .success(_):
+        completionHandler(result)
         
-        switch result {
-        case .success(_):
-          completionHandler(result)
-          
-        case .failure(_):
-          
-          if let localDataSource = self.localDataSource {
-            let orderedEndPoint = StoredEndPoint(value: endPoint.toDictionary())
-            localDataSource.save(with: boardId, storedEndPoint: orderedEndPoint) { object in
-              completionHandler(.success(object))
-            }
+      case .failure(_):
+        
+        if let localDataSource = self.localDataSource {
+          let orderedEndPoint = StoredEndPoint(value: endPoint.toDictionary())
+          localDataSource.save(with: boardId, storedEndPoint: orderedEndPoint) { object in
+            completionHandler(.success(object))
           }
-          
+        } else {
           completionHandler(result)
         }
       }
@@ -69,8 +83,15 @@ class ListService: ListServiceProtocol {
     }
   }
   
-  func updateList(ofId listId: Int, position: Double?, title: String?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-    router.request(route: ListEndPoint.updateList(listId: listId, position: position, title: title)) { result in
+  func updateList(
+    ofId listId: Int,
+    position: Double?,
+    title: String?,
+    completionHandler: @escaping (Result<Void, APIError>) -> Void
+  ) {
+    let endPoint = ListEndPoint.updateList(listId: listId, position: position, title: title)
+    
+    router.request(route: endPoint) { result in
       completionHandler(result)
     }
   }

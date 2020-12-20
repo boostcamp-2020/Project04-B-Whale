@@ -78,7 +78,7 @@ final class ListViewModel: ListViewModelProtocol {
   
   func numberOfCards() -> Int {
     return list.cards.count
-
+    
   }
   
   func fetchListId() -> Int {
@@ -103,7 +103,7 @@ final class ListViewModel: ListViewModelProtocol {
   
   func removeCard(at index: Int) {
     guard list.cards.indices.contains(index) else { return }
-    self.list.cards.remove(at: index)
+    list.cards.remove(at: index)
   }
   
   func updateListTitle(to title: String) {
@@ -152,7 +152,9 @@ final class ListViewModel: ListViewModelProtocol {
       switch result {
       case .success(_):
         self.realm.writeOnMain {
+          let card = self.fetchCard(at: sourceIndex)
           self.removeCard(at: sourceIndex)
+          
           card.position = position
           self.insert(card: card, at: destinationIndex)
           
@@ -191,10 +193,11 @@ final class ListViewModel: ListViewModelProtocol {
       switch result {
       case .success(_):
         self.realm.writeOnMain {
+          let card = sourceViewModel.fetchCard(at: sourceIndex)
           sourceViewModel.removeCard(at: sourceIndex)
           card.position = position
           self.insert(card: card, at: destinationIndex)
-
+          
           handler()
         }
         
@@ -225,6 +228,7 @@ final class ListViewModel: ListViewModelProtocol {
       switch result {
       case .success(_):
         self.realm.writeOnMain {
+          let card = sourceViewModel.fetchCard(at: sourceIndex)
           sourceViewModel.removeCard(at: sourceIndex)
           card.position = position
           self.append(card: card)

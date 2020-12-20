@@ -43,25 +43,28 @@ private extension NWMonitor {
   
   func configure() {
     monitor.pathUpdateHandler = { path in
-      guard !self.isInitial else {
+      guard
+        !self.isInitial,
+        path.status != self.currentState
+      else {
         self.currentState = path.status
         self.isInitial = false
         return
       }
 
-      if path.status == .satisfied && self.currentState != .satisfied {
+      if path.status == .satisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
-          userInfo: ["networkState": true]
+          userInfo: [NotificationConstant.networkStateKey: true]
         )
         self.requestStoredEndPoints()
         
-      } else if path.status == .unsatisfied && self.currentState != .unsatisfied {
+      } else if path.status == .unsatisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
-          userInfo: ["networkState": false]
+          userInfo: [NotificationConstant.networkStateKey: false]
         )
       }
       
@@ -78,7 +81,7 @@ private extension NWMonitor {
   func requestStoredEndPoints() {
     let realm = try! Realm()
     let result = realm.objects(StoredEndPoint.self).sorted(byKeyPath: "date")
-    let unmanagedEndPoints = Array(result).map { StoredEndPoint(value: $0)}
+    let unmanagedEndPoints = Array(result).map { StoredEndPoint(value: $0) }
     
     try! realm.write {
       realm.delete(result)

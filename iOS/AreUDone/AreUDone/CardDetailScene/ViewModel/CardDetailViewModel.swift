@@ -188,7 +188,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   }
   
   private func fetchUserData() {
-    userService.requestMe { [weak self] result in
+    userService.fetchMyInfo { [weak self] result in
       switch result {
       case .success(let user):
         if let cachedData = self?.cache.object(forKey: user.profileImageUrl as NSString) {

@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class ScreenBorderAlertAnimator {
+final class AlertAnimator {
   
   // MARK: - Property
   
-  let borderLayer: CALayer
+  let alertLayer: CALayer
   
   
   // MARK: - Initializer
   
-  init(borderLayer: CALayer) {
-    self.borderLayer = borderLayer
+  init(alertLayer: CALayer) {
+    self.alertLayer = alertLayer
   }
   
   
@@ -28,18 +28,16 @@ final class ScreenBorderAlertAnimator {
 
     if networkState { color = UIColor.systemGreen.cgColor
     } else { color = UIColor.systemRed.cgColor }
-    borderLayer.backgroundColor = color
+    alertLayer.backgroundColor = color
 
     let animation = CABasicAnimation(keyPath: "position.y")
-    animation.fromValue = borderLayer.frame.origin.y
+    animation.fromValue = alertLayer.frame.origin.y
     animation.toValue = 0
 
     animation.duration = 4
     animation.autoreverses = true
-    animation.timingFunction = CAMediaTimingFunction(
-      name: CAMediaTimingFunctionName.easeInEaseOut
-    )
+    animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 
-    borderLayer.add(animation, forKey: "networkAlert")
+    alertLayer.add(animation, forKey: "networkAlert")
   }
 }

@@ -23,6 +23,6 @@ public enum HTTPMethod: String {
        DELETE,
        PATCH
 }
-public typealias HTTPHeader = [String: String]
+public typealias HTTPHeader = [String: Any]
 public typealias HTTPBody = [String: Any]
-public typealias HTTPQuery = [String: String]
+public typealias HTTPQuery = [String: Any]

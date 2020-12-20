@@ -11,7 +11,9 @@ final class CustomBarButtonItem: UIBarButtonItem {
   
   // MARK: - Property
 
-  var handler: () -> Void
+  private let imageName: String
+  private var handler: () -> Void
+  
   private lazy var button: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -21,14 +23,13 @@ final class CustomBarButtonItem: UIBarButtonItem {
     
     return button
   }()
-  private let imageName: String
   
   
   // MARK: - Initializer
   
   init(imageName: String, handler: @escaping () -> Void) {
-    self.handler = handler
     self.imageName = imageName
+    self.handler = handler
     
     super.init()
     
@@ -47,20 +48,34 @@ final class CustomBarButtonItem: UIBarButtonItem {
   }
 }
 
+
 // MARK: - Extension Configure Method
 
 private extension CustomBarButtonItem {
   
   func configure() {
+    configureView()
+    configureButton()
+  }
+  
+  func configureView() {
+    customView = button
+  }
+  
+  func configureButton() {
     button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
     NSLayoutConstraint.activate([
       button.widthAnchor.constraint(equalToConstant: 30),
       button.heightAnchor.constraint(equalTo: button.widthAnchor)
     ])
-    
-    customView = button
   }
+}
+
+
+// MARK: - Extension objc Method
+
+private extension CustomBarButtonItem {
   
   @objc func buttonTapped() {
     handler()

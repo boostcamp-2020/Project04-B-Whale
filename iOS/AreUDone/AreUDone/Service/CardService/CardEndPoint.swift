@@ -10,10 +10,17 @@ import NetworkFramework
 import KeychainFramework
 
 enum CardEndPoint {
+  case createCard(
+        listId: Int,
+        title: String,
+        dueDate: String,
+        content: String
+       )
   
   case fetchDailyCards(dateString: String, option: FetchDailyCardsOption = .allCard)
-  case createCard(listId: Int, title: String, dueDate: String, content: String)
   case fetchDetailCard(id: Int)
+  case fetchCardsCount(startDate: String, endDate: String)
+
   case updateCard(
         id: Int,
         listId: Int?,
@@ -23,7 +30,7 @@ enum CardEndPoint {
         dueDate: String?
        )
   case updateCardMember(id: Int, userIds: [Int])
-  case fetchCardsCount(startDate: String, endDate: String)
+  
   case deleteCard(id: Int)
 }
 
@@ -39,14 +46,14 @@ extension CardEndPoint: EndPointable {
     case .fetchDetailCard(let id):
       return "\(APICredentials.ip)/api/card/\(id)"
       
+    case .fetchCardsCount:
+      return "\(APICredentials.ip)/api/card/count"
+      
     case .updateCard(let id, _, _, _, _, _):
       return "\(APICredentials.ip)/api/card/\(id)"
       
     case .updateCardMember(let id, _):
       return "\(APICredentials.ip)/api/card/\(id)/member"
-      
-    case .fetchCardsCount:
-      return "\(APICredentials.ip)/api/card/count"
       
     case .deleteCard(let id):
       return "\(APICredentials.ip)/api/card/\(id)"
@@ -54,13 +61,13 @@ extension CardEndPoint: EndPointable {
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() }
     return url
   }
   
   var query: HTTPQuery? {
     switch self {
-    case .fetchDailyCards(let dateString, let option): // ?q=date:2020-01-01 member:me
+    case .fetchDailyCards(let dateString, let option):
       var value = "date:\(dateString)"
       
       if let optionValue = option.value {
@@ -69,22 +76,10 @@ extension CardEndPoint: EndPointable {
       
       return ["q": value]
       
-    case .createCard:
-      return nil
-      
-    case .fetchDetailCard:
-      return nil
-      
-    case .updateCard:
-      return nil
-      
-    case .updateCardMember:
-      return nil
-      
     case .fetchCardsCount(let startDate, let endDate):
       return ["q": "startdate:\(startDate) enddate:\(endDate) member:me"]
       
-    case .deleteCard:
+    default:
       return nil
     }
   }
@@ -94,10 +89,9 @@ extension CardEndPoint: EndPointable {
     case .createCard:
       return .POST
       
-    case .fetchDailyCards:
-      return .GET
-      
-    case .fetchDetailCard:
+    case .fetchDailyCards,
+         .fetchDetailCard,
+         .fetchCardsCount:
       return .GET
       
     case .updateCard:
@@ -105,10 +99,7 @@ extension CardEndPoint: EndPointable {
       
     case .updateCardMember:
       return .PUT
-      
-    case .fetchCardsCount:
-      return .GET
-      
+    
     case .deleteCard:
       return .DELETE
     }
@@ -128,7 +119,11 @@ extension CardEndPoint: EndPointable {
   var bodies: HTTPBody? {
     switch self {
     case .createCard(_, let title, let dueDate, let content):
-      return ["title": title, "dueDate": dueDate, "content": content]
+      return [
+        "title": title,
+        "dueDate": dueDate,
+        "content": content
+      ]
       
     case .updateCard(
       _,

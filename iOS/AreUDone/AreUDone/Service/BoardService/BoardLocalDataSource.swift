@@ -55,9 +55,9 @@ final class BoardLocalDataSource: BoardLocalDataSourceable {
   }
   
   func updateBoard(title: String, ofId id: Int) {
-    guard let board = realm.objects(Board.self).filter("id == %@", id).first else { return }
-    
     realm.writeOnMain {
+      guard let board = self.realm.objects(Board.self).filter("id == %@", id).first else { return }
+
       board.title = title
     }
   }
