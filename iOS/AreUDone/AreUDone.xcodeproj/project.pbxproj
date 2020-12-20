@@ -1159,7 +1159,6 @@
 			isa = PBXGroup;
 			children = (
 				33B87E182565071C00354880 /* AreUDone */,
-				BDD18B9E2567B432005DF00A /* background.mp4 */,
 				3383647625660EDE00F92EE4 /* NetworkFramework */,
 				BDD18AE325660E77005DF00A /* KeychainFramework */,
 				33B87E2F2565072000354880 /* AreUDoneTests */,
@@ -1266,6 +1265,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD18B0525660F56005DF00A /* Signin.storyboard */,
+				BDD18B9E2567B432005DF00A /* background.mp4 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
