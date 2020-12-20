@@ -30,6 +30,11 @@ final class CardDetailContentLabel: PaddingLabel {
 private extension CardDetailContentLabel {
   
   func configure() {
+    configureView()
+    configureShadow()
+  }
+  
+  func configureView() {
     layer.borderWidth = 0.5
     layer.borderColor = UIColor.lightGray.cgColor
     layer.cornerRadius = 2
@@ -37,8 +42,6 @@ private extension CardDetailContentLabel {
     lineBreakMode = .byWordWrapping
     font = UIFont.nanumR(size: 15)
     backgroundColor = .white
-    
-    configureShadow()
   }
   
   func configureShadow() {

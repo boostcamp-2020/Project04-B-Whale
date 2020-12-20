@@ -19,7 +19,6 @@ final class CardDetailLocationView: UIView {
     
     return label
   }()
-  
   private lazy var listNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +26,6 @@ final class CardDetailLocationView: UIView {
     
     return label
   }()
-  
   private lazy var boardNameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +33,6 @@ final class CardDetailLocationView: UIView {
     
     return label
   }()
-  
   private lazy var listDescriptionLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,7 +41,6 @@ final class CardDetailLocationView: UIView {
     
     return label
   }()
-  
   private lazy var boardDescriptionLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +49,7 @@ final class CardDetailLocationView: UIView {
     
     return label
   }()
+  
   
   // MARK:- Initializer
   
@@ -68,6 +65,9 @@ final class CardDetailLocationView: UIView {
     configure()
   }
   
+  
+  // MARK:- Method
+  
   func updateListNameLabel(with title: String) {
     let text = title
     listNameLabel.text = text
@@ -80,12 +80,11 @@ final class CardDetailLocationView: UIView {
 }
 
 
+// MARK:- Extension Configure Method
+
 private extension CardDetailLocationView {
   
   func configure() {
-    layer.borderWidth = 0.3
-    layer.borderColor = UIColor.lightGray.cgColor
-    
     addSubview(titleLabel)
     addSubview(listNameLabel)
     addSubview(boardNameLabel)
@@ -97,6 +96,11 @@ private extension CardDetailLocationView {
     configureBoardNameLabel()
     configureListDescriptionLabel()
     configureBoardDescriptionLabel()
+  }
+  
+  func configureView() {
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
   }
   
   func configureTitleLabel() {

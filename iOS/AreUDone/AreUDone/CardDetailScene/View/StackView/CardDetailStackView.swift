@@ -17,14 +17,12 @@ final class CardDetailStackView: UIStackView {
     
     return view
   }()
-  
   private lazy var cardDetailContentView: CardDetailContentView = {
     let view = CardDetailContentView()
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
-  
   private lazy var cardDetailDueDateView: CardDetailDueDateView = {
     let view = CardDetailDueDateView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -81,17 +79,20 @@ final class CardDetailStackView: UIStackView {
 private extension CardDetailStackView {
   
   func configure() {
-    axis = .vertical
-    distribution = .fill
-    spacing = 20
-    
     addArrangedSubview(cardDetailLocationView)
     addArrangedSubview(cardDetailContentView)
     addArrangedSubview(cardDetailDueDateView)
     
+    configureView()
     configureCardDetailLocationView()
     configureCardDetailContentView()
     configureCardDetailDueDateView()
+  }
+  
+  func configureView() {
+    axis = .vertical
+    distribution = .fill
+    spacing = 20
   }
   
   func configureCardDetailLocationView() {

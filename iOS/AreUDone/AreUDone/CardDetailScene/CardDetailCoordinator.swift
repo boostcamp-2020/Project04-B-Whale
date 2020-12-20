@@ -12,15 +12,19 @@ final class CardDetailCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
-  var navigationController: UINavigationController?
+  private let router: Routable
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .cardDetail)
   }
-  private let router: Routable
+  
   private let id: Int
+  
+  var navigationController: UINavigationController?
   private var contentInputCoordinator: NavigationCoordinator!
   private var calendarPickerCoordinator: CalendarPickerCoordinator!
   private var memberUpdateCoordinator: MemberUpdateCoordinator!
+  
   
   // MARK:- Initializer
   
@@ -29,7 +33,6 @@ final class CardDetailCoordinator: NavigationCoordinator {
     self.router = router
   }
   
-  // TODO:- navi 쓸지 결정
   
   // MARK:- Method
   
@@ -39,10 +42,19 @@ final class CardDetailCoordinator: NavigationCoordinator {
             creator: { [weak self] coder in
               guard let self = self else { return UIViewController() }
                       
-              let imageService = ImageService(router: self.router, cacheManager: CacheManager())
-              let cardService = CardService(router: self.router, localDataSource: CardLocalDataSource())
+              let imageService = ImageService(
+                router: self.router,
+                cacheManager: CacheManager()
+              )
+              let cardService = CardService(
+                router: self.router,
+                localDataSource: CardLocalDataSource()
+              )
               let userService = UserService(router: self.router)
-              let commentService = CommentService(router: self.router, commentLocalDataSource: CommentLocalDataSource())
+              let commentService = CommentService(
+                router: self.router,
+                commentLocalDataSource: CommentLocalDataSource()
+              )
               let viewModel = CardDetailViewModel(
                 id: self.id,
                 cardService: cardService,
@@ -64,9 +76,14 @@ final class CardDetailCoordinator: NavigationCoordinator {
 }
 
 
+// MARK:- Extension
+
 extension CardDetailCoordinator {
   
-  func showContentInput(with content: String, delegate: ContentInputViewControllerDelegate) {
+  func pushToContentInput(
+    with content: String,
+    delegate: ContentInputViewControllerDelegate
+  ) {
     contentInputCoordinator = ContentInputCoordinator(content: content, router: router)
     contentInputCoordinator.navigationController = navigationController
     guard let contentInputViewController = contentInputCoordinator.start()
@@ -80,7 +97,10 @@ extension CardDetailCoordinator {
     )
   }
   
-  func showCalendar(with stringToDate: String, delegate: CalendarPickerViewControllerDelegate) {
+  func presentCalendar(
+    with stringToDate: String,
+    delegate: CalendarPickerViewControllerDelegate
+  ) {
     let date = stringToDate.toDateAndTimeFormat()
     calendarPickerCoordinator = CalendarPickerCoordinator(router: router, selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
@@ -93,7 +113,12 @@ extension CardDetailCoordinator {
     navigationController?.present(calendarPickerViewController, animated: true)
   }
   
-  func showMemberUpdate(with cardId: Int, boardId: Int, cardMember: [User]?, delegate: MemberUpdateViewControllerDelegate) {
+  func presentMemberUpdate(
+    with cardId: Int,
+    boardId: Int,
+    cardMember: [User]?,
+    delegate: MemberUpdateViewControllerDelegate
+  ) {
     memberUpdateCoordinator = MemberUpdateCoordinator(
       router: router,
       cardId: cardId,

@@ -38,11 +38,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   // MARK:- Property
   
+  private let id: Int
   private let cardService: CardServiceProtocol
   private let imageService: ImageServiceProtocol
   private let userService: UserServiceProtocol
   private let commentService: CommentServiceProtocol
-  private let id: Int
   
   private var cardDetailContentViewHandler: ((String?) -> Void)?
   private var cardDetailDueDateViewHandler: ((String) -> Void)?
@@ -63,6 +63,7 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
   
   private var boardId: Int?
   private var cardMembers: [User]?
+  
   
   // MARK:- Initializer
   
@@ -89,7 +90,6 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
       case .success(let detailCard):
         self?.boardId = detailCard.board!.id
         self?.cardMembers = detailCard.fetchMembers()
-        
         self?.cardDetailContentViewHandler?(detailCard.content)
         self?.cardDetailDueDateViewHandler?(detailCard.dueDate)
         self?.cardDetailCommentsViewHandler?(detailCard.fetchComment())
@@ -143,7 +143,11 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     }
   }
   
-  func fetchProfileImage(with urlAsString: String, userName: String, completionHandler: @escaping ((Data) -> Void)) {
+  func fetchProfileImage(
+    with urlAsString: String,
+    userName: String,
+    completionHandler: @escaping ((Data) -> Void)
+  ) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
       completionHandler(cachedData as Data)
       
@@ -171,7 +175,10 @@ final class CardDetailViewModel: CardDetailViewModelProtocol {
     prepareForUpdateMemberViewHandler?(id, boardId, cardMembers)
   }
   
-  func deleteComment(with commentId: Int, completionHandler: @escaping () -> Void) {
+  func deleteComment(
+    with commentId: Int,
+    completionHandler: @escaping (() -> Void)
+  ) {
     commentService.deleteComment(with: commentId) { result in
       switch result {
       case .success(()):

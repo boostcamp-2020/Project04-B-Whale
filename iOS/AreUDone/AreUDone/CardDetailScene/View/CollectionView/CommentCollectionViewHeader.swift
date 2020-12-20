@@ -9,15 +9,19 @@ import UIKit
 
 final class CommentCollectionViewHeader: UICollectionReusableView, Reusable {
   
+  // MARK:- Property
   
   private lazy var headerLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "댓글"
     label.font = UIFont.nanumB(size: 20)
-    label.translatesAutoresizingMaskIntoConstraints = false
     
     return label
   }()
+  
+  
+  // MARK:- Initializer
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
@@ -32,6 +36,8 @@ final class CommentCollectionViewHeader: UICollectionReusableView, Reusable {
   }
 }
 
+
+// MARK:- Extension Configure Method
 
 private extension CommentCollectionViewHeader {
   
