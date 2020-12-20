@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CardContext from '../../context/CardContext';
 import { modifyCardTitle } from '../../utils/cardRequest';
 import boardDetailContext from '../../context/BoardDetailContext';
+import { CardScrollStatusContext } from '../../context/CardScrollContext';
 
 const Wrapper = styled.div`
     display: grid;
@@ -48,6 +49,7 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
     const [cardTitleInput, setCardTitleInput] = useState(cardTitle);
     const card = cardState.data;
     const { boardDetail, setBoardDetail } = useContext(boardDetailContext);
+    const cardScrollState = useContext(CardScrollStatusContext);
 
     const onChange = (e) => {
         setCardTitleInput(e.target.value);
@@ -62,6 +64,12 @@ const CardTitleContainer = ({ cardTitle, cardListTitle }) => {
                 title: cardTitleInput,
             },
         });
+        if (cardScrollState) {
+            const { cards } = cardScrollState.data;
+            const cardScrollIndex = cards.findIndex((c) => card.id === c.id);
+            cards[cardScrollIndex].title = cardTitleInput;
+        }
+
         const listIndex = boardDetail.lists.findIndex((list) => list.id === card.list.id);
         const cardIndex = boardDetail.lists[listIndex].cards.findIndex((c) => c.id === card.id);
         boardDetail.lists[listIndex].cards[cardIndex].title = cardTitleInput;
