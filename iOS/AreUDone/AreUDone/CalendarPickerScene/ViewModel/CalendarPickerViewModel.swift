@@ -24,20 +24,20 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
   
   // MARK: - Property
   
+  private let cardService: CardServiceProtocol
+  
   private var initializeCalendarHandler: (([Day], Date) -> Void)?
   private var updateCalendarHandler: (([Day], Date) -> Void)?
   private var sendSelectedDateHandler: ((String) -> Void)?
   
-  var selectedDate: Date!
-  private lazy var basedate: Date! = selectedDate
-  private let cardService: CardServiceProtocol
-  private var countDictionary = [String: Int]()
-  
   private let calendar = Calendar(identifier: .gregorian)
-  
+  private lazy var basedate: Date! = selectedDate
+  private var countDictionary = [String: Int]()
+  var selectedDate: Date!
   private lazy var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "d"
+    
     return dateFormatter
   }()
   
@@ -121,7 +121,7 @@ final class CalendarPickerViewModel: CalendarPickerViewModelProtocol {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 extension CalendarPickerViewModel {
   
@@ -138,7 +138,7 @@ extension CalendarPickerViewModel {
   }
 }
 
-// MARK: Calendar 계산
+// MARK: Calculte Calendar
 
 private extension CalendarPickerViewModel {
   
@@ -147,20 +147,22 @@ private extension CalendarPickerViewModel {
       preconditionFailure("An error occurred when generating the metadata for \(baseDate)")
     }
     
-    var days = makeDays(using: monthMetadata) // 이전 달 + 해당 달
-    days += makeDaysOfNextMonth(using: days.count, monthMetadata.firstDay) // + 다음 달
+    var days = makeDays(using: monthMetadata)
+    days += makeDaysOfNextMonth(using: days.count, monthMetadata.firstDay)
     
     return days
   }
-    
+  
   func monthMetadata(for baseDate: Date) throws -> MonthMetadata {
-    guard let numberOfDaysInMonth = calendar.range(
-      of: .day,
-      in: .month,
-      for: baseDate
-    )?.count,
-    let firstDayOfMonth = calendar.date(
-      from: calendar.dateComponents([.year, .month], from: baseDate))
+    guard
+      let numberOfDaysInMonth = calendar.range(
+        of: .day,
+        in: .month,
+        for: baseDate
+      )?.count,
+      let firstDayOfMonth = calendar.date(
+        from: calendar.dateComponents([.year, .month], from: baseDate)
+      )
     else {
       throw CalendarDataError.metadataGeneration
     }
@@ -170,7 +172,8 @@ private extension CalendarPickerViewModel {
     return MonthMetadata(
       numberOfDays: numberOfDaysInMonth,
       firstDay: firstDayOfMonth,
-      firstDayIndex: firstDayWeekday)
+      firstDayIndex: firstDayWeekday
+    )
   }
   
   func makeDay(
@@ -192,36 +195,34 @@ private extension CalendarPickerViewModel {
   }
   
   func makeDays(using monthMetadata: MonthMetadata) -> [Day] {
-    let numberOfDaysInMonth = monthMetadata.numberOfDays        // 한 달의 일 수
-    let firstDayOfMonth = monthMetadata.firstDay                // 해당 달의 첫 번째 날
-    let firstDayOfMonthIndex = monthMetadata.firstDayIndex      // 해당 달의 첫 번째 날의 인덱스
+    let numberOfDaysInMonth = monthMetadata.numberOfDays
+    let firstDayOfMonth = monthMetadata.firstDay
+    let firstDayOfMonthIndex = monthMetadata.firstDayIndex
     
-    let days: [Day] = (1..<(numberOfDaysInMonth + firstDayOfMonthIndex)).map
-    {
-      day in
-      
+    let days: [Day] = (1..<(numberOfDaysInMonth + firstDayOfMonthIndex)).map { day in
       let isWithinDisplayedMonth = day >= firstDayOfMonthIndex
       
-      let dayOffset =
-        isWithinDisplayedMonth ?
-        day - firstDayOfMonthIndex :
-        -(firstDayOfMonthIndex - day)
+      let dayOffset = isWithinDisplayedMonth ? (day - firstDayOfMonthIndex) : -(firstDayOfMonthIndex - day)
       
       return makeDay(
         offsetBy: dayOffset,
         for: firstDayOfMonth,
-        isWithinDisplayedMonth: isWithinDisplayedMonth)
+        isWithinDisplayedMonth: isWithinDisplayedMonth
+      )
     }
     return days
   }
   
   func makeDaysOfNextMonth(
-    using counts: Int, _ firstDayOfDisplayedMonth: Date
+    using counts: Int,
+    _ firstDayOfDisplayedMonth: Date
   ) -> [Day] {
-    guard let lastDayInMonth = calendar.date(
-      byAdding: DateComponents(month: 1, day: -1),
-      to: firstDayOfDisplayedMonth
-    ) else { return [] }
+    guard
+      let lastDayInMonth = calendar.date(
+        byAdding: DateComponents(month: 1, day: -1),
+        to: firstDayOfDisplayedMonth
+      )
+    else { return [] }
     
     let additionalDays = 42 - counts
     guard additionalDays > 0 else { return [] }
@@ -230,7 +231,8 @@ private extension CalendarPickerViewModel {
       return makeDay(
         offsetBy: $0,
         for: lastDayInMonth,
-        isWithinDisplayedMonth: false)
+        isWithinDisplayedMonth: false
+      )
     }
     return days
   }

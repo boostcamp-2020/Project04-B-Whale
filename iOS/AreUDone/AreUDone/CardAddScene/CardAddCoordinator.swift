@@ -62,7 +62,7 @@ extension CardAddCoordinator {
   
   func presentCalendar(with dateString: String, delegate: CalendarPickerViewControllerDelegate) {
     let date = dateString.toDateAndTimeFormat()
-    calendarPickerCoordinator = CalendarPickerViewCoordinator(router: router, selectedDate: date)
+    calendarPickerCoordinator = CalendarPickerCoordinator(router: router, selectedDate: date)
     calendarPickerCoordinator.navigationController = navigationController
     
     guard
