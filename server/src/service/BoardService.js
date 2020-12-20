@@ -113,9 +113,18 @@ export class BoardService extends BaseService {
             board: boardId,
         });
         if (invitedUsers) throw new BadRequestError(`Duplicate user.`);
+        const board = await this.boardRepository.findOne(boardId, {
+            loadRelationIds: {
+                relations: ['creator'],
+                disableMixedMap: true,
+            },
+        });
+        if (!board) throw new EntityNotFoundError();
+        if (board.creator.id === userId) throw new BadRequestError(`Can't invite host of board.`);
 
         const namespace = getNamespace('localstorage');
         namespace?.set('userId', hostId);
+        namespace?.set('boardId', boardId);
 
         const invitation = {
             board: boardId,

@@ -21,7 +21,7 @@ export class BoardSubscriber {
 
         await activityService.createActivity(
             event.entity.id,
-            `${user.name}님이 보드 ${event.entity.title}을 생성하였습니다.`,
+            `${user.name}님이 ${event.entity.title} 보드를 생성하였습니다.`,
         );
     }
 

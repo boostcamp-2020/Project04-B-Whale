@@ -18,7 +18,7 @@ export class CommentSubscriber {
 
         const activityService = ActivityService.getInstance();
         const userService = UserService.getInstance();
-        const user = await userService.getUserById(event.entity.creator);
+        const user = await userService.getUserById(event.entity.user.id);
         await activityService.createActivity(
             namespace.get('boardId'),
             `${user.name}님이 ${namespace.get('cardTitle')} 카드에 댓글을 생성하였습니다. - ${

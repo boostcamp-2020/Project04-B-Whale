@@ -23,7 +23,7 @@ export class InvitationSubscriber {
         const invitedUser = await userService.getUserById(event.entity.user);
 
         await activityService.createActivity(
-            event.entity.id,
+            namespace.get('boardId'),
             `${user.name}님이 현재보드에 ${invitedUser.name}님을 초대하였습니다.`,
         );
     }
