@@ -12,7 +12,6 @@ protocol ContentInputViewControllerDelegate: AnyObject {
   func send(with content: String)
 }
 
-
 final class ContentInputViewController: UIViewController {
   
   // MARK:- Property
@@ -64,6 +63,12 @@ private extension ContentInputViewController {
   
   func configure() {
     view.addSubview(contentTextView)
+    
+    configureNavigationItem()
+    configureContentTextView()
+  }
+  
+  func configureNavigationItem() {
     navigationItem.leftBarButtonItem = UIBarButtonItem(
       title: "취소",
       style: .done,
@@ -76,8 +81,6 @@ private extension ContentInputViewController {
       target: self,
       action: #selector(saveButtonTapped)
     )
-    
-    configureContentTextView()
   }
   
   func configureContentTextView() {
@@ -108,7 +111,7 @@ private extension ContentInputViewController {
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension ContentInputViewController {
   
