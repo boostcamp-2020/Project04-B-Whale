@@ -35,7 +35,13 @@ final class BoardDetailViewController: UIViewController {
       collectionView.dropDelegate = self
     }
   }
-  private let pageControl: UIPageControl = {
+  private lazy var refreshView: RefreshView = {
+    let view = RefreshView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  private lazy var pageControl: UIPageControl = {
     let pageControl = UIPageControl()
     pageControl.translatesAutoresizingMaskIntoConstraints = false
     
@@ -104,11 +110,15 @@ private extension BoardDetailViewController {
   
   func configure() {
     view.addSubview(pageControl)
+    view.addSubview(refreshView)
     
     configureNotification()
     configurePageControl()
     configureNavigationBar()
     configureCollectionView()
+    configureRefreshView()
+    
+    addingGestureRecognizer()
   }
   
   func configureNotification() {
@@ -215,6 +225,23 @@ private extension BoardDetailViewController {
     
     sideBarViewController.configureTopHeight(to: topBarHeight)
     sideBarViewController.start()
+  }
+  
+  func configureRefreshView() {
+    NSLayoutConstraint.activate([
+      refreshView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width * 0.1),
+      refreshView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.bounds.height * 0.1),
+      refreshView.heightAnchor.constraint(equalToConstant: 50),
+      refreshView.widthAnchor.constraint(equalToConstant: 50)
+    ])
+  }
+  
+  func addingGestureRecognizer() {
+    let tapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(refreshButtonTapped)
+    )
+    refreshView.addGestureRecognizer(tapGestureRecognizer)
   }
 }
 
@@ -400,5 +427,10 @@ extension BoardDetailViewController {
   
   @objc func cardDidDragged() {
     collectionView.dropDelegate = self
+  }
+  
+  @objc func refreshButtonTapped() {
+    viewModel.fetchBoardDetail()
+    refreshView.rotateRefreshImage(forCount: 2)
   }
 }
