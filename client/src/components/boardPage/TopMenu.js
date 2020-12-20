@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import BoardDetailContext from '../../context/BoardDetailContext';
+import { BoardsStatusContext, BoardsDispatchContext } from '../../context/BoardsContext';
 import { updateBoardTitle } from '../../utils/boardRequest';
 
 const MenuDiv = styled.div`
@@ -133,6 +134,8 @@ const TopMenu = ({
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [inputState, setInputState] = useState('span');
     const [inputContent, setInputContent] = useState('');
+    const { myBoards, invitedBoards } = useContext(BoardsStatusContext);
+    const boardsDispatch = useContext(BoardsDispatchContext);
 
     useEffect(() => {
         setInputContent(boardDetail.title);
@@ -153,6 +156,18 @@ const TopMenu = ({
                 ...boardDetail,
                 title: inputContent,
             });
+
+            const newMyBoards = myBoards.map((board) => {
+                if (board.id === boardDetail.id) board.title = inputContent;
+                return board;
+            });
+            const newInvitedBoards = invitedBoards.map((board) => {
+                if (board.id === boardDetail.id) board.title = inputContent;
+                return board;
+            });
+            const newBoards = { myboards: newMyBoards, invitedBoards: newInvitedBoards };
+            boardsDispatch({ type: 'MODIFY_BOARD', boards: newBoards });
+
             setInputState('span');
         }
     };

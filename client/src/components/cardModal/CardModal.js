@@ -191,6 +191,7 @@ const CardModal = ({ visible, closeModal, cardId, listId }) => {
                             <CardTitleContainer
                                 cardTitle={card.title}
                                 cardListTitle={card.list.title}
+                                cardBoardTitle={card.board.title}
                             />
                             <CardMemberContainer members={card.members} />
                             <CardDueDateContainer dueDate={card.dueDate} />
