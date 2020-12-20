@@ -28,19 +28,19 @@ const CommentContainer = ({ comments }) => {
                 <CardCommentHeader>댓글</CardCommentHeader>
             </CardCommentHeaderContainer>
             <CommentInput />
-            {comments
-                .map((comment) => {
-                    return (
-                        <Comment
-                            key={comment.id}
-                            userName={comment.user.name}
-                            commentCreatedAt={comment.createdAt}
-                            commentContent={comment.content}
-                            profileImageUrl={comment.user.profileImageUrl}
-                        />
-                    );
-                })
-                .reverse()}
+            {comments.map((comment) => {
+                return (
+                    <Comment
+                        key={comment.id}
+                        commentId={comment.id}
+                        userId={comment.user.id}
+                        userName={comment.user.name}
+                        commentCreatedAt={comment.createdAt}
+                        commentContent={comment.content}
+                        profileImageUrl={comment.user.profileImageUrl}
+                    />
+                );
+            })}
         </>
     );
 };

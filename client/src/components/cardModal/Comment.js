@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { decode } from 'jsonwebtoken';
+import CardContext from '../../context/CardContext';
+import { deleteComment, modifyComment } from '../../utils/commentRequest';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
 
@@ -68,7 +71,6 @@ const CommentContentTextArea = styled.textarea`
 `;
 
 const CommentEditDeleteContainer = styled.span`
-    display: ${(props) => (props.visible ? 'inline-block' : 'none')};
     margin-left: 0.3rem;
 `;
 
@@ -87,11 +89,60 @@ const CommentSaveCloseButtonContainer = styled.div`
     align-items: center;
 `;
 
-const Comment = ({ userName, commentCreatedAt, commentContent, profileImageUrl }) => {
+const Comment = ({
+    commentId,
+    userId,
+    userName,
+    commentCreatedAt,
+    commentContent,
+    profileImageUrl,
+}) => {
     const [editOpen, setEditOpen] = useState(false);
+    const [contentState, setContentState] = useState(commentContent);
+    const { cardDispatch } = useContext(CardContext);
+    const contentTextArea = useRef();
 
-    const inverseEditOpen = () => {
-        setEditOpen(!editOpen);
+    const userIdFromAccessToken = parseInt(
+        decode(localStorage.getItem('jwt').replace(/Bearer /gi, ''))?.userId,
+        10,
+    );
+
+    const onChange = (e) => {
+        if (editOpen) {
+            setContentState(e.target.value);
+        }
+    };
+
+    const onClickEditButton = () => {
+        contentTextArea.current.value = contentState;
+        setEditOpen(true);
+    };
+
+    const onClickCloseButton = () => {
+        contentTextArea.current.value = commentContent;
+        setEditOpen(false);
+    };
+
+    const onClickSaveButton = async () => {
+        const response = await modifyComment({ commentId, commentContent: contentState });
+        if (response.status !== 200) {
+            alert('댓글을 수정할 수 없습니다.');
+            return;
+        }
+
+        cardDispatch({ type: 'MODIFY_COMMENT', commentId, commentContent: contentState });
+        setEditOpen(false);
+        contentTextArea.current.value = contentState;
+    };
+
+    const onClickDeleteButton = async () => {
+        const response = await deleteComment({ commentId });
+        if (response.status !== 204) {
+            alert('댓글을 삭제할 수 없습니다.');
+            return;
+        }
+
+        cardDispatch({ type: 'DELETE_COMMENT', commentId });
     };
 
     return (
@@ -103,18 +154,26 @@ const Comment = ({ userName, commentCreatedAt, commentContent, profileImageUrl }
                     <CommentCreatedAt>{commentCreatedAt}</CommentCreatedAt>
                 </CommentTitleContainer>
                 <CommentContentContainer editOpen={editOpen}>
-                    <CommentContentTextArea defaultValue={commentContent} />
+                    <CommentContentTextArea
+                        defaultValue={commentContent}
+                        onChange={onChange}
+                        ref={contentTextArea}
+                    />
                     <CommentSaveCloseButtonContainer visible={editOpen}>
-                        <SaveButton width="3.5rem" height="2rem">
+                        <SaveButton width="3.5rem" height="2rem" onClick={onClickSaveButton}>
                             저장
                         </SaveButton>
-                        <CloseButton width="2rem" onClick={inverseEditOpen} />
+                        <CloseButton width="2rem" onClick={onClickCloseButton} />
                     </CommentSaveCloseButtonContainer>
                 </CommentContentContainer>
-                <CommentEditDeleteContainer visible={!editOpen}>
-                    <CommentActionButton onClick={inverseEditOpen}>수정</CommentActionButton>
-                    <CommentActionButton>삭제</CommentActionButton>
-                </CommentEditDeleteContainer>
+                {!editOpen && userIdFromAccessToken === userId && (
+                    <CommentEditDeleteContainer>
+                        <CommentActionButton onClick={onClickEditButton}>수정</CommentActionButton>
+                        <CommentActionButton onClick={onClickDeleteButton}>
+                            삭제
+                        </CommentActionButton>
+                    </CommentEditDeleteContainer>
+                )}
             </CommentRightContainer>
         </CommentWrapper>
     );
