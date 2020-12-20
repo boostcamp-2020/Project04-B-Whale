@@ -91,6 +91,7 @@ private extension CardDetailLocationView {
     addSubview(listDescriptionLabel)
     addSubview(boardDescriptionLabel)
     
+    configureView()
     configureTitleLabel()
     configureListNameLabel()
     configureBoardNameLabel()
