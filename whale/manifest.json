@@ -1,0 +1,37 @@
+{
+	"manifest_version": 2,
+	"name": "BoosTrello",
+	"version": "1.0.0",
+	"description": "BoosTrello",
+	"icons": {
+    "48": "images/BoosTrello_Logo.png"
+  },
+  "sidebar_action": {
+    "default_page": "index.html",
+    "default_icon": {
+      "16": "images/BoosTrello_Logo.png"
+    },
+    "default_title": "BoosTrello",
+    "use_navigation_bar": false,
+    "mobile_user_agent": true
+  },
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["notifications.js"],
+    "persistent": false
+  },
+  "externally_connectable": {
+      "matches": ["http://localhost/*"]
+  },
+    "commands": {
+        "_execute_sidebar_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+X"
+            }
+        }
+    }
+}
