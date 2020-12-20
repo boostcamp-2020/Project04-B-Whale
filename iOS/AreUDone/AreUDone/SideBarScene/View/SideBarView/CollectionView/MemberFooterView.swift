@@ -28,6 +28,7 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
     titleLabel.text = "초대하기"
     titleLabel.font = UIFont.nanumB(size: 20)
     
@@ -83,11 +84,11 @@ private extension MemberFooterView {
 }
 
 
-// MARK: - Extension objc
+// MARK: - Extension objc Method
 
 private extension MemberFooterView {
   
   @objc func baseViewDidTapped() {
-    delegate?.pushToInvitation()
+    delegate?.pushInvitation()
   }
 }

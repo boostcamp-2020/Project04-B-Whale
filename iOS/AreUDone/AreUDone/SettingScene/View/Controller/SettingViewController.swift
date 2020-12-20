@@ -21,6 +21,7 @@ final class SettingViewController: UIViewController {
     return tableView
   }()
   
+  
   // MARK:- Initializer
   
   init?(coder: NSCoder, viewModel: SettingViewModelProtocol) {
@@ -44,6 +45,8 @@ final class SettingViewController: UIViewController {
   }
 }
 
+
+// MARK: - Extension
 
 private extension SettingViewController {
   
@@ -72,7 +75,7 @@ private extension SettingViewController {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 private extension SettingViewController {
   
@@ -90,7 +93,7 @@ private extension SettingViewController {
 extension SettingViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    1
+    return 1
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,7 +118,6 @@ extension SettingViewController: UITableViewDelegate {
         })
       
       present(alert, animated: true)
-    break
     
     default:
       break

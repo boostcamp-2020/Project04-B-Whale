@@ -16,13 +16,20 @@ protocol SettingViewModelProtocol {
 
 final class SettingViewModel: SettingViewModelProtocol {
   
+  // MARK: - Property
+  
   private var logoutHandler: (() -> Void)?
+  
+  
+  // MARK: - Method
   
   func logout() {
     logoutHandler?()
   }
 }
 
+
+// MARK: - Extension BindUI
 
 extension SettingViewModel {
   

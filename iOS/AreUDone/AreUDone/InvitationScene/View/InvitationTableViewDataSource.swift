@@ -24,7 +24,6 @@ final class InvitationTableViewDataSource: NSObject, UITableViewDataSource {
   // MARK: - Method
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // TODO: 데이터가 0개일 경우 backgroundview 로 안내
     return viewModel.numberOfUsers()
   }
   

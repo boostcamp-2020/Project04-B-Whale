@@ -12,15 +12,16 @@ final class InvitationCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
-  var navigationController: UINavigationController?
+  private let router: Routable
   private let boardId: Int
   private let members: [User]
-  private let router: Routable
   private weak var delegate: InvitationViewControllerDelegate?
   
   private var storyboard: UIStoryboard {
     UIStoryboard.load(storyboard: .invitation)
   }
+  
+  var navigationController: UINavigationController?
   
   
   // MARK: - Initializer

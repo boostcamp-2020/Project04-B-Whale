@@ -22,9 +22,10 @@ final class SideBarView: UIView {
 
   private lazy var titleView: ImageTitleView = {
     let view = ImageTitleView()
-    view.update(withImageName: "info.circle", andTitle: "정보")
     view.translatesAutoresizingMaskIntoConstraints = false
+    
     view.backgroundColor = #colorLiteral(red: 0.998553474, green: 1, blue: 0.9636932791, alpha: 1)
+    view.update(withImageName: "info.circle", andTitle: "정보")
     
     return view
   }()
@@ -34,7 +35,6 @@ final class SideBarView: UIView {
         
     return collectionView
   }()
-
   private lazy var exitButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +46,7 @@ final class SideBarView: UIView {
   }()
   
   weak var delegate: SideBarViewDelegate?
+  
   
   // MARK: - Initializer
   
@@ -64,7 +65,7 @@ final class SideBarView: UIView {
   }
   
   required init?(coder: NSCoder) {
-    fatalError("The class should initialized with code")
+    fatalError("The class should be initialized with code")
   }
 }
 

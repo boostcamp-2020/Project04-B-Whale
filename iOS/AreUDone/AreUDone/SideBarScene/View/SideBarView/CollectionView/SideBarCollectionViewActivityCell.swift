@@ -14,6 +14,7 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   private lazy var contentLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    
     label.font = UIFont.nanumB(size: 18)
     label.numberOfLines = 0
 
@@ -23,6 +24,7 @@ final class SideBarCollectionViewActivityCell: UICollectionViewCell, Reusable {
   private lazy var createdAtLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    
     label.font = UIFont.nanumR(size: 12)
     
     return label

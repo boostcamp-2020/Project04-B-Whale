@@ -11,9 +11,10 @@ final class SettingTableViewCell: UITableViewCell, Reusable {
   
   // MARK:- Property
   
-  private lazy var titleLable: UILabel = {
+  private lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
+    
     label.font = UIFont.nanumB(size: 20)
     
     return label
@@ -23,7 +24,7 @@ final class SettingTableViewCell: UITableViewCell, Reusable {
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This class Should be initialized with code")
   }
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,17 +33,22 @@ final class SettingTableViewCell: UITableViewCell, Reusable {
     configure()
   }
   
+  
+  // MARK: - Method
+  
   func update(with title: String) {
-    titleLable.text = title
+    titleLabel.text = title
   }
 }
 
+
+// MARK: - Extension Configure Method
 
 private extension SettingTableViewCell {
   
   func configure(){
     selectionStyle = .none
-    contentView.addSubview(titleLable)
+    contentView.addSubview(titleLabel)
     
     configureContentView()
     configureTitleLabel()
@@ -54,10 +60,10 @@ private extension SettingTableViewCell {
   
   func configureTitleLabel() {
     NSLayoutConstraint.activate([
-      titleLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-      titleLable.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-      titleLable.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-      titleLable.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+      titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+      titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
   }
 }

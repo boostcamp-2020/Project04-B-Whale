@@ -23,7 +23,6 @@ final class MemberCell: UICollectionViewCell, Reusable {
     
     return imageView
   }()
-  
   private lazy var profileId: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
