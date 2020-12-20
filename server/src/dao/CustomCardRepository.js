@@ -51,10 +51,9 @@ export class CustomCardRepository extends BaseRepository {
         const cardCountList = await this.createQueryBuilder('card')
             .select(`date_format(card.due_date, '%Y-%m-%d')`, 'dueDate')
             .addSelect('count(1)', 'count')
-            .leftJoin('card.members', 'member')
+            .leftJoin('card.members', 'member', 'member.user_id=:userId', { userId })
             .where(`card.due_date BETWEEN :startDate AND :endDate`, { startDate, endDate })
-            .andWhere('card.creator_id=:userId', { userId })
-            .orWhere('member.user_id=:userId', { userId })
+            .andWhere('(card.creator_id=:userId OR member.user_id=:userId)', { userId })
             .groupBy(`date_format(card.due_date, '%Y-%m-%d')`)
             .getRawMany();
 
@@ -71,5 +70,29 @@ export class CustomCardRepository extends BaseRepository {
             .getRawMany();
 
         return cardCountList;
+    }
+
+    async findWithListAndBoardById(cardId) {
+        const card = await this.createQueryBuilder('a')
+            .innerJoinAndSelect('a.list', 'b')
+            .innerJoinAndSelect('b.board', 'b_0')
+            .innerJoinAndSelect('a.creator', 'c')
+            .where('a.id = :cardId', { cardId })
+            .getOne();
+
+        return card;
+    }
+
+    async findWithCommentsAndMembers(cardId) {
+        const card = await this.createQueryBuilder('a')
+            .leftJoinAndSelect('a.comments', 'b')
+            .leftJoinAndSelect('b.user', 'b_0')
+            .leftJoinAndSelect('a.members', 'c')
+            .leftJoinAndSelect('c.user', 'c_0')
+            .where('a.id = :cardId', { cardId })
+            .orderBy('b.createdAt', 'DESC')
+            .getOne();
+
+        return card;
     }
 }

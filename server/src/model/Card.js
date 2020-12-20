@@ -21,7 +21,7 @@ export class Card {
     @Column({ name: 'due_date', type: 'datetime' })
     dueDate;
 
-    @ManyToOne(() => List, (list) => list.cards, { nullable: false })
+    @ManyToOne(() => List, (list) => list.cards, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'list_id' })
     list;
 

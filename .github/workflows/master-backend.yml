@@ -1,0 +1,78 @@
+name: Backend CI/CD on Branch 'master'
+on:
+  push:
+    branches: [ master ]
+    paths: [ 'server/**' ]
+  pull_request:
+    branches: [ master ]
+    paths: [ 'server/**' ]
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+    working-directory: ./server
+jobs:
+  test:
+    env:
+      MYSQL_DATABASE: boostrellodb
+      MYSQL_USER: boostrello
+      MYSQL_PASSWORD: 123123
+      MYSQL_ROOT_PASSWORD: 123123
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12.x
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: |
+          touch .env
+          touch .env.test
+          echo NODE_ENV=test >> .env
+          echo DATABASE_TYPE=mysql >> .env.test
+          echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@localhost:3306/${MYSQL_DATABASE} >> .env.test
+          echo DATABASE_DROP_SCHEMA=false >> .env.test
+          echo DATABASE_SYNCHRONIZE=true >> .env.test
+          echo JWT_SECRET=sjfklajslfjaslfjals >> .env.test
+          echo OAUTH_NAVER_CLIENT_ID=vdEhOcPIbq3NUryKWnDh >> .env.test
+          echo OAUTH_GITHUB_CLIENT_ID=d3fcbc6215c7a37893f1 >> .env.test
+          cat .env.test
+      - run: npm run test
+    services:
+      db:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: ${{ env.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
+  deploy:
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create environment files
+        run: |
+          touch .env.production
+          for env in $MASTER_BACKEND_ENVIRONMENTS
+          do
+            echo $env >> .env.production
+          done
+        env:
+          MASTER_BACKEND_ENVIRONMENTS: ${{ secrets.MASTER_BACKEND_ENVIRONMENTS }}
+      - uses: akhileshns/heroku-deploy@v3.7.8
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_MASTER_BACKEND_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: ./server
+          env_file: .env.production
+          procfile: 'web: npm run start:prod'
+        env:
+          HD_NODE_ENV: production

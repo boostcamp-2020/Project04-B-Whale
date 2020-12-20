@@ -14,5 +14,16 @@ export const UserRouter = () => {
         });
     });
 
+    router.get('/', async (req, res) => {
+        const userService = UserService.getInstance();
+        const userName = req.query?.username;
+        if (userName === undefined) {
+            res.sendStatus(400);
+            return;
+        }
+        const user = await userService.getUserStartsWithName(userName);
+        res.status(200).json(user);
+    });
+
     return router;
 };

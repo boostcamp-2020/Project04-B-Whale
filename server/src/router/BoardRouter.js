@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { BoardService } from '../service/BoardService';
+import { ListService } from '../service/ListService';
 
 export const BoardRouter = () => {
     const router = Router();
@@ -36,6 +37,32 @@ export const BoardRouter = () => {
     router.put('/:id', async (req, res) => {
         const boardService = BoardService.getInstance();
         await boardService.updateBoard(req.user.id, req.params.id, req.body.title);
+        res.sendStatus(204);
+    });
+
+    router.post('/:id/list', async (req, res) => {
+        const listService = ListService.getInstance();
+        const createdList = await listService.createList(
+            req.user.id,
+            req.params.id,
+            req.body.title,
+        );
+        res.status(201).json(createdList);
+    });
+
+    router.delete('/:id', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        const config = {
+            userId: req.user.id,
+            boardId: req.params.id,
+        };
+        await boardService.deleteBoard(config);
+        res.sendStatus(204);
+    });
+
+    router.delete('/:id/invitation/', async (req, res) => {
+        const boardService = BoardService.getInstance();
+        await boardService.exitBoard(req.user.id, req.params.id);
         res.sendStatus(204);
     });
 
