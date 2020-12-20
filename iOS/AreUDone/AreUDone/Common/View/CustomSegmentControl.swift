@@ -117,6 +117,7 @@ private extension CustomSegmentedControl {
       )
     )
     selectorView.backgroundColor = selectorViewColor
+    addSubview(selectorView)
   }
   
   private func configureStackView() {
