@@ -12,14 +12,16 @@ final class BoardListCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
+  private let router: Routable
+
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .boardList)
   }
-  private let router: Routable
   
   var navigationController: UINavigationController?
   private var boardDetailCoordinator: NavigationCoordinator!
   private var boardAddCoordinator: NavigationCoordinator!
+  
   
   // MARK: - Initializer
   
@@ -38,7 +40,11 @@ final class BoardListCoordinator: NavigationCoordinator {
               
               let boardService = BoardService(router: self.router, localDataSource: BoardLocalDataSource())
               let viewModel = BoardListViewModel(boardService: boardService)
-              return BoardListViewController(coder: coder, viewModel: viewModel, sectionFactory: SectionContentsFactory())
+              return BoardListViewController(
+                coder: coder,
+                viewModel: viewModel,
+                sectionFactory: SectionContentsFactory()
+              )
             }) as? BoardListViewController else { return UIViewController() }
     
     boardListViewController.coordinator = self
@@ -52,7 +58,7 @@ final class BoardListCoordinator: NavigationCoordinator {
 
 extension BoardListCoordinator {
   
-  func pushToBoardDetail(boardId: Int) {
+  func pushBoardDetail(boardId: Int) {
     boardDetailCoordinator = BoardDetailCoordinator(router: router, boardId: boardId)
     boardDetailCoordinator.navigationController = navigationController
     

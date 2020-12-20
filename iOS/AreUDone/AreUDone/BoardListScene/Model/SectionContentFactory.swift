@@ -14,12 +14,16 @@ protocol SectionContentsFactoryable {
 
 struct SectionContentsFactory: SectionContentsFactoryable {
   
+  // MARK: - Method
+  
   func load(index: Int) -> String {
     switch index {
     case 0:
       return "나의 보드"
+      
     case 1:
       return "공유 보드"
+      
     default:
       return ""
     }
