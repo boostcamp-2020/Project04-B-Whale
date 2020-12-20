@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -36,6 +35,7 @@ const Wrapper = styled.div`
 const ListWrapper = styled.div``;
 
 const Board = ({ match }) => {
+    document.getElementById('root').style.overflow = 'auto';
     const boardWrapper = useRef();
     const { id } = match.params;
     const [sidebarDisplay, setSidebarDisplay] = useState(false);

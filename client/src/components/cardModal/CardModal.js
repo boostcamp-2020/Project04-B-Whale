@@ -21,7 +21,7 @@ const DimmedModal = styled.div`
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
+    z-index: 3;
 `;
 
 const ModalWrapper = styled.div`
@@ -31,7 +31,7 @@ const ModalWrapper = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 4;
     overflow: auto;
     outline: 0;
 `;
@@ -173,6 +173,7 @@ const CardModal = ({ visible, closeModal, cardId, listId }) => {
 
     const onDimmedClick = (e) => {
         if (e.target === e.currentTarget) {
+            document.getElementById('root').style.overflow = 'auto';
             closeModal();
         }
     };

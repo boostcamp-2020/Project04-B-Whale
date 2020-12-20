@@ -164,7 +164,13 @@ const ActivitySidebar = ({ sidebarDisplay, setSidebarDisplay }) => {
                 <Hr />
                 <ActivitiesWrapper onWheel={(e) => e.stopPropagation()}>
                     {activities.map((v) => {
-                        return <ActivityDetail key={v.id} content={v.content} />;
+                        return (
+                            <ActivityDetail
+                                key={v.id}
+                                content={v.content}
+                                createdAt={v.createdAt}
+                            />
+                        );
                     })}
                 </ActivitiesWrapper>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>

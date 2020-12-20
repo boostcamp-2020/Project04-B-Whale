@@ -18,6 +18,7 @@ const Main = ({ location }) => {
     if (token) {
         localStorage.setItem('jwt', token);
     }
+    document.getElementById('root').style.overflow = 'auto';
 
     return (
         <BoardsProvider>

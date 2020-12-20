@@ -1,6 +1,5 @@
 import request from './request';
 
-// eslint-disable-next-line import/prefer-default-export
 export const searchUsersByName = async (name) => {
     const config = {
         url: `/api/user?username=${name}`,

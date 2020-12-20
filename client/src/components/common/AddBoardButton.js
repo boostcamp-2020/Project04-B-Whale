@@ -12,14 +12,20 @@ const Button = styled.li`
 
 const AddBoardButton = () => {
     const [isModalDisplay, setIsModalDisplay] = useState(false);
-
+    // eslint-disable-next-line no-unused-vars
     return (
         <>
             <Button onClick={() => setIsModalDisplay(true)}>
                 <HiPlus />
                 보드 추가하기
             </Button>
-            <Modal onClose={() => setIsModalDisplay(false)} visible={isModalDisplay} />
+            <Modal
+                onClose={() => {
+                    document.getElementById('root').style.overflow = 'auto';
+                    setIsModalDisplay(false);
+                }}
+                visible={isModalDisplay}
+            />
         </>
     );
 };

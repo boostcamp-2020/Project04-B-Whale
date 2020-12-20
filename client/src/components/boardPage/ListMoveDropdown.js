@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { BsChevronLeft } from 'react-icons/bs';
@@ -121,7 +122,6 @@ const ListMoveDropdown = ({
 
         boardDetail.lists[currentListInd].position = position;
         boardDetail.lists.sort((a, b) => {
-            // eslint-disable-next-line no-nested-ternary
             return a.position < b.position ? -1 : a.position > b.position ? 1 : 0;
         });
         setBoardDetail({ ...boardDetail });

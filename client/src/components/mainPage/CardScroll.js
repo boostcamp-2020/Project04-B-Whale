@@ -28,7 +28,6 @@ const CardScroll = () => {
     const [cardId, setCardId] = useState(-1);
     const [cardModalVisible, setCardModalVisible] = useState(false);
     const { loading, data, error } = useContext(CardScrollStatusContext);
-
     if (loading || error !== null) {
         return null;
     }
@@ -61,8 +60,8 @@ const CardScroll = () => {
                     <CardModal
                         visible={cardModalVisible}
                         closeModal={() => {
-                            setCardModalVisible(false);
                             document.getElementById('root').style.overflow = 'auto';
+                            setCardModalVisible(false);
                         }}
                         cardId={cardId}
                     />

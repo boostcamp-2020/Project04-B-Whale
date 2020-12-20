@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrag, useDrop } from 'react-dnd';
@@ -293,6 +291,7 @@ export default function List({ title, id, index, moveList, position }) {
                     visible={cardModalVisible}
                     closeModal={() => {
                         setCardModalVisible(false);
+                        document.getElementById('root').style.overflow = 'auto';
                     }}
                     cardId={cardId}
                     listId={id}
