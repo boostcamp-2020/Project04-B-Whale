@@ -12,7 +12,7 @@ struct UserJsonFactory: JsonFactory {
   
   func loadJson(endPoint: EndPointable) -> Data? {
     switch endPoint {
-    case UserEndPoint.requestMe:
+    case UserEndPoint.fetchMyInfo:
       return
         """
         {

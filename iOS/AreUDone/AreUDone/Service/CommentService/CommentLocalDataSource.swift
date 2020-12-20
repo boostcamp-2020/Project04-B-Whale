@@ -14,9 +14,14 @@ protocol CommentLocalDataSourceable {
   func deleteComment(for id: Int)
 }
 
-class CommentLocalDataSource: CommentLocalDataSourceable {
+final class CommentLocalDataSource: CommentLocalDataSourceable {
+  
+  // MARK: - Property
   
   let realm = try! Realm()
+  
+  
+  // MARK: - Method
   
   func save(comment: CardDetailComment, forCardId cardId: Int) {
     realm.writeOnMain {

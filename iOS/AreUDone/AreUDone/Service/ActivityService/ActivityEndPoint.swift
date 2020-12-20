@@ -10,7 +10,6 @@ import NetworkFramework
 import KeychainFramework
 
 enum ActivityEndPoint {
-  
   case fetchActivities(boardId: Int)
 }
 
@@ -20,7 +19,7 @@ extension ActivityEndPoint: EndPointable {
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } 
     return url
   }
   

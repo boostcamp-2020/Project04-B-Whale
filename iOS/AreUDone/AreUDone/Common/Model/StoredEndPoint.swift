@@ -18,6 +18,7 @@ final class StoredEndPoint: Object, EndPointable {
   var httpMethod: HTTPMethod? {
     return HTTPMethod(rawValue: httpMethodRawValue)
   }
+  
   var headers: HTTPHeader? {
     return convert(list: headerList)
   }
@@ -41,15 +42,14 @@ final class StoredEndPoint: Object, EndPointable {
   
   // MARK: - Method
   
-  private func convert(list: List<dicFormat>) -> [String: String] {
-    var lists = [String: String]()
+  private func convert(list: List<dicFormat>) -> [String: Any] {
+    var lists = [String: Any]()
     Array(list).forEach {
       lists[$0.key] = $0.value
     }
     return lists
   }
 }
-
 
 final class dicFormat: Object {
   

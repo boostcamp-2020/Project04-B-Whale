@@ -13,9 +13,8 @@ protocol ActivityServiceProtocol {
   func fetchActivities(withBoardId boardId: Int, completionHandler: @escaping (Result<Activities, APIError>) -> Void )
 }
 
-class ActivityService: ActivityServiceProtocol {
+final class ActivityService: ActivityServiceProtocol {
  
-  
   // MARK: - Property
   
   private let router: Routable
@@ -31,7 +30,9 @@ class ActivityService: ActivityServiceProtocol {
   // MARK: - Method
   
   func fetchActivities(withBoardId boardId: Int, completionHandler: @escaping (Result<Activities, APIError>) -> Void ) {
-    router.request(route: ActivityEndPoint.fetchActivities(boardId: boardId)) { result in
+    let endPoint = ActivityEndPoint.fetchActivities(boardId: boardId)
+    
+    router.request(route: endPoint) { result in
       completionHandler(result)
     }
   }

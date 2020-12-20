@@ -9,7 +9,6 @@ import Foundation
 import NetworkFramework
 
 enum ImageEndPoint {
-  
   case fetchImage(url: String)
 }
 
@@ -22,7 +21,7 @@ extension ImageEndPoint: EndPointable {
   }
   
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() }
     return url
   }
   
