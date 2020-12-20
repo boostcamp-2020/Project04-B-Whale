@@ -43,15 +43,18 @@ final class CardCollectionView: UICollectionView {
 private extension CardCollectionView {
   
   func configure() {
+    configureView()
+    configureFlowLayout()
+    registerCell()
+  }
+  
+  func configureView() {
     layer.cornerRadius = 10
     layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     backgroundColor = .white
     showsVerticalScrollIndicator = false
     showsHorizontalScrollIndicator = false
-    
-    register(CardCollectionViewCell.self)
-    configureFlowLayout()
   }
   
   func configureFlowLayout() {
@@ -62,5 +65,9 @@ private extension CardCollectionView {
     layout.minimumInteritemSpacing = 10
     
     collectionViewLayout = layout
+  }
+  
+  func registerCell() {
+    register(CardCollectionViewCell.self)
   }
 }

@@ -9,6 +9,7 @@ import AVKit
 import Foundation
 
 protocol VideoPlayerLoopable {
+  
   func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer?
   func play()
   func remove()

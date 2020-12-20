@@ -34,9 +34,9 @@ final class DateLabel: UILabel {
 
 // MARK:- Extension Configure Method
 
-extension DateLabel {
+private extension DateLabel {
   
-  private func configure(){
+  func configure(){
     textAlignment = .center
     font = UIFont.nanumB(size: 30)
   }

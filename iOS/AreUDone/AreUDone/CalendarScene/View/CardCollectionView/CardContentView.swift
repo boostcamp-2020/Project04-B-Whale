@@ -18,7 +18,6 @@ final class CardContentView: UIView {
     
     return label
   }()
-
   private lazy var commentImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,11 +27,11 @@ final class CardContentView: UIView {
     
     return imageView
   }()
-  
   private lazy var commentCountLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.nanumB(size: 14)
+    
     return label
   }()
   
@@ -66,6 +65,10 @@ final class CardContentView: UIView {
 private extension CardContentView {
   
   func configure() {
+    addSubview(titleLabel)
+    addSubview(commentImageView)
+    addSubview(commentCountLabel)
+    
     configureView()
     configureTitleLabel()
     configureCommentImageView()
@@ -80,10 +83,6 @@ private extension CardContentView {
     ]
     layer.cornerCurve = .continuous
     layer.cornerRadius = 5
-    
-    addSubview(titleLabel)
-    addSubview(commentImageView)
-    addSubview(commentCountLabel)
   }
   
   func configureTitleLabel() {

@@ -22,9 +22,21 @@ final class DateStepper: UIView {
   
   // MARK: - Property
   
-  @IBOutlet weak var leftArrow: UIImageView!
-  @IBOutlet weak var rightArrow: UIImageView!
-  @IBOutlet weak var dateLabel: UILabel!
+  @IBOutlet weak var leftArrow: UIImageView! {
+    didSet {
+      dateLabel.isUserInteractionEnabled = true
+    }
+  }
+  @IBOutlet weak var rightArrow: UIImageView! {
+    didSet {
+      leftArrow.isUserInteractionEnabled = true
+    }
+  }
+  @IBOutlet weak var dateLabel: UILabel! {
+    didSet {
+      rightArrow.isUserInteractionEnabled = true
+    }
+  }
   
   weak var delegate: DateStepperDelegate?
   
@@ -60,21 +72,27 @@ private extension DateStepper {
     backgroundColor = .clear
     
     nibSetup()
-    addingGesture()
+    addingGestureRecognizer()
   }
   
-  func addingGesture() {
-    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dateLabelDidTapped))
+  func addingGestureRecognizer() {
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(dateLabelDidTapped)
+    )
     dateLabel.addGestureRecognizer(tapRecognizer)
-    dateLabel.isUserInteractionEnabled = true
     
-    let rightTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(leftArrowDidTapped))
+    let rightTapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(leftArrowDidTapped)
+    )
     leftArrow.addGestureRecognizer(rightTapRecognizer)
-    leftArrow.isUserInteractionEnabled = true
     
-    let leftTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightArrowDidTapped))
+    let leftTapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(rightArrowDidTapped)
+    )
     rightArrow.addGestureRecognizer(leftTapRecognizer)
-    rightArrow.isUserInteractionEnabled = true
   }
 }
 
@@ -96,7 +114,7 @@ private extension DateStepper {
   }
 }
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension DateStepper {
   
