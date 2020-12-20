@@ -2,8 +2,10 @@ name: Server CI/CD on Branch 'develop/server'
 on:
   push:
     branches: [ develop/server ]
+    paths: [ 'server/**' ]
   pull_request:
     branches: [ develop/server ]
+    paths: [ 'server/**' ]
 defaults:
   run:
     shell: bash
