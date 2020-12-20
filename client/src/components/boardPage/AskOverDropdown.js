@@ -30,7 +30,7 @@ const DropdownWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     @media ${(props) => props.theme.sideBar} {
-        width: 220px;
+        width: 200px;
         left: ${(props) => props.offsetY - 30}px;
     }
 `;
@@ -83,7 +83,8 @@ const AskOverDropdown = (props) => {
     let time;
     useEffect(() => {
         time = setTimeout(async () => {
-            if (!input.current?.value) {
+            const replacedInput = input.current?.value?.replace(/ /g, '');
+            if (!input.current?.value || !replacedInput) {
                 setSearchedUsers([]);
                 return;
             }
@@ -122,7 +123,7 @@ const AskOverDropdown = (props) => {
                     onKeyDown={searchEscHandler}
                     ref={input}
                 />
-                <ContentWrapper>
+                <ContentWrapper onWheel={(e) => e.stopPropagation()}>
                     {!searchedUsers.length &&
                         inputContent &&
                         (!noUserState ? (

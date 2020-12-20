@@ -11,7 +11,7 @@ const HeaderDiv = styled.div`
     padding: 5px 10px;
     width: 100%;
     min-height: 50px;
-    background-color: lightskyblue;
+    background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const LogoImg = styled.img`

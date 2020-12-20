@@ -55,14 +55,21 @@ const BoardsDropdown = ({ onClose }) => {
     return (
         <Wrapper onClick={onClickClose}>
             <DropdownWrapper>
-                <BoardListWrapper>
+                <BoardListWrapper onWheel={(e) => e.stopPropagation()}>
                     <BoardTitle>
                         <RiContactsFill size={20} style={{ marginRight: '5px' }} />
                         내가 만든 보드
                     </BoardTitle>
                     <BoardWrapper>
                         {myBoards.map((board) => {
-                            return <Board key={board.id} id={board.id} title={board.title} />;
+                            return (
+                                <Board
+                                    key={board.id}
+                                    id={board.id}
+                                    title={board.title}
+                                    closeHandler={onClose}
+                                />
+                            );
                         })}
                     </BoardWrapper>
                     <BoardTitle>

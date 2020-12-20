@@ -69,9 +69,20 @@ const AddButton = styled.button.attrs({
 `;
 
 const CreateBoardModal = ({ onClose, visible }) => {
-    const [color, setColor] = useState('#B80000');
+    const [color, setColor] = useState('#FFFFFF');
     const inputTitleElement = useRef();
-
+    const colors = [
+        '#f4decd',
+        '#0e63b2',
+        '#C67e28',
+        '#43892b',
+        '#9f3426',
+        '#754a8c',
+        '#bf417e',
+        '#3fb757',
+        '#169ec0',
+        '#71797e',
+    ];
     const onClickChangeColor = ({ hex }) => {
         setColor(hex);
     };
@@ -79,6 +90,7 @@ const CreateBoardModal = ({ onClose, visible }) => {
     const onDimmedClick = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
+            document.getElementById('root').style.overflow = 'auto';
         }
     };
 
@@ -126,7 +138,11 @@ const CreateBoardModal = ({ onClose, visible }) => {
                             onKeyDown={addBoard}
                         />
                         <Wrapper>
-                            <GithubPicker width={212} onChangeComplete={onClickChangeColor} />
+                            <GithubPicker
+                                colors={colors}
+                                width={138}
+                                onChangeComplete={onClickChangeColor}
+                            />
                             <AddButton onClick={addBoard}>생성</AddButton>
                         </Wrapper>
                     </ModalContents>

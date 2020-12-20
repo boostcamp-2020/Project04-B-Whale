@@ -15,9 +15,6 @@ const GlobalStyle = createGlobalStyle`
       text-decoration: none;
       user-select: none;
   }
-  html {
-    height: 100%;
-  }
 
   @font-face {
     font-family: 'NanumBarunpen';
@@ -27,10 +24,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    height: 100%; font-family: NanumBarunpen;
+    /* height: 100%;  */
+    font-family: NanumBarunpen;
   }
   #root{
-    height: 100%;
+        height: 100%; 
   }
   button {
       cursor: pointer;

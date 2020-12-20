@@ -7,6 +7,7 @@ import CommentContainer from './CommentContainer';
 import CardMemberContainer from './CardMemberContainer';
 import MemberButton from '../common/MemberButton';
 import MoveButton from '../common/MoveButton';
+import RemoveButton from '../common/RemoveButton';
 import { getCard } from '../../utils/cardRequest';
 import CardContext from '../../context/CardContext';
 import BoardDetailContext from '../../context/BoardDetailContext';
@@ -48,6 +49,7 @@ const ModalInner = styled.div`
     padding: 1rem;
     border-radius: 0.2rem;
     overflow-y: scroll;
+    min-width: 385px;
 `;
 
 const CardModalLeftSideBar = styled.div`
@@ -118,7 +120,9 @@ const cardReducer = (state, action) => {
     }
 };
 
-const CardModal = ({ visible, closeModal, cardId }) => {
+const CardModal = ({ visible, closeModal, cardId, listId }) => {
+    if (visible) document.getElementById('root').style.overflow = 'hidden';
+
     const { boardDetail, setBoardDetail } = useContext(BoardDetailContext);
     const [cardState, cardDispatch] = useReducer(cardReducer, {
         loading: false,
@@ -155,7 +159,11 @@ const CardModal = ({ visible, closeModal, cardId }) => {
         <>
             <CardContext.Provider value={{ cardState, cardDispatch }}>
                 <DimmedModal visible={visible} />
-                <ModalWrapper onClick={onDimmedClick} visible={visible}>
+                <ModalWrapper
+                    onWheel={(e) => e.stopPropagation()}
+                    onClick={onDimmedClick}
+                    visible={visible}
+                >
                     <ModalInner>
                         <CardModalLeftSideBar>
                             <CardTitleContainer
@@ -171,6 +179,11 @@ const CardModal = ({ visible, closeModal, cardId }) => {
                             <ButtonList>
                                 <MemberButton />
                                 <MoveButton />
+                                <RemoveButton
+                                    cardId={cardId}
+                                    listId={listId}
+                                    closeModal={closeModal}
+                                />
                             </ButtonList>
                         </CardModalRightSideBar>
                     </ModalInner>

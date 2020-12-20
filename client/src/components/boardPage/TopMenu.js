@@ -19,6 +19,8 @@ const LeftTopmenuDiv = styled.div`
 
     @media ${(props) => props.theme.sideBar} {
         width: 80%;
+        max-height: 40px;
+        display: flex;
     }
 `;
 
@@ -39,7 +41,12 @@ const BoardTitle = styled.span`
             color: white;
         }`};
     @media ${(props) => props.theme.sideBar} {
-        margin-left: 1px;
+        margin-left: 2px;
+        max-width: 120px;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        min-height: 40px;
     }
 `;
 
@@ -53,6 +60,10 @@ const BoardInput = styled.input`
     z-index: 3;
     &:focus {
         outline: 1px solid blue;
+    }
+    @media ${(props) => props.theme.sideBar} {
+        margin-left: 2px;
+        max-width: 120px;
     }
 `;
 
@@ -71,7 +82,6 @@ const ButtonForGettingInvitedUser = styled.button`
 const InviteButton = styled.button`
     border-radius: 4px;
     padding: 5px 10px;
-    z-index: 9999;
     background-color: rgba(20, 197, 247, 0.17);
     &:hover {
         background-color: gray;
@@ -132,7 +142,8 @@ const TopMenu = ({
 
     const changeBoardTitle = async (evt) => {
         if (evt.keyCode === 13) {
-            if (!inputContent || inputContent === boardDetail.title) {
+            const replacedTitle = inputContent.replace(/ /g, '');
+            if (!replacedTitle || !inputContent || inputContent === boardDetail.title) {
                 setInputContent(boardDetail.title);
                 setInputState('span');
                 return;

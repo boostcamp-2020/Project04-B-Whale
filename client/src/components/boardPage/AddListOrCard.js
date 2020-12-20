@@ -177,6 +177,7 @@ const AddListBtnInput = ({ parent, id, history }) => {
                         format={dateFormat}
                         onOk={okHandler}
                         clearIcon={false}
+                        inputReadOnly
                     />
                 )}
                 <FooterBtnDiv>

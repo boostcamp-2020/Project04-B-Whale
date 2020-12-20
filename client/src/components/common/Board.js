@@ -12,10 +12,10 @@ const BoardTitle = styled.li`
     overflow-x: hidden;
 `;
 
-const Board = ({ id, title }) => {
+const Board = ({ id, title, closeHandler }) => {
     return (
         <Link to={`/board/${id}`}>
-            <BoardTitle>{title}</BoardTitle>
+            <BoardTitle onClick={closeHandler}>{title}</BoardTitle>
         </Link>
     );
 };

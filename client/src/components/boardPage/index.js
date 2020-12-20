@@ -17,7 +17,7 @@ import BoardsProvider from '../provider/BoardsProvider';
 import ActivityProvider from '../provider/ActivityProvider';
 
 const MainContents = styled.div`
-    height: 92%;
+    height: 100%;
     width: 100%;
     background-color: ${(props) => props.backgroundColor};
 `;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     margin-left: 10px;
     max-width: ${(props) => (props.sidebar ? '79' : '100')}%;
     overflow-x: auto;
-    height: 93%;
+    height: 83%;
     @media ${(props) => props.theme.sideBar} {
         max-width: ${(props) => (props.sidebar ? '29' : '100')}%;
     }
@@ -79,17 +79,15 @@ const Board = ({ match }) => {
     }, [id]);
 
     const onMouseWheel = (e) => {
-        const isListArea = !!e.target.closest('.list');
-        if (isListArea) return;
         boardWrapper.current.scrollBy({ left: e.deltaY * 2, behavior: 'smooth' });
     };
 
     return (
         <>
-            <BoardsProvider>
-                <Header />
-            </BoardsProvider>
             <MainContents backgroundColor={boardDetail.color} onWheel={onMouseWheel}>
+                <BoardsProvider>
+                    <Header />
+                </BoardsProvider>
                 <TopMenu
                     sidebarDisplay={sidebarDisplay}
                     setSidebarDisplay={setSidebarDisplay}
