@@ -68,9 +68,12 @@ final class CalendarViewModel: CalendarViewModelProtocol {
     }
     
     let date = dateAsString.toDateFormat()
-    let value = direction == .left ? -1 : 1
+    let value = direction.value
     let calendar = Calendar(identifier: .gregorian)
-    selectedDate = calendar.date(byAdding: .day, value: value, to: date)!
+    
+    if let updatedDate = calendar.date(byAdding: .day, value: value, to: date) {
+      selectedDate = updatedDate
+    }
   }
   
   func deleteCard(for cardId: Int, completionHandler: @escaping () -> Void) {
@@ -90,10 +93,12 @@ final class CalendarViewModel: CalendarViewModelProtocol {
   }
   
   func fetchDailyCards() {
-    cardService.fetchDailyCards(dateString: selectedDate.toString(), option: fetchDailyCardOption) { result in
+    cardService.fetchDailyCards(
+      dateString: selectedDate.toString(),
+      option: fetchDailyCardOption
+    ) { result in
       switch result {
       case .success(let cards):
-        //TODO: - self가 순환참조를 일으키는 확인해야 함.
         self.updateDateHandler?(self.selectedDate.toString())
         self.updateCardCollectionViewHandler?(cards)
         self.emptyIndicatorViewHandler?(cards.cards.isEmpty)

@@ -10,6 +10,13 @@ import UIKit
 enum Direction {
   case right
   case left
+  
+  var value: Int {
+    switch self {
+    case .right: return 1
+    case .left: return -1
+    }
+  }
 }
 
 protocol DateStepperDelegate: AnyObject {

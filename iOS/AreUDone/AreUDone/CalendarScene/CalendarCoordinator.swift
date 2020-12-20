@@ -12,13 +12,14 @@ final class CalendarCoordinator: NavigationCoordinator {
   
   // MARK: - Property
   
+  private let router: Routable
+  
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .calendar)
   }
-  private let router: Routable
+  
   
   var navigationController: UINavigationController?
-  
   private var calendarPickerCoordinator: NavigationCoordinator!
   private var cardDetailCoordinator: NavigationCoordinator!
   
