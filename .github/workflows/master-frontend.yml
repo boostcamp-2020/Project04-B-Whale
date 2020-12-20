@@ -44,5 +44,3 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: ./client
           env_file: .env
-        env:
-          HD_NODE_ENV: production
