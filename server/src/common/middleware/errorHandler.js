@@ -2,12 +2,13 @@ import { ValidationError } from 'class-validator';
 import { BusinessError } from '../error/BusinessError';
 import { ErrorCode } from '../error/ErrorCode';
 
+// eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
     if (err instanceof BusinessError) {
         res.status(err.errorCode.httpStatusCode).json({
             error: {
                 code: err.errorCode.code,
-                message: err.errorCode.message,
+                message: err.message,
             },
         });
     } else if (Array.isArray(err) && err[0] instanceof ValidationError) {

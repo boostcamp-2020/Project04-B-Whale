@@ -4,15 +4,25 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 import { validateOrReject } from 'class-validator';
-import { createConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import {
     initializeTransactionalContext,
     patchTypeORMRepositoryWithBaseRepository,
 } from 'typeorm-transactional-cls-hooked';
+import passport from 'passport';
 import { ConnectionOptionGenerator } from './common/config/database/ConnectionOptionGenerator';
 import { DatabaseEnv } from './common/env/DatabaseEnv';
 import { EnvType } from './common/env/EnvType';
+import { IndexRouter } from './router';
+import { errorHandler } from './common/middleware/errorHandler';
+import { namespaceCreator } from './common/middleware/namespaceCreator';
+import { NaverStrategy } from './common/config/passport/NaverStrategy';
+import { GitHubStrategy } from './common/config/passport/GitHubStrategy';
+import { JwtStrategy } from './common/config/passport/JwtStrategy';
+import { shouldHandleError } from './common/middleware/shouldHandlerError';
 
 export class Application {
     constructor() {
@@ -28,14 +38,11 @@ export class Application {
     }
 
     async initialize() {
-        try {
-            await this.initEnvironment();
-            this.registerMiddleware();
-            await this.initDatabase();
-        } catch (error) {
-            console.error(error);
-            process.exit();
-        }
+        await this.initEnvironment();
+        this.initSentry();
+        await this.initDatabase();
+        this.initPassport();
+        this.registerMiddleware();
     }
 
     async initEnvironment() {
@@ -61,8 +68,45 @@ export class Application {
     }
 
     registerMiddleware() {
+        if (process.env.SENTRY_DSN) {
+            this.httpServer.use(Sentry.Handlers.requestHandler({ user: ['id', 'name'] }));
+            this.httpServer.use(Sentry.Handlers.tracingHandler());
+        }
         this.httpServer.use(cors());
         this.httpServer.use(express.json());
         this.httpServer.use(express.urlencoded({ extended: false }));
+        this.httpServer.use(namespaceCreator);
+        this.httpServer.use(IndexRouter());
+        if (process.env.SENTRY_DSN) {
+            this.httpServer.use(
+                Sentry.Handlers.errorHandler({
+                    shouldHandleError,
+                }),
+            );
+        }
+        this.httpServer.use(errorHandler);
+    }
+
+    initPassport() {
+        passport.use(new NaverStrategy());
+        passport.use(new GitHubStrategy());
+        passport.use(new JwtStrategy());
+    }
+
+    initSentry() {
+        if (process.env.SENTRY_DSN) {
+            Sentry.init({
+                dsn: process.env.SENTRY_DSN,
+                integrations: [
+                    new Sentry.Integrations.Http({ tracing: true }),
+                    new Tracing.Integrations.Express({ app: this.httpServer }),
+                ],
+                tracesSampleRate: 1.0,
+            });
+        }
+    }
+
+    async close() {
+        await getConnection().close();
     }
 }

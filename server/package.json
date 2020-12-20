@@ -9,25 +9,35 @@
     "start": "babel-node src/main",
     "start:dev": "nodemon -e js --watch src --exec babel-node src/main",
     "start:prod": "node dist/main",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^5.29.1",
+    "@sentry/tracing": "^5.29.1",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
+    "cls-hooked": "^4.2.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
     "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-github": "^1.1.0",
+    "passport-jwt": "^4.0.0",
+    "passport-naver": "^1.0.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "typeorm": "^0.2.29",
-    "typeorm-transactional-cls-hooked": "^0.1.12"
+    "typeorm-transactional-cls-hooked": "^0.1.13"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
