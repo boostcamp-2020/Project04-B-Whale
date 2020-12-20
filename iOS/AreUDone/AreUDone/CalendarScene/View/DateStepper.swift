@@ -31,17 +31,17 @@ final class DateStepper: UIView {
   
   @IBOutlet weak var leftArrow: UIImageView! {
     didSet {
-      dateLabel.isUserInteractionEnabled = true
+      leftArrow.isUserInteractionEnabled = true
     }
   }
   @IBOutlet weak var rightArrow: UIImageView! {
     didSet {
-      leftArrow.isUserInteractionEnabled = true
+      rightArrow.isUserInteractionEnabled = true
     }
   }
   @IBOutlet weak var dateLabel: UILabel! {
     didSet {
-      rightArrow.isUserInteractionEnabled = true
+      dateLabel.isUserInteractionEnabled = true
     }
   }
   

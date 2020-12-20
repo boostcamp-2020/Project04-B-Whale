@@ -14,31 +14,24 @@ protocol CalendarPickerViewControllerDelegate: AnyObject {
 
 final class CalendarPickerViewController: UIViewController {
   
-  enum Section {
-    case main
-  }
-  
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, Day>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Day>
-  
+  typealias DataSource = UICollectionViewDiffableDataSource<SingleSection, Day>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<SingleSection, Day>
   
   // MARK: - Property
   
   private lazy var dimmedBackgroundView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
     
     return view
   }()
-  
   private lazy var headerView: CalendarPickerHeaderView = {
     let view = CalendarPickerHeaderView()
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
-  
   private lazy var collectionView: CalendarCollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
@@ -61,7 +54,6 @@ final class CalendarPickerViewController: UIViewController {
     
     return collectionView
   }()
-  
   private lazy var timeSettingActionSheet: UIAlertController = {
     let alert = UIAlertController(
       alertType: .timePicker,
@@ -74,7 +66,6 @@ final class CalendarPickerViewController: UIViewController {
     
     return alert
   }()
-  
   private lazy var timePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
     datePicker.translatesAutoresizingMaskIntoConstraints = false
@@ -83,13 +74,13 @@ final class CalendarPickerViewController: UIViewController {
     if #available(iOS 13.4, *) {
       datePicker.preferredDatePickerStyle = .wheels
     }
+    
     return datePicker
   }()
   
   private let viewModel: CalendarPickerViewModelProtocol
-  lazy var dataSource = configureDataSource()
   
-  //TODO:- 물어보기 delegate의 위치와 이름
+  private lazy var dataSource = configureDataSource()
   weak var delegate: CalendarPickerViewControllerDelegate?
   weak var coordinator: CalendarPickerCoordinator?
   
@@ -100,9 +91,6 @@ final class CalendarPickerViewController: UIViewController {
     self.viewModel = viewModel
     
     super.init(nibName: nil, bundle: nil)
-    
-    modalPresentationStyle = .overCurrentContext
-    modalTransitionStyle = .crossDissolve
   }
   
   required init?(coder: NSCoder) {
@@ -124,45 +112,7 @@ final class CalendarPickerViewController: UIViewController {
 }
 
 
-// MARK:- Extension bindUI
-
-private extension CalendarPickerViewController {
-  
-  func bindUI() {
-    bindingInitializeDate()
-    bindingUpdateCalendar()
-    bindingSendSelectedDate()
-  }
-  
-  func bindingInitializeDate() {
-    viewModel.bindingInitializeDate { [weak self] days, selectedDate in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: days, animatingDifferences: false)
-        self?.headerView.baseDate = selectedDate
-        self?.timePicker.date = selectedDate
-      }
-    }
-  }
-  
-  func bindingUpdateCalendar() {
-    viewModel.bindingUpdateCalendar { [weak self] days, selectedDate in
-      DispatchQueue.main.async {
-        self?.updateSnapshot(with: days)
-        self?.headerView.baseDate = selectedDate
-        self?.timePicker.date = selectedDate
-      }
-    }
-  }
-  
-  func bindingSendSelectedDate() {
-    viewModel.bindingSendSelectedDate { [weak self] date in
-      self?.delegate?.send(selectedDate: date)
-    }
-  }
-}
-
-
-// MARK: Constraints 설정
+// MARK:- Extension Configure Method
 
 private extension CalendarPickerViewController {
   
@@ -230,7 +180,45 @@ private extension CalendarPickerViewController {
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension BindUI
+
+private extension CalendarPickerViewController {
+  
+  func bindUI() {
+    bindingInitializeDate()
+    bindingUpdateCalendar()
+    bindingSendSelectedDate()
+  }
+  
+  func bindingInitializeDate() {
+    viewModel.bindingInitializeDate { [weak self] days, selectedDate in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: days, animatingDifferences: false)
+        self?.headerView.baseDate = selectedDate
+        self?.timePicker.date = selectedDate
+      }
+    }
+  }
+  
+  func bindingUpdateCalendar() {
+    viewModel.bindingUpdateCalendar { [weak self] days, selectedDate in
+      DispatchQueue.main.async {
+        self?.updateSnapshot(with: days)
+        self?.headerView.baseDate = selectedDate
+        self?.timePicker.date = selectedDate
+      }
+    }
+  }
+  
+  func bindingSendSelectedDate() {
+    viewModel.bindingSendSelectedDate { [weak self] date in
+      self?.delegate?.send(selectedDate: date)
+    }
+  }
+}
+
+
+// MARK:- Extension objc Method
 
 private extension CalendarPickerViewController {
   
@@ -292,13 +280,10 @@ extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
     viewModel.updateSelectedDate(to: day.date)
   }
   
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAt indexPath: IndexPath
-  ) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let width = Int(collectionView.frame.width / 7)
     let height = Int(collectionView.frame.height) / 6
+    
     return CGSize(width: width, height: height)
   }
 }

@@ -35,7 +35,9 @@ final class CalendarPickerCoordinator: NavigationCoordinator {
     
     let calendarPickerViewController = CalendarPickerViewController(viewModel: viewModel)
     calendarPickerViewController.coordinator = self
-
+    calendarPickerViewController.modalPresentationStyle = .overCurrentContext
+    calendarPickerViewController.modalTransitionStyle = .crossDissolve
+    
     return calendarPickerViewController
   }
 }
