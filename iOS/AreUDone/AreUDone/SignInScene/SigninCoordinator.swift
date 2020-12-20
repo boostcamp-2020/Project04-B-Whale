@@ -11,12 +11,12 @@ import UIKit
 final class SigninCoordinator: Coordinator {
   
   // MARK: - Property
-  
-  var parentCoordinator: Coordinator?
-  
+
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .signin)
   }
+  
+  var parentCoordinator: Coordinator?
   
   
   // MARK: - Method

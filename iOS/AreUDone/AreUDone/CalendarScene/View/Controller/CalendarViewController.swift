@@ -7,25 +7,19 @@
 
 import UIKit
 
-enum Section {
-  case main
-}
-
 final class CalendarViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, Card>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Card>
+  typealias DataSource = UICollectionViewDiffableDataSource<SingleSection, Card>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<SingleSection, Card>
   
   // MARK: - Property
   
   private let viewModel: CalendarViewModelProtocol
   weak var calendarCoordinator: CalendarCoordinator?
   
-  private lazy var dataSource = configureDataSource()
-  
-  @IBOutlet weak var cardCollectionView: CardCollectionView!
-  
-  @IBOutlet weak var baseView: UIView! {
+  @IBOutlet private weak var cardCollectionView: CardCollectionView!
+  @IBOutlet private weak var dateStepper: DateStepper!
+  @IBOutlet private weak var baseView: UIView! {
     didSet {
       baseView.backgroundColor = .clear
       baseView.addShadow(
@@ -35,29 +29,26 @@ final class CalendarViewController: UIViewController {
       )
     }
   }
-  
-  @IBOutlet weak var titleLabel: UILabel! {
+  @IBOutlet private weak var titleLabel: UILabel! {
     didSet {
       titleLabel.font = UIFont.nanumB(size: 30)
       titleLabel.text = "전체 카드"
     }
   }
-  
-  @IBOutlet weak var dateStepper: DateStepper!
-  
   @IBOutlet private weak var segmentedControl: CustomSegmentedControl! {
     didSet {
       let titles = CardSegment.allCases.map { $0.text }
       segmentedControl.setButtonTitles(buttonTitles: titles)
     }
   }
-  
   private lazy var emptyIndicatorView: EmptyIndicatorView = {
     let view = EmptyIndicatorView(emptyType: .cardEmpty)
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
+  
+  private lazy var dataSource = configureDataSource()
   
   
   // MARK: - Initializer
@@ -127,13 +118,16 @@ private extension CalendarViewController {
 private extension CalendarViewController {
   
   func configure() {
-    view.addSubview(emptyIndicatorView)
-    
     segmentedControl.delegate = self
     cardCollectionView.delegate = self
     dateStepper.delegate = self
     
+    configureView()
     configureEmptyIndicatorView()
+  }
+  
+  func configureView() {
+    view.addSubview(emptyIndicatorView)
   }
   
   func configureEmptyIndicatorView() {
@@ -192,7 +186,10 @@ extension CalendarViewController: DateStepperDelegate {
   
   func dateLabelDidTapped(of dateString: String) {
     tabBarController?.tabBar.isUserInteractionEnabled = false
-    calendarCoordinator?.didTapOnDate(selectedDate: dateString.toDateFormat(withDividerFormat: .dot), delegate: self)
+    calendarCoordinator?.presentCalendarPicker(
+      selectedDate: dateString.toDateFormat(withDividerFormat: .dot),
+      delegate: self
+    )
   }
 }
 
@@ -235,7 +232,9 @@ extension CalendarViewController: CardCellDelegate {
   }
   
   func didSelect(for cell: CardCollectionViewCell) {
-    guard let visibleCells = cardCollectionView.visibleCells as? [CardCollectionViewCell] else { return }
+    guard let visibleCells = cardCollectionView.visibleCells as? [CardCollectionViewCell]
+    else { return }
+    
     for visibleCell in visibleCells {
       if visibleCell.isSwiped {
         cardCollectionView.resetVisibleCellOffset()
@@ -245,7 +244,7 @@ extension CalendarViewController: CardCellDelegate {
     
     if let indexPath = cardCollectionView.indexPath(for: cell),
        let card = dataSource.itemIdentifier(for: indexPath) {
-      calendarCoordinator?.showCardDetail(for: card.id)
+      calendarCoordinator?.pushToCardDetail(for: card.id)
     }
   }
 }
@@ -271,12 +270,13 @@ extension CalendarViewController: CustomSegmentedControlDelegate {
       with: titleLabel,
       duration: 0.3,
       options: .transitionFlipFromLeft,
-      animations: nil,
-      completion: nil)
+      animations: nil
+    )
     
     switch segmented {
     case CardSegment.allCard:
       viewModel.fetchUpdateDailyCards(withOption: .allCard)
+      
     case CardSegment.myCard:
       viewModel.fetchUpdateDailyCards(withOption: .myCard)
       

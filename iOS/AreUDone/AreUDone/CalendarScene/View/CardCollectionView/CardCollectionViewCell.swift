@@ -20,38 +20,41 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var scrollView: UIScrollView = {
     let view = UIScrollView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.isPagingEnabled = true
     view.showsVerticalScrollIndicator = false
     view.showsHorizontalScrollIndicator = false
     view.layer.cornerRadius = 6
     view.backgroundColor = .clear
     view.bounces = false
+    view.delegate = self
     
     return view
   }()
-  
   private lazy var stackView: UIStackView = {
     let view = UIStackView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.axis = .horizontal
     view.distribution = .fill
     
     return view
   }()
-  
   private lazy var cardContentView: CardContentView = {
     let view = CardContentView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
-  
   private lazy var deleteCardView: DeleteCardView = {
     let view = DeleteCardView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
   
   weak var delegate: CardCellDelegate?
   var isSwiped: Bool = false
+  
   
   // MARK:- Initializer
   
@@ -86,18 +89,23 @@ final class CardCollectionViewCell: UICollectionViewCell, Reusable {
 
 private extension CardCollectionViewCell {
   func configure() {
-    backgroundColor = .clear
+    addSubview(scrollView)
+    scrollView.addSubview(stackView)
+    stackView.addArrangedSubview(cardContentView)
+    stackView.addArrangedSubview(deleteCardView)
+    
     configureScrollView()
     configureStackView()
     configureCardContentView()
     configureDeleteCardView()
+    addingGestureRecognizer()
+  }
+  
+  func configureView() {
+    backgroundColor = .clear
   }
   
   func configureScrollView() {
-    addSubview(scrollView)
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.delegate = self
-    
     NSLayoutConstraint.activate([
       scrollView.topAnchor.constraint(equalTo: topAnchor),
       scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -107,9 +115,6 @@ private extension CardCollectionViewCell {
   }
   
   func configureStackView() {
-    scrollView.addSubview(stackView)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
       stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
@@ -120,38 +125,34 @@ private extension CardCollectionViewCell {
   }
   
   func configureCardContentView() {
-    stackView.addArrangedSubview(cardContentView)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let tapRecognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(cardContentViewTapped))
-    cardContentView.addGestureRecognizer(tapRecognizer)
-    
-    
     NSLayoutConstraint.activate([
       cardContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
     ])
   }
   
   func configureDeleteCardView() {
-    stackView.addArrangedSubview(deleteCardView)
-    deleteCardView.translatesAutoresizingMaskIntoConstraints = false
-    let tapRecognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(deleteCardViewTapped)
-    )
-    deleteCardView.addGestureRecognizer(tapRecognizer)
-    
     NSLayoutConstraint.activate([
       deleteCardView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
       deleteCardView.widthAnchor.constraint(equalTo: deleteCardView.heightAnchor),
     ])
   }
+  
+  func addingGestureRecognizer() {
+    let cardContentViewTapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(cardContentViewTapped))
+    cardContentView.addGestureRecognizer(cardContentViewTapRecognizer)
+    
+    let deleteCardViewTapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(deleteCardViewTapped)
+    )
+    deleteCardView.addGestureRecognizer(deleteCardViewTapRecognizer)
+  }
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 extension CardCollectionViewCell {
   
@@ -163,6 +164,7 @@ extension CardCollectionViewCell {
     delegate?.didSelect(for: self)
   }
 }
+
 
 // MARK:- Extension UIScrollViewDelegate
 

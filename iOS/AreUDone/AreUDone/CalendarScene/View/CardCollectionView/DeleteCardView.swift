@@ -13,6 +13,7 @@ final class DeleteCardView: UIView {
   
   private lazy var deleteImageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
     let image = UIImage(systemName: "trash")
     imageView.tintColor = .white
     imageView.image = image
@@ -41,12 +42,14 @@ final class DeleteCardView: UIView {
 
 private extension DeleteCardView {
   
-  private func configure() {
+  func configure() {
+    addSubview(deleteImageView)
+    
     configureView()
     configureDeleteImageView()
   }
   
-  private func configureView() {
+  func configureView() {
     backgroundColor = .systemRed
     layer.maskedCorners = [
       .layerMaxXMinYCorner,
@@ -56,10 +59,7 @@ private extension DeleteCardView {
     layer.cornerRadius = 10
   }
 
-  private func configureDeleteImageView() {
-    addSubview(deleteImageView)
-    deleteImageView.translatesAutoresizingMaskIntoConstraints = false
-    
+  func configureDeleteImageView() {
     NSLayoutConstraint.activate([
       deleteImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
       deleteImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
