@@ -7,14 +7,10 @@
 
 import UIKit
 
-enum CommentSection {
-  case main
-}
-
 final class CardDetailViewController: UIViewController {
   
-  typealias DataSource = UICollectionViewDiffableDataSource<CommentSection, CardDetailComment>
-  typealias Snapshot = NSDiffableDataSourceSnapshot<CommentSection, CardDetailComment>
+  typealias DataSource = UICollectionViewDiffableDataSource<SingleSection, CardDetailComment>
+  typealias Snapshot = NSDiffableDataSourceSnapshot<SingleSection, CardDetailComment>
   
   // MARK:- Property
   
@@ -30,35 +26,30 @@ final class CardDetailViewController: UIViewController {
     
     return view
   }()
-  
   private lazy var stackView: CardDetailStackView = {
     let stackView = CardDetailStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
     return stackView
   }()
-  
   private lazy var cardDetailMemberView: CardDetailMemberView = {
     let view = CardDetailMemberView(viewModel: viewModel)
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
-  
   private lazy var commentCollectionView: CommentCollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = CommentCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
     
     return collectionView
   }()
-  
   private lazy var commentView: CommentView = {
     let view = CommentView()
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()
-  
   private lazy var dummyViewForCommentView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +57,6 @@ final class CardDetailViewController: UIViewController {
     
     return view
   }()
-  
   private lazy var emptyIndicatorView: EmptyIndicatorView = {
     let view = EmptyIndicatorView(emptyType: .commentEmpty)
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +136,6 @@ private extension CardDetailViewController {
   }
   
   func updateSnapshot(with item: [CardDetailComment]?, animatingDifferences: Bool = true) {
-    // TODO:- item이 nil일 경우 처리해줄 화면 만들기
     guard let item = item else { return }
     var snapshot = Snapshot()
     
@@ -165,6 +154,14 @@ private extension CardDetailViewController {
 private extension CardDetailViewController {
   
   func configure() {
+    view.addSubview(scrollView)
+    view.addSubview(commentView)
+    view.addSubview(dummyViewForCommentView)
+    scrollView.addSubview(stackView)
+    stackView.addArrangedSubview(cardDetailMemberView)
+    stackView.addArrangedSubview(commentCollectionView)
+    stackView.addArrangedSubview(emptyIndicatorView)
+    
     configureView()
     configureScrollView()
     configureStackView()
@@ -181,14 +178,6 @@ private extension CardDetailViewController {
     stackView.setupDueDateViewDelegate(self)
     
     addKeyboardNotification()
-    
-    view.addSubview(scrollView)
-    view.addSubview(commentView)
-    view.addSubview(dummyViewForCommentView)
-    scrollView.addSubview(stackView)
-    stackView.addArrangedSubview(cardDetailMemberView)
-    stackView.addArrangedSubview(commentCollectionView)
-    stackView.addArrangedSubview(emptyIndicatorView)
   }
   
   func configureScrollView() {
@@ -234,7 +223,10 @@ private extension CardDetailViewController {
   }
   
   func addEndEdittingGesture() {
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+    let tapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(endEditing)
+    )
     tapGestureRecognizer.delegate = self
     view.addGestureRecognizer(tapGestureRecognizer)
   }
@@ -396,7 +388,6 @@ private extension CardDetailViewController {
   
   func bindingEmptyIndicatorView() {
     viewModel.bindingEmptyIndicatorView { [weak self] isEmpty in
-//      DispatchQueue.main.async {
       DispatchQueue.main.async {
         UIView.animate(withDuration: 0.4) {
           self?.emptyIndicatorView.isHidden = isEmpty ? false : true
@@ -407,7 +398,7 @@ private extension CardDetailViewController {
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension CardDetailViewController {
   
