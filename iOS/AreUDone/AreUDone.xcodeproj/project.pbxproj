@@ -722,7 +722,6 @@
 			children = (
 				333BA5C6257878BE0057ACA4 /* Model */,
 				333BA5C7257878E20057ACA4 /* View */,
-				33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */,
 				333BA5CA257879480057ACA4 /* ViewModel */,
 			);
 			path = SideBarScene;
@@ -748,6 +747,7 @@
 		333BA5C7257878E20057ACA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				33F2D49B257A31DF008F1E06 /* ImageTitleView.swift */,
 				333BA5C5257878A20057ACA4 /* Controller */,
 				333BA53F2575FFDD0057ACA4 /* SideBarView */,
 			);
@@ -1144,6 +1144,15 @@
 			path = TableView;
 			sourceTree = "<group>";
 		};
+		33A092AB258F3DE100072D12 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				BD088AFB258875510056E95D /* SettingTableView.swift */,
+				BD088B00258875FA0056E95D /* SettingTableViewCell.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		33B87E0D2565071C00354880 = {
 			isa = PBXGroup;
 			children = (
@@ -1446,8 +1455,7 @@
 			isa = PBXGroup;
 			children = (
 				BD088AF7258875350056E95D /* Controller */,
-				BD088AFB258875510056E95D /* SettingTableView.swift */,
-				BD088B00258875FA0056E95D /* SettingTableViewCell.swift */,
+				33A092AB258F3DE100072D12 /* TableView */,
 			);
 			path = View;
 			sourceTree = "<group>";

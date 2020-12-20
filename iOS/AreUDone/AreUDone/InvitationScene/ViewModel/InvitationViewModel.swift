@@ -9,11 +9,10 @@ import Foundation
 
 protocol InvitationViewModelProtocol {
   
-  func bindingUpdateInvitationTableView(handler: @escaping () -> Void) // reload
+  func bindingUpdateInvitationTableView(handler: @escaping () -> Void) 
   
   func numberOfUsers() -> Int
   func fetchUserInfo(at index: Int, handler: @escaping ((User, Bool), Data) -> Void)
-  func fetchProfileImage(with urlAsString: String, userName: String, handler: @escaping ((Data) -> Void))
   
   func searchUser(of userName: String)
   func inviteUserToBoard(of index: Int)
@@ -31,7 +30,7 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   
   private var updateInvitationTableViewHandler: (() -> Void)?
   
-  private var users: [(User, Bool)]? {
+  private var users: [(info: User, isInvited: Bool)]? {
     didSet {
       updateInvitationTableViewHandler?()
     }
@@ -62,10 +61,61 @@ final class InvitationViewModel: InvitationViewModelProtocol {
   func fetchUserInfo(at index: Int, handler: @escaping ((User, Bool), Data) -> Void) {
     guard let user = users?[index] else { return }
     
-    fetchProfileImage(with: user.0.profileImageUrl, userName: user.0.name) { data in
+    fetchProfileImage(with: user.info.profileImageUrl, userName: user.info.name) { data in
       handler(user, data)
     }
   }
+  
+  func searchUser(of searchKeyword: String) {
+    let trimmedSearchKeyword = searchKeyword.trimmed
+    guard !trimmedSearchKeyword.isEmpty else {
+      users = .none
+      return
+    }
+    
+    var keyword = searchKeyword
+    if trimmedSearchKeyword == "@developer" {
+      keyword = ""
+    }
+    
+    userService.fetchUserInfo(userName: keyword) { result in
+      switch result {
+      case .success(let users):
+        let uninvitedUsersSet = Set(users).subtracting(self.members)
+        let unvitedUsers = Array(uninvitedUsersSet).sorted { $0.name < $1.name }.map { ($0, false) }
+        
+        let invitedUsers = Set(self.members).intersection(users).sorted { $0.name < $1.name }.map { ($0, true) }
+        
+        self.users = invitedUsers + unvitedUsers
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func inviteUserToBoard(of index: Int) {
+    guard let userId = users?[index].info.id else { return }
+    
+    boardService.inviteUserToBoard(withBoardId: boardId, andUserId: userId) { result in
+      switch result {
+      case .success(()):
+        self.users?[index].isInvited = true
+        if let user = self.users?[index].info {
+          self.members.append(user)
+        }
+
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+}
+
+
+// MARK: - Extension
+
+private extension InvitationViewModel {
   
   func fetchProfileImage(with urlAsString: String, userName: String, handler: @escaping ((Data) -> Void)) {
     if let cachedData = cache.object(forKey: urlAsString as NSString) {
@@ -81,53 +131,6 @@ final class InvitationViewModel: InvitationViewModelProtocol {
         case .failure(let error):
           print(error)
         }
-      }
-    }
-  }
-  
-  func searchUser(of searchKeyword: String) {
-    let trimmedSearchKeyword = searchKeyword.trimmed
-    guard !trimmedSearchKeyword.isEmpty else {
-      users = .none
-      return
-    }
-    
-    var keyword = searchKeyword
-    
-    if trimmedSearchKeyword == "@developer" {
-      keyword = ""
-    }
-    
-    userService.fetchUserInfo(userName: keyword) { result in
-      switch result {
-      case .success(let users):
-        
-        
-        // set 계산
-        let uninvitedUsersSet = Set(users).subtracting(self.members)
-        let unvitedUsers = Array(uninvitedUsersSet).sorted { $0.name < $1.name }.map { ($0, false) }
-        
-        let invitedUsers = Set(self.members).intersection(users).sorted { $0.name < $1.name }.map { ($0, true) }
-        
-        self.users = invitedUsers + unvitedUsers
-        
-      case .failure(let error):
-        print(error)
-      }
-    }
-  }
-  
-  func inviteUserToBoard(of index: Int) {
-    guard let userId = users?[index].0.id else { return }
-    
-    boardService.inviteUserToBoard(withBoardId: boardId, andUserId: userId) { result in
-      switch result {
-      case .success(()):
-        self.users?[index].1 = true
-        self.members.append((self.users?[index].0)!)
-
-      case .failure(let error):
-        print(error)
       }
     }
   }

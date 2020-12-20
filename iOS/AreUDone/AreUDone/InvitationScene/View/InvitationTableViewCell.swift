@@ -42,12 +42,12 @@ final class InvitationTableViewCell: UITableViewCell, Reusable {
   
   // MARK: - Method
  
-  func update(with data: Data, and user: (User, Bool)) {
+  func update(with data: Data, and user: (info: User, isInvited: Bool)) {
     profileImageView.image = UIImage(data: data)
-    textLabel?.text = user.0.name
+    textLabel?.text = user.info.name
     
-    let imageName = user.1 ? "checkmark.circle" : "plus.circle"
-    let color = user.1 ? UIColor.gray : UIColor.systemBlue
+    let imageName = user.isInvited ? "checkmark.circle" : "plus.circle"
+    let color = user.isInvited ? UIColor.gray : UIColor.systemBlue
     
     accessoryView = UIImageView(image: UIImage(systemName: imageName))
     accessoryView?.tintColor = color
