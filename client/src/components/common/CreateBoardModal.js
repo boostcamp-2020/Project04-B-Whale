@@ -69,6 +69,7 @@ const AddButton = styled.button.attrs({
 `;
 
 const CreateBoardModal = ({ onClose, visible }) => {
+    if (visible) document.getElementById('root').style.overflow = 'hidden';
     const [color, setColor] = useState('#FFFFFF');
     const inputTitleElement = useRef();
     const colors = [
@@ -89,8 +90,8 @@ const CreateBoardModal = ({ onClose, visible }) => {
 
     const onDimmedClick = (e) => {
         if (e.target === e.currentTarget) {
-            onClose();
             document.getElementById('root').style.overflow = 'auto';
+            onClose();
         }
     };
 

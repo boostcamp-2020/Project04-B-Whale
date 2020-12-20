@@ -21,7 +21,13 @@ const AddBoardButton = () => {
                 <HiPlus />
                 보드 추가하기
             </Button>
-            <Modal onClose={() => setIsModalDisplay(false)} visible={isModalDisplay} />
+            <Modal
+                onClose={() => {
+                    document.getElementById('root').style.overflow = 'auto';
+                    setIsModalDisplay(false);
+                }}
+                visible={isModalDisplay}
+            />
         </>
     );
 };
