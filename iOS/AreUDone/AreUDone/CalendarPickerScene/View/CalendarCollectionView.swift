@@ -20,7 +20,6 @@ final class CalendarCollectionView: UICollectionView {
     super.init(coder: coder)
     
     configure()
-    addingGestureRecognizer()
   }
   
   override init(
@@ -28,8 +27,8 @@ final class CalendarCollectionView: UICollectionView {
     collectionViewLayout layout: UICollectionViewLayout
   ) {
     super.init(frame: frame, collectionViewLayout: layout)
+    
     configure()
-    addingGestureRecognizer()
   }
   
   convenience init(
@@ -53,6 +52,9 @@ private extension CalendarCollectionView {
     
     layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     layer.cornerRadius = 10
+    
+    registerCell()
+    addingGestureRecognizer()
   }
   
   func registerCell() {
