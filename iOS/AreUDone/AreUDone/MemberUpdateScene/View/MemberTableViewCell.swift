@@ -18,7 +18,6 @@ class MemberTableViewCell: UITableViewCell, Reusable {
     
     return imageView
   }()
-  
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +41,9 @@ class MemberTableViewCell: UITableViewCell, Reusable {
     configure()
   }
   
+  
+  // MARK:- Method
+  
   func update(with name: String) {
     DispatchQueue.main.async { [weak self] in
       self?.nameLabel.text = name
@@ -56,16 +58,21 @@ class MemberTableViewCell: UITableViewCell, Reusable {
 }
 
 
+// MARK:- Extension Configure Method
+
 private extension MemberTableViewCell {
   
   func configure() {
-    selectionStyle = .none
-    
     addSubview(profileImageView)
     addSubview(nameLabel)
     
+    configureView()
     configureProfileImageView()
     configureNameLabel()
+  }
+  
+  func configureView() {
+    selectionStyle = .none
   }
   
   func configureProfileImageView() {
