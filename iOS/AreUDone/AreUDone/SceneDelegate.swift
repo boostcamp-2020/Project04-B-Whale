@@ -16,15 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
   private var sceneCoordinator: Coordinator!
-  private var isInitialNotification = true
-  private lazy var screenBorderAlertAnimator = ScreenBorderAlertAnimator(
-    borderLayer: borderLayer
-  )
-  private lazy var borderLayer: BorderLayer = {
+  private lazy var screenBorderAlertAnimator = AlertAnimator(alertLayer: alertLayer)
+  private lazy var alertLayer: AlertLayer = {
     let rootView = window?.rootViewController?.view
-    let frame = rootView?.frame ?? .zero
+
+    let width = rootView?.frame.width ?? .zero
+    let height = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? .zero
+    let frame = CGRect(x: 0, y: -height * 2, width: width, height: height * 2)
     
-    let borderLayer = BorderLayer(frame: frame)
+    let borderLayer = AlertLayer(frame: frame)
+    
     rootView?.layer.addSublayer(borderLayer)
     return borderLayer
   }()
@@ -39,10 +40,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
+    window?.overrideUserInterfaceStyle = .light
+    
     let router = Router()
-    
-    //    Keychain.shared.removeValue(forKey: "token") // TODO:- 테스트용 코드
-    
+        
     configureSceneCoordinator(
       router: router,
       window: window ?? UIWindow(windowScene: windowScene)
@@ -64,11 +65,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   }
   
   func sceneWillEnterForeground(_ scene: UIScene) {
-    NotificationCenter.default.post(name: Notification.Name("fore"), object: nil)
+    NotificationCenter.default.post(name: Notification.Name.foreground, object: nil)
   }
   
   func sceneDidEnterBackground(_ scene: UIScene) {
-    NotificationCenter.default.post(name: Notification.Name("back"), object: nil)
+    NotificationCenter.default.post(name: Notification.Name.background, object: nil)
   }
 }
 
@@ -108,7 +109,7 @@ private extension SceneDelegate {
   func signIn(by URLContexts: Set<UIOpenURLContext>) {
     guard
       let url = URLContexts.first?.url,
-      url.absoluteString.starts(with: "areudoneios://"),
+      url.absoluteString.starts(with: Scheme.app),
       let token = url.absoluteString.split(separator: "=").last.map({ String($0) }),
       let decodedToken = token.removingPercentEncoding
     else { return }
@@ -116,7 +117,7 @@ private extension SceneDelegate {
     let tokenParser = TokenParser()
     let items = tokenParser.decode(jwtToken: decodedToken)
     
-    Keychain.shared.save(value: decodedToken, forKey: "token")
+    Keychain.shared.save(value: decodedToken, forKey: KeyChainConstant.token)
     UserIdStore.saveUserId(with: items)
     
     sceneCoordinator.start()
@@ -130,12 +131,8 @@ extension SceneDelegate {
   
   @objc func networkChanged(notification: Notification) {
     DispatchQueue.main.async {
-      guard
-        let networkState = notification.userInfo?["networkState"] as? Bool, !self.isInitialNotification
-      else {
-        self.isInitialNotification = false
-        return
-      }
+      guard let networkState = notification.userInfo?[NotificationConstant.networkStateKey] as? Bool
+      else { return }
       
       self.screenBorderAlertAnimator.start(networkState: networkState)
     }

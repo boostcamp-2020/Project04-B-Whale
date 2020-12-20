@@ -13,6 +13,7 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
   
   private lazy var selectionBackgroundView: UIView = {
     let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.clipsToBounds = true
     view.layer.borderColor = UIColor.systemRed.cgColor
     view.layer.borderWidth = 2
@@ -20,9 +21,9 @@ final class CalendarDateCollectionViewCell: UICollectionViewCell, Reusable {
     
     return view
   }()
-
   private lazy var numberLabel: UILabel = {
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.textAlignment = .center
     label.font = UIFont.nanumR(size: 18)
     label.textColor = .label
@@ -87,8 +88,6 @@ private extension CalendarDateCollectionViewCell {
   }
   
   func configureNumberLabel() {
-    numberLabel.translatesAutoresizingMaskIntoConstraints = false
-    
     NSLayoutConstraint.activate([
       numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
       numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -96,8 +95,6 @@ private extension CalendarDateCollectionViewCell {
   }
   
   func configureSelectionBackgroundView() {
-    selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-    
     let size = frame.width - 20
 
     NSLayoutConstraint.activate([
@@ -143,13 +140,13 @@ private extension CalendarDateCollectionViewCell {
     case 0:
       break
     case 1...2:
-      return UIColor(red: 140/255, green: 241/255, blue: 152/255, alpha: 1.0)
+      return UIColor.githubLightGreen
     case 3...5:
-      return UIColor(red: 57/255, green: 187/255, blue: 81/255, alpha: 1.0)
+      return UIColor.githubGreen
     case 6...10:
-      return UIColor(red: 42/255, green: 147/255, blue: 62/255, alpha: 1.0)
+      return UIColor.githuBoldGreen
     default:
-      return UIColor(red: 28/255, green: 92/255, blue: 43/255, alpha: 1.0)
+      return UIColor.githubExtraBoldGreen
     }
     
     return nil

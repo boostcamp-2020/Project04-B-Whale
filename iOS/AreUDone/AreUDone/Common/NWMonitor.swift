@@ -14,11 +14,13 @@ final class NWMonitor {
   
   // MARK: - Property
   
-  let monitorSemaphore = DispatchSemaphore(value: 1)
-  let requestSemaphore = DispatchSemaphore(value: 1)
-  let monitor = NWPathMonitor()
-  let router: Routable
-    
+  private let requestSemaphore = DispatchSemaphore(value: 1)
+  private let monitor = NWPathMonitor()
+  private let router: Routable
+  
+  private var currentState: NWPath.Status!
+  private var isInitial = true
+  
   
   // MARK: - Initializer
   
@@ -41,27 +43,32 @@ private extension NWMonitor {
   
   func configure() {
     monitor.pathUpdateHandler = { path in
-      self.monitorSemaphore.wait()
-      
+      guard
+        !self.isInitial,
+        path.status != self.currentState
+      else {
+        self.currentState = path.status
+        self.isInitial = false
+        return
+      }
+
       if path.status == .satisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
-          userInfo: ["networkState": true]
+          userInfo: [NotificationConstant.networkStateKey: true]
         )
-        
         self.requestStoredEndPoints()
-        self.monitorSemaphore.signal()
         
-      } else {
+      } else if path.status == .unsatisfied {
         NotificationCenter.default.post(
           name: Notification.Name.networkChanged,
           object: nil,
-          userInfo: ["networkState": false]
+          userInfo: [NotificationConstant.networkStateKey: false]
         )
-        
-        self.monitorSemaphore.signal()
       }
+      
+      self.currentState = path.status
     }
   }
 }
@@ -74,7 +81,7 @@ private extension NWMonitor {
   func requestStoredEndPoints() {
     let realm = try! Realm()
     let result = realm.objects(StoredEndPoint.self).sorted(byKeyPath: "date")
-    let unmanagedEndPoints = Array(result).map { StoredEndPoint(value: $0)}
+    let unmanagedEndPoints = Array(result).map { StoredEndPoint(value: $0) }
     
     try! realm.write {
       realm.delete(result)

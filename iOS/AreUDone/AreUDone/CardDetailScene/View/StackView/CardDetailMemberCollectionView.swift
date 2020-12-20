@@ -9,6 +9,8 @@ import UIKit
 
 final class CardDetailMemberCollectionView: UICollectionView {
 
+  // MARK:- Property
+  
   override var contentSize:CGSize {
     didSet {
       invalidateIntrinsicContentSize()
@@ -19,6 +21,7 @@ final class CardDetailMemberCollectionView: UICollectionView {
     layoutIfNeeded()
     return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
   }
+  
   
   // MARK:- Initializer
   
@@ -33,19 +36,23 @@ final class CardDetailMemberCollectionView: UICollectionView {
     
     configure()
   }
-
 }
 
+
+// MARK:- Extension Configure Method
 
 private extension CardDetailMemberCollectionView {
   
   func configure() {
+    configureView()
+    configureFlowLayout()
+    registerCell()
+  }
+  
+  func configureView() {
     backgroundColor = .white
     showsVerticalScrollIndicator = false
     showsHorizontalScrollIndicator = false
-    
-    configureFlowLayout()
-    registerCell()
   }
   
   func configureFlowLayout() {

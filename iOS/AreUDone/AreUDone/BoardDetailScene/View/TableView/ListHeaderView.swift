@@ -24,10 +24,19 @@ final class ListHeaderView: UIView {
   private lazy var titleTextField: PaddingTextField = {
     let textField = PaddingTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.delegate = self
 
     textField.returnKeyType = .done
-    textField.delegate = self
     textField.font = UIFont.nanumB(size: 18)
+    
+    textField.backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 0.745906464)
+    textField.layer.cornerRadius = 5
+
+    textField.addShadow(
+      offset: CGSize(width: 0, height: 1),
+      radius: 0.4,
+      opacity: 0.3
+    )
 
     return textField
   }()
@@ -81,14 +90,6 @@ private extension ListHeaderView {
   }
   
   func configureTitleTextField() {
-    titleTextField.backgroundColor = #colorLiteral(red: 0.944453299, green: 0.9647708535, blue: 0.9688996673, alpha: 0.745906464)
-    titleTextField.layer.cornerRadius = 5
-
-    titleTextField.layer.shadowColor = UIColor.black.cgColor
-    titleTextField.layer.shadowOffset = CGSize(width: 0, height: 1)
-    titleTextField.layer.shadowRadius = 0.4
-    titleTextField.layer.shadowOpacity = 0.3
-    
     NSLayoutConstraint.activate([
       titleTextField.centerYAnchor.constraint(equalTo: baseView.centerYAnchor),
       titleTextField.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),

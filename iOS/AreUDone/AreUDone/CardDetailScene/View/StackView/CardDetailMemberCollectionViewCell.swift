@@ -34,6 +34,9 @@ final class CardDetailMemberCollectionViewCell: UICollectionViewCell, Reusable {
     configure()
   }
   
+  
+  // MARK:- Method
+  
   func update(with image: UIImage?) {
     DispatchQueue.main.async { [weak self] in
       self?.profileImageView.image = image
@@ -41,6 +44,8 @@ final class CardDetailMemberCollectionViewCell: UICollectionViewCell, Reusable {
   }
 }
 
+
+// MARK:- Extension Configure Method
 
 private extension CardDetailMemberCollectionViewCell {
   

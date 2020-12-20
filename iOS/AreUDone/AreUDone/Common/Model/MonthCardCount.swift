@@ -8,6 +8,9 @@
 import Foundation
 
 struct MonthCardCount: Codable {
+  
+  // MARK: - Property
+  
   let cardCounts: [DailyCardCount]
   
   struct DailyCardCount: Codable {

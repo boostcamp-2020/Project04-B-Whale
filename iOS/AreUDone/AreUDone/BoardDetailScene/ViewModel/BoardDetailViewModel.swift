@@ -16,18 +16,23 @@ protocol BoardDetailViewModelProtocol {
   func bindingUpdateControlPageCounts(handler: @escaping (Int) -> Void)
   
   func numberOfLists() -> Int
+  func createList(with title: String)
   func fetchList(at index: Int) -> ListOfBoard?
-  func remove(at index: Int)
   func insert(list: ListOfBoard, at index: Int)
+  func remove(at index: Int)
   
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void))
   
   func fetchBoardDetail()
   func updateBoardTitle(to title: String)
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void)
+  func updatePosition(
+    of sourceIndex: Int,
+    to destinationIndex: Int,
+    list: ListOfBoard,
+    handler: @escaping () -> Void
+  )
 
   func save()
-  func createList(with title: String)
 }
 
 final class BoardDetailViewModel: BoardDetailViewModelProtocol {
@@ -79,25 +84,39 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   
   // MARK: - Method
   
-  func save() {
-    guard let boardDetail = boardDetail else { return }
-    realm.writeOnMain(object: boardDetail) { object in
-      self.realm.create(BoardDetail.self, value: object, update: .all)
-    }
-  }
+  
   
   func numberOfLists() -> Int {
     return boardDetail?.lists.count ?? 0
+  }
+  
+  func createList(with title: String) {
+    listService.createList(withBoardId: boardId, title: title) { result in
+      switch result {
+      case .success(let list):
+        self.realm.writeOnMain {
+          self.boardDetail?.lists.append(list)
+        }
+        self.updateBoardDetailCollectionViewHandler?()
+        
+      case .failure(let error):
+        print(error)
+      }
+    }
+  }
+  
+  func fetchList(at index: Int) -> ListOfBoard? {
+    return boardDetail?.lists[index]
+  }
+  
+  func insert(list: ListOfBoard, at index: Int) {
+    self.boardDetail?.lists.insert(list, at: index)
   }
   
   func remove(at index: Int) {
     guard let boardDetail = self.boardDetail,
           boardDetail.lists.indices.contains(index) else { return }
     boardDetail.lists.remove(at: index)
-  }
-  
-  func insert(list: ListOfBoard, at index: Int) {
-    self.boardDetail?.lists.insert(list, at: index)
   }
   
   func fetchListViewModel(at index: Int, handler: ((ListViewModelProtocol) -> Void)) {
@@ -110,10 +129,6 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       list: list
     )
     handler(viewModel)
-  }
-  
-  func fetchList(at index: Int) -> ListOfBoard? {
-    return boardDetail?.lists[index]
   }
   
   func fetchBoardDetail() {
@@ -134,10 +149,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
   }
   
   func updateBoardTitle(to title: String) {
-    boardService.updateBoard(withBoardId: boardId, title: title) { result in
+    let trimmedTitle = title.trimmed
+    boardService.updateBoard(withBoardId: boardId, title: trimmedTitle) { result in
       switch result {
       case .success(()):
-        self.boardTitle = title
+        self.boardTitle = trimmedTitle
         
       case .failure(let error):
         self.updateBoardTitleHandler?(self.boardTitle)
@@ -146,7 +162,12 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
     }
   }
   
-  func updatePosition(of sourceIndex: Int, to destinationIndex: Int, list: ListOfBoard, handler: @escaping () -> Void) {
+  func updatePosition(
+    of sourceIndex: Int,
+    to destinationIndex: Int,
+    list: ListOfBoard,
+    handler: @escaping () -> Void
+  ) {
     guard let lists = boardDetail?.lists else { return }
     
     let listId = lists[sourceIndex].id
@@ -180,19 +201,11 @@ final class BoardDetailViewModel: BoardDetailViewModelProtocol {
       }
     }
   }
-  
-  func createList(with title: String) {
-    listService.createList(withBoardId: boardId, title: title) { result in
-      switch result {
-      case .success(let list):
-        self.realm.writeOnMain {
-          self.boardDetail?.lists.append(list)
-        }
-        self.updateBoardDetailCollectionViewHandler?()
-        
-      case .failure(let error):
-        print(error)
-      }
+
+  func save() {
+    guard let boardDetail = boardDetail else { return }
+    realm.writeOnMain(object: boardDetail) { object in
+      self.realm.create(BoardDetail.self, value: object, update: .all)
     }
   }
 }

@@ -28,6 +28,7 @@ final class MemberFooterView: UICollectionReusableView, Reusable {
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
     titleLabel.text = "초대하기"
     titleLabel.font = UIFont.nanumB(size: 20)
     
@@ -70,7 +71,7 @@ private extension MemberFooterView {
       baseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
     ])
     
-    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewTapped))
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(baseViewDidTapped))
     baseView.addGestureRecognizer(gestureRecognizer)
   }
   
@@ -83,11 +84,11 @@ private extension MemberFooterView {
 }
 
 
-// MARK: - Extension objc
+// MARK: - Extension objc Method
 
 private extension MemberFooterView {
   
-  @objc func baseViewTapped() {
-    delegate?.pushToInvitation()
+  @objc func baseViewDidTapped() {
+    delegate?.pushInvitation()
   }
 }

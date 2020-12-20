@@ -24,11 +24,12 @@ final class SigninButton: UIButton {
   }
 }
 
-extension SigninButton {
+
+// MARK:- Extension Configure Method
+
+private extension SigninButton {
   
-  // MARK: - Method
-  
-  private func configure() {
+  func configure() {
     layer.cornerRadius = 5
     adjustsImageWhenHighlighted = false
   }

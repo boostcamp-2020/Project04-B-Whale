@@ -12,7 +12,7 @@ final class ListTableView: UITableView {
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This class Should be initialized with code")
   }
   
   override init(frame: CGRect, style: UITableView.Style) {
@@ -39,6 +39,7 @@ private extension ListTableView {
     rowHeight = 65
     sectionHeaderHeight = 60
     sectionFooterHeight = 60
+    
     showsVerticalScrollIndicator = false
     allowsMultipleSelection = false
   }

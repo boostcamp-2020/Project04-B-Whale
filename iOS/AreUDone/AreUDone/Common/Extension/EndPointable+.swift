@@ -18,8 +18,8 @@ extension EndPointable {
     let dic: [String: Any] = [
       "environmentBaseURL": self.environmentBaseURL,
       "httpMethodRawValue": self.httpMethod?.rawValue as Any,
-      "headersList": headers as Any,
-      "bodiesList": bodies as Any,
+      "headerList": headers as Any,
+      "bodyList": bodies as Any,
       "queryList": queries as Any
     ]
     

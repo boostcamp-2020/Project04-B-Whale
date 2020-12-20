@@ -12,7 +12,7 @@ final class SettingTableView: UITableView {
   // MARK:- Initializer
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    fatalError("This class Should be initialized with code")
   }
   
   override init(frame: CGRect, style: UITableView.Style) {

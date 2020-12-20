@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-
+  
   func register<T: UICollectionViewCell>(_: T.Type) where T: Reusable {
     register(T.self, forCellWithReuseIdentifier: T.defaultReuseIdentifier)
   }
@@ -29,38 +29,48 @@ extension UICollectionView {
   }
   
   func registerFooterView<T: UICollectionReusableView>(_: T.Type) where T: Reusable {
-    register(T.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: T.defaultReuseIdentifier)
+    register(
+      T.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+      withReuseIdentifier: T.defaultReuseIdentifier
+    )
   }
   
   func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
-    guard let cell: T = dequeueReusableCell(
-      withReuseIdentifier: T.defaultReuseIdentifier,
-      for: indexPath
-    ) as? T else {
+    guard
+      let cell: T = dequeueReusableCell(
+        withReuseIdentifier: T.defaultReuseIdentifier,
+        for: indexPath
+      ) as? T
+    else {
       return T()
     }
     
     return cell
   }
-
+  
   func dequeReusableHeaderView<T: UICollectionReusableView>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
-    guard let headerView: T = dequeueReusableSupplementaryView(
-      ofKind: UICollectionView.elementKindSectionHeader,
-      withReuseIdentifier: T.defaultReuseIdentifier,
-      for: indexPath
-    ) as? T else {
+    guard
+      let headerView: T = dequeueReusableSupplementaryView(
+        ofKind: UICollectionView.elementKindSectionHeader,
+        withReuseIdentifier: T.defaultReuseIdentifier,
+        for: indexPath
+      ) as? T
+    else {
       return T()
     }
-
+    
     return headerView
   }
   
   func dequeReusableFooterView<T: UICollectionReusableView>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
-    guard let footerView: T = dequeueReusableSupplementaryView(
-      ofKind: UICollectionView.elementKindSectionFooter,
-      withReuseIdentifier: T.defaultReuseIdentifier,
-      for: indexPath
-    ) as? T else {
+    guard
+      let footerView: T = dequeueReusableSupplementaryView(
+        ofKind: UICollectionView.elementKindSectionFooter,
+        withReuseIdentifier: T.defaultReuseIdentifier,
+        for: indexPath
+      ) as? T
+    else {
       return T()
     }
     

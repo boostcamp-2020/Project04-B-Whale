@@ -13,9 +13,10 @@ protocol BoardAddViewModelProtocol {
   func bindingUpdateBoardColor(handler: @escaping (String) -> Void)
   func bindingDismiss(handler: @escaping () -> Void)
   
+  func createBoard()
+
   func updateBoardTitle(to title: String)
   func updateRGBHexString(completionHandler: ((String) -> Void)?)
-  func createBoard()
 }
 
 extension BoardAddViewModelProtocol {
@@ -58,17 +59,6 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
   
   // MARK: - Method
   
-  func updateBoardTitle(to title: String) {
-    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-    boardTitle = trimmedTitle
-  }
-  
-  func updateRGBHexString(completionHandler: ((String) -> Void)?) {
-    rgbHexString = makeRandomRGBHexString()
-    completionHandler?(rgbHexString)
-    updateBoardColorHandler?(rgbHexString)
-  }
-  
   func createBoard() {
     boardService.createBoard(withTitle: boardTitle, color: rgbHexString) { result in
       switch result {
@@ -79,6 +69,17 @@ final class BoardAddViewModel: BoardAddViewModelProtocol {
         print(error)
       }
     }
+  }
+  
+  func updateBoardTitle(to title: String) {
+    let trimmedTitle = title.trimmed
+    boardTitle = trimmedTitle
+  }
+  
+  func updateRGBHexString(completionHandler: ((String) -> Void)?) {
+    rgbHexString = makeRandomRGBHexString()
+    completionHandler?(rgbHexString)
+    updateBoardColorHandler?(rgbHexString)
   }
 }
 
@@ -110,7 +111,8 @@ private extension BoardAddViewModel {
   }
 }
 
-// MARK: - Extension UIBind
+
+// MARK: - Extension BindUI
 
 extension BoardAddViewModel {
   

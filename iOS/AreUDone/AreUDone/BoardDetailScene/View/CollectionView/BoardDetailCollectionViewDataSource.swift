@@ -44,7 +44,12 @@ final class BoardDetailCollectionViewDataSource: NSObject, UICollectionViewDataS
     
     viewModel.fetchListViewModel(at: indexPath.item) { viewModel in
       let dataSource = ListTableViewDataSource(viewModel: viewModel)
-      cell.update(with: viewModel, dataSource: dataSource, presentCardDetailHandler: presentCardDetailHandler, presentCardAddHandler: presentCardAddHandler)
+      cell.update(
+        with: viewModel,
+        dataSource: dataSource,
+        presentCardDetailHandler: presentCardDetailHandler,
+        presentCardAddHandler: presentCardAddHandler
+      )
     }
   
     return cell

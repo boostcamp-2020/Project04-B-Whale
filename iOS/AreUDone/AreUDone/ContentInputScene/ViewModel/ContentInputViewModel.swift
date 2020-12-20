@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ContentInputViewModelProtocol {
+  
   func bindingInitializeContent(handler: @escaping ((String) -> Void))
   
   func initailizeContent()
@@ -39,7 +40,7 @@ final class ContentInputViewModel: ContentInputViewModelProtocol {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 extension ContentInputViewModel {
   

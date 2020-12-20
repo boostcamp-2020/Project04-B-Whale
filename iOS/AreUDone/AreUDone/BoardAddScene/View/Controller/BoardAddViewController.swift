@@ -13,7 +13,7 @@ final class BoardAddViewController: UIViewController {
   
   weak var coordinator: BoardAddCoordinator?
   private let viewModel: BoardAddViewModelProtocol
-
+  
   @IBOutlet private weak var tableView: BoardAddTableView! {
     didSet {
       tableView.dataSource = dataSource
@@ -60,48 +60,66 @@ private extension BoardAddViewController {
     navigationController?.navigationBar.titleTextAttributes = [
       NSAttributedString.Key.font: UIFont.nanumB(size: 20)
     ]
-
+    
+    configureLeftBarButtonItem()
+    configureRightBarButtonItem()
+  }
+  
+  func configureLeftBarButtonItem() {
     let leftBarButtonItem = CustomBarButtonItem(imageName: "xmark") { [weak self] in
       self?.coordinator?.dismiss()
     }
     leftBarButtonItem.setColor(to: .black)
     
+    navigationItem.leftBarButtonItem = leftBarButtonItem
+  }
+  
+  func configureRightBarButtonItem() {
     rightBarButtonItem = UIBarButtonItem(
       title: "생성하기",
       style: .plain,
       target: self,
       action: #selector(createButtonTapped)
     )
-    rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.nanumR(size: 18)], for: .normal)
-    rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.nanumR(size: 18)], for: .disabled)
+    let textAttribute = [NSAttributedString.Key.font: UIFont.nanumR(size: 18)]
+    rightBarButtonItem.setTitleTextAttributes(textAttribute, for: .normal)
+    rightBarButtonItem.setTitleTextAttributes(textAttribute, for: .disabled)
     rightBarButtonItem.isEnabled = false
     
-    navigationItem.leftBarButtonItem = leftBarButtonItem
     navigationItem.rightBarButtonItem = rightBarButtonItem
-  }
-  
-  @objc func createButtonTapped() {
-    viewModel.createBoard()
   }
 }
 
 
-// MARK: - Extension bindUI
+// MARK: - Extension BindUI
 
 extension BoardAddViewController {
   
   func bindUI() {
+    bindingIsCreateEnable()
+    bindingUpdateBoardColor()
+    bindingDismiss()
+  }
+  
+  func bindingIsCreateEnable() {
     viewModel.bindingIsCreateEnable { [weak self] bool in
       self?.rightBarButtonItem.isEnabled = bool
     }
-   
-    viewModel.bindingUpdateBoardColor { [weak self] colorAsString in
-      guard let cell =
-              self?.tableView.cellForRow(at: IndexPath(row: 1, section: 0))
-              as? BoardColorTableViewCell else { return }
-      cell.update(with: colorAsString)
+  }
+  
+  func bindingUpdateBoardColor() {
+    viewModel.bindingUpdateBoardColor { [weak self] colorString in
+      guard
+        let cell = self?.tableView.cellForRow(at: IndexPath(row: 1, section: 0))
+              as? BoardColorTableViewCell
+      else {
+        return
+      }
+      cell.update(with: colorString)
     }
-    
+  }
+  
+  func bindingDismiss() {
     viewModel.bindingDismiss { [weak self] in
       DispatchQueue.main.async {
         self?.coordinator?.dismiss()
@@ -109,3 +127,14 @@ extension BoardAddViewController {
     }
   }
 }
+
+
+// MARK: - Extension objc Method
+
+extension BoardAddViewController {
+  
+  @objc func createButtonTapped() {
+    viewModel.createBoard()
+  }
+}
+

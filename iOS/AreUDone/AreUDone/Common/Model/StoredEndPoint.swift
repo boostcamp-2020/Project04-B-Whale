@@ -9,49 +9,52 @@ import Foundation
 import NetworkFramework
 import RealmSwift
 
-class StoredEndPoint: Object, EndPointable {
+final class StoredEndPoint: Object, EndPointable {
+  
+  // MARK: - Property
+  
   @objc dynamic var date: Date = Date()
   
   var httpMethod: HTTPMethod? {
     return HTTPMethod(rawValue: httpMethodRawValue)
   }
+  
   var headers: HTTPHeader? {
-    var headers = [String: String]() // TODO: 메소드로 모듈화해보기
-    Array(headersList).forEach {
-      headers[$0.key] = $0.value
-    }
-    
-    return headers
+    return convert(list: headerList)
   }
   var bodies: HTTPBody? {
-    var bodies = [String: Any]()
-    Array(bodiesList).forEach {
-      bodies[$0.key] = $0.value
-    }
-    
-    return bodies
+    return convert(list: bodyList)
   }
   var query: HTTPQuery? {
-    var queries = [String: String]()
-    Array(queryList).forEach {
-      queries[$0.key] = $0.value
-    }
-    
-    return queries
+    return convert(list: queryList)
   }
   var baseURL: URLComponents {
-    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() } // TODO: 예외처리로 바꿔주기
+    guard let url = URLComponents(string: environmentBaseURL) else { fatalError() }
     return url
   }
   
   @objc dynamic var environmentBaseURL: String = ""
   @objc dynamic var httpMethodRawValue: String = ""
-  var headersList = List<dic>()
-  var bodiesList = List<dic>()
-  var queryList = List<dic>()
+  var headerList = List<dicFormat>()
+  var bodyList = List<dicFormat>()
+  var queryList = List<dicFormat>()
+  
+  
+  // MARK: - Method
+  
+  private func convert(list: List<dicFormat>) -> [String: Any] {
+    var lists = [String: Any]()
+    Array(list).forEach {
+      lists[$0.key] = $0.value
+    }
+    return lists
+  }
 }
 
-class dic: Object {
+final class dicFormat: Object {
+  
+  // MARK: - Property
+  
   @objc dynamic var key: String = ""
   @objc dynamic var value: String = ""
 }

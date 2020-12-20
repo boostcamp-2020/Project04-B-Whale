@@ -12,18 +12,22 @@ final class SettingCoordinator: NavigationCoordinator {
   
   // MARK:- Property
   
+  private let router: Routable
+
   private var storyboard: UIStoryboard {
     return UIStoryboard.load(storyboard: .setting)
   }
-  private let router: Routable
-  var navigationController: UINavigationController?
+  
   weak var sceneCoordinator: Coordinator?
+  var navigationController: UINavigationController?
+  
   
   // MARK:- Initializer
   
   init(router: Routable) {
     self.router = router
   }
+  
   
   // MARK:- Method
   
@@ -47,7 +51,7 @@ final class SettingCoordinator: NavigationCoordinator {
 extension SettingCoordinator {
   
   func logout() {
-    Keychain.shared.removeValue(forKey: "token")
+    Keychain.shared.removeValue(forKey: KeyChainConstant.token)
     sceneCoordinator?.start()
   }
 }

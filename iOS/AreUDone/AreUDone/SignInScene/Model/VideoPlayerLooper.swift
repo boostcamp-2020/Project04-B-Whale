@@ -9,6 +9,7 @@ import AVKit
 import Foundation
 
 protocol VideoPlayerLoopable {
+  
   func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer?
   func play()
   func remove()
@@ -16,13 +17,21 @@ protocol VideoPlayerLoopable {
 
 final class VideoPlayerLooper: VideoPlayerLoopable {
   
+  // MARK:- Property
+  
   private var player: AVQueuePlayer!
   private var playerLayer: AVPlayerLayer?
   private var playerLooper: AVPlayerLooper?
   
+  
+  // MARK:- Initializer
+  
   init(){
     configureNotification()
   }
+  
+  
+  // MARK:- Method
   
   func configureVideoLayer(for fileName: String, ofType type: String) -> AVPlayerLayer? {
     if let path = Bundle.main.path(forResource: fileName, ofType: type) {
@@ -54,6 +63,12 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
     unload()
     playerLayer?.removeFromSuperlayer()
   }
+}
+
+
+// MARK:- Extension
+
+private extension VideoPlayerLooper {
   
   private func unload() {
     player = nil
@@ -62,15 +77,31 @@ final class VideoPlayerLooper: VideoPlayerLoopable {
   }
   
   private func configureNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: Notification.Name("fore"), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: Notification.Name("back"), object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(sceneWillEnterForeground),
+      name: Notification.Name.foreground,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(sceneDidEnterBackground),
+      name: Notification.Name.background,
+      object: nil
+    )
   }
+}
+
+
+// MARK:- Extension objc Method
+
+private extension VideoPlayerLooper {
   
-  @objc private func sceneWillEnterForeground(){
+  @objc func sceneWillEnterForeground(){
     play()
   }
   
-  @objc private func sceneDidEnterBackground(){
+  @objc func sceneDidEnterBackground(){
     pause()
   }
 }

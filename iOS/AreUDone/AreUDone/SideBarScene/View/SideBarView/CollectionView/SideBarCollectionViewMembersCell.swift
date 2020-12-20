@@ -15,7 +15,6 @@ final class SideBarCollectionViewMembersCell: UICollectionViewCell, Reusable {
   
   private lazy var collectionView: MemberCollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
-    
     let collectionView = MemberCollectionView(frame: bounds, collectionViewLayout: flowLayout)
     
     return collectionView
@@ -43,7 +42,12 @@ final class SideBarCollectionViewMembersCell: UICollectionViewCell, Reusable {
     super.preferredLayoutAttributesFitting(layoutAttributes)
     layoutIfNeeded()
 
-    layoutAttributes.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: collectionView.contentSize.height)
+    layoutAttributes.frame = CGRect(
+      x: frame.origin.x,
+      y: frame.origin.y,
+      width: frame.width,
+      height: collectionView.contentSize.height
+    )
    
     return layoutAttributes
   }

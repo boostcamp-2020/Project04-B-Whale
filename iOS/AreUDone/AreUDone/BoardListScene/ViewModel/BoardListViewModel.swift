@@ -9,14 +9,13 @@ import Foundation
 
 protocol BoardListViewModelProtocol {
   
-  func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void)
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void)
-  func bindingDidBoardTapped(handler: @escaping (Int) -> Void)
+  func bindingBoardDidTapped(handler: @escaping (Int) -> Void)
   func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void)
   
-  func fetchBoardId(for board: Board)
-  func changeBoardOption(option: FetchBoardOption)
   func fetchBoard()
+  func pushBoardDetail(to board: Board)
+  func changeBoardOption(option: FetchBoardOption)
 }
 
 final class BoardListViewModel: BoardListViewModelProtocol {
@@ -25,16 +24,14 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   private let boardService: BoardServiceProtocol
   
-  private var initializeBoardListCollectionViewHandler: (([Board]) -> Void)?
   private var updateBoardListCollectionViewHandler: (([Board]) -> Void)?
-  private var didBoardTappedHandler: ((Int) -> Void)?
+  private var boardDidTappedHandler: ((Int) -> Void)?
   private var emptyIndicatorViewHandler: ((Bool) -> Void)?
   
   private var fetchBoardOption: FetchBoardOption = .myBoards {
     didSet {
-      if oldValue != fetchBoardOption {
-        fetchBoard()
-      }
+      guard oldValue != fetchBoardOption else { return }
+      fetchBoard()
     }
   }
 
@@ -48,14 +45,6 @@ final class BoardListViewModel: BoardListViewModelProtocol {
   
   // MARK: - Method
   
-  func fetchBoardId(for board: Board) {
-    didBoardTappedHandler?(board.id)
-  }
-  
-  func changeBoardOption(option: FetchBoardOption) {
-    fetchBoardOption = option
-  }
-  
   func fetchBoard() {
     boardService.fetchAllBoards() { result in
       switch result {
@@ -63,6 +52,7 @@ final class BoardListViewModel: BoardListViewModelProtocol {
         if self.fetchBoardOption == .myBoards {
           self.updateBoardListCollectionViewHandler?(boards.fetchMyBoard())
           self.emptyIndicatorViewHandler?(boards.fetchMyBoard().isEmpty)
+          
         } else {
           self.updateBoardListCollectionViewHandler?(boards.fetchInvitedBoard())
           self.emptyIndicatorViewHandler?(boards.fetchInvitedBoard().isEmpty)
@@ -73,23 +63,27 @@ final class BoardListViewModel: BoardListViewModelProtocol {
       }
     }
   }
+  
+  func pushBoardDetail(to board: Board) {
+    boardDidTappedHandler?(board.id)
+  }
+  
+  func changeBoardOption(option: FetchBoardOption) {
+    fetchBoardOption = option
+  }
 }
 
 
-// MARK: - Extension bindUI
+// MARK: - Extension BindUI
 
 extension BoardListViewModel {
-  
-  func bindingInitializeBoardListCollectionView(handler: @escaping ([Board]) -> Void) {
-    initializeBoardListCollectionViewHandler = handler
-  }
   
   func bindingUpdateBoardListCollectionView(handler: @escaping ([Board]) -> Void) {
     updateBoardListCollectionViewHandler = handler
   }
   
-  func bindingDidBoardTapped(handler: @escaping (Int) -> Void) {
-    didBoardTappedHandler = handler
+  func bindingBoardDidTapped(handler: @escaping (Int) -> Void) {
+    boardDidTappedHandler = handler
   }
   
   func bindingEmptyIndicatorView(handler: @escaping (Bool) -> Void) {

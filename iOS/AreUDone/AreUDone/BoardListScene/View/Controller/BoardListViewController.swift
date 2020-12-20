@@ -135,7 +135,7 @@ private extension BoardListViewController {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 private extension BoardListViewController {
   
@@ -152,8 +152,8 @@ private extension BoardListViewController {
   }
   
   func bindingDidBoardTapped() {
-    viewModel.bindingDidBoardTapped { [weak self] boardId in
-      self?.coordinator?.pushToBoardDetail(boardId: boardId)
+    viewModel.bindingBoardDidTapped { [weak self] boardId in
+      self?.coordinator?.pushBoardDetail(boardId: boardId)
     }
   }
   
@@ -165,6 +165,7 @@ private extension BoardListViewController {
     }
   }
 }
+
 
 // MARK: - Extension Diffable DataSource
 
@@ -195,13 +196,14 @@ private extension BoardListViewController {
   }
 }
 
+
 // MARK: - Extension UICollectionViewDelegate
 
 extension BoardListViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let board = dataSource.itemIdentifier(for: indexPath) else { return }
-    viewModel.fetchBoardId(for: board)
+    viewModel.pushBoardDetail(to: board)
   }
 }
 

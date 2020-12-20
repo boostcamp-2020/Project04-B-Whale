@@ -24,7 +24,6 @@ final class CardDetailContentView: UIView {
     
     return label
   }()
-  
   private lazy var contentLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +32,6 @@ final class CardDetailContentView: UIView {
     
     return label
   }()
-  
   private lazy var editButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +42,7 @@ final class CardDetailContentView: UIView {
   }()
   
   weak var delegate: CardDetailContentViewDelegate?
+  
   
   // MARK:- Initializer
   
@@ -74,17 +73,20 @@ final class CardDetailContentView: UIView {
 private extension CardDetailContentView {
   
   func configure() {
-    layer.borderWidth = 0.3
-    layer.borderColor = UIColor.lightGray.cgColor
-    
     addSubview(titleLabel)
     addSubview(contentLabel)
     addSubview(editButton)
     
+    configureView()
     configureTitleLabel()
     configureContentLabel()
     configureEditButton()
     addingTarget()
+  }
+  
+  func configureView() {
+    layer.borderWidth = 0.3
+    layer.borderColor = UIColor.lightGray.cgColor
   }
   
   func configureTitleLabel() {
@@ -114,12 +116,16 @@ private extension CardDetailContentView {
   }
   
   func addingTarget() {
-    editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+    editButton.addTarget(
+      self,
+      action: #selector(editButtonTapped),
+      for: .touchUpInside
+    )
   }
 }
 
 
-// MARK:- Extension obj-c
+// MARK:- Extension objc Method
 
 private extension CardDetailContentView {
   

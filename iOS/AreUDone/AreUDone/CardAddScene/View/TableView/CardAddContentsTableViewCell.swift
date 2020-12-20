@@ -61,7 +61,6 @@ final class CardAddContentsTableViewCell: UITableViewCell, Reusable {
 private extension CardAddContentsTableViewCell {
   
   func configure() {
-    selectionStyle = .none
     
     addSubview(titleLabel)
     addSubview(contents)
@@ -72,6 +71,7 @@ private extension CardAddContentsTableViewCell {
   }
   
   func configureView() {
+    selectionStyle = .none
     accessoryType = .disclosureIndicator
   }
   

@@ -38,9 +38,13 @@ private extension SideBarCollectionView {
     translatesAutoresizingMaskIntoConstraints = false
     backgroundColor = .white
 
+    registerCell()
+  }
+  
+  func registerCell() {
     register(SideBarCollectionViewMembersCell.self)
     register(SideBarCollectionViewActivityCell.self)
-    registerHeaderView(SideBarHeaderView.self)    
+    registerHeaderView(SideBarHeaderView.self)
   }
   
   func configureFlowLayout() {

@@ -52,9 +52,10 @@ private extension BoardListCollectionView {
   }
   
   func configureFlowLayout() {
-    let flowLayout = UICollectionViewFlowLayout()
     let width = bounds.width * 0.9
     let height = bounds.height * 0.12
+    
+    let flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
     flowLayout.itemSize = CGSize(width: width, height: height)
 

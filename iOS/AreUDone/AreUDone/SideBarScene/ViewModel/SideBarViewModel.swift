@@ -15,6 +15,8 @@ protocol SideBarViewModelProtocol {
   func bindindAfterDeleteBoardAction(handler: @escaping () -> Void)
 //  func bindingUpdateActivitiesInCollectionView(handler: @escaping () -> Void)
   
+  func members() -> [User]
+  
   func updateCollectionView()
   func deleteBoard()
 //  func updateMembersInCollectionView()
@@ -77,6 +79,10 @@ final class SideBarViewModel: SideBarViewModelProtocol {
   
   
   // MARK: - Method
+  
+  func members() -> [User] {
+    boardMembers ?? []
+  }
   
   func updateCollectionView() {
     

@@ -10,7 +10,11 @@ import NetworkFramework
 
 protocol CommentServiceProtocol {
   
-  func createComment(with cardId: Int, content: String, completionHandler: @escaping ((Result<CardDetailComment, APIError>) -> Void))
+  func createComment(
+    with cardId: Int,
+    content: String,
+    completionHandler: @escaping ((Result<CardDetailComment, APIError>) -> Void)
+  )
   func deleteComment(with commentId: Int, compeletionHandler: @escaping ((Result<Void, APIError>) -> Void))
 }
 
@@ -32,8 +36,14 @@ class CommentService: CommentServiceProtocol {
   
   // MARK: - Method
   
-  func createComment(with cardId: Int, content: String, completionHandler: @escaping ((Result<CardDetailComment, APIError>) -> Void)) {
-    router.request(route: CommentEndPoint.createComment(cardId: cardId, content: content)) { (result: Result<CardDetailComment, APIError>) in
+  func createComment(
+    with cardId: Int,
+    content: String,
+    completionHandler: @escaping ((Result<CardDetailComment, APIError>) -> Void)
+  ) {
+    let endPoint = CommentEndPoint.createComment(cardId: cardId, content: content)
+    
+    router.request(route: endPoint) { (result: Result<CardDetailComment, APIError>) in
       switch result {
       case .success(let comment):
         completionHandler(result)
@@ -42,12 +52,13 @@ class CommentService: CommentServiceProtocol {
       case .failure(_):
         completionHandler(.failure(.data))
       }
-      
     }
   }
   
   func deleteComment(with commentId: Int, compeletionHandler: @escaping ((Result<Void, APIError>) -> Void)) {
-    router.request(route: CommentEndPoint.deleteComment(commentId: commentId)) { (result: Result<Void, APIError>) in
+    let endPoint = CommentEndPoint.deleteComment(commentId: commentId)
+    
+    router.request(route: endPoint) { (result: Result<Void, APIError>) in
       switch result {
       case .success(()):
         compeletionHandler(result)

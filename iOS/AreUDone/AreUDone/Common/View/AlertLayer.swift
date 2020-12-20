@@ -7,12 +7,16 @@
 
 import UIKit
 
-final class BorderLayer: CALayer {
+final class AlertLayer: CALayer {
   
   // MARK: - Initializer
   
   override init() {
     super.init()
+  }
+  
+  override init(layer: Any) {
+    super.init(layer: layer)
   }
   
   convenience init(frame: CGRect) {
@@ -30,7 +34,7 @@ final class BorderLayer: CALayer {
 
 // MARK: - Extension Configure Method
 
-extension BorderLayer {
+extension AlertLayer {
   
   func configure() {
     backgroundColor = UIColor.clear.cgColor

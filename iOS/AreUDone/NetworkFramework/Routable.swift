@@ -42,7 +42,7 @@ extension Routable {
     if let query = route.query {
       var queryItems = [URLQueryItem]()
       query.forEach { (key, value) in
-        queryItems.append(URLQueryItem(name: key, value: value))
+        queryItems.append(URLQueryItem(name: key, value: "\(value)"))
       }
       
       urlComponents.queryItems = queryItems
@@ -61,7 +61,7 @@ extension Routable {
       }
       
       route.headers?.forEach { key, value in
-        request.setValue(value, forHTTPHeaderField: key)
+        request.setValue("\(value)", forHTTPHeaderField: key)
       }
       return request
     }

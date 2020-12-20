@@ -38,6 +38,10 @@ private extension MemberCollectionView {
     translatesAutoresizingMaskIntoConstraints = false
     backgroundColor = .white
     
+    registerCell()
+  }
+  
+  func registerCell() {
     register(MemberCell.self)
     registerFooterView(MemberFooterView.self)
   }

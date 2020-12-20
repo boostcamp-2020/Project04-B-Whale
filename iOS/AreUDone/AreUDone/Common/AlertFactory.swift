@@ -8,6 +8,7 @@
 import UIKit
 
 protocol AlertProtocol {
+  
   var title: String? { get }
   var message: String? { get }
   var actionTitle: String? { get }
@@ -23,7 +24,7 @@ enum AlertType {
   case boardDelete
 }
 
-class AlertFactory {
+final class AlertFactory {
   
   static func alert(forType type: AlertType, style: UIAlertController.Style) -> AlertProtocol {
     var alert: AlertProtocol
@@ -56,8 +57,8 @@ struct DeleteAlert: AlertProtocol {
   
   var title: String? { return "해당 댓글을 삭제하시겠습니까?"}
   var message: String? { return nil }
-  var actionTitle: String? { return "삭제"}
-  var cancelTitle: String? { return "취소"}
+  var actionTitle: String? { return "삭제" }
+  var cancelTitle: String? { return "취소" }
   var style: UIAlertController.Style
 }
 

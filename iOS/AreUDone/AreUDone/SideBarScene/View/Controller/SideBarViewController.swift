@@ -9,7 +9,7 @@ import UIKit
 
 protocol SideBarViewControllerProtocol: AnyObject {
   
-  func pushToInvitation()
+  func pushInvitation()
   
   func start()
   func configureTopHeight(to topHeight: CGFloat)
@@ -30,12 +30,13 @@ final class SideBarViewController: UIViewController {
   // MARK: - Property
   
   private let viewModel: SideBarViewModelProtocol
+  private weak var coordinator: BoardDetailCoordinator?
+
   private lazy var sideBarDataSource: UICollectionViewDataSource = SideBarCollectionViewDataSource(
     viewModel: viewModel,
     memberDataSource: membersDataSource
   )
   private lazy var membersDataSource: UICollectionViewDataSource = MembersCollectionViewDataSource(viewModel: viewModel, delegate: self)
-  private weak var coordinator: BoardDetailCoordinator?
 
   private lazy var sideBarMinimumX: CGFloat = view.bounds.width * 0.25
   private lazy var sideBarMaximumX: CGFloat = view.bounds.width
@@ -45,7 +46,7 @@ final class SideBarViewController: UIViewController {
     let frame = CGRect(
       x: view.bounds.width,
       y: topHeight,
-      width: view.bounds.width - sideBarMinimumX + 5,
+      width: view.bounds.width - sideBarMinimumX + 10,
       height: view.bounds.height - topHeight
     )
     
@@ -172,7 +173,7 @@ private extension SideBarViewController {
     let frameAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut) {
       switch state {
       case .expanded:
-        self.sideBarView.frame.origin.x = self.sideBarMinimumX - 5
+        self.sideBarView.frame.origin.x = self.sideBarMinimumX - 10
         
         self.view.isUserInteractionEnabled = true
         self.configureBackground(toAlpha: self.maximumAlpha)
@@ -195,6 +196,7 @@ private extension SideBarViewController {
         UIViewPropertyAnimator(duration: 0.1, curve: .easeIn) {
           self.sideBarView.frame.origin.x = self.sideBarMinimumX
         }.startAnimation()
+        
       default:
         break
       }
@@ -220,8 +222,8 @@ extension SideBarViewController: UIGestureRecognizerDelegate {
 
 extension SideBarViewController: SideBarViewControllerProtocol {
   
-  func pushToInvitation() {
-    coordinator?.pushToInvitation(delegate: self)
+  func pushInvitation() {
+    coordinator?.pushInvitation(delegate: self, members: viewModel.members())
   }
   
   func start() {

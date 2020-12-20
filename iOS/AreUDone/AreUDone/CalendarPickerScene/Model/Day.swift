@@ -8,6 +8,7 @@
 import Foundation
 
 struct Day {
+  
   let date: Date
   let number: String
   let isSelected: Bool
@@ -15,6 +16,7 @@ struct Day {
 }
 
 extension Day: Hashable {
+  
   static func == (lhs: Day, rhs: Day) -> Bool {
     return lhs.date == rhs.date &&
       lhs.isWithinDisplayedMonth == rhs.isWithinDisplayedMonth &&

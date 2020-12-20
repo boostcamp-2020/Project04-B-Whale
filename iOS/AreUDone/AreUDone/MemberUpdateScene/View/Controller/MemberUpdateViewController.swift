@@ -12,20 +12,6 @@ protocol MemberUpdateViewControllerDelegate: NSObject {
   func memberUpdateViewControllerWillDisappear()
 }
 
-enum MemberSection: CaseIterable {
-  case invited
-  case notInvited
-  
-  var description: String {
-    switch self {
-    case .invited:
-      return "카드를 즐겨찾는 멤버"
-    case .notInvited:
-      return "카드를 즐겨찾지 않는 멤버"
-    }
-  }
-}
-
 final class MemberUpdateViewController: UIViewController {
   
   typealias DataSource = MemberTableViewDiffableDataSource
@@ -125,10 +111,13 @@ private extension MemberUpdateViewController {
       
       cell.update(with: member.name)
       
-      self?.viewModel.fetchProfileImage(with: member.profileImageUrl, userName: member.name, completionHandler: { data in
-        let image = UIImage(data: data)
-        cell.update(with: image)
-      })
+      self?.viewModel.fetchProfileImage(
+        with: member.profileImageUrl,
+        userName: member.name,
+        completionHandler: { data in
+          let image = UIImage(data: data)
+          cell.update(with: image)
+        })
       
       return cell
     }
@@ -157,6 +146,7 @@ private extension MemberUpdateViewController {
 // MARK:- Extension UITableViewDelegate
 
 extension MemberUpdateViewController: UITableViewDelegate {
+  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     var snapshot = dataSource.snapshot()
     guard let member = dataSource.itemIdentifier(for: indexPath) else { return }

@@ -11,7 +11,7 @@ import NetworkFramework
 
 protocol SigninViewModelProtocol {
   
-  func videoPlayBinding(handler: @escaping((AVPlayerLayer) -> Void))
+  func bindingVideoPlay(handler: @escaping((AVPlayerLayer) -> Void))
   
   func videoPlay()
   func videoRemove()
@@ -51,11 +51,11 @@ final class SigninViewModel: SigninViewModelProtocol {
 }
 
 
-// MARK:- Extension bindUI
+// MARK:- Extension BindUI
 
 extension SigninViewModel {
   
-  func videoPlayBinding(handler: @escaping ((AVPlayerLayer) -> Void)) {
+  func bindingVideoPlay(handler: @escaping ((AVPlayerLayer) -> Void)) {
     videoPlayHandler = handler
   }
 }

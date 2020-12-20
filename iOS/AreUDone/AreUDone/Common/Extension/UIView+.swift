@@ -30,3 +30,14 @@ extension UIView {
     self.layer.shadowOpacity = opacity
   }
 }
+
+extension UIView {
+  func rotate(forCount count: Float) {
+    let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+    rotation.toValue = NSNumber(value: Double.pi * 2)
+    rotation.duration = 1
+    rotation.isCumulative = true
+    rotation.repeatCount = count
+    self.layer.add(rotation, forKey: "rotationAnimation")
+  }
+}

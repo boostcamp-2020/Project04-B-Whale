@@ -136,7 +136,7 @@ private extension BoardColorTableViewCell {
 }
 
 
-// MARK: - Extension objc
+// MARK: - Extension objc Method
 
 private extension BoardColorTableViewCell {
   
