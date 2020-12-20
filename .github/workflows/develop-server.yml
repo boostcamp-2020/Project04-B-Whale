@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ develop/server ]
     paths: [ 'server/**' ]
+  workflow_dispatch:
 defaults:
   run:
     shell: bash
@@ -51,7 +52,7 @@ jobs:
           MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
   deploy:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
     needs: test
     runs-on: ubuntu-latest
     steps:
