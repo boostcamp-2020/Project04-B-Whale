@@ -20,7 +20,7 @@
 > 대규모 일정관리 서비스
 
 ## 데모 영상
-> [WEB 데모영상]()
+> [WEB 데모영상](https://youtu.be/h9chnOJ3WCE)
 
 > [iOS 데모영상](https://www.youtube.com/watch?v=dYPaWi2tTGA&feature=youtu.be&ab_channel=%ED%95%84%EB%AF%B8%ED%95%84%EB%AF%B8TV)
 
